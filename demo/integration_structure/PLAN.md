@@ -1,64 +1,46 @@
-# Integración completa: plan de implementación
+# Full integration: implementation plan
 
-> Ejecución inline con `superpowers:executing-plans`. Diseño aprobado por el
-> usuario: `analytics/analyses/collection/demo-integration-structure-v1-design.md`.
+> Inline execution with `superpowers:executing-plans`. User-approved design:
+> `analytics/analyses/collection/demo-integration-structure-v1-design.md`.
 
-**Objetivo:** notebook y paquete autónomo para ejecutar la integración de los
-15 papers en Linux/A100 a partir de sus parsings guardados.
+**Objective:** a notebook and standalone package to run integration of the 15 papers on Linux/A100 from their saved parsing outputs.
 
-**Arquitectura:** copias exactas de los módulos vigentes y auxiliar de colección.
-Entradas verificadas → preparación portable → conciliación → clasificación v2 →
-inventario/cápsulas → Docling/nativo/estructura/conexión → salidas y respaldo.
+**Architecture:** exact copies of current modules and a collection helper. Verified inputs → portable preparation → reconciliation → classification v2 → inventory/capsules → Docling/native/structure/integration → outputs and backup.
 
-**Tecnología:** Jupyter, biblioteca estándar, Python 3.13.5 aislado, versiones y
-hash Docling congelados, PyMuPDF. La A100 se registra; el cálculo usa CPU.
+**Technology:** Jupyter, standard library, isolated Python 3.13.5, frozen Docling versions and hash, PyMuPDF. The A100 is recorded; computation uses the CPU.
 
-## Restricciones globales
+## Global constraints
 
-Mismo código/configuración para todos los papers. Fuentes y resultados canónicos
-intactos. Destinos nuevos; sin reintentos, OCR, modelos o servicios. Abstenciones,
-hijos sin bbox y revisión after_full_mvp preservados. Sin Git en esta raíz.
+The same code/configuration for all papers. Canonical sources and results remain intact. New destinations; no retries, OCR, models, or services. Abstentions, children without bounding boxes, and after_full_mvp review are preserved. No Git in this root.
 
-## Focos de revisión
+## Review priorities
 
-- Punteros de Windows: regenerarlos desde fuentes en el destino Linux.
-- Kernel distinto: toda etapa corre con Python 3.13.5 aislado.
-- ZIP alterado/rutas inseguras: rechazar antes de ejecutar código empaquetado.
-- Fallo de etapa o respaldo: registrar fallo/partial, nunca completado ficticio.
-- Traslado de resultados: vistas estáticas portables; procedencia absoluta refleja
-  el entorno de ejecución y los fuentes también viajan en el respaldo.
+- Windows pointers: regenerate them from sources at the Linux destination.
+- Different kernel: every stage runs with isolated Python 3.13.5.
+- Altered ZIP/unsafe paths: reject before executing packaged code.
+- Stage or backup failure: record failed/partial status, never fictitious completion.
+- Result relocation: portable static views; absolute provenance reflects the execution environment, and sources also travel in the backup.
 
-## Tareas
+## Tasks
 
-- [x] 1. Pruebas nuevas de contratos (RED): paquete seguro, exportación conciliada,
-  destinos nuevos, fallos y respaldo verificable.
-- [x] 2. Auxiliares y entorno: `integration_demo/`, locks y snapshot `src/`;
-  demostrar GREEN con fixtures y APIs reales.
-- [x] 3. Notebook, documentación, constructor de paquete e inputs íntegros;
-  verificación de sintaxis, manifests, hashes y cierre de dependencias de archivos.
-- [x] 4. Revisión independiente final, correcciones y entrega; registrar evidencia
-  local y diferenciar ejecución en A100 pendiente por el usuario.
+- [x] 1. New contract tests (RED): safe package, reconciled export, new destinations, failures, and verifiable backup.
+- [x] 2. Helpers and environment: `integration_demo/`, locks, and `src/` snapshot; demonstrate GREEN with fixtures and real APIs.
+- [x] 3. Notebook, documentation, package builder, and intact inputs; verify syntax, manifests, hashes, and file dependency closure.
+- [x] 4. Final independent review, corrections, and delivery; record local evidence and distinguish actual A100 execution pending by the user.
 
-## Registro de decisiones y progreso
+## Decision and progress log
 
-- Diseño aprobado por usuario el 27 de octubre de 2026.
-- Preflight: el exportador nuevo produce el contrato requerido por clasificación
-  v2; reading export produce el contrato requerido por pipeline canónico.
-- Decisión: conservar el código científico sin cambios; entorno mínimo instala
-  Docling/docling-slim exactos sin sus extras de modelos, y la clausura completa
-  de docling-core/rtree/PyMuPDF con versiones fijadas. El probe prueba el componente
-  geométrico por hash e importación; no se presenta como instalación completa OCR.
-- Decisión: no ejecutar otra exportación de los 15 papers localmente para preparar
-  la demo; pruebas sintéticas ejercitan todas las etapas con las APIs reales.
+- Design approved by the user on October 27, 2026.
+- Preflight: the new exporter produces the contract required by classification v2; reading export produces the contract required by the canonical pipeline.
+- Decision: preserve scientific code unchanged; the minimal environment installs exact Docling/docling-slim versions without model extras, and the complete docling-core/rtree/PyMuPDF closure with pinned versions. The probe tests the geometric component by hash and import; it is not presented as a full OCR installation.
+- Decision: do not run another local export of the 15 papers to prepare the demo; synthetic tests exercise all stages with real APIs.
 
-- RED observado: import ausente de los auxiliares; después 8 contratos GREEN.
-- Ajuste de entorno de pruebas: temporales dentro de la demo por restricciones
-  del sandbox Windows; no se cambió lógica científica.
-- Hardware corregido por instrucción explícita del usuario: A100.
+- RED observed: missing helper imports; subsequently 8 GREEN contracts.
+- Test environment adjustment: temporary files inside the demo because of Windows sandbox restrictions; scientific logic was unchanged.
+- Hardware corrected by explicit user instruction: A100.
 
-- 9 pruebas locales GREEN, incluido controller en subproceso con fuentes sintéticas.
-- Paquete inicial verificado: 60 miembros, 28 fuentes científicas idénticas.
-- Revisión independiente final: sin hallazgos críticos/importantes.
-- Precisión documental menor: la descarga Colab usa files.download(); corregida
-  junto con referencias residuales al hardware inicial en este plan.
-- La entrega final se reconstruye tras esas precisiones y se verifica por SHA256.
+- 9 GREEN local tests, including the controller in a subprocess with synthetic sources.
+- Initial package verified: 60 members, 28 identical scientific source files.
+- Final independent review: no critical/major findings.
+- Minor documentation clarification: Colab downloads use files.download(); corrected together with residual references to the initial hardware in this plan.
+- The final delivery is rebuilt after these clarifications and verified by SHA256.

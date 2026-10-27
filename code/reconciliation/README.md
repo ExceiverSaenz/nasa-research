@@ -1,11 +1,11 @@
-# Conciliación autónoma offline v1
+# Autonomous offline reconciliation v1
 
-Diseño aprobado: ../../analytics/analyses/paper/autonomous-reconciliation-design.md.
-Motor genérico `engine.reconcile(page)`; adaptador `inputs.load_evaluation(directory)`
-para exportaciones document_trial con MinerU 4.0.12 y contratos LM/TATR originales.
-No importa modelos, ejecuta OCR ni consulta red. No consume aceptación humana.
+Approved design: ../../analytics/analyses/paper/autonomous-reconciliation-design.md.
+Generic engine `engine.reconcile(page)`; adapter `inputs.load_evaluation(directory)`
+for document_trial exports with MinerU 4.0.12 and original LM/TATR contracts.
+Does not import models, run OCR or access the network. Does not consume human acceptance.
 
-Desde raíz en PowerShell:
+From the root in PowerShell:
 
 ```powershell
 $env:PYTHONPATH='code'
@@ -13,75 +13,75 @@ python -m unittest discover -s code/reconciliation -t code -v
 python -m reconciliation.export RUTA_EVALUACION DIRECTORIO_NUEVO
 ```
 
-El adaptador descubre las páginas declaradas en el manifiesto, no trece páginas
-fijas. Verifica hashes, identidad, render y versiones de paquetes que definen los
-contratos externos. Transformación MinerU normalizado→píxeles; LM/TATR ya están
-en píxeles según este contrato de exportación. Otro formato/configuración requiere
-adaptador versionado: no adivinar escalas ni aceptar versiones desconocidas.
+The adapter discovers pages declared in the manifest, not thirteen fixed
+pages. Verifies hashes, identity, render and versions of packages defining the
+external contracts. MinerU normalized→pixel transformation; LM/TATR are already
+in pixels under this export contract. Another format/configuration requires
+a versioned adapter: do not guess scales or accept unknown versions.
 
-API común `canonical-v1`: identity(document_sha256,physical_page,render_sha256,
+Common API `canonical-v1`: identity(document_sha256,physical_page,render_sha256,
 width_px,height_px); parsers(model→status); records(id,parser,native_type,bbox,
 native,parent,role,source(path,sha256,pointer),transform,text); incidents. `bbox`
-ya está en píxeles XYXY, origen superior izquierdo; `transform` documenta la
-transformación afín [a,b,c,d,e,f] desde caja nativa. Quien cree un adaptador debe
-verificar esa transformación contra su fuente antes de entregar registros.
-El núcleo es una API de confianza interna; no abre archivos de source ni aplica
-una transformación por segunda vez. El exportador suministrado verifica fuentes.
+is already in XYXY pixels, top-left origin; `transform` documents the
+affine transformation [a,b,c,d,e,f] from the native box. Anyone creating an adapter must
+verify that transformation against its source before providing records.
+The core is an internally trusted API; it does not open source files or apply
+a transformation a second time. The supplied exporter verifies sources.
 
-Salidas: document.json, manifest.json, review.html. Cuatro vistas: automática,
-MinerU, TATR y LM; selección de página/categoría, contenedores, grupos e inspector.
-La automática conserva cajas/texto MinerU y añade relaciones. Resultados humanos
-anteriores permanecen separados. No corrige bordes ni recupera etiquetas históricas.
+Outputs: document.json, manifest.json, review.html. Four views: automatic,
+MinerU, TATR and LM; page/category selection, containers, groups and inspector.
+The automatic view preserves MinerU boxes/text and adds relationships. Previous human
+results remain separate. Does not correct edges or recover historical labels.
 
-Reglas: normalización explícita de ocho clases; correspondencia mutua >=0.90
-única por pareja de parsers; multipanel con soporte LM y estructura/caption MinerU,
-sin conflictos internos o externos comparables. Scores no seleccionan ganadores.
-Fuentes fallidas se preservan sin apoyar decisiones. Fallo de integridad local
-bloquea página, no todo documento; manifiesto global inválido impide cargarlo.
-Geometría inválida bloquea relaciones de la página. Números no finitos se exportan
-como `{"$nonfinite":"nan"}` (o inf/-inf), sin recortarlos ni borrarlos.
+Rules: explicit normalization of eight classes; mutual correspondence >=0.90,
+unique per parser pair; multipanel with LM support and MinerU structure/caption,
+without comparable internal or external conflicts. Scores do not select winners.
+Failed sources are preserved without supporting decisions. Local integrity failure
+blocks a page, not the entire document; an invalid global manifest prevents loading it.
+Invalid geometry blocks page relationships. Nonfinite numbers are exported
+as `{"$nonfinite":"nan"}` (or inf/-inf), without clipping or deleting them.
 
-Límite: probado en regresión 12.pdf y fixtures de contrato. No se ha evaluado
-generalidad en otros papers; tampoco exactitud OCR/lectura. Las correspondencias
-geométricas no son identidad semántica validada. Configuración nueva no soportada
-se bloquea; esto es una limitación explícita, no un fallo del parser.
+Limit: regression-tested on 12.pdf and contract fixtures. Generality on
+other papers has not been evaluated; neither has OCR/reading accuracy. Geometric
+correspondences are not validated semantic identity. Unsupported new configuration
+is blocked; this is an explicit limitation, not a parser failure.
 
-## Entrada de ZIP nativo consolidado v1
+## Consolidated native ZIP input v1
 
-`consolidated_inputs.py` adapta `sic-native-archive-consolidation/1` a páginas
-`canonical-v1`, separadas por SHA256 de documento. No ejecuta el motor, modelos,
-OCR ni nuevos renders; no modifica `inputs.py`, `engine.py` o reglas/umbrales.
-MinerU se lee desde `middle-native.json`, con transformación normalizado→píxeles
-verificada contra su exportación; LM/TATR desde sus `regions.json` en píxeles.
-Se conservan registros nativos completos, jerarquía, scores, clases desconocidas
-y geometría inválida. Ninguna caja se recorta ni se usa un score para filtrar.
+`consolidated_inputs.py` adapts `sic-native-archive-consolidation/1` to
+`canonical-v1` pages, separated by document SHA256. Does not run the engine, models,
+OCR or new renders; does not modify `inputs.py`, `engine.py` or rules/thresholds.
+MinerU is read from `middle-native.json`, with normalized→pixel transformation
+verified against its export; LM/TATR from their pixel-based `regions.json`.
+Complete native records, hierarchy, scores, unknown classes
+and invalid geometry are preserved. No box is clipped and no score is used to filter.
 
-Preparación offline, una sola vez y con destino nuevo:
+Offline preparation, once only and with a new destination:
 
 ```powershell
 $env:PYTHONPATH='code'
 python -B -m reconciliation.consolidated_inputs ARCHIVO.zip DESTINO_NUEVO
 ```
 
-Exige el sidecar `.sha256`, formatos/versiones soportados y correspondencia de
-documento/página/render/estado. Copia solo fuentes necesarias a `sources/`, con
-bytes intactos, y escribe `documents/<SHA256>/input.json` y
-`adaptation-manifest.json`. Si la preparación falla, conservar el directorio
-parcial para revisión; no sobrescribirlo ni reintentar automáticamente.
+Requires the `.sha256` sidecar, supported formats/versions and matching
+document/page/render/status. Copies only necessary sources to `sources/`, with
+intact bytes, and writes `documents/<SHA256>/input.json` and
+`adaptation-manifest.json`. If preparation fails, preserve the partial
+directory for review; do not overwrite it or retry automatically.
 
-API de carga verificada, sin conciliación automática:
+Verified loading API, without automatic reconciliation:
 
 ```python
 from reconciliation.consolidated_inputs import load_document
 data = load_document("DESTINO_PREPARADO", "SHA256_DEL_DOCUMENTO")
-# data['pages'] contiene el contrato de entrada de engine.reconcile(page).
+# data['pages'] contains the input contract for engine.reconcile(page).
 ```
 
-El CLI histórico `reconciliation.export` sigue recibiendo evaluaciones antiguas;
-no pasarle directamente este ZIP o la colección preparada. Cada documento debe
-consumirse por separado para no confundir páginas físicas con igual número.
-Las rutas de procedencia de los inputs preparados son absolutas: mover la carpeta
-requiere una nueva preparación trazable, no editar punteros/hashes manualmente.
-Preparar la entrada no valida la generalidad del reconciliador entre papers.
+The historical `reconciliation.export` CLI still accepts old evaluations;
+do not pass this ZIP or the prepared collection directly to it. Each document must
+be consumed separately to avoid confusing physical pages with the same number.
+Provenance paths in prepared inputs are absolute: moving the folder
+requires new traceable preparation, not manual pointer/hash edits.
+Preparing the input does not validate reconciler generality across papers.
 
-Pruebas: `python -B -m unittest reconciliation.test_consolidated_inputs -v`.
+Tests: `python -B -m unittest reconciliation.test_consolidated_inputs -v`.

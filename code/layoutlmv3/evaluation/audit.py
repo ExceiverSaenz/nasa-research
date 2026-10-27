@@ -1,7 +1,7 @@
-"""Auditoría sin referencia de una página, usando únicamente la biblioteca estándar.
+"""Reference-free audit of a page, using only the standard library.
 
-No modifica regiones, descarta predicciones ni estima precisión/recall. Los fallos
-de formato son errores técnicos; duplicación, conflicto y anidamiento son alertas.
+Does not modify regions, discard predictions or estimate precision/recall. Format
+failures are technical errors; duplication, conflict and nesting are alerts.
 """
 from collections import Counter
 from itertools import combinations
@@ -22,7 +22,7 @@ def _finite_number(value: Any) -> bool:
 
 
 def _validate_document(document: Mapping[str, Any]) -> tuple:
-    """Exige una página con dimensiones e interpretación inequívocas; no adivina unidades."""
+    """Requires a page with unambiguous dimensions and interpretation; does not guess units."""
     if not isinstance(document, Mapping) or not isinstance(document.get('regions'), list):
         raise ValueError('Se requiere un documento con regions como lista')
     for name in ('document_id', 'run_id'):
@@ -46,7 +46,7 @@ def _validate_document(document: Mapping[str, Any]) -> tuple:
 
 def _region_errors(region: Any, index: int, repeated_ids: set,
                    width: int, height: int, page: int) -> list:
-    """Recoge errores de una región sin incorporar valores no JSON en el informe."""
+    """Collects region errors without including non-JSON values in the report."""
     errors = []
     identifier = region.get('region_id') if isinstance(region, Mapping) else None
     identifier = identifier if isinstance(identifier, str) else None
@@ -90,14 +90,14 @@ def _region_errors(region: Any, index: int, repeated_ids: set,
 
 def _pair_alert(first: Mapping[str, Any], second: Mapping[str, Any], indices: tuple,
                 iou_threshold: float, containment_threshold: float) -> Any:
-    """Devuelve una sola alerta por par: similitud primero, contención después."""
+    """Returns one alert per pair: similarity first, containment second."""
     a, b = first['bbox'], second['bbox']
     intersection = max(0, min(a[2], b[2]) - max(a[0], b[0])) * max(0, min(a[3], b[3]) - max(a[1], b[1]))
     if intersection <= 0:
         return None
     area_a = (a[2] - a[0]) * (a[3] - a[1])
     area_b = (b[2] - b[0]) * (b[3] - b[1])
-    # Escalar evita overflow en la suma de áreas de entradas numéricas extremas.
+    # Scaling avoids overflow when summing areas of extreme numeric inputs.
     scale = max(area_a, area_b)
     iou = (intersection / scale) / (area_a / scale + area_b / scale - intersection / scale)
     inclusion = intersection / min(area_a, area_b)
@@ -121,24 +121,24 @@ def _pair_alert(first: Mapping[str, Any], second: Mapping[str, Any], indices: tu
 
 def audit_regions(regions_document: Mapping[str, Any], *, iou_threshold: float,
                   containment_threshold: float) -> Dict[str, Any]:
-    """Audita un regions.json sin referencia, mutación, I/O ni dependencias de inference.
+    """Audits a regions.json without reference, mutation, I/O or inference dependencies.
 
     Args:
-        regions_document: Documento de una página producido por save_regions.
-        iou_threshold: Umbral inclusivo (0,1] para duplicación/conflicto de clases.
-        containment_threshold: Umbral inclusivo (0,1] de intersección/área menor.
+        regions_document: Single-page document produced by save_regions.
+        iou_threshold: Inclusive threshold (0,1] for duplication/class conflict.
+        containment_threshold: Inclusive threshold (0,1] for intersection/smaller area.
     Returns:
-        Informe serializable con errores técnicos y alertas por par. quality_score
-        es siempre None; una salida vacía o sin alertas no acredita buena calidad.
+        Serializable report with technical errors and pairwise alerts. quality_score
+        is always None; an empty or alert-free output does not establish good quality.
     Raises:
-        ValueError: Umbrales o esquema global inválidos; no hay marco fiable para comparar.
+        ValueError: Invalid thresholds or global schema; no reliable comparison frame.
     Notes:
-        Se inspeccionan todas las regiones, sin filtrar por score. Las regiones con
-        cualquier error técnico se excluyen únicamente de comparaciones por pares,
-        se conservan sus índices/errores y nunca se borran del documento original.
-        Una caja no se compara consigo misma. Cada par no ordenado se visita una vez.
-        Un par de IoU alta no se vuelve a contar como anidamiento. Índices desde 0.
-        Complejidad O(N²), adecuada para la salida actual limitada a 100 detecciones.
+        All regions are inspected, without score filtering. Regions with any
+        technical error are excluded only from pairwise comparisons;
+        their indices/errors are preserved and never deleted from the original document.
+        A box is not compared with itself. Each unordered pair is visited once.
+        A high-IoU pair is not counted again as nesting. Indices start at 0.
+        O(N²) complexity, suitable for the current output limited to 100 detections.
     """
     for name, value in [('iou_threshold', iou_threshold), ('containment_threshold', containment_threshold)]:
         if not _finite_number(value) or not 0 < value <= 1:

@@ -1,98 +1,98 @@
-# Diferencias de orden Docling frente al baseline: 12.pdf
+# Docling order differences against the baseline: 12.pdf
 
-La observación del usuario —Docling resulta mucho mejor visualmente— está respaldada
-por varias correcciones de continuidad entre columnas en la salida guardada. También
-hay regresiones puntuales y relaciones que siguen sin adjudicación suficiente.
-No se ajustaron reglas, ejecutó Docling otra vez, OCR ni modelos neuronales.
+The user's observation—Docling looks much better visually—is supported
+by several cross-column continuity corrections in the saved output. There are also
+specific regressions and relations still lacking sufficient adjudication.
+No rules were adjusted, Docling rerun, or OCR or neural models executed.
 
-## Alcance y evidencia
+## Scope and evidence
 
-Se revisaron los168pares de contenido cuya precedencia difiere entre las dos salidas,
-en13páginas y sus rutas. Se contrastaron cajas conciliadas, texto extraído directamente
-del PDF con PyMuPDF y renders originales. Inspección visual de originales: páginas
-1,2,3,4,9; para las demás, cajas y texto nativo de las regiones. No se hizo nueva
-inspección de interfaz en navegador ni se crearon renders/crops/boxes.
+The 168 content pairs whose precedence differs between the two outputs were reviewed,
+across 13 pages and their routes. Reconciled boxes, text extracted directly
+from the PDF with PyMuPDF and original renders were compared. Visual inspection of originals: pages
+1, 2, 3, 4, 9; for the others, boxes and native region text. No new
+browser interface inspection was performed and no renders/crops/boxes were created.
 
-Esta es adjudicación documental del agente, pendiente de revisión humana final;
-no un GT humano ni una evaluación de toda la secuencia. Las relaciones entre pares
-se solapan: una continuidad recuperada puede corregir varios pares simultáneamente.
-No interpretar129/168 como accuracy, precision ni tasa general de éxito.
+This is documentary adjudication by the agent, pending final human review;
+not human GT or an evaluation of the entire sequence. Pairwise relations
+overlap: one recovered continuity may correct several pairs simultaneously.
+Do not interpret 129/168 as accuracy, precision or a general success rate.
 
-| Dictamen sobre precedencia cambiada | Pares |
+| Assessment of changed precedence | Pairs |
 | --- | ---: |
-| Corrección respaldada | 129 |
-| Regresión respaldada | 6 |
-| Indeterminado | 33 |
-| Total revisado | 168 |
+| Supported correction | 129 |
+| Supported regression | 6 |
+| Indeterminate | 33 |
+| Total reviewed | 168 |
 
-## Correcciones respaldadas
+## Supported corrections
 
-| Página física | Evidencia de orden correcto | Qué cambia |
+| Physical page | Evidence of correct order | What changes |
 | --- | --- | --- |
-| 1 | Introducción: encabezado y fragmento izquierdo antes de la continuación derecha que empieza severe degradation | Corrige dos precedencias locales; no arregla toda la página |
-| 2 | La sección2/2.1 y el final izquierdo magnitude of the swelling preceden a strain has inverse temperature dependence en derecha | Evita leer constitutivas/ecuaciones antes del comienzo de su sección |
-| 3 | El ítem2 izquierdo termina commercial FE software y continúa en derecha Abaqus, while BISON... | La tabla2,3.1 y lista quedan antes de esa continuación; recupera el flujo de columnas |
-| 4 | El texto izquierdo termina axial void y continúa en derecha distribution..., antes de4.Results | Mejora la precedencia entre columnas; conserva una inversión local descrita abajo |
-| 5 | El final izquierdo dice ...the y derecha comienza fuel rod-cladding gap decreases... | Coloca las conclusiones y desarrollo izquierdo antes de4.1.2/4.1.3 de la derecha |
-| 6 | At al final izquierdo continúa this time en derecha | Corrige transición de columna en4.1.4 |
-| 7 | El final izquierdo relation continúa of hoop stress en derecha, antes de ecuaciones6–8 | Evita adelantar ecuaciones y explicación derecha |
-| 8 | El final izquierdo decreases continúa with increasing temperature en derecha | Restituye continuidad de la explicación de hinchamiento |
-| 9 | El final izquierdo was not continúa considered for the stress evaluation en derecha | Corrige el orden del cuerpo antes de4.1.5 y4.2 |
-| 11 | azimuthal al final izquierdo continúa power variation en derecha | Recupera la frase que introduce Fig.22 |
-| 12 | possible al final izquierdo continúa impacts from such... en derecha, antes de Summary | Evita adelantar conclusiones antes del cierre del desarrollo |
+| 1 | Introduction: heading and left fragment before the right continuation starting severe degradation | Corrects two local precedence relations; does not fix the entire page |
+| 2 | Section2/2.1 and the left ending magnitude of the swelling precede strain has inverse temperature dependence on the right | Avoids reading constitutive relations/equations before the start of their section |
+| 3 | Left item2 ends commercial FE software and continues on the right Abaqus, while BISON... | Table2,3.1 and the list precede that continuation; restores column flow |
+| 4 | Left text ends axial void and continues on the right distribution..., before4.Results | Improves cross-column precedence; retains a local inversion described below |
+| 5 | Left ending says ...the and right starts fuel rod-cladding gap decreases... | Places conclusions and left-side development before4.1.2/4.1.3 on the right |
+| 6 | At at the left end continues this time on the right | Corrects column transition in4.1.4 |
+| 7 | Left ending relation continues of hoop stress on the right, before equations6–8 | Avoids bringing equations and right-side explanation forward |
+| 8 | Left ending decreases continues with increasing temperature on the right | Restores continuity of the swelling explanation |
+| 9 | Left ending was not continues considered for the stress evaluation on the right | Corrects body order before4.1.5 and4.2 |
+| 11 | azimuthal at the left end continues power variation on the right | Recovers the sentence introducing Fig.22 |
+| 12 | possible at the left end continues impacts from such... on the right, before Summary | Avoids bringing conclusions ahead of the end of the development |
 
-Las continuidades se describen como evidencia del análisis; no se añadieron vínculos
-paragraph_continues ni se fusionó texto en resultados. El signo de guion, salto de
-línea o ligadura puede diferir entre texto nativo y texto conciliado; no se corrigió OCR.
+Continuities are described as analysis evidence; no paragraph_continues
+links were added or text merged in results. Hyphens, line breaks or
+ligatures may differ between native and reconciled text; OCR was not corrected.
 
-## Regresiones concretas introducidas
+## Specific introduced regressions
 
-Son cinco casos que explican seis relaciones invertidas:
+Five cases explain six reversed relations:
 
-1. **Página1, abstract frente a introducción —2pares.** Baseline: cuerpo del abstract
-   antes de1.Introduction y su primer párrafo. Docling adelanta el encabezado y ese
-   párrafo al cuerpo del abstract. La caja del abstract está aproximadamente en
-   [564,904,1570,1360] y la introducción en [112,1521,296,1550] y
-   [109,1579,822,1669], XYXY píxeles del render1654×2205. El original muestra una
-   banda horizontal divisoria: el abstract termina antes de la introducción.
-2. **Página1, notas —1par.** Invierte Corresponding author y E-mail address. El original
-   y las cajas muestran el rótulo primero y el correo debajo. No es un fallo de OCR.
-3. **Página2, columna izquierda —1par.** Docling coloca The current work focuses...
-   antes de Recent studies[19–21]..., aunque Recent studies ocupa y≈556–1400 y
-   The current work y≈1398–1810. Baseline conservaba este orden local correctamente.
-4. **Página2, definiciones de resistividad —1par.** Cambia el orden K0 y Krd. El original
-   muestra Kirr, K0, Krd verticalmente; baseline lo respetaba y Docling intercambia
-   los dos últimos. Son bloques independientes con cajas ligeramente solapadas.
-5. **Página4, columna izquierda —1par.** Coloca A section of the3D FE model...
-   antes de Fig.4 shows the axial power profile..., aunque el texto de Fig.4 está
-   arriba (y≈514–747) y el del modelo3D debajo (y≈745–953). Baseline lo hacía bien.
+1. **Page1, abstract versus introduction —2 pairs.** Baseline: abstract body
+   before1.Introduction and its first paragraph. Docling moves the heading and that
+   paragraph ahead of the abstract body. The abstract box is approximately
+   [564,904,1570,1360] and the introduction at [112,1521,296,1550] and
+   [109,1579,822,1669], XYXY pixels of the1654×2205 render. The original shows a
+   horizontal dividing band: the abstract ends before the introduction.
+2. **Page1, notes —1 pair.** Reverses Corresponding author and E-mail address. The original
+   and boxes show the label first and the email below. This is not an OCR failure.
+3. **Page2, left column —1 pair.** Docling places The current work focuses...
+   before Recent studies[19–21]..., although Recent studies occupies y≈556–1400 and
+   The current work y≈1398–1810. Baseline correctly preserved this local order.
+4. **Page2, resistivity definitions —1 pair.** Changes the order of K0 and Krd. The original
+   shows Kirr, K0, Krd vertically; baseline respected it and Docling swaps
+   the last two. These are independent blocks with slightly overlapping boxes.
+5. **Page4, left column —1 pair.** Places A section of the3D FE model...
+   before Fig.4 shows the axial power profile..., although the Fig.4 text is
+   above (y≈514–747) and the3D model text below (y≈745–953). Baseline did this correctly.
 
-En los cuatro casos locales de notas/párrafos/definiciones las cajas se tocan o
-solapan aproximadamente2–4px. Eso es una pista compatible con sensibilidad geométrica,
-no una causalidad aislada demostrada: no se cambió ninguna caja, tolerancia o regla.
-La regresión del abstract afecta un cambio de composición más amplio.
+In the four local note/paragraph/definition cases, the boxes touch or
+overlap by approximately2–4px. This is a clue compatible with geometric sensitivity,
+not demonstrated isolated causality: no box, tolerance or rule was changed.
+The abstract regression affects a broader composition change.
 
-## Indeterminados y pendientes heredados
+## Indeterminate cases and inherited pending issues
 
-33pares:9 de página1 (Crossmark/metadatos/copyright y flujos paralelos),14 de página4
-(posición relativa de Table3/Fig4 y texto),10 de página9 (figuras frente al cuerpo).
-No hay precedencia única adjudicada para esas relaciones entre contenidos flotantes
-con la evidencia revisada. Tener caption vinculado no fija su precedencia respecto
-a todos los bloques vecinos. Esta decisión conservadora no declara correctos esos
-órdenes ni convierte automáticamente todos los elementos en flujos independientes.
+33 pairs: 9 on page1 (Crossmark/metadata/copyright and parallel flows), 14 on page4
+(relative position of Table3/Fig4 and text), 10 on page9 (figures versus body).
+The reviewed evidence does not yield a single adjudicated precedence for those
+relations among floating content. Having a linked caption does not fix its precedence relative
+to all neighboring blocks. This conservative decision does not declare those
+orders correct or automatically turn all elements into independent flows.
 
-Los problemas de clasificación de autores/afiliaciones/editorial en main son heredados:
-Docling no los creó ni los corrigió. Tampoco cambió orden interno de paneles, asociaciones,
-caption primero o jerarquía. La imagen Crossmark de página1 sigue como figura sin
-función documental adecuada. No atribuir estas limitaciones a un nuevo error del parser.
+The classification problems of authors/affiliations/editorial in main are inherited:
+Docling neither created nor corrected them. Nor did it change internal panel order, associations,
+caption first or hierarchy. The Crossmark image on page1 remains a figure without
+an appropriate document function. Do not attribute these limitations to a new parser error.
 
-Páginas10 y13: sin cambios de orden de contenido; eso no valida su orden. Las rutas
-bibliography,metadata y editorial_navigation no cambian; en notes solo cambia el par
-señalado de página1. No se revisaron como correctos todos los pares no modificados.
+Pages10 and13: no content-order changes; that does not validate their order. The
+bibliography,metadata and editorial_navigation routes do not change; in notes only the
+identified pair on page1 changes. Not all unchanged pairs were reviewed as correct.
 
-## Desglose de los168pares cambiados
+## Breakdown of the168 changed pairs
 
-| Página | Correcciones | Regresiones | Indeterminados |
+| Page | Corrections | Regressions | Indeterminate |
 | --- | ---: | ---: | ---: |
 | 1 | 2 | 3 | 9 |
 | 2 | 56 | 2 | 0 |
@@ -106,22 +106,22 @@ señalado de página1. No se revisaron como correctos todos los pares no modific
 | 11 | 2 | 0 | 0 |
 | 12 | 3 | 0 | 0 |
 
-## Trazabilidad y parada
+## Traceability and stopping point
 
-- [168dictámenes por par con IDs y posiciones de ambas rutas](../results/sic12_document/docling-order-difference-review-v1/changed-pairs-review.json).
-- [Cajas y texto nativo por región](../results/sic12_document/docling-order-difference-review-v1/native-region-evidence.json).
-- [Resumen](../results/sic12_document/docling-order-difference-review-v1/review-summary.json).
-- [Verificación](../results/sic12_document/docling-order-difference-review-v1/verification.json).
-- [Comparación HTML original sin cambios](../results/sic12_document/docling-order-trial-v1-view/index.html).
+- [168 pair assessments with IDs and positions in both routes](../results/sic12_document/docling-order-difference-review-v1/changed-pairs-review.json).
+- [Boxes and native text per region](../results/sic12_document/docling-order-difference-review-v1/native-region-evidence.json).
+- [Summary](../results/sic12_document/docling-order-difference-review-v1/review-summary.json).
+- [Verification](../results/sic12_document/docling-order-difference-review-v1/verification.json).
+- [Unchanged original HTML comparison](../results/sic12_document/docling-order-trial-v1-view/index.html).
 
-Índices baseline_indices/docling_indices son posiciones locales de contenido por
-página/ruta; route_step_positions son las posiciones globales con estructuras que
-muestra el visor. Extracción de texto usa el ROI de las cajas existentes y puede
-incluir partes de líneas vecinas cuando estas se solapan; las páginas originales
-respaldan los casos de definiciones/notas descritos. No es OCR ni transcripción validada.
+baseline_indices/docling_indices are local content positions per
+page/route; route_step_positions are the global positions including structures shown
+by the viewer. Text extraction uses the ROI of existing boxes and may
+include parts of neighboring lines when they overlap; original pages
+support the described definition/note cases. This is not OCR or a validated transcription.
 
-Conclusión acotada: Docling aporta mejoras comprobables de precedencia en los casos
-revisados y merece mantenerse como candidato; todavía no como autoridad única del
-orden. Las regresiones justifican reconciliación con anclas nativas y estructura,
-no tuning automático en esta ronda. Parar aquí: resultados/código intactos, sin nueva
-exportación ni extensión de alcance. Revisión humana semántica formal after_full_mvp.
+Bounded conclusion: Docling provides verifiable precedence improvements in the reviewed
+cases and deserves to remain a candidate; not yet the sole authority on
+order. Regressions justify reconciliation with native anchors and structure,
+not automatic tuning in this round. Stop here: results/code intact, without a new
+export or scope extension. Formal human semantic review after_full_mvp.

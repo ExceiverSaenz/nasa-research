@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>12.pdf · Orden de lectura</title><style>__CSS__</style></head>
-<body><header><div class="heading"><strong>12.pdf</strong><span>Orden de lectura · versión conciliada · propuesta sin validar</span></div>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>12.pdf · Reading order</title><style>__CSS__</style></head>
+<body><header><div class="heading"><strong>12.pdf</strong><span>Reading order · reconciled version · unvalidated proposal</span></div>
 <div class="toolbar">
-<label>Página <select id="page" aria-label="Página física"></select></label>
-<label>Recorrido <select id="route"><option value="main">Principal</option><option value="notes">Notas</option><option value="bibliography">Bibliografía</option><option value="metadata">Metadatos</option><option value="editorial_navigation">Editorial y navegación</option><option value="pending_structures">Referencias pendientes</option></select></label>
-<div class="navigation"><button id="previous" aria-label="Paso anterior">←</button><output id="position"></output><button id="next" aria-label="Paso siguiente">→</button></div>
-<div class="zoom"><button id="fit">Ajustar</button><button id="out" aria-label="Reducir zoom">−</button><output id="zoom">Ajustada</output><button id="in" aria-label="Aumentar zoom">+</button></div>
-<label class="check"><input id="arrows" type="checkbox" checked>Flechas</label><label class="check"><input id="containers" type="checkbox">Contenedores</label>
+<label>Page <select id="page" aria-label="Physical page"></select></label>
+<label>Traversal <select id="route"><option value="main">Main</option><option value="notes">Notes</option><option value="bibliography">Bibliography</option><option value="metadata">Metadata</option><option value="editorial_navigation">Editorial and navigation</option><option value="pending_structures">Pending references</option></select></label>
+<div class="navigation"><button id="previous" aria-label="Previous step">←</button><output id="position"></output><button id="next" aria-label="Next step">→</button></div>
+<div class="zoom"><button id="fit">Fit</button><button id="out" aria-label="Zoom out">−</button><output id="zoom">Fitted</output><button id="in" aria-label="Zoom in">+</button></div>
+<label class="check"><input id="arrows" type="checkbox" checked>Arrows</label><label class="check"><input id="containers" type="checkbox">Containers</label>
 </div></header><main><div id="status" role="status" aria-live="polite"></div>
-<div class="legend"><span>Azul: paso propuesto</span><span>Naranja discontinuo: orden provisional o abstendido</span><span>Cajas numeradas según el recorrido</span></div>
-<div class="layout"><section id="viewport" aria-label="Cajas y flechas del recorrido"><div id="stage"><img id="paper" alt="Página original"><svg id="overlay" aria-label="Orden de lectura sobre cajas originales"></svg></div></section>
-<aside><div id="detail" aria-live="polite"></div><details id="list-wrap" open><summary>Lista del recorrido en esta página</summary><div id="step-list"></div></details></aside></div>
-<footer>Captions antes del cuerpo visual cuando existe asociación utilizable. Referencias compartidas no duplican contenido. Hijos sin caja: pendientes, sin posición inventada. Revisión humana al final del MVP completo.</footer></main>
+<div class="legend"><span>Blue: proposed step</span><span>Dashed orange: provisional or abstained order</span><span>Boxes numbered by traversal</span></div>
+<div class="layout"><section id="viewport" aria-label="Traversal boxes and arrows"><div id="stage"><img id="paper" alt="Original page"><svg id="overlay" aria-label="Reading order over original boxes"></svg></div></section>
+<aside><div id="detail" aria-live="polite"></div><details id="list-wrap" open><summary>Traversal list on this page</summary><div id="step-list"></div></details></aside></div>
+<footer>Captions precede visual content when a usable association exists. Shared references do not duplicate content. Children without boxes remain pending, without invented positions. Human review follows the complete MVP.</footer></main>
 <script id="data-model" type="application/json">__DATA__</script><script>__JS__</script></body></html>

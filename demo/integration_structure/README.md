@@ -1,114 +1,67 @@
-# Integración de la colección SiC · Jupyter / A100
+# SiC collection integration · Jupyter / A100
 
-Abre `integration_structure_pipeline.ipynb` y ejecuta las celdas en orden en una
-sesión Linux x86_64 con una GPU **A100**. En Colab selecciona A100 en el tipo de
-entorno. También funciona en Jupyter Linux de otra plataforma con A100.
+Open `integration_structure_pipeline.ipynb` and run the cells in order in a Linux x86_64 session with an **A100** GPU. In Colab, select A100 as the runtime type. Jupyter on other Linux platforms with an A100 is also supported.
 
-La integración actual usa CPU. La GPU identifica el entorno solicitado; no se
-ejecutan los modelos de parsing ni se necesitan pesos CUDA. La instalación usa
-Internet para descargar Python 3.13.5 y los paquetes fijados. Los documentos,
-resultados nativos y código científico ya están incluidos en `upload.zip`.
+The current integration uses the CPU. The GPU identifies the requested environment; parsing models are not run and CUDA weights are not needed. Installation uses the Internet to download Python 3.13.5 and the pinned packages. Documents, native results, and scientific code are already included in `upload.zip`.
 
-## Archivos y uso
+## Files and usage
 
-- `integration_structure_pipeline.ipynb`: notebook completo, con etapas separadas,
-  diagrama, validación, inspección de resultados y respaldo final.
-- `upload.zip` y `upload.sha256`: subir estos dos archivos de **esta carpeta**.
-  El notebook comprueba también el hash esperado incorporado en sus celdas.
-  En Jupyter normal, dejarlos junto al notebook; en Colab se pueden cargar desde
-  el panel de archivos. El ZIP ocupa aproximadamente 1,3 GB: para Colab puede
-  ser más cómodo guardarlo en Drive y configurar su ruta en la primera celda.
-- `src/`: 28 archivos científicos copiados byte a byte del código vigente.
-- `integration_demo/`: adaptación de colección, control de etapas, entorno y
-  verificación. No modifica las reglas científicas.
-- `requirements-runtime.lock`, `requirements-docling.txt`: versiones exactas.
-- `source-snapshot.json`, `bundle-manifest.json`, `package-spec.json` y
-  `package-verification.json`: procedencia, hashes, alcance y revisión del paquete.
-- `tests/`, `build_package.py`, `make_notebook.py`, `verify_delivery.py`:
-  pruebas y herramientas locales para mantener esta entrega.
+- `integration_structure_pipeline.ipynb`: complete notebook with separate stages, a diagram, validation, result inspection, and a final backup.
+- `upload.zip` and `upload.sha256`: upload these two files from **this folder**. The notebook also checks the expected hash embedded in its cells. In regular Jupyter, place them next to the notebook; in Colab, upload them through the file panel. The ZIP is approximately 1.3 GB: for Colab, storing it in Drive and configuring its path in the first cell may be more convenient.
+- `src/`: 28 scientific files copied byte for byte from the current code.
+- `integration_demo/`: collection adaptation, stage control, environment, and verification. It does not modify scientific rules.
+- `requirements-runtime.lock`, `requirements-docling.txt`: exact versions.
+- `source-snapshot.json`, `bundle-manifest.json`, `package-spec.json`, and `package-verification.json`: provenance, hashes, scope, and package review.
+- `tests/`, `build_package.py`, `make_notebook.py`, `verify_delivery.py`: tests and local tools for maintaining this delivery.
 
-El paquete incluye los 15 PDFs y el ZIP nativo consolidado conservado, con
-11.467 registros de los tres parsers sobre 397 páginas. No se requieren rutas
-de Windows ni el resto del proyecto para ejecutar la demo.
+The package includes the 15 PDFs and the preserved consolidated native ZIP, with 11,467 records from the three parsers across 397 pages. Running the demo does not require Windows paths or the rest of the project.
 
-## Flujo
+## Workflow
 
-Entradas nativas → preparación de punteros Linux → conciliación → clasificación
-funcional v2 → inventario/cápsulas → baseline geométrico Docling + evidencia nativa
-→ estructura y conexión operativa → JSON, vistas, índice y colas de revisión.
+Native inputs → Linux pointer preparation → reconciliation → functional classification v2 → inventory/capsules → Docling geometric baseline + native evidence → structure and operational integration → JSON, views, index, and review queues.
 
-El paso de cápsulas conserva el contrato reading-v1 como intermedio. El ordenador
-que se usa como baseline operativo es Docling. Cada etapa guarda sus archivos
-para que se pueda inspeccionar qué entra y qué sale.
+The capsule step preserves the reading-v1 contract as an intermediate format. Docling provides the operational ordering baseline. Each stage saves its files so that inputs and outputs can be inspected.
 
-El notebook crea un intérprete aislado Python 3.13.5 con PyMuPDF 1.27.2.3,
-Docling 2.123.1 y docling-core 2.92.0. Instala las distribuciones oficiales exactas
-de Docling y docling-slim con `--no-deps`, junto a la clausura fijada de
-docling-core/rtree/PyMuPDF. Así se carga el postprocesador geométrico original
-sin instalar sus extras neuronales. Comprueba su hash y ejecuta un probe real
-del ordenador antes de procesar la colección. No es una instalación del
-conversor completo de Docling ni de sus modelos.
+The notebook creates an isolated Python 3.13.5 interpreter with PyMuPDF 1.27.2.3, Docling 2.123.1, and docling-core 2.92.0. It installs the exact official Docling and docling-slim distributions with `--no-deps`, together with the pinned docling-core/rtree/PyMuPDF dependency closure. This loads the original geometric postprocessor without installing its neural extras. It checks its hash and runs a real ordering probe before processing the collection. This is not an installation of the complete Docling converter or its models.
 
-## Recursos y salidas
+## Resources and outputs
 
-Recomendado: al menos **16 GiB de RAM y 20 GiB libres en disco**, además del
-espacio de respaldo en Drive. Son márgenes de preparación, no tiempos o picos
-medidos en A100. Se procesa una colección con configuración idéntica y sin
-concurrencia de modelos.
+Recommended: at least **16 GiB of RAM and 20 GiB of free disk space**, plus backup space in Drive. These are preparation margins, not runtimes or peak usage measured on an A100. The collection is processed with identical configuration and no concurrent models.
 
-La carpeta `run/` del intento contiene:
+The attempt's `run/` folder contains:
 
-| Carpeta / archivo | Contenido |
+| Folder / file | Contents |
 | --- | --- |
-| `prepared/` | Fuentes nativas intactas, renders previos y punteros regenerados |
-| `reconciliation/` | Unidades, relaciones y evidencia de los tres parsers |
-| `classification-v2/` | Clasificación sobre unidades conciliadas |
-| `capsules-reading-v1/` | Inventario y cápsulas intermedias |
-| `operational/` | JSON, estructura, Docling, evidencia nativa y vistas finales |
-| `operational/index.html` | Entrada a los 15 papers |
-| `operational/review-queue.json` | Cola de revisión humana posterior al MVP |
-| `stages/`, `logs/`, `status.json` | Estados, comandos, salidas y fallos |
-| `source-code/`, `pdfs/` | Código ejecutado y PDFs para conservar procedencia |
-| `verification.json` | Integridad técnica del nuevo intento |
+| `prepared/` | Unchanged native sources, previous renders, and regenerated pointers |
+| `reconciliation/` | Units, relations, and evidence from the three parsers |
+| `classification-v2/` | Classification of reconciled units |
+| `capsules-reading-v1/` | Intermediate inventory and capsules |
+| `operational/` | JSON, structure, Docling, native evidence, and final views |
+| `operational/index.html` | Entry point for the 15 papers |
+| `operational/review-queue.json` | Human review queue after the MVP |
+| `stages/`, `logs/`, `status.json` | States, commands, outputs, and failures |
+| `source-code/`, `pdfs/` | Executed code and PDFs to preserve provenance |
+| `verification.json` | Technical integrity of the new attempt |
 
-En Colab, la celda final crea `result.zip` y `result.sha256`, verifica todos los
-miembros y copia ambos a una carpeta nueva de Drive. La descarga del ZIP se inicia desde el notebook con `files.download()`. En Jupyter normal, se entregan archivos
-locales con el mismo contrato. La verificación también permite respaldar un
-intento fallido: su estado sigue siendo `failed`, no éxito de la integración.
+In Colab, the final cell creates `result.zip` and `result.sha256`, verifies all members, and copies both to a new Drive folder. ZIP download starts from the notebook with `files.download()`. Regular Jupyter provides local files under the same contract. Verification also allows a failed attempt to be backed up: its status remains `failed`, rather than integration success.
 
-Las vistas HTML son estáticas y conservan sus imágenes mediante rutas relativas.
-Los JSON de procedencia mantienen las rutas absolutas reales del runtime; el
-respaldo incluye las fuentes consumidas y un manifest relativo para localizarlas
-tras descargarlo. Tras moverlo, las rutas absolutas históricas documentan origen;
-no se reescriben ni se presentan como rutas locales activas.
+HTML views are static and retain their images through relative paths. Provenance JSON retains the runtime's actual absolute paths; the backup includes the consumed sources and a relative manifest to locate them after download. After relocation, historical absolute paths document origin; they are not rewritten or presented as active local paths.
 
-## Límites y conservación
+## Limits and preservation
 
-Las salidas son nuevas. La demo recalcula Docling y evidencia nativa en los 15
-papers: el run histórico reutilizó cachés aprobados de 12.pdf. Por esa diferencia
-de procedencia no se promete igualdad binaria con el artefacto canónico.
+Outputs are new. The demo recalculates Docling and native evidence for all 15 papers: the historical run reused approved caches for 12.pdf. Because of that provenance difference, binary equality with the canonical artifact is not promised.
 
-Se conservan abstenciones, contradicciones, originales y los 374 hijos sin bbox.
-No se les asigna caja del padre. Las secciones y continuidades siguen siendo
-propuestas; todas las unidades conservan revisión `after_full_mvp`. Las pruebas
-de integridad no acreditan exactitud semántica ni QA visual real.
+Abstentions, contradictions, originals, and the 374 children without bounding boxes are preserved. They are not assigned their parent's box. Sections and continuities remain proposals; all units retain `after_full_mvp` review. Integrity tests do not establish semantic accuracy or real visual QA.
 
-No repetir celdas de ejecución. Una etapa ya iniciada se rechaza si se vuelve a
-lanzar. Ante fallo, conservar logs y respaldar el intento; una ejecución distinta
-requiere un directorio nuevo. No hay recuperación automática. Si se interrumpe
-manualmente una celda, comprobar que el subproceso ha terminado antes de usar la
-celda de cierre de intento interrumpido y después generar el respaldo.
+Do not repeat execution cells. A stage that has already started is rejected if launched again. On failure, retain logs and back up the attempt; a separate execution requires a new directory. There is no automatic recovery. If a cell is manually interrupted, check that the subprocess has terminated before using the interrupted-attempt closing cell, then create the backup.
 
-## Verificación local de esta entrega
+## Local verification of this delivery
 
-Desde la raíz del proyecto:
+From the project root:
 
 ```powershell
 python -B -m unittest discover -s demo/integration_structure/tests -v
 python -B demo/integration_structure/verify_delivery.py
 ```
 
-Las pruebas usan fuentes sintéticas y APIs reales (incluido Docling geométrico y
-extracción nativa). No vuelven a exportar la colección canónica. La evidencia
-local final se guarda en `verification.json`; la ejecución real del notebook en
-A100 queda a cargo del usuario.
+Tests use synthetic sources and real APIs (including geometric Docling and native extraction). They do not re-export the canonical collection. Final local evidence is saved in `verification.json`; actual notebook execution on an A100 remains the user's responsibility.

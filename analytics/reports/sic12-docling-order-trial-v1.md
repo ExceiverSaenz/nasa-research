@@ -1,35 +1,35 @@
-# Ensayo de orden Docling en 12.pdf
+# Docling ordering trial on 12.pdf
 
-Se ejecutó una vez el componente de orden basado en reglas de Docling sobre las
-unidades conciliadas existentes. No se ejecutó DocumentConverter, OCR, modelos
-neuronales, clasificador ni integración nativa/GROBID. Alcance:13páginas de12.pdf.
+Docling's rule-based ordering component was run once over the
+existing reconciled units. DocumentConverter, OCR, neural
+models, classifier and native/GROBID integration were not run. Scope: 13 pages of 12.pdf.
 
-## Consultar
+## Consult
 
-- [Comparación HTML responsive](../results/sic12_document/docling-order-trial-v1-view/index.html).
-- [JSON candidato](../results/sic12_document/docling-order-trial-v1/document.json).
-- [Resumen por página y recorrido](../results/sic12_document/docling-order-trial-v1/summary.json).
-- [Advertencias](../results/sic12_document/docling-order-trial-v1/review-queue.json).
-- [Auditoría](../results/sic12_document/docling-order-trial-v1-audit/verification.json).
-- [Plan congelado](../analyses/paper/sic12-docling-order-trial-v1-plan.md) y [código](../../code/document_structure/DOCLING_TRIAL.md).
+- [Responsive HTML comparison](../results/sic12_document/docling-order-trial-v1-view/index.html).
+- [Candidate JSON](../results/sic12_document/docling-order-trial-v1/document.json).
+- [Summary per page and route](../results/sic12_document/docling-order-trial-v1/summary.json).
+- [Warnings](../results/sic12_document/docling-order-trial-v1/review-queue.json).
+- [Audit](../results/sic12_document/docling-order-trial-v1-audit/verification.json).
+- [Frozen plan](../analyses/paper/sic12-docling-order-trial-v1-plan.md) and [code](../../code/document_structure/DOCLING_TRIAL.md).
 
-La vista permite elegir página/ruta, sincronizar selección o mantenerla independiente,
-ver ambas versiones o una sola, zoom/cajas/flechas y tabla de diferencias. Comparte
-13PNG originales idénticos por hash, sin reducción ni recompresión; CSS ajusta su
-presentación al ancho. En móvil los paneles se apilan. No son capas de parsers.
+The view allows choosing page/route, synchronizing selection or keeping it independent,
+viewing both versions or only one, zoom/boxes/arrows and a differences table. It shares
+13 original hash-identical PNGs, without reduction or recompression; CSS fits their
+presentation to width. Panels stack on mobile. These are not parser layers.
 
-## Resultado descriptivo
+## Descriptive result
 
-293unidades preservadas (251segmentos,36contenedores,6grupos),251apariciones de
-contenido y279pasos de recorrido, incluidas estructuras/referencias. Se modificaron
-99posiciones de contenido;168pares cambiaron su precedencia respecto del baseline.
-El denominador de pares comparados es 2006: pares dentro de la misma página y ruta; no mezcla rutas distintas.
+293 units preserved (251 segments, 36 containers, 6 groups), 251 content
+occurrences and 279 route steps, including structures/references. 99 content
+positions changed; 168 pairs changed precedence relative to the baseline.
+The denominator of compared pairs is 2006: pairs within the same page and route; it does not mix different routes.
 
-Estos números miden desacuerdo, no errores ni mejora. No hay GT adjudicado de lectura.
-Las29combinaciones página/ruta procesadas terminaron sin fallback de ejecución.
-Eso solo demuestra funcionamiento del componente, no lectura correcta.
+These numbers measure disagreement, not errors or improvement. There is no adjudicated reading GT.
+All 29 processed page/route combinations completed without execution fallback.
+This only demonstrates that the component works, not correct reading.
 
-| Página | Contenido | Posiciones distintas | Pares invertidos / comparados |
+| Page | Content | Distinct positions | Reversed / compared pairs |
 | --- | ---: | ---: | ---: |
 | 1 | 27 | 10 | 14 / 103 |
 | 2 | 25 | 20 | 58 / 254 |
@@ -45,47 +45,47 @@ Eso solo demuestra funcionamiento del componente, no lectura correcta.
 | 12 | 14 | 4 | 3 / 67 |
 | 13 | 46 | 0 | 0 / 787 |
 
-## Qué cambió y qué quedó fijo
+## What changed and what remained fixed
 
-Variable única: orden entre bloques/grupos existentes dentro de cada ruta y página.
+Single variable: order among existing blocks/groups within each route and page.
 Docling2.123.1, docling-core2.92.0, rtree1.4.1, pydantic2.12.5, Python3.13.5; defaults
-intactos y módulo predictivo fijado por hash. Inputs neutrales ordenados por geometría
-antes de invocar el componente, sin usar secuencia baseline como señal semántica.
-Anclas de grupos usan las mismas cajas de cuerpos existentes; sus envolventes son
-inputs derivados para ordenar, no cajas conciliadas nuevas.
+intact and predictive module pinned by hash. Neutral inputs sorted by geometry
+before invoking the component, without using the baseline sequence as a semantic signal.
+Group anchors use the same existing body boxes; their enclosing extents are
+derived ordering inputs, not new reconciled boxes.
 
-La adaptación geométrica a BOTTOMLEFT fue necesaria porque la conversión de origen
-TOPLEFT de la dependencia devuelve BoundingBox y pierde cid. Se detectó con pruebas,
-se resolvió creando correctamente PageElement de entrada y no se modificó Docling.
+Geometric adaptation to BOTTOMLEFT was necessary because the dependency's
+TOPLEFT origin conversion returns BoundingBox and loses cid. Detected through tests,
+it was resolved by correctly creating the input PageElement; Docling was not modified.
 
-No se modificaron clasificación, enrutamiento, asociaciones, miembros ni orden
-interno de grupos/paneles. Caption primero y contenido compartido sin duplicación
-se conservan. Si las referencias compartidas exigen que una cápsula aparezca antes,
-se registra esa restricción en la traza. No se corrigieron los problemas conocidos
-con autores/afiliaciones/metadatos: siguen influyendo en los recorridos.
+Classification, routing, associations, members and internal
+group/panel order were not modified. Caption first and shared content without duplication
+are preserved. If shared references require a capsule to appear earlier,
+that constraint is recorded in the trace. Known problems with
+authors/affiliations/metadata were not corrected: they continue to affect routes.
 
-Las relaciones originales permanecen en baseline_evidence_relations. Se regeneró
-next_in_route. No se reutilizaron continuidades antiguas como nuevas: no se ejecutó
-NLP de continuidad. Las advertencias anteriores siguen presentes en cada paso y
-unidad, junto a la advertencia de propuesta no validada de este ensayo.
+Original relations remain in baseline_evidence_relations. next_in_route
+was regenerated. Old continuities were not reused as new ones: continuity NLP
+was not run. Previous warnings remain present in every step and
+unit, alongside this trial's warning of an unvalidated proposal.
 
-## Verificación y límites
+## Verification and limitations
 
-145archivos anteriores protegidos intactos por hash; inventario y contexto de páginas
-idénticos. Sin duplicación, pérdida de referencias ni ciclos operativos. Nueve pruebas
-Python pasan; una expectedFailure documenta un fallo de calidad del propio componente:
-un encabezado ancho seguido de dos columnas en un fixture produce intercalación por
-filas. No se ajustaron parámetros para ocultarlo. Revisión técnica independiente
-completada; corrigió reinicio de selección del otro panel al desactivar sincronización.
-Prueba con texto literal de cierre de script confirma conservación al embebir JSON.
+145 previous protected files hash-intact; identical inventory and page context.
+No duplication, reference loss or operational cycles. Nine Python tests
+pass; one expectedFailure documents a quality failure of the component itself:
+a wide heading followed by two columns in a fixture produces row-wise
+interleaving. Parameters were not tuned to hide it. Independent technical review
+completed; it corrected resetting the other panel's selection when synchronization was disabled.
+A test with literal script-closing text confirms preservation when embedding JSON.
 
-Simulación DOM de los HTML reales:156combinaciones página/ruta entre ambas vistas,
-navegación, sincronización sin eco y selección independiente; pruebas parent de
-sincronización/altura/mostrar panel pasan. La revisión visual en navegador no pudo
-realizarse: su política de seguridad rechaza file://. No se intentó un workaround.
-Esta limitación no se presenta como QA visual aprobada.
+DOM simulation of the actual HTML: 156 page/route combinations across both views,
+navigation, synchronization without echoes and independent selection; parent tests for
+synchronization/height/showing panels pass. Visual browser review could not
+be performed: its security policy rejects file://. No workaround was attempted.
+This limitation is not presented as passed visual QA.
 
-El ensayo no demuestra superioridad frente al baseline ni sustituye estructura
-semántica. Las diferencias están disponibles para inspección; revisión humana formal
-sigue after_full_mvp. Parada alcanzada para esta exportación acotada; no tuning,
-repetición automática ni extensión a otros papers por esta entrega.
+The trial does not demonstrate superiority over the baseline or replace semantic
+structure. Differences are available for inspection; formal human review
+remains after_full_mvp. Stopping point reached for this bounded export; no tuning,
+automatic repetition or extension to other papers through this delivery.

@@ -1,30 +1,21 @@
-# Entorno aislado desde Colab CLI 0.7.4
+# Isolated environment using Colab CLI 0.7.4
 
-## Estado y continuidad
+## Status and continuity
 
-Instalación, descarga directa de pesos e imports/configuración completados en
-Tesla T4 el 18 de octubre de 2026. Respaldo verificado:
-`code/results/layoutlmv3-import/20261018T201957Z/`. Sesión real `nasa-layout-env`,
-detenida según el usuario. Nueve tests aprobados en Windows y WSL.
+Installation, direct weight download, and imports/configuration were completed on a Tesla T4 on October 18, 2026. Verified backup: `code/results/layoutlmv3-import/20261018T201957Z/`. Actual session `nasa-layout-env`, stopped according to the user. Nine tests passed on Windows and WSL.
 
-No ejecutar de nuevo esta guía para recuperar contexto. El siguiente hito es
-probar el MVP ya implementado de inferencia sobre una página; ver
-[inference/README.md](inference/README.md). Faltan empaquetado/recuperación y
-ejecución real del adaptador en GPU. Consultar
-`docs/continuidad/04-estado-de-la-prueba.md` y `docs/continuidad/05-continuacion-de-la-prueba.md`.
-Los comandos siguientes son un procedimiento de reconstrucción para una VM nueva,
-con autorización de consumo, no una lista pendiente de verificaciones manuales.
+Do not rerun this guide to recover context. The next milestone is to test the implemented single-page inference MVP; see [inference/README.md](inference/README.md). Packaging/recovery and actual GPU execution of the adapter remain pending. Consult `docs/continuidad/04-estado-de-la-prueba.md` and `docs/continuidad/05-continuacion-de-la-prueba.md`. The commands below are a reconstruction procedure for a new VM with resource-use authorization, not a pending list of manual checks.
 
-## Instalación adicional del detector (segunda etapa)
+## Additional detector installation (second stage)
 
-Con los archivos locales ya preparados, verificar sin GPU:
+With the local files already prepared, verify without a GPU:
 
 ```bash
 python3 -m unittest discover -s code/layoutlmv3 -p 'test_*.py' -v
 bash -n code/layoutlmv3/test_detector.sh
 ```
 
-Después de autorizar el consumo, crear una T4 solo si no existe una sesión adecuada:
+After resource use is authorized, create a T4 only if no suitable session exists:
 
 ```bash
 colab sessions
@@ -32,34 +23,15 @@ colab new -s nasa-layout-env --gpu T4
 bash code/layoutlmv3/test_detector.sh nasa-layout-env
 ```
 
-test_detector.sh transfiere código y el manifiesto pequeño, sin subir el TAR de pesos.
-El instalador descarga el modelo directamente en Colab desde la revisión fija de
-Hugging Face y verifica tamaño y SHA-256 antes de publicar cada archivo. Si la
-descarga falla o está corrupta, elimina el archivo parcial y no continúa con la
-instalación. Requiere acceso a Internet desde Colab; el acceso comprobado desde WSL
-no demuestra acceso desde la VM. Los errores de descarga omiten URLs temporales.
-Después reconstruye el entorno base, instala dependencias, comprueba importaciones y configuración,
-y descarga registros con SHA-256 a code/results/layoutlmv3-import/<fecha>/.
-No crea ni detiene sesiones. Tras comprobar el respaldo, detener exclusivamente
-la sesión creada para la prueba con `colab stop -s nasa-layout-env`.
-Si la instalación falla, el verificador devuelve error pero conserva el ZIP descargado.
-Si hay timeout, no asumir que el proceso se detuvo ni repetirlo simultáneamente.
-El respaldo incluye el manifiesto y, si la descarga terminó correctamente,
-`model-download-check.json`. No incluye los pesos descargados.
+test_detector.sh transfers code and the small manifest without uploading the weights TAR. The installer downloads the model directly in Colab from the pinned Hugging Face revision and verifies size and SHA-256 before publishing each file. If the download fails or is corrupt, it deletes the partial file and does not continue installation. Internet access from Colab is required; verified access from WSL does not establish access from the VM. Download errors omit temporary URLs. It then rebuilds the base environment, installs dependencies, checks imports and configuration, and downloads logs with SHA-256 to code/results/layoutlmv3-import/<date>/. It does not create or stop sessions. After checking the backup, stop only the session created for the test with `colab stop -s nasa-layout-env`. If installation fails, the verifier returns an error but retains the downloaded ZIP. On timeout, do not assume that the process has stopped or repeat it concurrently. The backup includes the manifest and, if download completed successfully, `model-download-check.json`. It does not include downloaded weights.
 
-Esta etapa NO carga los pesos en un detector ni ejecuta inferencia. Las dependencias
-adicionales se instalaron y sus imports/configuración se comprobaron en Colab;
-los tests locales por sí solos no prueban esas importaciones. No se modifican ni transfieren PDFs en esta prueba.
+This stage does NOT load weights into a detector or run inference. Additional dependencies were installed and their imports/configuration checked in Colab; local tests alone do not establish those imports. This test does not modify or transfer PDFs.
 
-La sección de entorno base más abajo instala y verifica Python 3.9.25,
-PyTorch 1.10.0+cu111, torchvision 0.11.1+cu111 y Detectron2 0.6. Esa sección
-base sola no instala LayoutLMv3; el flujo adicional anterior sí lo instala y
-descarga sus pesos. Ninguno procesa PDFs. Mantiene el kernel de Colab intacto.
-El instalador conserva setuptools 80.9.0 porque PyTorch antiguo necesita pkg_resources.
+The base environment section below installs and verifies Python 3.9.25, PyTorch 1.10.0+cu111, torchvision 0.11.1+cu111, and Detectron2 0.6. That base section alone does not install LayoutLMv3; the additional workflow above does install it and download its weights. Neither processes PDFs. The Colab kernel remains intact. The installer retains setuptools 80.9.0 because old PyTorch needs pkg_resources.
 
-## Preparación sin GPU
+## Preparation without a GPU
 
-Desde Ubuntu WSL:
+From Ubuntu WSL:
 
 ```bash
 cd "/mnt/c/Users/HP Victus/Desktop/nasa_research"
@@ -68,14 +40,11 @@ colab usage
 colab sessions
 ```
 
-Los tests no instalan paquetes, no invocan Colab y no necesitan GPU.
+Tests do not install packages, invoke Colab, or require a GPU.
 
-## Ejecución, solo después de autorizar consumo
+## Execution, only after resource use is authorized
 
-Ejecutar paso por paso. Revisar sesiones existentes antes de crear una.
-Si nasa-layout-env ya existe, revisar con colab status y no crear otra ni detener
-una que pertenezca a otro trabajo. La tarifa se consulta después de asignar recursos.
-Para este entorno inicial, solicitar T4; no hace falta A100 para las operaciones mínimas.
+Execute step by step. Review existing sessions before creating one. If nasa-layout-env already exists, check it with colab status and do not create another or stop a session belonging to other work. Rates are checked after resources are allocated. Request a T4 for this initial environment; the minimal operations do not require an A100.
 
 ```bash
 colab new -s nasa-layout-env --gpu T4
@@ -85,24 +54,18 @@ colab upload -s nasa-layout-env code/layoutlmv3/setup_env.py /content/nasa_setup
 colab upload -s nasa-layout-env code/layoutlmv3/cli_job.py /content/nasa_cli_job.py
 ```
 
-Lanzar el archivo transferido mediante runpy: conserva __file__ y evita depender
-de que colab exec -f sincronice otros archivos o defina esa variable.
+Launch the transferred file through runpy: this preserves __file__ and avoids relying on colab exec -f to synchronize other files or define that variable.
 
 ```bash
 printf '%s\n' 'import runpy, sys; sys.argv=["/content/nasa_cli_job.py"]; runpy.run_path(sys.argv[0], run_name="__main__")' \
   | colab exec -s nasa-layout-env --timeout 1800
 ```
 
-Las descargas iniciales pueden tardar. Un timeout no confirma que el proceso
-remoto se haya detenido: consultar su estado antes de repetir o cerrar la sesión.
-No lanzar dos instaladores simultáneamente.
+Initial downloads may take time. A timeout does not confirm that the remote process has stopped: check its status before retrying or closing the session. Do not launch two installers concurrently.
 
-## Recuperar resultados, también después de un fallo del instalador
+## Recover results, including after installer failure
 
-Antes de ejecutar este bloque, esperar a que aparezca `Respaldo remoto:` en la
-salida. El proceso empaqueta los diagnósticos al terminar, incluso si el instalador
-devuelve error. Si la VM se desconecta o muere, esa recuperación no está garantizada.
-Si upload falla, corregirlo antes de ejecutar.
+Before executing this block, wait until `Respaldo remoto:` appears in the output. The process packages diagnostics when it finishes, even if the installer returns an error. Recovery is not guaranteed if the VM disconnects or dies. If upload fails, correct it before executing.
 
 ```bash
 RUN_DIR="code/results/layoutlmv3-env/$(date -u +%Y%m%dT%H%M%SZ)"
@@ -112,13 +75,9 @@ colab download -s nasa-layout-env /content/nasa-layoutlm-setup.sha256 "$RUN_DIR/
 python3 code/layoutlmv3/verify_download.py "$RUN_DIR/setup.zip"
 ```
 
-El verificador comprueba SHA-256 y CRC del ZIP, y después el estado del instalador.
-Si indica instalación fallida pero integridad verificada, los diagnósticos están
-recuperados: revisar setup-console.log dentro del ZIP; no afirmar que el entorno funciona.
-Si falla la integridad, volver a descargar antes de detener.
+The verifier checks the ZIP's SHA-256 and CRC, then installer status. If it reports failed installation but verified integrity, diagnostics have been recovered: inspect setup-console.log inside the ZIP; do not claim that the environment works. If integrity fails, download again before stopping.
 
-Tras recuperar y comprobar los resultados, detener únicamente la sesión creada
-para este trabajo:
+After recovering and checking results, stop only the session created for this work:
 
 ```bash
 colab stop -s nasa-layout-env
@@ -126,43 +85,25 @@ colab sessions
 colab usage
 ```
 
-## Qué se conserva
+## What is retained
 
-El ZIP contiene configuración, lista de versiones y registros. No contiene el
-virtualenv, intérprete Python, PDFs, modelos ni resultados almacenados fuera de
-/content/nasa-layoutlm-state. El entorno se reconstruye en cada VM; esta primera
-adaptación no promete restauración offline ni automática de todos los archivos.
-El cierre de la VM elimina /content.
+The ZIP contains configuration, version lists, and logs. It does not contain the virtualenv, Python interpreter, PDFs, models, or results stored outside /content/nasa-layoutlm-state. The environment is rebuilt on each VM; this first adaptation does not promise offline or automatic restoration of all files. Closing the VM deletes /content.
 
-La caché completa de wheels es opcional: setup_env.py admite --cache-wheels.
-El lanzador normal no la activa para evitar duplicar descargas de varios GB.
-Si se activa manualmente, se incluye en el ZIP y debe descargarse antes de cerrar.
-Una futura restauración requiere transferir snapshot.json y wheelhouse verificados
-al directorio de estado antes de ejecutar el instalador. Las versiones transitivas
-se registran tras resolverlas; sin snapshot, dos instalaciones pueden diferir.
+The complete wheel cache is optional: setup_env.py accepts --cache-wheels. The normal launcher does not enable it, to avoid duplicating several GB of downloads. If manually enabled, it is included in the ZIP and must be downloaded before closing. A future restoration requires transferring verified snapshot.json and wheelhouse to the state directory before executing the installer. Transitive versions are recorded after resolution; without a snapshot, two installations may differ.
 
-## Alcance de verificación
+## Verification scope
 
-Las pruebas locales verifican recuperación y validación de archivos. Las versiones base y la instalación adicional fueron verificadas en Colab
-en la ejecución documentada. Una VM nueva debe reconstruir y comprobar el entorno. Disponibilidad de wheels, descargas, compatibilidad del driver y acceso a
-Internet pueden impedir instalar. No compila Detectron2 contra CUDA 13; utiliza su
-wheel histórico para PyTorch/CUDA 11.1 dentro de un entorno separado.
+Local tests verify file recovery and validation. Base versions and the additional installation were verified in Colab in the documented execution. A new VM must rebuild and check the environment. Wheel availability, downloads, driver compatibility, and Internet access may prevent installation. It does not compile Detectron2 against CUDA 13; it uses the historical PyTorch/CUDA 11.1 wheel within a separate environment.
 
-Fuentes utilizadas para la configuración original:
+Sources used for the original configuration:
+
 - https://detectron2.readthedocs.io/en/latest/tutorials/install.html
 - https://github.com/microsoft/unilm/tree/master/layoutlmv3
-- Ayuda instalada de google-colab-cli 0.7.4 compartida por el usuario.
+- Installed google-colab-cli 0.7.4 help shared by the user.
 
+Launcher update (October 18, 2026): packaging and recovery are now implemented. `code/layoutlmv3/test_page.sh NOMBRE_SESION` runs the full trial on an existing authorized session, without creating or closing it. It includes automatic reconstruction of the new VM's environment and download/verification of the page backup. Package `code/packages/layoutlmv3-page.zip`, approximately 3.8 MiB; 22 local tests passed and Bash syntax is valid. **Current next step: authorize/allocate a T4 and run that launcher**; actual inference remains unverified. Do not request the local checks again to recover context.
 
-Actualización del lanzador (18 de octubre de 2026): empaquetado y recuperación ya
-implementados. `code/layoutlmv3/test_page.sh NOMBRE_SESION` ejecuta todo el ensayo
-sobre una sesión existente autorizada, sin crearla ni cerrarla. Incluye reconstrucción
-automática del entorno de la VM nueva y descarga/verificación del respaldo de página.
-Paquete `code/packages/layoutlmv3-page.zip`, aproximadamente3.8MiB; 22 tests locales
-aprobados y sintaxis Bash correcta. **Siguiente paso vigente: autorizar/asignar una
-T4 y ejecutar ese lanzador**; la inferencia real continúa sin acreditarse. No pedir
-otra vez los controles locales para recuperar contexto.
-
+```text
 inference/
 ├── __init__.py
 ├── render.py
@@ -170,3 +111,4 @@ inference/
 ├── outputs.py
 └── run_page.py
 test_inference.py
+```

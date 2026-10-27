@@ -1,6 +1,6 @@
-"""Adaptador LayoutLMv3/Detectron2 con imports pesados diferidos a load/predict.
+"""LayoutLMv3/Detectron2 adapter with heavy imports deferred to load/predict.
 
-Consume types.LoadReport y Predictions; run_page coordina carga y predicción.
+Consumes types.LoadReport and Predictions; run_page coordinates loading and prediction.
 """
 import hashlib
 import json
@@ -17,17 +17,17 @@ CLASS_NAMES = ('text', 'title', 'list', 'table', 'figure')
 
 
 def compare_state_dicts(expected: Mapping[str, Any], found: Mapping[str, Any]) -> LoadReport:
-    """Compara nombres y shapes de parámetros sin importar PyTorch.
+    """Compares parameter names and shapes without importing PyTorch.
 
     Args:
-        expected: Mapping de parámetros esperados con atributo shape.
-        found: Mapping de parámetros encontrados con atributo shape.
+        expected: Mapping of expected parameters with a shape attribute.
+        found: Mapping of found parameters with a shape attribute.
     Returns:
-        LoadReport con claves faltantes, inesperadas y shapes incompatibles.
+        LoadReport with missing and unexpected keys and incompatible shapes.
     Raises:
-        AttributeError: Un valor comparado carece de shape.
+        AttributeError: A compared value lacks shape.
     Notes:
-        No carga pesos, no compara valores/dtypes ni modifica los mappings.
+        Does not load weights, compare values/dtypes or modify mappings.
     """
     common = sorted(set(expected) & set(found))
     shapes = tuple((key, tuple(expected[key].shape), tuple(found[key].shape))
@@ -37,16 +37,16 @@ def compare_state_dicts(expected: Mapping[str, Any], found: Mapping[str, Any]) -
 
 
 def file_sha256(path: Path) -> str:
-    """Calcula SHA-256 leyendo bloques de 4 MiB.
+    """Computes SHA-256 by reading 4 MiB blocks.
 
     Args:
-        path: Archivo local legible.
+        path: Readable local file.
     Returns:
-        Digest hexadecimal str.
+        Hexadecimal digest str.
     Raises:
-        OSError: Fallo al abrir o leer el archivo.
+        OSError: File open or read failure.
     Notes:
-        Solo lectura; no valida la procedencia del archivo.
+        Read-only; does not validate file provenance.
     """
     digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -56,29 +56,29 @@ def file_sha256(path: Path) -> str:
 
 
 class LayoutLMv3Detector:
-    """Mantiene configuración, modelo evaluado y diagnóstico de carga.
+    """Maintains configuration, evaluated model and loading diagnostics.
 
-    La construcción valida rutas; load verifica archivos y carga pesos. predict
-    requiere carga exitosa. No renderiza PDFs ni escribe resultados de ejecución.
-    El consumidor principal es run_page.run_page. Doc-Refs: INF-004, INF-008.
+    Construction validates paths; load verifies files and loads weights. predict
+    requires successful loading. Does not render PDFs or write run results.
+    The main consumer is run_page.run_page. Doc-Refs: INF-004, INF-008.
     """
 
     def __init__(self, config_path: Path, checkpoint_path: Path,
                  model_config_dir: Path, device: str = 'cuda') -> None:
-        """Inicializa rutas locales y estado, sin construir el modelo.
+        """Initializes local paths and state, without building the model.
 
         Args:
-            config_path: Archivo YAML cascade junto al paquete ditod.
-            checkpoint_path: Archivo del checkpoint local.
-            model_config_dir: Directorio local de config.json y download-manifest.json.
-            device: cuda o cpu; default cuda.
+            config_path: Cascade YAML file beside the ditod package.
+            checkpoint_path: Local checkpoint file.
+            model_config_dir: Local directory for config.json and download-manifest.json.
+            device: cuda or cpu; default cuda.
         Returns:
             None.
         Raises:
-            OSError: Ruta inexistente o inaccesible.
-            ValueError: Tipo de ruta o device no admitido.
+            OSError: Missing or inaccessible path.
+            ValueError: Unsupported path type or device.
         Notes:
-            Guarda rutas absolutas y estado interno; no carga pesos.
+            Saves absolute paths and internal state; does not load weights.
         """
         self._config_path = Path(config_path).resolve(strict=True)
         self._checkpoint_path = Path(checkpoint_path).resolve(strict=True)
@@ -98,34 +98,34 @@ class LayoutLMv3Detector:
 
     @property
     def is_loaded(self) -> bool:
-        """Indica si el modelo fue asignado tras una carga exitosa.
+        """Indicates whether the model was assigned after successful loading.
 
         Returns:
-            bool; no comprueba disponibilidad futura del device ni escribe archivos.
+            bool; does not check future device availability or write files.
         """
         return self._model is not None
 
     @property
     def load_report(self) -> Optional[LoadReport]:
-        """Devuelve el último diagnóstico de compatibilidad o None.
+        """Returns the latest compatibility diagnostics or None.
 
         Returns:
-            LoadReport opcional; no implica por sí solo una carga exitosa.
+            Optional LoadReport; does not by itself imply successful loading.
         """
         return self._load_report
 
     def _build_config(self) -> Any:
         # config_path is the vendored cascade YAML alongside ditod/.
-        """Construye y congela la configuración efectiva.
+        """Builds and freezes the effective configuration.
 
         Returns:
-            Config de Detectron2 con rutas locales y device seleccionado.
+            Detectron2 config with local paths and selected device.
         Raises:
-            ValueError: Entrada distinta de 800/1333, no image-only, clases != 5 o no RGB.
-            Exception: Fallos de imports o lectura/merge del YAML se propagan.
+            ValueError: Input other than 800/1333, not image-only, classes != 5 or not RGB.
+            Exception: Import or YAML read/merge failures propagate.
         Notes:
-            Inserta el directorio del YAML al inicio de sys.path y no lo restaura.
-            No descarga explícitamente archivos. Doc-Refs: INF-008.
+            Inserts the YAML directory at the start of sys.path and does not restore it.
+            Does not explicitly download files. Doc-Refs: INF-008.
         """
         sys.path.insert(0, str(self._config_path.parent))
         from ditod import add_vit_config
@@ -146,19 +146,19 @@ class LayoutLMv3Detector:
         return cfg
 
     def _load_checkpoint(self, model: Any) -> LoadReport:
-        """Compara y carga un state_dict estrictamente.
+        """Strictly compares and loads a state_dict.
 
         Args:
-            model: Modelo construido con state_dict y load_state_dict.
+            model: Constructed model with state_dict and load_state_dict.
         Returns:
-            LoadReport compatible tras load_state_dict(strict=True).
+            Compatible LoadReport after load_state_dict(strict=True).
         Raises:
-            ValueError: Estructura del checkpoint o compatibilidad inválida.
-            Exception: Fallos de torch.load o load_state_dict se propagan.
+            ValueError: Invalid checkpoint structure or compatibility.
+            Exception: torch.load or load_state_dict failures propagate.
         Notes:
-            Deserializa el checkpoint confiable con torch.load(map_location='cpu');
-            actualiza load_report y los parámetros del modelo. No escribe load-report.json:
-            esa escritura pertenece al coordinador.
+            Deserializes the trusted checkpoint with torch.load(map_location='cpu');
+            updates load_report and model parameters. Does not write load-report.json:
+            that write belongs to the coordinator.
         """
         import torch
         # Only the locally verified, trusted checkpoint is loaded. No torch hub.
@@ -173,17 +173,17 @@ class LayoutLMv3Detector:
         return self._load_report
 
     def load(self) -> LoadReport:
-        """Verifica identidad, tamaño/hash y carga el detector en modo eval.
+        """Verifies identity, size/hash and loads the detector in eval mode.
 
         Returns:
-            LoadReport; si ya está cargado, devuelve el informe almacenado.
+            LoadReport; if already loaded, returns the stored report.
         Raises:
-            ValueError: Identidad, tamaño/hash, configuración o parámetros incompatibles.
-            RuntimeError: CUDA solicitada pero no disponible.
-            Exception: Fallos de archivos, JSON, imports o construcción se propagan.
+            ValueError: Incompatible identity, size/hash, configuration or parameters.
+            RuntimeError: CUDA requested but unavailable.
+            Exception: File, JSON, import or construction failures propagate.
         Notes:
-            Lee manifest/config/pesos, modifica sys.path al configurar y asigna estado
-            interno. Solo publica el modelo después de cargarlo y llamar eval.
+            Reads manifest/config/weights, modifies sys.path when configuring and assigns
+            internal state. Publishes the model only after loading it and calling eval.
             Doc-Refs: INF-004.
         """
         if self.is_loaded:
@@ -212,20 +212,20 @@ class LayoutLMv3Detector:
         return self._load_report
 
     def predict(self, image: NDArray[np.uint8]) -> Predictions:
-        """Predice cajas postprocessed en dimensiones del render original.
+        """Predicts postprocessed boxes in original-render dimensions.
 
         Args:
-            image: RGB uint8 no vacío con shape (height, width, 3).
+            image: Nonempty RGB uint8 with shape (height, width, 3).
         Returns:
-            Predictions con arrays CPU, cajas XYXY en píxeles y origen superior izquierdo.
+            Predictions with CPU arrays, XYXY pixel boxes and top-left origin.
         Raises:
-            RuntimeError: No se completó load.
-            ValueError: Imagen inválida o predicciones que violan sus contratos.
-            Exception: Fallos de PyTorch/Detectron2 se propagan.
+            RuntimeError: load did not complete.
+            ValueError: Invalid image or predictions violating their contracts.
+            Exception: PyTorch/Detectron2 failures propagate.
         Notes:
-            Redimensiona con 800/1333, usa no_grad y entrega height/width originales al
-            modelo. Actualiza el último tamaño de entrada; no aplica una segunda escala
-            ni escribe archivos. Integración real no acreditada aquí. Doc-Refs: INF-004, INF-005.
+            Resizes with 800/1333, uses no_grad and passes original height/width to the
+            model. Updates the latest input size; does not apply a second scale
+            or write files. Real integration not established here. Doc-Refs: INF-004, INF-005.
         """
         if not self.is_loaded:
             raise RuntimeError('Call load successfully before predict')
@@ -246,15 +246,15 @@ class LayoutLMv3Detector:
                            instances.scores.numpy().astype(np.float32), CLASS_NAMES, width, height)
 
     def metadata(self) -> dict:
-        """Recupera configuración y procedencia para el manifest.
+        """Retrieves configuration and provenance for the manifest.
 
         Returns:
-            dict con hashes, identidad, configuración efectiva y último tamaño de entrada.
+            dict with hashes, identity, effective configuration and latest input size.
         Raises:
-            Exception: Lectura, hashing, JSON o serialización de config pueden fallar.
+            Exception: Reading, hashing, JSON or config serialization may fail.
         Notes:
-            Lee YAML, manifest y fuentes Python bajo vendor_root; no escribe archivos.
-            Antes de load algunos campos son None.
+            Reads YAML, manifest and Python sources under vendor_root; writes no files.
+            Some fields are None before load.
         """
         cfg = self._cfg
         vendor_root = self._config_path.parent.parent.parent

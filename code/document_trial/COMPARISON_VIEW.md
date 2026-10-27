@@ -9,8 +9,8 @@ Existing sources and incompatible destinations are protected.
 Outputs: index.html with embedded data/renders, data.json, local JavaScript/CSS,
 manifest.json and protected-before.json. No web resources or fetch required.
 Open index.html in the app/browser. It compares reconciled, MinerU, TATR and LM;
-page controls and scrolling are shared. Use Ampliar to read one view, Ver las
-cuatro to restore comparison, or checkboxes to show selected outputs.
+page controls and scrolling are shared. Use Expand to read one view, Show all
+four to restore comparison, or checkboxes to show selected outputs.
 
 Layers include native regions/containers, accepted group links, historical Table2
 and optional pending alternatives. Click region/group/title to inspect source,

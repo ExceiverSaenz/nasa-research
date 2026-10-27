@@ -1,90 +1,90 @@
-# A04 Completitud visible de regiones y recortes
+# A04 Visible completeness of regions and crops
 
-24 de octubre de 2026. Etapa ejecutada después de cerrar A03 y recibir dos
-decisiones explícitas del usuario: caption con rótulo y descripción en el mismo
-recorte, y tabla con contenido y bordes estructurales completos. A05/A06 aún no
-ejecutadas. No nueva inferencia, E03, GT ni conciliación.
+October 24, 2026. Stage executed after closing A03 and receiving two
+explicit user decisions: caption with label and description in the same
+crop, and table with complete content and structural borders. A05/A06 not yet
+executed. No new inference, E03, GT or reconciliation.
 
-## Pregunta C01 y método
+## Question C01 and method
 
-¿Qué contenido aparece mezclado o recortado y qué requiere revisión? Se
-inspeccionaron los21crops originales existentes (2TATR,19MinerU), extraídos sin
-modificación de sus ZIP verificados. Se contrastaron con el render y evidencia
-A02/A03. Los23registros LM no exportaron crops: su alcance visible previo se
-conserva, pero utilidad de un recorte inexistente queda indeterminada. No se
-generaron crops sintéticos para presentarlos como exportaciones del modelo.
-Los4contenedores MinerU permanecen solo como contexto, sin doble conteo.
+What content appears mixed or clipped and what requires review? The
+21 existing original crops (2 TATR, 19 MinerU), extracted unchanged
+from their verified ZIPs, were inspected. They were compared with the render and
+A02/A03 evidence. The 23 LM records exported no crops: their previous visible scope
+is preserved, but the usefulness of a nonexistent crop remains indeterminate. No
+synthetic crops were generated to present as model exports.
+The 4 MinerU containers remain contextual only, without double counting.
 
-Las observaciones se refieren a contenido visible de esta página, no a exactitud
-OCR, LaTeX, contenido científico o completitud de un párrafo en todo el documento.
-No se deciden omisiones sin referencia revisada. La revisión es del asistente,
-no una anotación humana independiente. Se registra indeterminación sin suponer
-tolerancias de píxel ni umbrales de calidad.
+Observations concern visible content on this page, not OCR
+accuracy, LaTeX, scientific content or paragraph completeness throughout the document.
+Omissions are not decided without a reviewed reference. The review is by the assistant,
+not independent human annotation. Indeterminacy is recorded without assuming
+pixel tolerances or quality thresholds.
 
-## Resultados relevantes
+## Relevant results
 
-| Evidencia | Observación | Resultado frente al criterio acordado |
+| Evidence | Observation | Result against the agreed criterion |
 | --- | --- | --- |
-| TATR q5/q7 | Contenido tabular visible; líneas exteriores fuera de los crops | No satisface bordes estructurales completos |
-| MinerU p0-b2-c1, tabla superior | Contenido presente; parte del trazo de regla inferior queda fuera | No satisface borde completo |
-| MinerU p0-b4-c1, tabla inferior | Trazo oscuro inferior visible; una fila gris antialiasada de borde queda fuera | Extensión estricta del borde indeterminada, sin tolerancia inventada |
-| MinerU p0-b2-c0/p0-b4-c0 | Descripción visible sin Table1/Table2 | No satisface caption completo en mismo crop |
-| MinerU p0-b3-c1/p0-b9-c1 | Fig1/Fig2 y descripción en mismo crop | Aparentemente satisface al nivel visual inspeccionado |
-| MinerU p0-b3-c0/p0-b9-c0 | Figuras con ejes o Fuel rod/Cladding, sin tabla/caption ajenos | Contenido visible aparentemente conservado; no certificado píxel a píxel |
-| MinerU p0-b12 | Párrafo sobre presión con fragmento direction. previo en borde superior | Contenido ajeno observado; requiere revisión |
-| MinerU p0-b8/p0-b10 | Fin izquierdo commercial FE software y comienzo derecho Abaqus... | Posible continuidad del ítem2 entre columnas; unidad semántica completa no certificada en crop p0-b8 |
-| LM23registros | No crops exportados; mezclas/parciales A02 conservados | Utilidad del crop indeterminada; no cero ni fallo de inferencia |
+| TATR q5/q7 | Visible table content; outer rules outside the crops | Does not satisfy complete structural borders |
+| MinerU p0-b2-c1, upper table | Content present; part of the lower rule stroke is outside | Does not satisfy complete border |
+| MinerU p0-b4-c1, lower table | Dark lower stroke visible; one gray antialiased border row is outside | Strict border extent indeterminate, without invented tolerance |
+| MinerU p0-b2-c0/p0-b4-c0 | Description visible without Table1/Table2 | Does not satisfy complete caption in the same crop |
+| MinerU p0-b3-c1/p0-b9-c1 | Fig1/Fig2 and description in the same crop | Apparently satisfies the criterion at the inspected visual level |
+| MinerU p0-b3-c0/p0-b9-c0 | Figures with axes or Fuel rod/Cladding, without unrelated table/caption | Visible content apparently preserved; not certified pixel by pixel |
+| MinerU p0-b12 | Pressure paragraph with preceding direction. fragment at the top edge | Unrelated content observed; requires review |
+| MinerU p0-b8/p0-b10 | Left ending commercial FE software and right beginning Abaqus... | Possible item2 continuity across columns; complete semantic unit not certified in crop p0-b8 |
+| LM 23 records | No exported crops; A02 mixed/partial scopes preserved | Crop usefulness indeterminate; not zero or an inference failure |
 
-Título, encabezado, página, introducción, texto visible y ecuación tienen registro
-individual en review.json, incluidos los aparentemente conservados y los límites
-por fragmentos de página. Aparente cumplimiento visual no equivale a exactitud
-de transcripción ni a aprobación humana individual. No se calcula porcentaje de
-calidad a partir de estos estados o del conteo de crops.
+Title, header, page, introduction, visible text and equation have individual
+records in review.json, including apparently preserved cases and limitations
+from page fragments. Apparent visual compliance does not equal transcription
+accuracy or individual human approval. No quality percentage is calculated
+from these statuses or the crop count.
 
-## Evidencia fina de bordes y crop_clipped
+## Fine border evidence and crop_clipped
 
-El crop MinerU superior tiene bbox entero [114,231,1564,428], con extremo inferior
-exclusivo428. En el render, la regla inferior tiene muestrasRGB(189,189,189)
-en y427, (15,15,15) en428 y (0,0,0) en429, verificadas en x300/700/1200. El crop
-conserva solo la primera de esas filas: parte del trazo oscuro queda fuera.
+The upper MinerU crop has integer bbox [114,231,1564,428], with exclusive lower
+endpoint 428. In the render, the lower rule has RGB(189,189,189) samples
+at y427, (15,15,15) at428 and (0,0,0) at429, verified at x300/700/1200. The crop
+retains only the first of those rows: part of the dark stroke lies outside.
 
-El inferior termina en y1526 exclusivo; conserva trazo oscuro en1524/1525,
-pero queda fuera fila1526 grisRGB(203,203,203), verificada en x300/500/700.
-Esto no se resuelve con una tolerancia no acordada: se conserva indeterminación
-para el borde estricto. Los valores son muestras de imagen, no anotaciónGT o
-una regla automática para decidir calidad de otras tablas.
+The lower one ends at exclusive y1526; it retains the dark stroke at1524/1525,
+but gray row1526 RGB(203,203,203) is outside, verified at x300/500/700.
+This is not resolved with an unagreed tolerance: indeterminacy is preserved
+for the strict border. Values are image samples, not GT annotation or
+an automatic rule to decide other tables' quality.
 
-crop_clipped=false de MinerU no garantiza contenido completo: indica ausencia
-de clipping al marco, no preservación de rótulos, reglas o texto ajeno. La caja
-predicha flotante y el crop entero se conservan separados.
+MinerU crop_clipped=false does not guarantee complete content: it indicates absence
+of clipping to the frame, not preservation of labels, rules or unrelated text. The predicted
+floating-point box and integer crop remain separate.
 
-## Revisión de una interpretación anterior
+## Revision of a previous interpretation
 
-La lectura conjunta del ítem2 izquierdo y el texto Abaqus... derecho sugiere una
-continuación entre columnas. Por ello el juicio previo A02/Q02 que calificaba
-LM r12 list como prosa incorrectamente clasificada era demasiado fuerte. A04 lo
-deja como posible continuación de lista, sin validar el orden de lectura ni
-modificar la etiqueta original. La diferencia list/text sigue siendo descriptiva;
-no se considera error de clase confirmado. A03 no necesita recalcular geometría.
+Reading left item2 together with the right Abaqus... text suggests a
+cross-column continuation. Therefore the previous A02/Q02 judgment describing
+LM r12 list as incorrectly classified prose was too strong. A04
+leaves it as possible list continuation, without validating reading order or
+modifying the original label. The list/text difference remains descriptive;
+it is not considered a confirmed class error. A03 geometry does not need recalculation.
 
-Los registros A02/A03 se conservan como evidencia histórica; esta revisión tiene
-prioridad interpretativa al sintetizar C01. Se conservó una primera pasada A04
-como archivos draft-first-pass; la salida vigente es review.json con su manifiesto.
+A02/A03 records are preserved as historical evidence; this review has
+interpretive priority when synthesizing C01. An initial A04 pass was preserved
+as draft-first-pass files; the current output is review.json with its manifest.
 
-## Evidencia, verificación y límites
+## Evidence, verification and limitations
 
-Directorio analytics/results/sic12_page3/a04-20261024/: review.json,
-review-manifest.json, review-status.json, crop-inventory.json,21crops originales,
-boundary-pixels.json, receta y verificador, export-check.json.
-Se comprobaron48referencias exactas,21crops byte a byte contra ZIP, hashes de
-entradas/registro/receta y muestras de píxeles contra render. Es comprobación
-técnica de evidencia; no prueba automáticamente los juicios visuales.
-No cambió código de producción: no se repiten suites de inferencia/analytics
-históricas para esta revisión documental. La verificación es puntual al incremento.
+Directory analytics/results/sic12_page3/a04-20261024/: review.json,
+review-manifest.json, review-status.json, crop-inventory.json, 21 original crops,
+boundary-pixels.json, recipe and verifier, export-check.json.
+48 exact references, 21 crops byte for byte against ZIPs, input/record/recipe
+hashes and pixel samples against the render were checked. This is technical
+verification of evidence; it does not automatically prove visual judgments.
+Production code did not change: historical inference/analytics suites are not
+repeated for this documentary review. Verification is specific to the increment.
 
-A04 se cierra con estos límites explícitos: crops LM no disponibles, borde
-inferior MinerU estrictamente indeterminado, continuidad entre columnas como
-hipótesis, sin auditoría completa de omisiones ni referencia geométrica.
-El objetivo persistente continúa. A05 necesita acordar qué cuenta como aporte
-útil: ventaja diagnóstica de separación/categoría frente a utilidad estricta
-del recorte. No se elegirá silenciosamente ni se seleccionará por score/IoU.
+A04 closes with these explicit limits: LM crops unavailable, lower
+MinerU border strictly indeterminate, cross-column continuity as a
+hypothesis, without a complete omission audit or geometric reference.
+The persistent objective continues. A05 requires agreement on what counts as a useful
+contribution: diagnostic advantage of separation/category versus strict usefulness
+of the crop. Neither will be silently chosen and selection will not use score/IoU.

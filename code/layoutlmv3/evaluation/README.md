@@ -1,8 +1,6 @@
-# Auditoría sin referencia: MVP
+# Reference-free audit: MVP
 
-`audit.py` consume el `regions.json` de una sola página, sin importar `inference`,
-PyTorch o Detectron2. Usa solo biblioteca estándar y sintaxis compatible con Python3.9.
-La función no lee/escribe archivos, no muta la entrada y no elimina predicciones.
+`audit.py` consumes `regions.json` for a single page without importing `inference`, PyTorch, or Detectron2. It uses only the standard library and Python 3.9-compatible syntax. The function does not read/write files, mutate the input, or remove predictions.
 
 ```python
 from evaluation.audit import audit_regions
@@ -14,37 +12,24 @@ report = audit_regions(
 )
 ```
 
-Los parámetros son obligatorios y deben ser finitos en (0,1]. Los valores0.90 y0.95
-son **heurísticos exploratorios**, no calibrados ni umbrales de exactitud.
+Parameters are required and must be finite within (0,1]. The values 0.90 and 0.95 are **exploratory heuristics**, neither calibrated nor accuracy thresholds.
 
-## Controles
+## Checks
 
-1. **Validez técnica:** dimensiones, unidades, origen y formato del documento;
-   IDs, categorías nativas, correspondencia class_id/type/native_label, score y
-   cajas finitas, positivas y dentro del render.
-2. **Posible duplicado:** misma clase e IoU mayor o igual al umbral.
-3. **Conflicto de clase:** clases distintas e IoU mayor o igual al umbral.
-4. **Posible anidamiento:** IoU por debajo del umbral de similitud e
-   intersección/área de caja menor mayor o igual al umbral de contención.
+1. **Technical validity:** document dimensions, units, origin, and format; IDs, native categories, class_id/type/native_label correspondence, score, and finite, positive boxes within the render.
+2. **Possible duplicate:** same class and IoU greater than or equal to the threshold.
+3. **Class conflict:** different classes and IoU greater than or equal to the threshold.
+4. **Possible nesting:** IoU below the similarity threshold and intersection/smaller-box area greater than or equal to the containment threshold.
 
-Se compara cada par no ordenado una vez. Cada par produce como máximo una alerta;
-similitud alta tiene prioridad sobre anidamiento para evitar doble conteo del mismo
-par. Una región puede aparecer en varios pares: alert_count no es número de objetos
-erróneos. Se informan IoU, coberturas de ambas cajas, IDs, índices, clases y scores.
+Each unordered pair is compared once. Each pair produces at most one alert; high similarity takes priority over nesting to avoid counting the same pair twice. A region may appear in multiple pairs: alert_count is not a count of erroneous objects. IoU, coverage of both boxes, IDs, indices, classes, and scores are reported.
 
-El esquema global inválido lanza ValueError, porque no hay un marco fiable para
-comparar coordenadas. Las regiones inválidas generan validation_errors y no
-participan en pares; se conservan índices de entrada desde0 e IDs disponibles.
-Para IDs duplicados se marcan todas sus apariciones. No hay filtrado por confianza.
+An invalid global schema raises ValueError because there is no reliable frame for comparing coordinates. Invalid regions produce validation_errors and do not participate in pairs; zero-based input indices and available IDs are retained. For duplicate IDs, all occurrences are flagged. There is no confidence filtering.
 
-El contrato es el formato actual de PubLayNet: text/title/list/table/figure.
-Una categoría futura distinta requiere acordar un esquema nuevo, no se interpreta
-silenciosamente como compatible. Cero regiones es entrada válida con cero pares;
-no se convierte en100% de calidad. quality_score siempre es null.
+The contract is the current PubLayNet format: text/title/list/table/figure. A different future category requires agreement on a new schema; it is not silently interpreted as compatible. Zero regions is a valid input with zero pairs; it is not converted into 100% quality. quality_score is always null.
 
-## Ejecutar sobre el respaldo existente
+## Run against the existing backup
 
-Desde `code/layoutlmv3/`, ejemplo de lectura/escritura externa a la función:
+From `code/layoutlmv3/`, an example of file I/O outside the function:
 
 ```python
 import json
@@ -56,22 +41,17 @@ archive = Path('../results/layoutlmv3-page/20261023T153938Z/result.zip')
 with zipfile.ZipFile(archive) as source:
     regions = json.loads(source.read('page/regions.json'))
 report = audit_regions(regions, iou_threshold=0.90, containment_threshold=0.95)
-# Guardar report en una ruta de evaluación propia; nunca sobre regions.json.
+# Save report to a separate evaluation path; never overwrite regions.json.
 ```
 
-El informe de esta ejecución ya existe en
-`code/results/layoutlmv3-page/20261023T153938Z/audit/iou-0.90-containment-0.95/`.
-No repetirlo para recuperar contexto. Incluye audit.json y provenance.json
-(hash del archivo de código y del ZIP/miembro de entrada). No hace falta GPU.
+The report from this execution already exists at `code/results/layoutlmv3-page/20261023T153938Z/audit/iou-0.90-containment-0.95/`. Do not repeat it to recover context. It includes audit.json and provenance.json (hashes of the code file and input ZIP/member). No GPU is needed.
 
-## Límites
+## Limits
 
-- Alertas geométricas no son errores confirmados, precisión ni recall.
-- Un anidamiento puede ser legítimo y una mezcla puede no activar ninguna alerta.
-- No identifica objetos nunca detectados ni sabe dónde terminan científicamente.
-- No evalúa cobertura textual, outliers de tamaño, consistencia entre inferencias,
-  ni usa referencias manuales. Son incrementos posteriores que debe decidir el usuario.
-- O(N²) para pares: adecuado para las23 regiones y el límite actual de100 por página.
+- Geometric alerts are not confirmed errors, precision, or recall.
+- Nesting may be legitimate, and a merged region may trigger no alert.
+- It does not identify objects that were never detected or know their scientific boundaries.
+- It does not evaluate text coverage, size outliers, or consistency across inferences, and does not use manual references. These are later increments for the user to decide.
+- O(N²) for pairs: suitable for the 23 regions and the current limit of 100 per page.
 
-Pruebas nuevas: `test_audit.py`. Cubren geometría, umbrales, clases/IDs inválidos,
-contención, ausencia de mutación, reproducibilidad y el resultado real guardado.
+New tests: `test_audit.py`. They cover geometry, thresholds, invalid classes/IDs, containment, absence of mutation, reproducibility, and the saved real result.

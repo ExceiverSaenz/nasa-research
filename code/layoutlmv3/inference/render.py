@@ -1,6 +1,6 @@
-"""Renderizado PDF a RGB, sin escritura de salidas ni importación del detector.
+"""PDF-to-RGB rendering, without writing outputs or importing the detector.
 
-Consume types.RenderedPage; run_page.run_page coordina su uso.
+Consumes types.RenderedPage; run_page.run_page coordinates its use.
 """
 from pathlib import Path
 
@@ -10,21 +10,21 @@ from .types import RenderedPage, _positive_int
 
 
 def render_page(pdf_path: Path, page_number: int, dpi: int = 200) -> RenderedPage:
-    """Renderiza la caja visible con rotación intrínseca aplicada.
+    """Renders the visible box with intrinsic rotation applied.
 
     Args:
-        pdf_path: Ruta de un PDF existente y legible.
-        page_number: Página física, entero positivo desde 1.
-        dpi: Resolución, entero positivo; default 200 puntos por pulgada.
+        pdf_path: Path to an existing readable PDF.
+        page_number: Physical page, positive integer starting at 1.
+        dpi: Resolution, positive integer; default 200 dots per inch.
     Returns:
-        RenderedPage con RGB uint8 (height, width, 3), caja PDF en puntos
-        de 1/72 de pulgada y rotación en grados.
+        RenderedPage with RGB uint8 (height, width, 3), PDF box in points
+        of 1/72 inch and rotation in degrees.
     Raises:
-        ValueError: Página/dpi inválidos, página fuera de rango o UserUnit distinto de 1.
-        OSError: Archivo inexistente o inaccesible.
-        Exception: Errores de lectura de pypdf/PDFium se propagan.
+        ValueError: Invalid page/dpi, out-of-range page or UserUnit other than 1.
+        OSError: Missing or inaccessible file.
+        Exception: pypdf/PDFium read errors propagate.
     Notes:
-        Lee el PDF con pypdf y PDFium; libera page y bitmap. No escribe archivos.
+        Reads the PDF with pypdf and PDFium; releases page and bitmap. Writes no files.
         Doc-Refs: INF-003, INF-007.
     """
     import pypdfium2 as pdfium

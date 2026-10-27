@@ -1,21 +1,21 @@
-# Flujo único de ejecución Colab CLI
+# Single Colab CLI execution workflow
 
-Esta es la entrada operativa común para cualquier ejecución remota. Las guías
-de `code/colab/`, `code/document_trial/` y `code/page_integration/` describen
-ensayos concretos, pero no sustituyen este control de estado.
+This is the common operational entry point for any remote run. The guides
+in `code/colab/`, `code/document_trial/` and `code/page_integration/` describe
+specific trials, but do not replace this state control.
 
-## Antes de ejecutar
+## Before running
 
-1. Consultar `AGENTS.md`, `docs/continuidad/session-handoff.md` y el estado
-   canónico.
-2. Consultar [`analytics/config/remote_runs.json`](../../analytics/config/remote_runs.json).
-3. Confirmar que no existe otro run del mismo alcance en `running`,
-   `timeout_manual_review` o `backup_verified` sin resolver.
-4. Identificar paquete, versión, configuración, pesos, documento, páginas y
-   sesión autorizada.
-5. Crear un registro con estado `prepared` usando la plantilla de esta carpeta.
+1. Consult `AGENTS.md`, `docs/continuidad/session-handoff.md` and the
+   canonical state.
+2. Consult [`analytics/config/remote_runs.json`](../../analytics/config/remote_runs.json).
+3. Confirm that no other run with the same scope remains unresolved in `running`,
+   `timeout_manual_review` or `backup_verified`.
+4. Identify the package, version, configuration, weights, document, pages and
+   authorized session.
+5. Create a record with status `prepared` using the template in this folder.
 
-## Flujo controlado
+## Controlled workflow
 
 ```text
 prepared
@@ -26,21 +26,21 @@ prepared
   → closed
 ```
 
-Cada transición debe conservar comando, salida de terminal, run ID, ZIP,
-sidecar, SHA/CRC y decisión. Un timeout del cliente no demuestra que el proceso
-remoto terminó; usar `timeout_manual_review` y no reintentar automáticamente.
+Each transition must preserve the command, terminal output, run ID, ZIP,
+sidecar, SHA/CRC and decision. A client timeout does not prove that the remote
+process ended; use `timeout_manual_review` and do not retry automatically.
 
-## Criterios de cierre
+## Closure criteria
 
-Solo marcar `backup_verified` cuando el respaldo descargado, su hash/CRC, el
-manifest y la identidad del paquete coincidan. Marcar `accepted` únicamente
-después de la comparación autorizada con baseline. Marcar `closed` solo cuando
-la sesión y el registro tengan estado confirmado.
+Mark `backup_verified` only when the downloaded backup, its hash/CRC,
+manifest and package identity match. Mark `accepted` only
+after the authorized baseline comparison. Mark `closed` only when
+the session and record have confirmed status.
 
-## No repetir
+## Do not repeat
 
-- No repetir preflight, upload ni descarga de un run ya respaldado.
-- No crear otra sesión para recuperar contexto.
-- No cambiar paquete, configuración, pesos o hardware dentro del mismo run.
-- No cerrar un proceso potencialmente activo tras un timeout sin confirmación.
-- No ejecutar este flujo solo para leer documentación.
+- Do not repeat preflight, upload or download for an already backed-up run.
+- Do not create another session to recover context.
+- Do not change the package, configuration, weights or hardware within the same run.
+- Do not close a potentially active process after a timeout without confirmation.
+- Do not execute this workflow merely to read documentation.

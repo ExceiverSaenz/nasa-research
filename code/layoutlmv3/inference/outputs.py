@@ -1,6 +1,6 @@
-"""Exportación JSON/overlay y geometría PDF-render sin dependencias GPU.
+"""JSON/overlay export and PDF-render geometry without GPU dependencies.
 
-Consume Predictions y RenderedPage; run_page decide el directorio y el estado final.
+Consumes Predictions and RenderedPage; run_page determines the directory and final status.
 """
 import json
 from pathlib import Path
@@ -12,20 +12,20 @@ from .types import Predictions, RenderedPage
 
 
 def save_json(path: Path, data: dict) -> None:
-    """Serializa JSON estricto mediante archivo temporal y replace.
+    """Serializes strict JSON using a temporary file and replace.
 
     Args:
-        path: Destino cuyo directorio padre debe existir.
-        data: Mapping serializable por json.dumps.
+        path: Destination whose parent directory must exist.
+        data: Mapping serializable by json.dumps.
     Returns:
         None.
     Raises:
-        ValueError: NaN/Infinity no admitidos.
-        TypeError: Contenido no serializable.
-        OSError: Fallo de escritura o replace.
+        ValueError: NaN/Infinity not allowed.
+        TypeError: Nonserializable content.
+        OSError: Write or replace failure.
     Notes:
-        Escribe path + '.part' y reemplaza el destino si existe. No crea padres,
-        no usa fsync y no garantiza recuperación ante fallos de almacenamiento.
+        Writes path + '.part' and replaces the destination if present. Does not create parents,
+        use fsync or guarantee recovery from storage failures.
     """
     path = Path(path)
     temporary = path.with_suffix(path.suffix + '.part')
@@ -34,17 +34,17 @@ def save_json(path: Path, data: dict) -> None:
 
 
 def render_geometry(page: RenderedPage) -> dict:
-    """Calcula matrices homogéneas PDF-render y su inversa.
+    """Computes homogeneous PDF-render matrices and their inverse.
 
     Args:
-        page: RenderedPage con caja PDF en puntos y rotación aplicada.
+        page: RenderedPage with PDF box in points and rotation applied.
     Returns:
-        dict de dimensiones, unidades, origen y matrices 3x3.
+        dict of dimensions, units, origin and 3x3 matrices.
     Raises:
-        numpy.linalg.LinAlgError: Si la matriz no pudiera invertirse.
+        numpy.linalg.LinAlgError: If the matrix cannot be inverted.
     Notes:
-        PDF: origen inferior izquierdo; render: superior izquierdo, píxeles.
-        Usa dimensiones reales para considerar redondeo. Sin escritura ni mutación.
+        PDF: bottom-left origin; render: top-left, pixels.
+        Uses actual dimensions to account for rounding. No writing or mutation.
         Doc-Refs: INF-005.
     """
     x0, y0, x1, y1 = page.crop_box_pt
@@ -67,22 +67,22 @@ def render_geometry(page: RenderedPage) -> dict:
 
 def save_regions(predictions: Predictions, rendered_page: RenderedPage,
                  output_dir: Path, *, document_id: str, run_id: str) -> None:
-    """Guarda regiones comunes y arrays postprocessed sin remapear categorías.
+    """Saves common regions and postprocessed arrays without remapping categories.
 
     Args:
-        predictions: Predicciones válidas en coordenadas del render.
-        rendered_page: Página cuyo tamaño debe coincidir con las predicciones.
-        output_dir: Directorio existente para regions.json y regions-raw.json.
-        document_id: Identidad del documento; el coordinador utiliza su SHA-256.
-        run_id: Identificador de la ejecución usado en IDs de región.
+        predictions: Valid predictions in render coordinates.
+        rendered_page: Page whose size must match the predictions.
+        output_dir: Existing directory for regions.json and regions-raw.json.
+        document_id: Document identity; the coordinator uses its SHA-256.
+        run_id: Run identifier used in region IDs.
     Returns:
         None.
     Raises:
-        ValueError: Dimensiones de predicción y render distintas.
-        Exception: Errores de geometría o save_json se propagan.
+        ValueError: Prediction and render dimensions differ.
+        Exception: Geometry or save_json errors propagate.
     Notes:
-        Escribe dos JSON secuencialmente; puede quedar exportación parcial.
-        Raw significa salida tras filtering/NMS y postprocessing. Doc-Refs: INF-005.
+        Writes two JSON files sequentially; export may remain partial.
+        Raw means output after filtering/NMS and postprocessing. Doc-Refs: INF-005.
     """
     if (predictions.image_width_px, predictions.image_height_px) != (rendered_page.width_px, rendered_page.height_px):
         raise ValueError('Prediction and render dimensions differ')
@@ -105,19 +105,19 @@ def save_regions(predictions: Predictions, rendered_page: RenderedPage,
 
 
 def save_overlay(predictions: Predictions, rendered_page: RenderedPage, output_dir: Path) -> None:
-    """Dibuja cajas, IDs, categorías y scores sobre una copia del render.
+    """Draws boxes, IDs, categories and scores on a copy of the render.
 
     Args:
-        predictions: Cajas XYXY en píxeles del render original.
-        rendered_page: Imagen RGB original y dpi para dibujo y metadatos PNG.
-        output_dir: Directorio existente donde escribir overlay.png.
+        predictions: XYXY boxes in original-render pixels.
+        rendered_page: Original RGB image and dpi for drawing and PNG metadata.
+        output_dir: Existing directory in which to write overlay.png.
     Returns:
         None.
     Raises:
-        Exception: Errores de dibujo y escritura Pillow se propagan.
+        Exception: Pillow drawing and writing errors propagate.
     Notes:
-        No modifica la imagen original. Intenta DejaVuSans y usa fallback si falta.
-        El coordinador guarda regiones antes, donde comprueba dimensiones.
+        Does not modify the original image. Tries DejaVuSans and uses fallback if missing.
+        The coordinator saves regions first, where it checks dimensions.
     """
     image = Image.fromarray(rendered_page.image.copy())
     draw = ImageDraw.Draw(image)
@@ -141,16 +141,16 @@ def save_overlay(predictions: Predictions, rendered_page: RenderedPage, output_d
 
 
 def save_manifest(run_metadata: dict, output_dir: Path) -> None:
-    """Guarda run-manifest.json mediante save_json.
+    """Saves run-manifest.json through save_json.
 
     Args:
-        run_metadata: Metadatos serializables de la ejecución.
-        output_dir: Directorio existente.
+        run_metadata: Serializable run metadata.
+        output_dir: Existing directory.
     Returns:
         None.
     Raises:
-        Exception: Errores de serialización o escritura se propagan.
+        Exception: Serialization or write errors propagate.
     Notes:
-        Puede reemplazar el manifest previo de la misma ejecución.
+        May replace the previous manifest from the same run.
     """
     save_json(Path(output_dir) / 'run-manifest.json', run_metadata)

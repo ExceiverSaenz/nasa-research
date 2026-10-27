@@ -1,8 +1,0 @@
-{
-  "baseline_manifest_unchanged": true,
-  "original_scientific_files_unchanged": 28,
-  "active_canonical_artifact_unchanged": true,
-  "package_sha256": "025d8e307e13780884609d2528839217610346e41c2907ef0d784adfd0c18c7a",
-  "local_tests": 9,
-  "remote_A100_execution": false
-}

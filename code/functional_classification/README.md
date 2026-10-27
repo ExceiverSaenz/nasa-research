@@ -1,24 +1,24 @@
-# Clasificación funcional offline MVP v1
+# Offline functional classification MVP v1
 
-## Uso en la integración canónica
+## Use in canonical integration
 
-La clasificación conciliada v2 sigue como fuente original inmutable; su semántica
-operativa complementaria y recorrido están en [document_pipeline](../document_pipeline/README.md),
-ejecutado en15 papers. El inventario no vuelve a clasificarse por parser. Roles nuevos
-no sustituyen silenciosamente la categoría/función original; ambiguos y advertencias
-permanecen. No reexportar el clasificador para actualizar documentación.
+Reconciled classification v2 remains an immutable original source; its complementary
+operational semantics and traversal are in [document_pipeline](../document_pipeline/README.md),
+run on 15 papers. The inventory is not reclassified per parser. New roles
+do not silently replace the original category/function; ambiguities and warnings
+remain. Do not reexport the classifier to update documentation.
 
-## Versión vigente: conciliación v2
+## Current version: reconciliation v2
 
-La v1 inferior clasifica registros de fuentes y queda como intento histórico de
-alcance incorrecto. No repetirla ni usar sus cifras como clasificación conciliada.
-La entrada vigente v2 son objects/containers/groups de la reconciliación: categoría
-conservada como semilla, etiquetas nativas y otros parsers como evidencia, sin
-reemplazos silenciosos. Fuente de diseño:
+The v1 below classifies source records and remains a historical attempt with
+incorrect scope. Do not repeat it or use its counts as reconciled classification.
+The current v2 inputs are reconciliation objects/containers/groups: category
+preserved as a seed, native labels and other parsers as evidence, without
+silent replacements. Design source:
 [reconciled-v2-plan](../../analytics/analyses/collection/functional-classification-reconciled-v2-plan.md).
 
-Módulos nuevos: `reconciled.py`, `export_reconciled.py`, `view.py` y viewer HTML/JS/CSS.
-Los módulos v1 originales permanecen intactos. Pruebas offline v2:
+New modules: `reconciled.py`, `export_reconciled.py`, `view.py` and HTML/JS/CSS viewer.
+Original v1 modules remain intact. Offline v2 tests:
 
 ```powershell
 $env:PYTHONPATH='code'
@@ -26,46 +26,46 @@ python -B -m unittest functional_classification.test_reconciled functional_class
 node code/functional_classification/test_view.js analytics/results/sic12_document/functional-classification-reconciled-v2-view/index.html
 ```
 
-Salida vigente `analytics/results/sic_collection/functional-classification-reconciled-v2`;
-website local `analytics/results/sic12_document/functional-classification-reconciled-v2-view/index.html`.
-HTML sin red externa; abrir index.html en navegador conservando images/ a su lado.
-Las imágenes PNG originales se copian por bytes; el ajuste inicial es solo CSS.
-La clasificación no ejecuta OCR/modelos/Colab ni calcula orden. No repetir exportación.
-Grupos referencian miembros y captions; no reciben una caja envolvente inventada.
+Current output `analytics/results/sic_collection/functional-classification-reconciled-v2`;
+local website `analytics/results/sic12_document/functional-classification-reconciled-v2-view/index.html`.
+HTML without external network access; open index.html in a browser, keeping images/ beside it.
+Original PNG images are copied byte for byte; initial fitting uses only CSS.
+Classification does not run OCR/models/Colab or calculate order. Do not repeat the export.
+Groups reference members and captions; they receive no invented enclosing box.
 
-## Referencia histórica v1
+## Historical v1 reference
 
-Diseño/plan canónico:
+Canonical design/plan:
 [`functional-classification-mvp-v1-plan.md`](../../analytics/analyses/collection/functional-classification-mvp-v1-plan.md).
-API pura `classifier.classify_document(document)`; entrada: un document.json de
-reconciliación vigente, con todos sus registros/páginas. Salida: sidecar por paper,
-registros originales íntegros, propuestas por categoría/subtipo/función, metadatos
-por referencia, geometría relativa auxiliar y cola de revisión al final del MVP.
-Relaciones/grupos/estados originales se conservan. No determina orden de lectura.
+Pure API `classifier.classify_document(document)`; input: a current reconciliation
+document.json, with all its records/pages. Output: sidecar per paper,
+intact original records, category/subtype/function proposals, metadata
+by reference, auxiliary relative geometry and review queue at the end of the MVP.
+Original relationships/groups/states are preserved. It does not determine reading order.
 
-Solo biblioteca estándar. No modelos/OCR/red, entrenamiento ni scores inventados.
-No importa ni ejecuta reconciliador. No cambia el esquema ni normalización originales.
-Valores/reglas congelados en el plan y `classifier.CONFIG`; cobertura no es exactitud.
-Los textos normalizados solo sirven para comparar: original_record conserva el literal.
+Standard library only. No models/OCR/network, training or invented scores.
+Does not import or run the reconciler. Does not change original schema or normalization.
+Values/rules frozen in the plan and `classifier.CONFIG`; coverage is not accuracy.
+Normalized text is only used for comparison: original_record preserves the literal.
 
-Pruebas offline desde raíz:
+Offline tests from the root:
 
 ```powershell
 $env:PYTHONPATH='code'
 python -B -m unittest functional_classification.test_classifier -v
 ```
 
-Exportación **solo dentro del incremento autorizado**, a destino nuevo:
+Export **only within the authorized increment**, to a new destination:
 
 ```powershell
 $env:PYTHONPATH='code'
 python -B -m functional_classification.export analytics/results/sic_collection/autonomous-reconciliation-v1 analytics/results/sic_collection/functional-classification-mvp-v1
 ```
 
-No repetir por contexto. El exportador rechaza sobrescritura; verifica SHA256 de
-fuentes nativas y protege todos los archivos de la colección de entrada. Guarda
-manifest, summary, review-queue y papers/*/document.json; al fallar conserva parcial.
-Las advertencias dicen «Requiere validación humana», `review_stage=after_full_mvp`.
-Ninguna advertencia solicita intervención durante esta etapa. Decisiones automáticas
-también quedan semánticamente sin validar. No se alteran abstenciones de página ni
-se imputan cajas a hijos MinerU; clasificación y lectura son decisiones separadas.
+Do not repeat for context. The exporter rejects overwriting; verifies SHA256 of
+native sources and protects all files in the input collection. Saves
+manifest, summary, review-queue and papers/*/document.json; preserves partial output on failure.
+Warnings say “Requires human validation”, `review_stage=after_full_mvp`.
+No warning requests intervention during this stage. Automatic decisions
+also remain semantically unvalidated. Page abstentions are not changed and
+boxes are not imputed to MinerU children; classification and reading are separate decisions.

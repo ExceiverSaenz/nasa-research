@@ -1,4 +1,4 @@
-"""Adaptador HF con imports pesados diferidos y decodificación local comprobable."""
+"""HF adapter with deferred heavy imports and locally testable decoding."""
 import hashlib
 import json
 from pathlib import Path

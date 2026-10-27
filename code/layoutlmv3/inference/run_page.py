@@ -1,6 +1,6 @@
-"""Coordinación de una página y CLI; sin creación explícita de sesiones remotas.
+"""Single-page coordination and CLI; no explicit creation of remote sessions.
 
-Integra render, detector y outputs. README.md explica ejecución y evidencia histórica.
+Integrates render, detector and outputs. README.md explains execution and historical evidence.
 """
 import argparse
 from dataclasses import asdict
@@ -26,30 +26,30 @@ def run_page(pdf_path: Path, page_number: int, output_dir: Path, *, dpi: int = 2
              config_path: Optional[Path] = None, checkpoint_path: Optional[Path] = None,
              model_config_dir: Optional[Path] = None, device: str = 'cuda',
              detector_factory: Optional[Callable] = None, renderer: Callable = render_page) -> RunResult:
-    """Procesa una página en un directorio nuevo y registra etapas/resultados.
+    """Processes a page in a new directory and records stages/results.
 
     Args:
-        pdf_path: PDF legible; se calcula SHA-256 antes del render.
-        page_number: Página física desde 1; el renderer normal exige entero positivo.
-        output_dir: Directorio nuevo; se crean padres si faltan.
-        dpi: Resolución positiva del render; default 200.
-        config_path: YAML requerido cuando no hay detector_factory.
-        checkpoint_path: Pesos requeridos cuando no hay detector_factory.
-        model_config_dir: Directorio de config/manifest requerido por el detector real.
-        device: cuda o cpu para el detector real; default cuda.
-        detector_factory: Callable sin argumentos que devuelve load, predict,
-            load_report y metadata; reservado para inyección explícita.
-        renderer: Callable (pdf_path, page_number, dpi=...) que devuelve RenderedPage.
+        pdf_path: Readable PDF; SHA-256 is computed before rendering.
+        page_number: Physical page starting at 1; the normal renderer requires a positive integer.
+        output_dir: New directory; missing parents are created.
+        dpi: Positive render resolution; default 200.
+        config_path: YAML required when detector_factory is absent.
+        checkpoint_path: Weights required when detector_factory is absent.
+        model_config_dir: Config/manifest directory required by the real detector.
+        device: cuda or cpu for the real detector; default cuda.
+        detector_factory: Argument-free callable returning load, predict,
+            load_report and metadata; reserved for explicit injection.
+        renderer: Callable (pdf_path, page_number, dpi=...) returning RenderedPage.
     Returns:
-        RunResult completed o failed; cero regiones difiere de conteo None.
+        RunResult completed or failed; zero regions differs from a None count.
     Raises:
-        FileExistsError: output_dir ya existe.
-        Exception: Preparación anterior al try o persistencia de diagnósticos puede fallar.
+        FileExistsError: output_dir already exists.
+        Exception: Preparation before try or diagnostic persistence may fail.
     Notes:
-        Crea y escribe archivos; el detector real puede usar GPU y modificar sys.path.
-        Captura Exception en inputs/render/load/predict/export dentro del try y escribe
-        error.log. La preparación inicial y los fallos durante except/finally no tienen
-        garantía de estado persistido. No crea sesiones. Doc-Refs: INF-002, INF-006.
+        Creates and writes files; the real detector may use GPU and modify sys.path.
+        Catches Exception in inputs/render/load/predict/export inside try and writes
+        error.log. Initial preparation and failures during except/finally have no
+        persisted-state guarantee. Does not create sessions. Doc-Refs: INF-002, INF-006.
     """
     output_dir = Path(output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=False)
@@ -134,17 +134,17 @@ def run_page(pdf_path: Path, page_number: int, output_dir: Path, *, dpi: int = 2
 
 
 def parse_args(argv: Optional[list] = None) -> argparse.Namespace:
-    """Define y procesa la interfaz CLI sin iniciar inferencia.
+    """Defines and parses the CLI interface without starting inference.
 
     Args:
-        argv: Lista de argumentos; None utiliza sys.argv.
+        argv: Argument list; None uses sys.argv.
     Returns:
-        argparse.Namespace con PDF, página, salida, dpi, rutas y device.
+        argparse.Namespace with PDF, page, output, dpi, paths and device.
     Raises:
-        SystemExit: Help (0) o argumentos inválidos (normalmente 2).
+        SystemExit: Help (0) or invalid arguments (usually 2).
     Notes:
-        Los defaults de vendor/modelos parten de code/, no del working directory.
-        argparse puede escribir ayuda o errores; no valida existencia de archivos.
+        Vendor/model defaults start from code/, not the working directory.
+        argparse may write help or errors; it does not validate file existence.
     """
     code = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser(description='Infer one PDF page; never creates a Colab session.')
@@ -160,18 +160,18 @@ def parse_args(argv: Optional[list] = None) -> argparse.Namespace:
 
 
 def main(argv: Optional[list] = None) -> int:
-    """Ejecuta el CLI y comunica el resultado en stdout/stderr.
+    """Runs the CLI and reports the result on stdout/stderr.
 
     Args:
-        argv: Argumentos opcionales entregados a parse_args.
+        argv: Optional arguments passed to parse_args.
     Returns:
-        0 ante RunResult exitoso; 1 ante fallo o OSError/ValueError capturados.
+        0 for successful RunResult; 1 for failure or caught OSError/ValueError.
     Raises:
-        SystemExit: Help o error de argparse, antes del try.
-        Exception: Otros errores no capturados de run_page se propagan.
+        SystemExit: Help or argparse error, before try.
+        Exception: Other uncaught run_page errors propagate.
     Notes:
-        Tiene los efectos de run_page. La invocación como módulo transforma el retorno
-        en SystemExit. No modifica configuraciones ni crea sesiones remotas.
+        Has the effects of run_page. Invocation as a module turns the return value
+        into SystemExit. Does not modify configurations or create remote sessions.
     """
     args = parse_args(argv)
     try:

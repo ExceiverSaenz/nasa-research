@@ -1,75 +1,75 @@
-# Capa nativa aditiva B-native
+# Additive native layer B-native
 
-## Integración actual
+## Current integration
 
-B-native de12.pdf es evidencia/caché histórica preservada. La integración canónica
-actual está en [document_pipeline](../document_pipeline/README.md), ejecutada en15 papers
-con el mismo método y sin GROBID. No repetir esta exportación por contexto. Sus
-propuestas no son GT ni validación semántica. El resto describe la capa B original.
+B-native for 12.pdf is preserved historical evidence/cache. The current canonical
+integration is in [document_pipeline](../document_pipeline/README.md), run on 15 papers
+with the same method and without GROBID. Do not repeat this export for context. Its
+proposals are neither GT nor semantic validation. The remainder describes the original B layer.
 
-Autorización y alcance: `analytics/analyses/paper/sic12-native-structure-implementation-scope.md`.
-Entrada: PDF original, conciliación/clasificación v2 y recorrido Docling aprobado.
-No ejecuta Docling, OCR, GROBID ni modelos. No cambia clasificación, cajas, grupos,
-texto ni recorrido originales. Salida independiente con propuestas operativas
-provisionales: no sustituyen automáticamente el pipeline canónico.
+Authorization and scope: `analytics/analyses/paper/sic12-native-structure-implementation-scope.md`.
+Input: original PDF, reconciliation/classification v2 and approved Docling traversal.
+Does not run Docling, OCR, GROBID or models. Does not change original classification, boxes, groups,
+text or traversal. Independent output with provisional operational
+proposals: these do not automatically replace the canonical pipeline.
 
-## Componentes
+## Components
 
-- `native.py`: PyMuPDF1.27.2.3, Python3.13.5. Texto/spans/estilos, XMP/metadata,
-  outlines, anotaciones, recursos de imágenes, estructura y article threads.
-  Sin renderizar ni decodificar imágenes. Conserva xref/puntero y hash del PDF.
+- `native.py`: PyMuPDF1.27.2.3, Python3.13.5. Text/spans/styles, XMP/metadata,
+  outlines, annotations, image resources, structure and article threads.
+  No image rendering or decoding. Preserves xref/pointer and PDF hash.
 
-- `align.py`: transforma extensiones conciliadas a puntos relativos al crop;
-  vincula spans cuyos centros caen en la caja. Es correspondencia muchos-a-muchos,
-  no identidad ni nueva segmentación. El texto alineado es una vista de comparación,
-  no reemplaza la transcripción. Rotación no cero y geometría inválida se abstienen;
-  hijos sin bbox no reciben cajas y se conserva su padre.
+- `align.py`: transforms reconciled extents to crop-relative points;
+  links spans whose centers fall inside the box. This is a many-to-many correspondence,
+  not identity or new segmentation. Aligned text is a comparison view,
+  not a replacement for the transcription. Nonzero rotation and invalid geometry trigger abstention;
+  children without bbox receive no boxes and their parent is preserved.
 
-- `claims.py`: reconciliación por dimensión. Una afirmación directa verificable
-  puede bastar; valores directos incompatibles dejan la propuesta sin resolver.
-  Diferencia con evidencia retenida o inferida conserva conflicto y alternativas.
-  No vota fuentes correlacionadas ni fabrica scores/probabilidades.
+- `claims.py`: reconciliation by dimension. A verifiable direct claim
+  may suffice; incompatible direct values leave the proposal unresolved.
+  Differences from retained or inferred evidence preserve conflicts and alternatives.
+  It does not vote across correlated sources or fabricate scores/probabilities.
 
-- `structure.py`: roles frontales contextualizados, jerarquía declarada por outlines,
-  enlaces exactos Unicode normalizados a encabezados localizados. Sin jerarquía
-  declarada, conserva títulos existentes como candidatos de nivel desconocido.
-  Metadata puede identificarse sin outlines. Mención parcial de autor ≠ autoría.
-  Pertenencia a secciones inferida del recorrido provisional; pertenencia temática de
-  visualizaciones se mantiene separada. Párrafos por referencias, con continuidades
-  candidatas al cambiar columna/página; no concatena textos ni las acepta como GT.
+- `structure.py`: contextualized front-matter roles, hierarchy declared by outlines,
+  exact Unicode-normalized links to located headings. Without a declared
+  hierarchy, preserves existing titles as candidates of unknown level.
+  Metadata can be identified without outlines. Partial author mention ≠ authorship.
+  Section membership inferred from provisional traversal; thematic membership of
+  visualizations remains separate. Paragraphs use references, with candidate continuities
+  at column/page transitions; text is not concatenated and candidates are not accepted as GT.
 
-- `native_export.py`: verifica hashes y contratos, rechaza sobrescritura y exporta
+- `native_export.py`: verifies hashes and contracts, rejects overwriting and exports
   `native-evidence.json`, `document.json`, `summary.json`, `review-queue.json`, manifest.
 
-- `native_view.py`/`native_view.*`: inspección responsive con cajas originales,
-  jerarquía, clasificación anterior/propuesta, contradicciones y evidencia.
-  Copia PNG originales byte a byte; zoom CSS opcional, sin recompresión.
+- `native_view.py`/`native_view.*`: responsive inspection with original boxes,
+  hierarchy, previous/proposed classification, contradictions and evidence.
+  Copies original PNGs byte for byte; optional CSS zoom, no recompression.
 
-## Contrato
+## Contract
 
-`inventory`, `approved_routes` y `approved_steps` son copias íntegras del baseline.
-`classification_proposals` contiene decisiones por categoría, función, rol documental
-y flujo. Cada decisión conserva claims, alternativas, procedencia, estado y aviso
-«Requiere validación humana». `operational_proposal` pertenece a la capa nueva;
-`applied_to_baseline=false`. Una propuesta respaldada no equivale a validación humana.
-`contradictions` permite inspección agrupada. Se conserva la cola after_full_mvp sin bloqueo.
+`inventory`, `approved_routes` and `approved_steps` are complete baseline copies.
+`classification_proposals` contains decisions by category, function, document role
+and flow. Each decision preserves claims, alternatives, provenance, status and the warning
+“Requires human validation”. `operational_proposal` belongs to the new layer;
+`applied_to_baseline=false`. A supported proposal is not equivalent to human validation.
+`contradictions` allows grouped inspection. The after_full_mvp queue is preserved without blocking.
 
-`document_structure` separa secciones, pertenencia contextual/temática, fragmentos
-y continuidades candidatas. No deduce orden global de enlaces, recursos, tags Figure
-ni article threads. Atributos geométricos compartidos del StructTree no localizan
-figuras individuales. Missing data y matches múltiples permanecen explícitos.
+`document_structure` separates sections, contextual/thematic membership, fragments
+and candidate continuities. It does not infer global order from links, resources, Figure tags
+or article threads. Shared geometric StructTree attributes do not locate
+individual figures. Missing data and multiple matches remain explicit.
 
-## Verificación y operación
+## Verification and operation
 
-Pruebas: `PYTHONPATH=code python -B -m unittest document_structure.test_native_structure`.
+Tests: `PYTHONPATH=code python -B -m unittest document_structure.test_native_structure`.
 DOM: `node code/document_structure/test_native_view.js [HTML_exportado]`.
-No son validación semántica ni QA visual real del navegador.
-La exportación ya realizada queda congelada; no repetir ni ajustar reglas sobre12.pdf.
-Los comandos de módulos exportadores exigen destinos nuevos y autorización de alcance.
-Congelación de librería en `native-requirements.txt`; no instalar ni ejecutar modelos.
+These are neither semantic validation nor actual browser visual QA.
+The completed export remains frozen; do not repeat or tune rules on 12.pdf.
+Export-module commands require new destinations and scope authorization.
+Library freeze in `native-requirements.txt`; do not install or run models.
 
-Limitaciones: matching por centros puede asociar spans de regiones solapadas; exact
-matching de encabezados no resuelve automáticamente todo título partido entre cajas.
-Autores con variantes/afiliaciones mezcladas conservan candidatos sin aplicar. Los
-roles desconocidos no se fuerzan. La jerarquía depende de la calidad de outlines;
-pertenencia/continuidad heredan errores del recorrido. Sin GT, no se informa accuracy.
+Limitations: center-based matching may associate spans from overlapping regions; exact
+heading matching does not automatically resolve every title split across boxes.
+Authors with variants/mixed affiliations retain unapplied candidates. Unknown
+roles are not forced. Hierarchy depends on outline quality;
+membership/continuity inherit traversal errors. Without GT, accuracy is not reported.

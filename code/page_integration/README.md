@@ -1,44 +1,44 @@
-# Recuperación localizada: dos rótulos, ejecución exclusiva del usuario
+# Localized recovery: two labels, user-only execution
 
-## Experimento vigente preparado: Table1 square-v1 con trazas
+## Current prepared experiment: Table1 square-v1 with traces
 
-El encabezado sin padding produjo salida nativa vacia. El nuevo incremento aprobado
-conserva831x76 pixeles y agrega blanco377arriba/378abajo para lienzo831x831, mismo
-parser/configuracion/tolerancias. Paquete separado `code/packages/table1-square-v1/`.
-Solo usuario: `bash code/page_integration/test_square.sh SESION_T4 --own-session`.
-Instrucciones vigentes en [SQUARE.md](SQUARE.md). No se ha ejecutado OCR nuevo;
-Table2 aceptada y experimentos anteriores intactos. Las secciones siguientes son historia.
+The unpadded header produced empty native output. The new approved increment
+preserves831x76 pixels and adds white377above/378below for an831x831 canvas, same
+parser/configuration/tolerances. Separate package `code/packages/table1-square-v1/`.
+User only: `bash code/page_integration/test_square.sh SESION_T4 --own-session`.
+Current instructions in [SQUARE.md](SQUARE.md). No new OCR has been run;
+accepted Table2 and previous experiments remain intact. The following sections are historical.
 
-## Siguiente experimento listo: encabezado de Table 1
+## Next experiment ready: Table 1 header
 
-Paquete independiente `code/packages/table1-header-v1/`; instrucciones vigentes en
-[HEADER.md](HEADER.md). El usuario ejecuta `bash code/page_integration/test_header.sh SESION_T4 --own-session`.
-Solo una ROI `[112,154,943,230]`, mismo parser/configuracion/tolerancias; no hay OCR nuevo
-ejecutado por el agente. El lanzador cierra la sesion propia despues de verificar respaldo.
-Table2 aceptada, paquetes y resultados anteriores intactos. Las instrucciones v1 siguientes
-se conservan como historia; no ejecutarlas para esta nueva ROI.
+Independent package `code/packages/table1-header-v1/`; current instructions in
+[HEADER.md](HEADER.md). The user runs `bash code/page_integration/test_header.sh SESION_T4 --own-session`.
+Only one ROI `[112,154,943,230]`, same parser/configuration/tolerances; no new OCR
+has been run by the agent. The launcher closes the user's own session after verifying the backup.
+Accepted Table2, packages and previous results remain intact. The following v1 instructions
+are preserved as history; do not run them for this new ROI.
 
-## Actualización: Table 2 mediante líneas nativas (24oct2026)
+## Update: Table 2 through native lines (24Oct2026)
 
-Incremento posterior aprobado y realizado exclusivamente sin OCR. Resultado vigente:
+Later increment approved and performed exclusively without OCR. Current result:
 `analytics/results/sic12_page3/table2-lines-v1/accepted/table2-lines.json`.
-Primera línea del caption nativo = candidato de rótulo; segunda = candidato de descripción.
-La asignación no es transcripción individual del parser: requiere registro visual separado,
-con hash de fuente y punteros. `visual-review.json` registra la inspección de Codex;
-no equivale a aprobación humana del resultado ni valida otros documentos.
+First native caption line = label candidate; second = description candidate.
+The assignment is not the parser's individual transcription: it requires a separate visual record,
+with source hash and pointers. `visual-review.json` records Codex inspection;
+it is not equivalent to human approval of the result and does not validate other documents.
 
-Solo se aplica la equivalencia explícita `\mathrm{UO}_{2}` → `UO2` para comparar;
-se conservan literales y regla aplicada. No se eliminan comandos LaTeX genéricamente.
-Se preservan el candidato combinado original y todas las alternativas rechazadas.
-Más de dos líneas, solapamientos, inversiones, contenido interpuesto, columnas distintas
-o varios candidatos elegibles impiden cerrar automáticamente el vínculo.
+Only the explicit equivalence `\mathrm{UO}_{2}` → `UO2` is applied for comparison;
+literals and the applied rule are preserved. LaTeX commands are not generically removed.
+The original combined candidate and all rejected alternatives are preserved.
+More than two lines, overlaps, inversions, intervening content, different columns
+or several eligible candidates prevent automatically closing the link.
 
-Table 2 pasa IoU=0.6637845569 y cobertura=0.99 con las tolerancias originales.
-Vínculo `p0-b4`/`p0-b4-c0`/`p0-b4-c1` verificado con revisión visual explícita del agente.
-Table 1 no se recupera ni modifica; sus resultados v1 se conservan sin cambios.
-24 pruebas offline pasan. ZIP, referencia, paquete original y 85 archivos protegidos intactos.
+Table 2 passes IoU=0.6637845569 and coverage=0.99 with the original tolerances.
+Link `p0-b4`/`p0-b4-c0`/`p0-b4-c1` verified with explicit agent visual review.
+Table 1 is not recovered or modified; its v1 results remain unchanged.
+24 offline tests pass. ZIP, reference, original package and 85 protected files remain intact.
 
-Comando reproducible offline (salida nueva obligatoria):
+Reproducible offline command (new output required):
 
 ```bash
 PYTHONPATH=code python3 -B -m page_integration.workflow evaluate-table2-lines \
@@ -48,37 +48,37 @@ PYTHONPATH=code python3 -B -m page_integration.workflow evaluate-table2-lines \
   --review analytics/results/sic12_page3/table2-lines-v1/visual-review.json
 ```
 
-Sin `--review`, el vínculo permanece pendiente aunque pase la geometría.
-El esquema específico está en `label_recovery.schema.json#/$defs/table2_lines`.
-El upload v1 queda congelado como evidencia de lo ejecutado; no se reconstruye ni se
-repite OCR para este incremento. Las instrucciones remotas siguientes son históricas.
+Without `--review`, the link remains pending even if geometry passes.
+The specific schema is in `label_recovery.schema.json#/$defs/table2_lines`.
+The v1 upload remains frozen as evidence of what ran; it is not rebuilt and
+OCR is not repeated for this increment. The following remote instructions are historical.
 
-Estado 24oct2026: código y paquete preparados; pruebas offline, sin OCR. La recuperación real y los vínculos siguen pendientes. El diagnóstico A03–A06 no se repite.
+Status 24Oct2026: code and package prepared; offline tests, no OCR. Actual recovery and links remain pending. The A03–A06 diagnosis is not repeated.
 
-## Qué se ejecutará
+## What will run
 
-Dos PNG recortados del render original, sin resize/padding: p0-b2 `[112,154,1564,428]`, p0-b4 `[112,1106,818,1526]`. Incluyen rótulo, descripción y cuerpo según cajas originales; no corrigen los bordes tabulares históricos. Se verificaron visualmente antes del OCR. La referencia manual NO se sube ni entra en el algoritmo.
+Two PNGs cropped from the original render, without resize/padding: p0-b2 `[112,154,1564,428]`, p0-b4 `[112,1106,818,1526]`. They include label, description and body according to original boxes; they do not correct historical table boundaries. They were visually verified before OCR. The manual reference is NOT uploaded or fed into the algorithm.
 
-La entrada nueva llama al `parse_native` original sin modificarlo: MinerU4.0.12/DocVortex0.6.0, Python3.11.16, Basic/Torch, OCR, image_analysis=True, CUDA12.6/Tesla T4, tablas CPU; funciones LLM desactivadas. Se reproduce el config.yaml original y se instala el requirements.lock archivado, con hashes. Se compara el conjunto completo de paquetes instalado con el freeze original. Pesos locales de la revisión `2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`, verificados contra recibo original. Si ya hay pesos en la ruta original, se verifican sin sobrescribirlos. Cualquier incompatibilidad detiene el proceso antes del OCR.
+The new input calls the original `parse_native` without modifying it: MinerU4.0.12/DocVortex0.6.0, Python3.11.16, Basic/Torch, OCR, image_analysis=True, CUDA12.6/Tesla T4, CPU tables; LLM functions disabled. The original config.yaml is reproduced and archived requirements.lock installed with hashes. The complete installed package set is compared against the original freeze. Local weights from revision `2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`, verified against the original receipt. If weights already exist at the original path, they are verified without overwriting. Any incompatibility stops the process before OCR.
 
-No hay API OCR alternativa, reintentos, ampliación de documentos, asignación/cierre de sesiones ni ejecución automática de comandos CLI. El bootstrap se prepara para que lo ejecute únicamente el usuario desde su Colab CLI sobre una sesión T4 elegida por él. Crea un venv dedicado, puede instalar dependencias y descargar solo los pesos originales si no existen.
+There is no alternative OCR API, retry, document expansion, session allocation/closure or automatic CLI-command execution. The bootstrap is prepared for execution only by the user through their Colab CLI on a T4 session they choose. It creates a dedicated venv, may install dependencies and download only the original weights if absent.
 
-## Ejecutar en Ubuntu/WSL mediante Colab CLI
+## Run in Ubuntu/WSL through Colab CLI
 
-Flujo recomendado, equivalente al lanzador anterior (solo lo ejecuta el usuario):
+Recommended workflow, equivalent to the previous launcher (user execution only):
 
 ```bash
 cd "/mnt/c/Users/HP Victus/Desktop/nasa_research"
 bash code/page_integration/test_labels.sh NOMBRE_DE_TU_SESION_T4
 ```
 
-Gestiona verificación del paquete, subida, ejecución, descarga y hash en una sesión existente. No crea/cierra sesiones ni repite OCR. Ante error/timeout conserva el log y se detiene; revisar antes de descargar o reintentar. 
+Manages package verification, upload, execution, download and hash in an existing session. Does not create/close sessions or repeat OCR. On error/timeout it preserves the log and stops; review before downloading or retrying.
 
-El lanzador usa un bootstrap que aísla los argumentos del kernel Jupyter y exige `LOCALIZED_LABELS_COMPLETED` antes de descargar. No ejecutar directamente `remote_labels.py` con `colab exec -f`: el kernel puede pasar sus propios argumentos a argparse. Ante error o timeout, no repetir automáticamente; revisar el log y confirmar si terminó. Esta corrección no cambia el paquete OCR, sus versiones ni configuración.
+The launcher uses a bootstrap that isolates Jupyter kernel arguments and requires `LOCALIZED_LABELS_COMPLETED` before downloading. Do not run `remote_labels.py` directly with `colab exec -f`: the kernel may pass its own arguments to argparse. On error or timeout, do not repeat automatically; review the log and confirm whether it finished. This correction does not change the OCR package, its versions or configuration.
 
-## Evaluación posterior, sin OCR
+## Subsequent evaluation, without OCR
 
-Cuando el usuario notifique el final, verificar y evaluar el ZIP descargado. El comando no carga modelos:
+When the user reports completion, verify and evaluate the downloaded ZIP. The command does not load models:
 
 ```bash
 PYTHONPATH=code python3 -B -m page_integration.workflow evaluate \
@@ -87,35 +87,35 @@ PYTHONPATH=code python3 -B -m page_integration.workflow evaluate \
   --output analytics/results/sic12_page3/localized-labels-v1-evaluation
 ```
 
-La carpeta de salida debe ser nueva. `unified-page.json` conserva candidatos, motivos, textos literales, fragmentos, cajas nativas/originales, hashes, punteros y referencias a cuerpos/captions originales. La asociación usa parentesco, alineación, orden, descripción coincidente y ausencia de texto interpuesto; no usa la referencia manual ni proximidad sola. Un candidato con varios destinos elegibles sigue ambiguo aunque otro destino ya sea ambiguo. Bloques combinados no reciben una caja de rótulo inventada: se conserva la caja del bloque y puede fallar la aceptación geométrica.
+The output folder must be new. `unified-page.json` preserves candidates, reasons, literal text, fragments, native/original boxes, hashes, pointers and references to original bodies/captions. Association uses parentage, alignment, order, matching description and absence of intervening text; it does not use the manual reference or proximity alone. A candidate with several eligible targets remains ambiguous even if another target is already ambiguous. Combined blocks receive no invented label box: the block box is preserved and may fail geometric acceptance.
 
-La evaluación compara la referencia manual independiente. Mantiene literalmente los umbrales aprobados: IoU>=0.50; intersección candidato/referencia ampliada 2px dividida por área de esa referencia ampliada >=0.90; error inverso <=1px. **Una caja exacta ajustada a los glifos puede fallar esa cobertura estricta**; el sistema lo informa, no relaja el umbral. La comparación textual admite Table1/Table 1 y diferencias de espacios/mayúsculas; no corrige automáticamente caracteres dudosos.
+Evaluation compares against the independent manual reference. It preserves the approved thresholds literally: IoU>=0.50; candidate/2px-expanded-reference intersection divided by the area of that expanded reference >=0.90; inverse error <=1px. **An exact box fitted to glyphs may fail that strict coverage**; the system reports this rather than relaxing the threshold. Text comparison allows Table1/Table 1 and space/case differences; it does not automatically correct uncertain characters.
 
-`registry_implemented`, `labels_recovered` y `links_verified` son estados distintos. `links_verified` representa aceptación automatizada contra la referencia; `human_review` permanece `pending` hasta revisión humana. Ninguna prueba sintética demuestra OCR real o generalización.
+`registry_implemented`, `labels_recovered` and `links_verified` are distinct states. `links_verified` represents automated acceptance against the reference; `human_review` remains `pending` until human review. No synthetic test demonstrates real OCR or generalization.
 
-## Comprobaciones offline realizadas
+## Offline checks performed
 
 ```bash
 python -B -m unittest discover -s code/page_integration -p 'test_*.py' -v
 ```
 
-Pruebas acotadas de ROI, unidades/inversa, tolerancia, ambigüedad, intercambios, falsos captions, referencia en cuerpo, deriva de runtime, ZIP/allowlist/integridad y evaluación de salidas sintéticas. No importan ni ejecutan torch/MinerU. No se reejecutan los análisis históricos.
+Bounded tests of ROI, units/inverse, tolerance, ambiguity, swaps, false captions, body references, runtime drift, ZIP/allowlist/integrity and synthetic-output evaluation. They do not import or run torch/MinerU. Historical analyses are not rerun.
 
-Archivos originales intactos. El manifiesto `code/packages/localized-labels-v1/integrity.json` protege los ZIP de los tres modelos, preparados, render, exportaciones originales pertinentes, código MinerU y resultados A03–A06 usados; la evaluación verifica sus hashes antes de producir un nuevo derivado.
+Original files remain intact. The manifest `code/packages/localized-labels-v1/integrity.json` protects the three models' ZIPs, prepared inputs, render, relevant original exports, MinerU code and A03–A06 results used; evaluation verifies their hashes before producing a new derivative.
 
 
-## Reconciliación de página implementada offline (24oct2026)
-Prioridad aprobada: MinerU estructura, TATR contraste tablas, LayoutLMv3 apoyo.
-Salida vigente analytics/results/sic12_page3/reconciliation-v1/verified-output/;
-reconciled-page.json, review.html, selected-overlay.png y manifest.json.
-Código code/page_integration/reconciliation.py: receta específica de esta página,
-no matching general. 48fuentes preservadas,19segmentos+4contenedores,8relaciones,
-35vínculos candidatos pendientes. No convertir A03 en identidades; sin unión/promedio
-ni ranking de scores. Texto nativo con procedencia, sin nueva validación OCR.
-32tests offline pasan (10nuevos);151archivos protegidos intactos. Informe y auditoría
-reconciliation-v1/report.md y verification.json; copias de continuidad en before/.
-Table1 sigue advertencia pendiente; Table2 aceptación con revisión visual de agente
-intacta y rótulo derivado separado. Bordes tablas, continuidad lista/r12 y p0-b12
-direction siguen explícitos. No orden de lectura validado ni ensemble superior.
-Implementación y aceptación técnica con pendientes verificadas; no exactitud GT.
-No OCR/inferencia/Colab ejecutados. Esta autorización no amplía a12.pdf completo.
+## Page reconciliation implemented offline (24Oct2026)
+Approved priority: MinerU structure, TATR table comparison, LayoutLMv3 support.
+Current output analytics/results/sic12_page3/reconciliation-v1/verified-output/;
+reconciled-page.json, review.html, selected-overlay.png and manifest.json.
+Code code/page_integration/reconciliation.py: recipe specific to this page,
+not general matching. 48sources preserved,19segments+4containers,8relationships,
+35candidate links pending. Do not turn A03 into identities; no union/averaging
+or score ranking. Native text with provenance, without new OCR validation.
+32offline tests pass (10new);151protected files intact. Report and audit
+reconciliation-v1/report.md and verification.json; continuity copies in before/.
+Table1 remains a pending warning; Table2 acceptance with agent visual review
+is intact and its derived label separate. Table boundaries, list/r12 continuity and p0-b12
+direction remain explicit. No validated reading order or superior ensemble.
+Implementation and technical acceptance with verified pending items; no GT accuracy.
+No OCR/inference/Colab run. This authorization does not extend to all of12.pdf.

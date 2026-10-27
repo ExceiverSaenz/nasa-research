@@ -1,18 +1,7 @@
-# Reconciliación documental por decisiones humanas
+# Document reconciliation through human decisions
 
-Incremento aprobado `final-reconciliation-v1`, offline. API:
-`build(root)` valida y compone; `export(root, destination)` exporta documento,
-vista HTML, manifiesto y hashes previos. Solo bibliotecas estándar, sin modelos,
-subprocesos, OCR, inferencias ni regeneración de candidatos.
+Approved increment `final-reconciliation-v1`, offline. API: `build(root)` validates and composes; `export(root, destination)` exports the document, HTML view, manifest, and prior hashes. Standard libraries only, with no models, subprocesses, OCR, inference, or candidate regeneration.
 
-Lee los trece R mediante hashes del manifiesto de evaluación. Contrasta cada
-decisión humana con el candidato, baseline, manifiesto, punteros M0 y evidencia
-LM. Seis grupos aceptados y Fig5 simple; Fig6 explícita se deduplica si coincide.
-La aceptación reside en el registro humano, no en el estado del generador.
-Fuentes originales, geometría, texto y alternativas se conservan por referencia.
+Reads all thirteen R outputs using evaluation-manifest hashes. Checks each human decision against the candidate, baseline, manifest, M0 pointers, and LM evidence. Six accepted groups and single Fig5; explicit Fig6 is deduplicated if it matches. Acceptance resides in the human record, not in generator status. Original sources, geometry, text, and alternatives are preserved by reference.
 
-Las pruebas `test_final_reconciliation.py` son offline. Ejecutar con PYTHONPATH=code:
-`python -m unittest document_trial.test_final_reconciliation -v`.
-No repetir exportación para contexto. Un destino incompatible se rechaza.
-La vista utiliza renders originales mediante rutas locales; requiere conservar
-la estructura del proyecto. La geometría de Fig6 y P7 siguen pendientes.
+The `test_final_reconciliation.py` tests are offline. Run with PYTHONPATH=code: `python -m unittest document_trial.test_final_reconciliation -v`. Do not repeat export to recover context. An incompatible destination is rejected. The view uses original renders through local paths; the project structure must be retained. Fig6 geometry and P7 remain pending.

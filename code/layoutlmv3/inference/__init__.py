@@ -1,4 +1,4 @@
-"""Paquete de inferencia de una página. Importarlo no carga el modelo.
+"""Single-page inference package. Importing it does not load the model.
 
-Contexto: README.md; contratos canónicos en documentation-inference/data/records.jsonl.
+Context: README.md; canonical contracts in documentation-inference/data/records.jsonl.
 """

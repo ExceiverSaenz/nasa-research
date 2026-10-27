@@ -18,7 +18,7 @@ vm.runInNewContext(fs.readFileSync(__dirname+'/viewer.js','utf8'),context);
 let cases=0;
 for(const route of Object.keys(model.routes))for(const page of model.pages){
  elements.route.value=route;elements.route.fire('change');elements.page.value=String(page.n);elements.page.fire('change');
- assert.strictEqual(elements.paper.src,page.image);assert.ok(elements.status.textContent.includes(`Página ${page.n}`));
+ assert.strictEqual(elements.paper.src,page.image);assert.ok(elements.status.textContent.includes(`Page ${page.n}`));
  for(const id of ['containers','arrows']){elements[id].checked=!elements[id].checked;elements[id].fire('change');}
  for(const id of ['in','out','fit'])elements[id].fire('click');
  const buttons=[...elements['step-list'].children];for(const b of buttons)b.fire('click');

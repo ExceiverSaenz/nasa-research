@@ -1,33 +1,33 @@
-# Evaluación documental de los 15 papers
+# Documentary evaluation of the 15 papers
 
-Síntesis del resultado guardado, sin nuevo procesamiento, tuning ni adjudicación.
-[Informe técnico](sic-parsing-operational-v1.md), [métricas consolidadas](../analyses/collection/parsing-operational-v1-evaluation.json),
-[comparación de órdenes](../results/sic_collection/parsing-operational-v1-audit/comparison.json)
-y [vistas/JSON](../results/sic_collection/parsing-operational-v1/index.html).
+Synthesis of the saved result, without new processing, tuning or adjudication.
+[Technical report](sic-parsing-operational-v1.md), [consolidated metrics](../analyses/collection/parsing-operational-v1-evaluation.json),
+[order comparison](../results/sic_collection/parsing-operational-v1-audit/comparison.json)
+and [views/JSON](../results/sic_collection/parsing-operational-v1/index.html).
 
-## Dictamen
+## Assessment
 
-MVP técnico automatizado útil y más integrado que el componente geométrico Docling
-utilizado como baseline. Calidad semántica desigual y aún sin exactitud global.
-No se comparó con todo el pipeline neuronal de Docling, que no fue ejecutado.
-Misma configuración en 15 papers / 397 páginas; originales, 5.374 unidades y 4.512
-apariciones preservadas. Sin ajustes manuales por documento ni GROBID.
+Useful automated technical MVP, more integrated than the geometric Docling component
+used as baseline. Uneven semantic quality and still no global accuracy measurement.
+It was not compared against the full Docling neural pipeline, which was not run.
+Same configuration across 15 papers / 397 pages; originals, 5,374 units and 4,512
+occurrences preserved. No manual document-specific adjustments or GROBID.
 
-## Aportes frente al baseline
+## Contributions relative to the baseline
 
-- Estructura y recorrido conectados con IDs, fuentes, estados y alternativas: 478 nodos propuestos, 185 con parent y 3.298 unidades con contexto de sección.
-- 24 cápsulas pasan al flujo de metadata como propuestas trazables, sin duplicar captions ni contenido.
-- 174 de 23.563 pares comparables cambian de sentido (0,74%). No son 174 errores corregidos. Las 1.139 posiciones distintas incluyen corrimientos al separar metadata.
-- En la revisión previa del agente de 12.pdf se conservan las 129 relaciones consideradas mejoras de Docling; cuatro de seis regresiones invierten su sentido y otras dos quedan en flujos separados. Solo abarca casos ya revisados, no GT humano ni exactitud global.
-- Todas las salidas tienen JSON/visor comparativo y procedencia verificable. La automatización técnica en 15 documentos no demuestra precisión universal.
+- Structure and route connected through IDs, sources, statuses and alternatives: 478 proposed nodes, 185 with parent and 3,298 units with section context.
+- 24 capsules move to the metadata flow as traceable proposals, without duplicating captions or content.
+- 174 of 23,563 comparable pairs reverse direction (0.74%). These are not 174 corrected errors. The 1,139 distinct positions include shifts from separating metadata.
+- In the agent's previous review of 12.pdf, the 129 relations considered Docling improvements are retained; four of six regressions reverse direction and the other two remain in separate flows. This covers only previously reviewed cases, not human GT or global accuracy.
+- All outputs have JSON/comparative viewer and verifiable provenance. Technical automation on 15 documents does not demonstrate universal precision.
 
-## Por paper
+## Per paper
 
-Función pendiente solo cuenta apariciones de contenido, excluyendo contenedores e
-hijos diferidos. Pares cambiados excluyen elementos que pasan a otro flujo; no son
-errores confirmados. Nodos de sección pueden contener hipótesis no reconciliadas.
+Pending function counts only content occurrences, excluding containers and
+deferred children. Changed pairs exclude elements moved to another flow; these are not
+confirmed errors. Section nodes may contain unreconciled hypotheses.
 
-| Paper | Pares cambiados vs Docling | Función pendiente / contenido | Nivel desconocido / nodos | Hijos diferidos |
+| Paper | Changed pairs vs Docling | Pending function / content | Unknown level / nodes | Deferred children |
 | --- | ---: | ---: | ---: | ---: |
 | 1 | 0 | 32 / 284 | 27 / 27 | 20 |
 | 2 | 7 | 40 / 256 | 1 / 21 | 20 |
@@ -45,48 +45,48 @@ errores confirmados. Nodos de sección pueden contener hipótesis no reconciliad
 | 15 | 1 | 22 / 503 | 9 / 68 | 135 |
 | 17 | 9 | 111 / 577 | 72 / 74 | 75 |
 
-La jerarquía es especialmente incompleta en 1, 11 y 17. Los papers 6, 7 y 5 concentran
-133 de 174 cambios de pares: prioridad de verificación, no errores adjudicados.
-Paper 17 concentra 111 de 296 funciones pendientes de contenido. Paper 9 no tiene
-subsecciones propuestas; cero parent no implica por sí solo fallo en un paper plano.
+The hierarchy is especially incomplete in 1, 11 and 17. Papers 6, 7 and 5 account for
+133 of 174 pair changes: a verification priority, not adjudicated errors.
+Paper 17 accounts for 111 of 296 pending content functions. Paper 9 has no
+proposed subsections; zero parent does not by itself imply failure in a flat paper.
 
-## Incertidumbre y revisión: denominadores distintos
+## Uncertainty and review: different denominators
 
-| Medida | Casos | Interpretación |
+| Measure | Cases | Interpretation |
 | --- | ---: | --- |
-| Revisión final por política | 5.374 unidades | No todas son errores ni ambiguas |
-| Alguna advertencia heredada | 2.471 unidades | Avisos anteriores conservados |
-| Categoría o función desconocida, unión sin duplicar | 1.292 unidades | 24,0% del inventario; incluye estructuras diferidas |
-| Categoría desconocida | 209 unidades | No equivale a texto perdido |
-| Función desconocida | 1.127 unidades | 374 hijos + 457 contenedores + 296 apariciones de contenido |
-| Función desconocida en contenido | 296 / 4.512 | 6,6%; categoría previa puede estar resuelta |
-| Contradicción semántica explícita | 25 unidades | Alternativas por dimensión conservadas |
-| Nivel de sección desconocido | 198 / 478 nodos | 41,4%; no usar parent ausente como sinónimo de error |
-| Numeración ambigua | 10 nodos | Hipótesis conservadas |
-| Encabezado sin localizar | 10 nodos | No forzar identidad por proximidad |
-| Sin contexto de sección en flujo principal | 123 unidades | Los 1.536 fuera del flujo principal no se cuentan como ese fallo |
-| Continuidad ambigua | 102 relaciones | No aceptar por consecutividad o tema |
-| Continuidad bloqueada | 16 relaciones | Abstención/alineación nativa insuficiente; no todos son hijos sin bbox |
-| Continuidad con soporte | 127 relaciones | Sigue siendo candidata, no validada |
-| Precedencia suspendida | 4 relaciones | Contradicción jerarquía/geometría; cero ciclos operativos |
+| Final review by policy | 5,374 units | Not all are errors or ambiguous |
+| Any inherited warning | 2,471 units | Previous warnings preserved |
+| Unknown category or function, deduplicated union | 1,292 units | 24.0% of inventory; includes deferred structures |
+| Unknown category | 209 units | Does not equal lost text |
+| Unknown function | 1,127 units | 374 children + 457 containers + 296 content occurrences |
+| Unknown function in content | 296 / 4,512 | 6.6%; previous category may be resolved |
+| Explicit semantic contradiction | 25 units | Alternatives per dimension preserved |
+| Unknown section level | 198 / 478 nodes | 41.4%; do not treat an absent parent as synonymous with error |
+| Ambiguous numbering | 10 nodes | Hypotheses preserved |
+| Unlocated heading | 10 nodes | Do not force identity by proximity |
+| No section context in main flow | 123 units | The 1,536 outside the main flow are not counted as this failure |
+| Ambiguous continuity | 102 relations | Do not accept based on consecutiveness or topic |
+| Blocked continuity | 16 relations | Abstention/insufficient native alignment; not all are children without bbox |
+| Supported continuity | 127 relations | Still a candidate, not validated |
+| Suspended precedence | 4 relations | Hierarchy/geometry contradiction; zero operational cycles |
 
-No sumar filas: unidades, nodos y relaciones tienen granularidades y solapamientos
-diferentes. 4.878 unidades no reciben un rol documental más específico; conservan
-su categoría/función anterior. Ese campo auxiliar desconocido no significa 4.878
-unidades completamente sin clasificar.
+Do not sum rows: units, nodes and relations have different granularities and
+overlaps. 4,878 units do not receive a more specific document role; they retain
+their previous category/function. That unknown auxiliary field does not mean 4,878
+completely unclassified units.
 
-## Limitaciones que siguen abiertas
+## Limitations still open
 
-103 nodos tienen alineación nativa única; 235 son candidatos de título no resueltos,
-120 propuestas de encabezado, 10 numeraciones ambiguas y 10 no localizados. Outlines
-y títulos con diferencias de codificación pueden representar hipótesis duplicadas.
-Niveles nativos y profundidad de marcador tienen distinto origen; el contrato explica
-cómo interpretarlos. Pertenencia física depende del recorrido; no demuestra pertenencia
-temática de figuras/tablas. Metadatos mixtos y columnas/flujos independientes siguen
-pudiendo quedar provisionales. Los 374 hijos sin caja y sus 19 padres se mantienen;
-las 17 páginas abstendidas no se fuerzan a lectura individual.
+103 nodes have unique native alignment; 235 are unresolved heading candidates,
+120 heading proposals, 10 ambiguous numberings and 10 unlocated. Outlines
+and headings with encoding differences may represent duplicate hypotheses.
+Native levels and marker depth have different origins; the contract explains
+how to interpret them. Physical membership depends on the route; it does not demonstrate thematic
+membership of figures/tables. Mixed metadata and independent columns/flows may still
+remain provisional. The 374 children without boxes and their 19 parents are retained;
+the 17 abstained pages are not forced into individual reading.
 
-13 pruebas offline y 4.764 casos DOM respaldan integridad/interacción, no comprensión.
-QA visual real y referencia semántica independiente pendientes. No se calculan
-precision/recall/F1 ni se afirma mejora global sin adjudicación al final del MVP.
-GROBID permanece pospuesto. Este informe no autoriza correcciones ni otra exportación.
+13 offline tests and 4,764 DOM cases support integrity/interaction, not comprehension.
+Real visual QA and an independent semantic reference remain pending. No
+precision/recall/F1 is calculated or global improvement claimed without adjudication at the end of the MVP.
+GROBID remains postponed. This report does not authorize corrections or another export.

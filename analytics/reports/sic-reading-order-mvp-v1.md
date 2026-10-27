@@ -1,36 +1,36 @@
-# Orden de lectura MVP v1: resultados
+# Reading order MVP v1: results
 
-Implementación autorizada sobre la clasificación de la versión conciliada, sin reclasificar ni ejecutar OCR, modelos o Colab. Exportación única de 15 papers / 397 páginas. Las propuestas quedan pendientes de validación semántica después del MVP de todas las etapas.
+Authorized implementation over classification of the reconciled version, without reclassification or running OCR, models or Colab. Single export of 15 papers / 397 pages. Proposals remain pending semantic validation after the MVP of all stages.
 
-## Dónde consultar
+## Where to consult
 
-- [Vista responsive de 12.pdf](../results/sic12_document/reading-order-mvp-v1-view/index.html): 13 páginas, PNG originales íntegros, cajas/lista/flechas sincronizadas, cambio de recorrido y zoom.
-- [JSON de 12.pdf](../results/sic_collection/reading-order-mvp-v1/papers/12/document.json).
-- [Resumen y enlaces a cada paper](../results/sic_collection/reading-order-mvp-v1/summary.json), [cola de advertencias](../results/sic_collection/reading-order-mvp-v1/review-queue.json).
-- [Diseño](../analyses/collection/reading-order-reconciled-mvp-v1-design.md), [plan con parámetros](../analyses/collection/reading-order-reconciled-mvp-v1-plan.md), [código y técnicas](../../code/reading_order/README.md).
-- [Auditoría](../results/sic_collection/reading-order-mvp-v1-audit/verification.json).
+- [Responsive view of 12.pdf](../results/sic12_document/reading-order-mvp-v1-view/index.html): 13 pages, intact original PNGs, synchronized boxes/list/arrows, route switching and zoom.
+- [12.pdf JSON](../results/sic_collection/reading-order-mvp-v1/papers/12/document.json).
+- [Summary and links to each paper](../results/sic_collection/reading-order-mvp-v1/summary.json), [warning queue](../results/sic_collection/reading-order-mvp-v1/review-queue.json).
+- [Design](../analyses/collection/reading-order-reconciled-mvp-v1-design.md), [plan with parameters](../analyses/collection/reading-order-reconciled-mvp-v1-plan.md), [code and techniques](../../code/reading_order/README.md).
+- [Audit](../results/sic_collection/reading-order-mvp-v1-audit/verification.json).
 
-## Contrato y técnicas
+## Contract and techniques
 
-`inventory` conserva cada unidad original y su clasificación sin cambios; `steps` contiene visitas por referencia; `routes` separa cuerpo, notas, bibliografía, metadatos y navegación editorial. Los fragmentos no se concatenan. `original_page_context`, `layouts`, `decisions` y `suspended_constraints` conservan evidencia, alternativas y procedencia. El visor presenta texto/advertencias y el JSON conserva el detalle completo de las alternativas.
+`inventory` preserves each original unit and its classification unchanged; `steps` contains visits by reference; `routes` separates body, notes, bibliography, metadata and editorial navigation. Fragments are not concatenated. `original_page_context`, `layouts`, `decisions` and `suspended_constraints` preserve evidence, alternatives and provenance. The viewer presents text/warnings and the JSON retains complete details of alternatives.
 
-XY-cut recursivo propone zonas/columnas desde las cajas existentes (gap vertical .025 ancho; horizontal .012 alto). Un grafo de precedencias conserva restricciones utilizables; los conflictos se suspenden con advertencia. Sin corte claro se ofrece fallback y,x y alternativa x,y. Dirección LTR es hipótesis explícita. El orden atraviesa páginas dentro de cada paper.
+Recursive XY-cut proposes zones/columns from existing boxes (vertical gap .025 width; horizontal .012 height). A precedence graph preserves usable constraints; conflicts are suspended with a warning. Without a clear cut, y,x fallback and an x,y alternative are offered. LTR direction is an explicit hypothesis. Order crosses pages within each paper.
 
-Caption primero se aplica únicamente dentro de asociaciones existentes utilizables: native_preserved, automatic_rule, human_accepted o accepted. Automatic_rule no significa aceptación humana. Los vínculos candidatos no se aceptan por cercanía. Captions y cuerpos compartidos tienen una aparición de contenido y visitas posteriores por referencia. La posición del conjunto usa sus cuerpos como anclas, sin exportar cajas nuevas.
+Caption first applies only within existing usable associations: native_preserved, automatic_rule, human_accepted or accepted. Automatic_rule does not mean human acceptance. Candidate links are not accepted by proximity. Shared captions and bodies have one content occurrence and later visits by reference. The set's position uses its bodies as anchors, without exporting new boxes.
 
-`precedes` expresa restricciones; `next_in_route` la visita consecutiva; `paragraph_continues` una hipótesis de pertenencia al mismo párrafo. Geometría de transición de página/columna, guion final o cláusula abierta/inicio minúsculo apoyan candidatos de continuidad. No se fusiona texto ni se considera esa relación validada.
+`precedes` expresses constraints; `next_in_route` the consecutive visit; `paragraph_continues` a hypothesis of membership in the same paragraph. Page/column transition geometry, a final hyphen or an open clause/lowercase start support continuity candidates. Text is not merged and that relation is not considered validated.
 
-## Cobertura, abstención y advertencias
+## Coverage, abstention and warnings
 
-5 374 unidades contabilizadas = 5 343 regiones + 31 grupos: cobertura de inventario 100 %. Esto no equivale a ordenar individualmente todo el texto. Hay 4 512 apariciones de contenido: 1 835 posiciones propuestas por reglas (40.67 %) y 2 677 fallback (59.33 %). Las 79 apariciones de contenido con evidencia geométrica abstendida están incluidas en fallback, no se suman aparte.
+5 374 units accounted for = 5 343 regions + 31 groups: 100 % inventory coverage. This does not equal individually ordering all text. There are 4 512 content occurrences: 1 835 rule-proposed positions (40.67 %) and 2 677 fallback (59.33 %). The 79 content occurrences with abstained geometric evidence are included in fallback, not added separately.
 
-Hay 4 158 pasos con alguna advertencia y 2 838 pasos fallback, incluyendo estructuras/referencias además del contenido. Estos conteos pueden solaparse y su denominador es pasos, diferente del inventario. Las advertencias originales de clasificación siguen en cada unidad; la cola adicional corresponde a esta etapa. Ninguna cifra mide exactitud, precision, recall ni F1: no existe GT de orden validado.
+There are 4 158 steps with some warning and 2 838 fallback steps, including structures/references in addition to content. These counts may overlap and their denominator is steps, different from the inventory. Original classification warnings remain in each unit; the additional queue belongs to this stage. No figure measures accuracy, precision, recall or F1: no validated order GT exists.
 
-Los 374 hijos sin coordenadas siguen diferidos en 19 placeholders de padres, con referencias sin secuencia individual; 17 páginas conservan abstención. Se preservan todas las cajas y textos originales. La revisión humana no bloquea la exportación y queda al final, también para decisiones automáticas.
+The 374 children without coordinates remain deferred in 19 parent placeholders, with references without individual sequence; 17 pages retain abstention. All original boxes and texts are preserved. Human review does not block export and remains at the end, including automatic decisions.
 
-Continuidad: 108 candidatos apoyados por reglas, 374 ambiguos y 14 bloqueados por geometría/diferidos. Todos requieren validación humana final. No hay contenido duplicado ni ciclos operativos. Las heurísticas conservadoras producen muchos fallback ante geometría sin separación clara; no se ajustaron umbrales para mejorar estas cifras.
+Continuity: 108 rule-supported candidates, 374 ambiguous and 14 blocked by geometry/deferred units. All require final human validation. There is no duplicate content or operational cycles. Conservative heuristics produce many fallbacks for geometry without clear separation; thresholds were not adjusted to improve these figures.
 
-| Paper | Inventario | Apariciones contenido | Posición propuesta | Fallback contenido | Hijos diferidos |
+| Paper | Inventory | Content occurrences | Proposed position | Content fallback | Deferred children |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | 331 | 284 | 133 | 151 | 20 |
 | 2 | 303 | 256 | 50 | 206 | 20 |
@@ -48,10 +48,10 @@ Continuidad: 108 candidatos apoyados por reglas, 374 ambiguos y 14 bloqueados po
 | 15 | 694 | 503 | 196 | 307 | 135 |
 | 17 | 709 | 577 | 370 | 207 | 75 |
 
-## Aceptación técnica y límites
+## Technical acceptance and limitations
 
-23 pruebas offline pasan: columnas/bloques anchos, caption primero, relaciones compartidas, rutas, ciclos, escala, RTL, páginas abstendidas, hijos diferidos, hashes y referencias inválidas. Simulación DOM: 78 combinaciones página×ruta y 199 transiciones de navegación de 12.pdf, sin errores. Las 13 imágenes copiadas mantienen sus hashes, sin reducción ni recompresión. Auditoría independiente de exportación confirma igualdad exacta de unidades y contexto original, referencias únicas y captions antes de cuerpos en las cápsulas aplicables.
+23 offline tests pass: columns/wide blocks, caption first, shared relations, routes, cycles, scale, RTL, abstained pages, deferred children, hashes and invalid references. DOM simulation: 78 page×route combinations and 199 navigation transitions for 12.pdf, without errors. The 13 copied images retain their hashes, without reduction or recompression. Independent export audit confirms exact equality of units and original context, unique references and captions before bodies in applicable capsules.
 
-111 archivos anteriores protegidos permanecen idénticos por hash, además de las comprobaciones del manifiesto de entrada. La revisión técnica independiente encontró y permitió corregir conflictos de serialización, propagación de fallback, falsas evidencias de continuidad y validación insuficiente de referencias antes de la exportación definitiva. No valida el orden semántico de los papers.
+111 previous protected files remain hash-identical, in addition to input manifest checks. Independent technical review found and enabled correction of serialization conflicts, fallback propagation, false continuity evidence and insufficient reference validation before final export. It does not validate the papers' semantic order.
 
-No se completó inspección visual en navegador en esta sesión; la verificación de interfaz es simulación DOM y revisión de código. Abrir el HTML local permite revisar el recorrido. La integración canónica y V&V permanecen pendientes; no repetir exportación ni afinar reglas automáticamente.
+Visual browser inspection was not completed in this session; interface verification consists of DOM simulation and code review. Opening the local HTML allows reviewing the route. Canonical integration and V&V remain pending; do not repeat the export or automatically refine rules.

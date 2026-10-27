@@ -1,4 +1,4 @@
-"""Prueba de infraestructura; ejecutar con colab exec, sin instalar paquetes."""
+"""Infrastructure test; run with colab exec, without installing packages."""
 import hashlib
 import json
 import platform

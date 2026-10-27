@@ -1,27 +1,27 @@
-# Prueba mínima con Colab CLI 0.7.4
+# Minimal trial with Colab CLI 0.7.4
 
-## Entrada operativa común
+## Common operational entry point
 
-Antes de usar cualquier lanzador Colab CLI, seguir
-[`EXECUTION.md`](EXECUTION.md) y registrar el run en
+Before using any Colab CLI launcher, follow
+[`EXECUTION.md`](EXECUTION.md) and record the run in
 [`analytics/config/remote_runs.json`](../../analytics/config/remote_runs.json).
-Esta guía contiene contexto histórico de un smoke test; no repetirlo para
-recuperar contexto.
+This guide contains historical smoke-test context; do not repeat it to
+recover context.
 
-## Guía histórica de infraestructura
+## Historical infrastructure guide
 
-La etapa descrita aquí ya fue superada por instalación LayoutLMv3 e imports/config
-correctos. Ver `docs/continuidad/04-estado-de-la-prueba.md` y evidencia en
-`code/results/layoutlmv3-import/20261018T201957Z/`. No repetir este smoke para
-iniciar una conversación. Sesión posterior `nasa-layout-env`, detenida según el
-usuario; siguiente hito: inferencia de una página. Los saldos y limitaciones
-que siguen son históricos, no consultas actuales.
+The stage described here has already been superseded by successful LayoutLMv3 installation and
+imports/configuration. See `docs/continuidad/04-estado-de-la-prueba.md` and evidence in
+`code/results/layoutlmv3-import/20261018T201957Z/`. Do not repeat this smoke test to
+start a conversation. Later session `nasa-layout-env`, stopped according to the
+user; next milestone: single-page inference. The balances and limitations
+below are historical, not current queries.
 
-Estado histórico consultado por el usuario: 280.14 unidades, 0.00/h, ninguna sesión activa. Consultar de nuevo antes de ejecutar. El acceso automatizado a WSL está bloqueado; ejecutar estos comandos en Ubuntu como exceiver.
+Historical state checked by the user: 280.14 units, 0.00/h, no active sessions. Check again before running. Automated WSL access is blocked; run these commands in Ubuntu as exceiver.
 
-Esta prueba verifica infraestructura, transferencia y recuperación. No instala dependencias ni ejecuta LayoutLMv3. Las operaciones de preparación se hacen localmente. La inferencia futura del detector se ejecutará en GPU; el inventario, validación de cajas y análisis de resultados pueden hacerse localmente.
+This trial checks infrastructure, transfer and recovery. It does not install dependencies or run LayoutLMv3. Preparation runs locally. Future detector inference will run on GPU; inventory, box validation and result analysis can run locally.
 
-## Preparación local (sin GPU)
+## Local preparation (no GPU)
 
 ```bash
 cd "/mnt/c/Users/HP Victus/Desktop/nasa_research"
@@ -31,9 +31,9 @@ colab usage
 colab sessions
 ```
 
-## Ejecutar únicamente después de autorizar el consumo
+## Run only after resource consumption is authorized
 
-Solicitar una T4 para esta prueba pequeña; no se necesita una A100 para validar la conexión. Si aparece una sesión existente adecuada, revisar su propietario y estado antes de reutilizarla. No detener sesiones ajenas.
+Request a T4 for this small trial; an A100 is not needed to validate the connection. If a suitable existing session appears, review its owner and status before reusing it. Do not stop other people's sessions.
 
 ```bash
 colab new -s nasa-cli-smoke --gpu T4
@@ -48,16 +48,16 @@ import hashlib, json
 from pathlib import Path
 r = json.loads(Path('code/results/smoke/result.json').read_text())
 expected = hashlib.sha256(Path('code/colab/smoke_remote.py').read_bytes()).hexdigest()
-assert r['uploaded_source_sha256'] == expected, 'El archivo transferido no coincide'
-assert r['gpu_ok'] is True, 'La operación CUDA no pasó'
+assert r['uploaded_source_sha256'] == expected, 'Transferred file does not match'
+assert r['gpu_ok'] is True, 'CUDA operation did not pass'
 print(json.dumps(r, indent=2))
-print('Transferencia, GPU y recuperación verificadas')
+print('Transfer, GPU and recovery verified')
 PY
 ```
 
-Ejecutar cada paso por separado; no continuar tras un fallo. Antes de detener, comprobar que result.json existe, es legible y contiene gpu_ok=true. Si la ejecución falla, consultar estado y recuperar los resultados disponibles antes de cerrar. Un timeout del cliente no demuestra que el proceso remoto se haya detenido.
+Run each step separately; do not continue after a failure. Before stopping, check that result.json exists, is readable and contains gpu_ok=true. If execution fails, check status and recover available results before closing. A client timeout does not prove that the remote process stopped.
 
-Si la sesión nasa-cli-smoke fue creada por ti exclusivamente para esta prueba y los resultados ya están verificados:
+If you created the nasa-cli-smoke session exclusively for this trial and the results are already verified:
 
 ```bash
 colab stop -s nasa-cli-smoke
@@ -65,13 +65,13 @@ colab sessions
 colab usage
 ```
 
-## Siguiente etapa: el detector
+## Next stage: the detector
 
-El entorno aislado y la instalación de LayoutLMv3 ya están comprobados en Colab.
-Usar `code/layoutlmv3/test_detector.sh` solo al necesitar reconstruir una VM para
-un ensayo autorizado. Falta implementar el wrapper de inferencia. No instalar
-paquetes históricos en el kernel moderno con `colab install`.
+The isolated environment and LayoutLMv3 installation have already been checked in Colab.
+Use `code/layoutlmv3/test_detector.sh` only when a VM needs rebuilding for
+an authorized trial. The inference wrapper still needs implementation. Do not install
+historical packages in the modern kernel with `colab install`.
 
-Para ejecutar varios módulos, preparar un archivo de distribución con una lista explícita de scripts, configuración y PDFs seleccionados; subirlo con colab upload y extraerlo en una carpeta remota dedicada. colab exec -f solo transmite el archivo indicado: no sincroniza imports, datos ni checkpoints. No subir todo el repositorio indiscriminadamente.
+To run several modules, prepare a distribution file with an explicit list of scripts, configuration and selected PDFs; upload it with colab upload and extract it into a dedicated remote folder. colab exec -f transmits only the specified file: it does not synchronize imports, data or checkpoints. Do not upload the entire repository indiscriminately.
 
-Registrar versiones, pesos y hashes, PDF/páginas de prueba y parámetros. Guardar salidas y checkpoints en una carpeta de ejecución, empaquetarlos, descargarlos y comparar sus hashes antes de detener la VM. No confiar en el almacenamiento temporal remoto. Mantener credenciales y metadatos del CLI fuera del proyecto.
+Record versions, weights and hashes, test PDF/pages and parameters. Save outputs and checkpoints in a run folder, package them, download them and compare their hashes before stopping the VM. Do not rely on temporary remote storage. Keep CLI credentials and metadata outside the project.

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Registro de incrementos técnicos",
+  "title": "Technical increment registry",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "increments"],

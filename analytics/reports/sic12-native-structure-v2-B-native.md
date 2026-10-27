@@ -1,103 +1,103 @@
-# Evidencia nativa y reconciliación estructural en 12.pdf
+# Native evidence and structural reconciliation in 12.pdf
 
-26oct2026. Implementación aditiva autorizada por el usuario. Baseline operativo:
-Docling aprobado, clasificación funcional conciliada v2 y PDF original. Se conserva
-el inventario íntegro y no se cambia el recorrido. Sin OCR, modelos, GROBID ni
-repetición de Docling. No se procesaron los otros14papers.
+26oct2026. Additive implementation authorized by the user. Operational baseline:
+approved Docling, reconciled functional classification v2 and original PDF. The complete
+inventory is preserved and the route is unchanged. No OCR, models, GROBID or
+repetition of Docling. The other 14 papers were not processed.
 
-## Resultados y archivos
+## Results and files
 
-- [Vista responsive](../results/sic12_document/native-structure-v2-view/index.html):
-  13 páginas con PNG originales sin recompresión, cajas conciliadas, jerarquía y
-  comparación por región de clasificación anterior/propuesta/evidencia.
-- [JSON integrado](../results/sic12_document/native-structure-v2/B-native/document.json).
-- [Evidencia PDF](../results/sic12_document/native-structure-v2/B-native/native-evidence.json).
-- [Métricas](../results/sic12_document/native-structure-v2/B-native/summary.json) y
-  [cola final](../results/sic12_document/native-structure-v2/B-native/review-queue.json).
-- [Manifest](../results/sic12_document/native-structure-v2/B-native/manifest.json) y
-  [auditoría](../results/sic12_document/native-structure-v2-audit/verification.json).
-- [Métodos y contrato](../../code/document_structure/NATIVE_STRUCTURE.md).
+- [Responsive view](../results/sic12_document/native-structure-v2-view/index.html):
+  13 pages with original PNGs without recompression, reconciled boxes, hierarchy and
+  per-region comparison of previous classification/proposal/evidence.
+- [Integrated JSON](../results/sic12_document/native-structure-v2/B-native/document.json).
+- [PDF evidence](../results/sic12_document/native-structure-v2/B-native/native-evidence.json).
+- [Metrics](../results/sic12_document/native-structure-v2/B-native/summary.json) and
+  [final queue](../results/sic12_document/native-structure-v2/B-native/review-queue.json).
+- [Manifest](../results/sic12_document/native-structure-v2/B-native/manifest.json) and
+  [audit](../results/sic12_document/native-structure-v2-audit/verification.json).
+- [Methods and contract](../../code/document_structure/NATIVE_STRUCTURE.md).
 
-| Medida | Resultado | Interpretación |
+| Measure | Result | Interpretation |
 | --- | ---: | --- |
-| Unidades conciliadas preservadas | 293/293 | Incluye regiones, contenedores y grupos; sin descarte |
-| Evidencias nativas | 525 | 131 bloques,242 enlaces,25 recursos de imagen,18 outlines,37 XMP,8 metadata,25 tags,39 áreas thread |
-| Unidades con spans alineados | 220/293 (75.09%) | Correspondencia geométrica por centros, no identidad validada |
-| Sin spans asociados | 67 | Puede incluir figuras/tablas; no equivale a texto perdido |
-| Sin geometría propia | 6 | Grupos conservados; no reciben cajas inventadas |
-| Roles documentales propuestos | 22/293 (7.51%) | Refinamiento limitado; las demás categorías/funciones se conservan o abstienen |
-| Roles respaldados directamente / inferidos | 17 / 5 | No son etiquetas humanas ni scores calibrados |
-| Unidades con contradicción | 5/293 (1.71%) | 10 dimensiones en total: función y flujo; alternativas intactas |
-| Nodos de outlines alineados / no localizados | 14 / 4 | 18 nodos declarados; incluye raíz de artículo truncada, no18secciones de cuerpo confirmadas |
-| Pertenencia inferida del orden provisional | 87 | Incluye incertidumbre heredada del recorrido |
-| Contexto físico de visualizaciones | 64 | Pertenencia temática separada, sin asignación automática |
-| Fragmentos de párrafo / continuidades candidatas | 77 / 20 | Solo referencias; no concatenación ni continuidad aceptada |
-| Unidades conservadas para revisión final | 293 | Política after_full_mvp; no293errores detectados |
+| Preserved reconciled units | 293/293 | Includes regions, containers and groups; none discarded |
+| Native evidence items | 525 | 131 blocks, 242 links, 25 image resources, 18 outlines, 37 XMP, 8 metadata, 25 tags, 39 thread areas |
+| Units with aligned spans | 220/293 (75.09%) | Geometric center-based correspondence, not validated identity |
+| Without associated spans | 67 | May include figures/tables; does not equal lost text |
+| Without their own geometry | 6 | Groups preserved; no invented boxes assigned |
+| Proposed document roles | 22/293 (7.51%) | Limited refinement; other categories/functions are preserved or abstained |
+| Directly supported / inferred roles | 17 / 5 | Not human labels or calibrated scores |
+| Units with contradiction | 5/293 (1.71%) | 10 dimensions in total: function and flow; alternatives intact |
+| Aligned / unlocated outline nodes | 14 / 4 | 18 declared nodes; includes truncated article root, not 18 confirmed body sections |
+| Membership inferred from provisional order | 87 | Includes uncertainty inherited from the route |
+| Physical context of visualizations | 64 | Separate thematic membership, without automatic assignment |
+| Paragraph fragments / candidate continuities | 77 / 20 | References only; no concatenation or accepted continuity |
+| Units retained for final review | 293 | after_full_mvp policy; not 293 detected errors |
 
-Los roles son14encabezados de sección,1título de artículo,1keywords,1copyright,
-1encabezado de abstract,1cuerpo de abstract candidato y3afiliaciones candidatas.
-271unidades no reciben un rol documental nuevo; no significa que pierdan su
-clasificación previa. Categoría:291valores retenidos y2abstenciones conservadas.
-Función:234retenidas,15respaldadas,2inferidas,5en conflicto y37sin resolver.
-Cobertura, evidencia directa y advertencias **no miden exactitud semántica**.
+The roles are 14 section headings, 1 article title, 1 keywords, 1 copyright,
+1 abstract heading, 1 candidate abstract body and 3 candidate affiliations.
+271 units receive no new document role; this does not mean they lose their
+previous classification. Category: 291 retained values and 2 preserved abstentions.
+Function: 234 retained, 15 supported, 2 inferred, 5 conflicting and 37 unresolved.
+Coverage, direct evidence and warnings **do not measure semantic accuracy**.
 
-## Técnicas y conflictos
+## Techniques and conflicts
 
-PyMuPDF1.27.2.3, Python3.13.5; sin dependencias neuronales. Se leen texto/spans,
-estilos, XMP, marcadores, anotaciones y objetos estructurales sin renderizar.
-Normalización Unicode NFKC para comparación; el texto fuente queda intacto.
-Geometría vincula spans a cajas conciliadas; títulos exactos y marcadores respaldan
-encabezados/jerarquía. Campos XMP localizados y contexto frontal apoyan metadata.
-Señales léxicas auxiliares generan propuestas de abstract/afiliación, explícitamente
-inferidas. No se usa un esquema fijo de secciones ni nombres/páginas de12.pdf.
+PyMuPDF1.27.2.3, Python3.13.5; no neural dependencies. Text/spans,
+styles, XMP, bookmarks, annotations and structural objects are read without rendering.
+Unicode NFKC normalization for comparison; source text remains intact.
+Geometry links spans to reconciled boxes; exact titles and bookmarks support
+headings/hierarchy. Located XMP fields and front-matter context support metadata.
+Auxiliary lexical signals generate abstract/affiliation proposals, explicitly
+inferred. No fixed section schema or names/pages from 12.pdf are used.
 
-Una fuente directa verificable puede bastar. La reconciliación opera por dimensión:
-conserva la clasificación previa, todos los claims y alternativas. Si fuentes
-directas discrepan, deja la propuesta sin resolver; no decide por mayoría. Si una
-fuente directa contradice la anterior, puede proponer un valor provisional sin
-reescribir el anterior ni ocultar el conflicto. Cinco unidades de página1 proponen
-función metadata/flujo frontal frente a cuerpo previo. El recorrido aprobado no cambia.
+One direct verifiable source may suffice. Reconciliation operates per dimension:
+it preserves previous classification, all claims and alternatives. If direct
+sources disagree, the proposal remains unresolved; no majority vote decides it. If a
+direct source contradicts the previous one, it may propose a provisional value without
+rewriting the previous one or hiding the conflict. Five units on page 1 propose
+metadata function/front-matter flow versus the previous body. The approved route does not change.
 
-Un nombre de autor dentro de texto no basta para autoría: la coincidencia parcial
-queda como candidata sin aplicar. En la línea real de autores quedan caracteres
-adicionales; se conserva candidata pendiente, sin forzar la clasificación. Metadata
-frontal puede reconocerse sin outlines; la ausencia de jerarquía no inventa niveles.
+An author's name within text is insufficient for authorship: a partial match
+remains an unapplied candidate. Additional characters remain in the real author
+line; it is preserved as a pending candidate without forcing classification. Front-matter
+metadata may be recognized without outlines; absence of hierarchy does not invent levels.
 
-## Límites explícitos
+## Explicit limitations
 
-Los cuatro nodos no localizados incluyen la raíz cuyo título está truncado y tres
-subsecciones que no satisfacen igualdad textual normalizada. Hay discrepancias
-de codificación, por ejemplo `e` en texto nativo frente a un separador en el marcador;
-no se corrigieron reglas para hacer coincidir12.pdf. No se afirman matches parciales
-como identidades. Los títulos partidos entre varias cajas siguen siendo limitación.
+The four unlocated nodes include the root with a truncated title and three
+subsections that do not satisfy normalized text equality. There are encoding
+discrepancies, for example `e` in native text versus a separator in the bookmark;
+rules were not corrected to match 12.pdf. Partial matches are not asserted
+as identities. Titles split across several boxes remain a limitation.
 
-El matching por centros puede incluir spans compartidos por cajas solapadas y no
-garantiza una correspondencia uno-a-uno. Falta validar semánticamente roles, sección
-y párrafos. Las pertenencias y continuidades heredan errores de Docling. Las figuras,
-tablas, captions y grupos originales permanecen vinculados según evidencia existente;
-esta capa no acepta asociaciones nuevas. La pertenencia temática sigue sin resolver.
-Los tags Figure con atributos compartidos no localizan figuras individuales. Los
-article threads y enlaces se conservan como evidencia candidata, no como orden aceptado.
+Center-based matching may include spans shared by overlapping boxes and does not
+guarantee a one-to-one correspondence. Semantic validation of roles, section
+and paragraphs is pending. Memberships and continuities inherit Docling errors. Original figures,
+tables, captions and groups remain linked according to existing evidence;
+this layer accepts no new associations. Thematic membership remains unresolved.
+Figure tags with shared attributes do not locate individual figures. Article
+threads and links are preserved as candidate evidence, not accepted order.
 
-Los374hijos sin bbox y sus padres de la colección quedan fuera de este incremento;
-12.pdf no contiene esos incidentes. Fixtures comprueban que la capa no imputa cajas,
-no levanta abstenciones ni elimina padres. No se ha generalizado a otros14papers.
+The collection's 374 children without bbox and their parents fall outside this increment;
+12.pdf does not contain those incidents. Fixtures check that the layer does not impute boxes,
+lift abstentions or remove parents. It has not been generalized to the other 14 papers.
 
-## Aceptación técnica y revisión
+## Technical acceptance and review
 
-17 pruebas offline pasan: PDF sin metadata, Unicode, geometría ausente/rotada,
-hijos diferidos, contradicciones, autoría frente a mención, metadata sin outlines,
-portada anterior al cuerpo, jerarquía, IDs/punteros, hashes, no-overwrite y bytes PNG.
-Revisión independiente detectó dos P2; ambos tuvieron reproducción RED→GREEN y
-cierre puntual del revisor. No certifica calidad semántica general.
+17 offline tests pass: PDF without metadata, Unicode, missing/rotated geometry,
+deferred children, contradictions, authorship versus mention, metadata without outlines,
+front page before body, hierarchy, IDs/pointers, hashes, no-overwrite and PNG bytes.
+Independent review detected two P2 issues; both had RED→GREEN reproduction and
+specific reviewer closure. This does not certify general semantic quality.
 
-DOM del HTML exportado:156combinaciones página/filtro/zoom,1773selecciones de región,
-18enlaces de jerarquía y selección por teclado comprobados. **No es QA visual real**.
-Acceso del navegador a file:// bloqueado por política; no se intentaron alternativas
-para sortearla. La vista se entrega para apertura local del usuario.
+Exported HTML DOM: 156 page/filter/zoom combinations, 1773 region selections,
+18 hierarchy links and keyboard selection checked. **This is not real visual QA**.
+Browser access to file:// blocked by policy; no alternatives were attempted
+to bypass it. The view is delivered for the user to open locally.
 
-Contrato y hashes verificados en la auditoría: inventario, clasificaciones originales,
-recorrido aprobado, fuentes y renders intactos; punteros resueltos y jerarquía sin
-ciclos. Revisión humana acumulada al final del MVP, sin bloquear continuidad.
-Una exportación congelada; no repetir, afinar reglas ni ejecutar GROBID/modelos.
-Integración canónica, generalización y mejora del recorrido siguen pendientes.
+Contract and hashes verified in the audit: inventory, original classifications,
+approved route, sources and renders intact; resolved pointers and acyclic
+hierarchy. Human review accumulated at the end of the MVP, without blocking continuation.
+One frozen export; do not repeat, refine rules or run GROBID/models.
+Canonical integration, generalization and route improvement remain pending.

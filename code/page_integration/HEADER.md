@@ -1,47 +1,47 @@
-# Table 1: ROI de encabezado — ejecucion exclusiva del usuario
+# Table 1: header ROI — user-only execution
 
-Estado: codigo y paquete preparados, sin OCR nuevo. Table 1 NO se declara recuperada.
+Status: code and package prepared, no new OCR. Table 1 is NOT declared recovered.
 
-## Ejecutar
+## Run
 
-Desde Ubuntu/WSL, sobre una T4 propia dedicada a esta prueba:
+From Ubuntu/WSL, on your own T4 dedicated to this trial:
 
 ```bash
 cd "/mnt/c/Users/HP Victus/Desktop/nasa_research"
 bash code/page_integration/test_header.sh NOMBRE_DE_TU_SESION_T4 --own-session
 ```
 
-Si no tienes una sesion propia T4 activa, puedes crearla tu mismo:
+If you do not have an active T4 session of your own, you can create one yourself:
 
 ```bash
 colab new -s nasa-table1-header-env --gpu T4
 bash code/page_integration/test_header.sh nasa-table1-header-env --own-session
 ```
 
-`--own-session` confirma que la sesion es tuya y exclusiva: se cerrara despues de descargar y verificar un respaldo terminal. El script no asigna sesiones ni cambia hardware. No se ejecuta localmente el parser: todos los modelos se ejecutan por Colab CLI en T4.
+`--own-session` confirms that the session is yours and exclusive: it will close after downloading and verifying a terminal-state backup. The script does not allocate sessions or change hardware. The parser does not run locally: all models run through Colab CLI on T4.
 
-El lanzador verifica el paquete y hardware, sube un ZIP y su sidecar, instala/verifica el entorno original y procesa **una sola ROI una vez**. Aisla argumentos Jupyter y modulos de experimentos anteriores. Descarga el ZIP y sidecar; comprueba hash, CRC, plan exacto y estado terminal antes de cerrar la sesion. Tambien conserva y descarga un fallo terminal con respaldo antes de cerrarla. No hay reintentos automaticos.
+The launcher verifies the package and hardware, uploads a ZIP and its sidecar, installs/verifies the original environment and processes **one ROI once only**. It isolates Jupyter arguments and modules from previous experiments. Downloads the ZIP and sidecar; checks hash, CRC, exact plan and terminal state before closing the session. It also preserves and downloads a terminal failure with backup before closing it. There are no automatic retries.
 
-Si hay timeout o falta confirmacion terminal, no puede garantizar que termino el proceso: no reinicia OCR ni cierra un trabajo posiblemente activo. Avisa con el log para revisar manualmente; no dejes esa sesion sin seguimiento. Si falla la descarga/integridad, no la cierra antes de asegurar el respaldo. No limpiar ni reutilizar rutas remotas automaticamente.
+On timeout or missing terminal confirmation, it cannot guarantee that the process ended: it does not restart OCR or close a potentially active job. It reports the log for manual review; do not leave that session unattended. If download/integrity fails, it does not close before securing the backup. Do not automatically clean or reuse remote paths.
 
-Resultados locales: `code/results/table1-header-v1/<fecha>-<pid>/`. Avisar al terminar con esa ruta y cualquier error. La evaluacion sera local, sin GPU ni OCR. No ejecutar tambien `test_labels.sh` (experimento anterior).
+Local results: `code/results/table1-header-v1/<fecha>-<pid>/`. Report completion with that path and any errors. Evaluation will be local, without GPU or OCR. Do not also run `test_labels.sh` (previous experiment).
 
-## Que cambia y que se conserva
+## What changes and what is preserved
 
-Solo cambia el contenido de entrada: ROI `[112,154,943,230]`, 831x76 pixeles, del render original1654x2205. X=envolvente de descripcion; Y superior=barrera previa y Y inferior=fin de descripcion; redondeo hacia fuera. Sin padding, resize ni mejora de imagen. El cuerpo tabular queda fuera; documento/pagina/hash, parentage y cajas originales permanecen como referencias.
+Only the input content changes: ROI `[112,154,943,230]`, 831x76 pixels, from the original1654x2205 render. X=description envelope; upper Y=previous boundary and lower Y=end of description; outward rounding. No padding, resize or image enhancement. The table body is excluded; document/page/hash, parentage and original boxes remain references.
 
-Misma llamada `parse_native`: MinerU4.0.12/DocVortex0.6.0, Python3.11.16, Basic/Torch, OCR, image_analysis=True, CUDA12.6/Tesla T4 y tablas CPU; mismo requirements.lock/freeze, config.yaml, pesos y revision `2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`. Se valida el entorno antes del OCR. Ninguna opcion nueva de reconocimiento.
+Same `parse_native` call: MinerU4.0.12/DocVortex0.6.0, Python3.11.16, Basic/Torch, OCR, image_analysis=True, CUDA12.6/Tesla T4 and CPU tables; same requirements.lock/freeze, config.yaml, weights and revision `2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`. The environment is validated before OCR. No new recognition option.
 
-Las rutas de estado y venv son nuevas (`/content/nasa-table1-header-v1*`) para no sobrescribir la prueba anterior. Se verifican y reutilizan pesos originales si existen; si no, se descargan las mismas revisiones mediante el flujo original. Una incompatibilidad se informa y detiene; no se cambia version/configuracion.
+State and venv paths are new (`/content/nasa-table1-header-v1*`) to avoid overwriting the previous trial. Original weights are verified and reused if present; otherwise, the same revisions are downloaded through the original workflow. An incompatibility is reported and stops execution; version/configuration is not changed.
 
-Referencia y expectativa Table1 quedan solo en `acceptance-local.json`; no se suben al OCR. Paquete: `code/packages/table1-header-v1/upload.zip`; plan y crop de inspeccion al lado. Historial y verificacion de integridad en `analytics/results/sic12_page3/table1-header-v1-preparation/`.
+The Table1 reference and expectation remain only in `acceptance-local.json`; they are not uploaded to OCR. Package: `code/packages/table1-header-v1/upload.zip`; plan and inspection crop beside it. History and integrity verification in `analytics/results/sic12_page3/table1-header-v1-preparation/`.
 
-## Aceptacion acordada, aun pendiente de resultados
+## Agreed acceptance, still awaiting results
 
-- Rótulo visible completo en ROI y reconocido en texto nativo como Table1/Table 1 (espacios/case tolerados); no deducir numeracion por orden.
-- Caja del candidato en render original: `x=x0+xn*831`, `y=y0+yn*76`; IoU>=0.50, cobertura de referencia ampliada 2px>=0.90, error inverso<=1px. Sin segundo escalado.
-- Descripcion coincidente y parentesco `p0-b2`/`p0-b2-c0`/`p0-b2-c1`; cercania sola no basta. Referencias del cuerpo, varios destinos o candidatos contradictorios quedan rechazados/ambiguos y conservados.
-- Si se combinan rotulo y descripcion, no se inventa una caja de glifos: evaluar lineas nativas y revisar visualmente si no tienen transcripcion individual, conforme al incremento anterior. No aceptar la caja combinada si falla geometria.
-- Mantener intactos ZIP/paquetes/resultados anteriores, referencia y Table2 aceptada. Un fallo no autoriza nueva zona, motor o reintento.
+- Complete label visible in ROI and recognized in native text as Table1/Table 1 (spaces/case tolerated); do not infer numbering from order.
+- Candidate box in original render: `x=x0+xn*831`, `y=y0+yn*76`; IoU>=0.50, coverage of 2px-expanded reference>=0.90, inverse error<=1px. No second scaling.
+- Matching description and parentage `p0-b2`/`p0-b2-c0`/`p0-b2-c1`; proximity alone is insufficient. Body references, multiple targets or contradictory candidates remain rejected/ambiguous and preserved.
+- If label and description are combined, do not invent a glyph box: evaluate native lines and visually review if they lack individual transcription, as in the previous increment. Do not accept the combined box if it fails geometry.
+- Keep previous ZIPs/packages/results, reference and accepted Table2 intact. A failure does not authorize a new region, engine or retry.
 
-Las pruebas actuales verifican preparacion y lanzador sin OCR (CLI ficticio); no demuestran reconocimiento real ni compatibilidad acreditada del nuevo entorno remoto hasta tu ejecucion.
+Current tests verify preparation and launcher without OCR (fake CLI); they do not demonstrate real recognition or established compatibility of the new remote environment until your run.

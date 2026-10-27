@@ -1,127 +1,127 @@
-# A06 Síntesis del piloto y prioridades de revisión
+# A06 Pilot synthesis and review priorities
 
-24 de octubre de 2026. Estudio descriptivo/comparativo de la página física3 de
-SiC12.pdf, con preguntas C01 conservadas. A03,A04,A05 se ejecutaron y verificaron
-secuencialmente con sus decisiones aprobadas; A06 sintetiza sus resultados.
-Las propuestas futuras de este informe no se ejecutan ni quedan autorizadas.
+October 24, 2026. Descriptive/comparative study of physical page3 of
+SiC12.pdf, preserving C01 questions. A03,A04,A05 were executed and verified
+sequentially with their approved decisions; A06 synthesizes their results.
+Future proposals in this report are neither executed nor authorized.
 
-## Respuestas a las cinco preguntas C01
+## Answers to the five C01 questions
 
-### 1 Qué aporta cada parser por categoría
+### 1 What each parser contributes by category
 
-TATR aporta dos candidatas tabulares aisladas, sin incorporar figuras/captions.
-MinerU separa varias regiones que LM mezcla y ofrece categorías explícitas de
-caption, ecuación, encabezado y página. LM conserva candidatas útiles de tabla,
-texto y título, clase list y rótulos separados, junto con cajas parciales o
-mezcladas. Son aportes observados en esta página, no un ganador global.
+TATR contributes two isolated table candidates, without including figures/captions.
+MinerU separates several regions that LM mixes and offers explicit caption,
+equation, header and page categories. LM retains useful table,
+text and title candidates, list class and separate labels, alongside partial or
+mixed boxes. These are contributions observed on this page, not a global winner.
 
-E02 contextualiza las salidas: D05 LM23,TATR2,MinerU19. Las19hojas MinerU no son
-19objetosGT. Una clase no soportada no significa que el contenido se haya perdido.
-Véanse informes E02 y A05, y matriz A05 con etiquetas originales recuperables.
+E02 contextualizes the outputs: D05 LM23,TATR2,MinerU19. The 19 MinerU leaves are not
+19 GT objects. An unsupported class does not mean the content was lost.
+See E02 and A05 reports, and the A05 matrix with recoverable original labels.
 
-### 2 Dónde coinciden o difieren
+### 2 Where they agree or differ
 
-A03 registra18asociaciones visuales,44parejas únicas entre modelos y132medidas
-S01. Hay casos de alcance semejante (título y ciertos pies/textos), uno-a-varios
-en los ítems numerados y cajas LM de alcance multirregión. En tablas, las cajas
-TATR se contienen en los cuerpos MinerU; esto describe geometría, no perfección.
+A03 records 18 visual associations, 44 unique cross-model pairs and 132 S01
+measures. There are similar-scope cases (title and certain captions/texts), one-to-many
+cases in numbered items and LM boxes with multiregion scope. For tables, TATR
+boxes are contained within MinerU bodies; this describes geometry, not perfection.
 
-Nueve casos conservan ambigüedad y19parejas tienen distinta categoría comparable;
-ningún número es un conteo de errores confirmados. No se forzó asignación
-uno-a-uno, se descartó una pareja por clase o se eligió una caja por confianza.
-Evidencia: informe A03, asociaciones y auditoría geométrica Decimal independiente.
+Nine cases retain ambiguity and 19 pairs have different comparable categories;
+neither number is a confirmed error count. No one-to-one assignment was forced,
+pair discarded by class or box chosen by confidence.
+Evidence: A03 report, associations and independent Decimal geometric audit.
 
-### 3 Qué aparece mezclado o recortado
+### 3 What appears mixed or clipped
 
-Se conservan las mezclas superiores LM y r21 multibloque ya documentadas en Q02.
-Bajo el criterio aprobado, ambos crops TATR incumplen bordes estructurales;
-MinerU superior corta parte de regla inferior y la extensión estricta del borde
-inferior queda indeterminada. Los captions de tablas MinerU excluyen Table1/Table2,
-por lo que no cumplen rótulo+descripción en el mismo crop. El crop p0-b12 incorpora
-un fragmento direction. del párrafo anterior.
+The previously documented upper LM mixtures and multiblock r21 from Q02 are retained.
+Under the approved criterion, both TATR crops fail structural borders;
+upper MinerU cuts part of the lower rule and the strict extent of the lower
+border remains indeterminate. MinerU table captions exclude Table1/Table2,
+so they do not satisfy label+description in the same crop. Crop p0-b12 includes
+a direction. fragment from the preceding paragraph.
 
-Los23registros LM no exportaron crops: no se certifica su utilidad ni se crean
-crops nuevos como si fueran nativos. Se inspeccionaron21crops reales byte-idénticos
-a los ZIP. Completitud visible de una página no es completitud del documento ni
-transcripción OCR correcta. Evidencia individual y muestras de bordes en A04.
+The 23 LM records exported no crops: their usefulness is not certified and no new
+crops are created as if native. 21 actual crops byte-identical to the ZIPs
+were inspected. Visible completeness of a page is not document completeness or
+correct OCR transcription. Individual evidence and border samples in A04.
 
-**Corrección interpretativa:** la secuencia commercial FE software / Abaqus...
-sugiere que el bloque superior derecho continúa el ítem2 de la izquierda. El
-juicio anterior de r12 list como error confirmado era excesivo. Permanece como
-hipótesis de continuidad, sin validar orden de lectura o cambiar datos previos.
-Esta matización A04 tiene prioridad al interpretar A02/Q02; A05 la conserva.
+**Interpretive correction:** the commercial FE software / Abaqus... sequence
+suggests that the upper-right block continues left item2. The
+previous judgment of r12 list as a confirmed error was excessive. It remains a
+continuity hypothesis, without validating reading order or changing previous data.
+This A04 qualification takes priority when interpreting A02/Q02; A05 preserves it.
 
-No se realizó una auditoría completa de omisiones: no hay referencia geométrica
-revisada. No se presentan recall, precisión ni porcentajes de calidad.
+No complete omission audit was performed: there is no reviewed geometric
+reference. No recall, precision or quality percentages are presented.
 
-### 4 Si hay evidencia para combinar herramientas
+### 4 Whether there is evidence for combining tools
 
-Hay alternativas diagnósticas locales en tres ejes separados: geometría,
-categoría explícita y crop. Separar mejor una figura o emitir equation aporta
-información, pero no demuestra que un ensemble supere al parser por separado.
-En tablas y captions de tablas subsisten limitaciones frente al criterio de
-utilidad. No se ha obtenido una solución completa simplemente por combinar
-conteos o por acuerdo de las predicciones.
+There are local diagnostic alternatives on three separate axes: geometry,
+explicit category and crop. Better separating a figure or emitting equation contributes
+information, but does not demonstrate that an ensemble outperforms a parser alone.
+Limitations against the usefulness criterion remain in tables and table
+captions. A complete solution has not been obtained merely by combining
+counts or through prediction agreement.
 
-No se propone ganador global ni regla automática de conciliación. Tampoco se
-midió reducción de trabajo manual, coste o latencia comparable: tiempos históricos
-tienen alcances distintos y consumo no disponible no se imputa. Evidencia: matriz
-y reporte A05, límites de comparabilidad Q03.
+No global winner or automatic reconciliation rule is proposed. Nor was
+reduction of manual work, cost or comparable latency measured: historical timings
+have different scopes and unavailable resource consumption is not imputed. Evidence: A05
+matrix and report, Q03 comparability limits.
 
-### 5 Qué necesita revisión humana y más evidencia
+### 5 What requires human review and more evidence
 
-Prioridades acordes a C01, sin atribuir tasas de error ni tiempos inventados:
+Priorities consistent with C01, without attributing invented error rates or times:
 
-1. **Omisiones:** si se quieren afirmar, acordar primero referencia revisada;
-   ni la coincidencia de modelos ni el conteo visual19 la sustituyen.
-2. **Recortes:** revisar rótulos de captions y bordes de las dos tablas, y el
-   fragmento previo en p0-b12. El borde inferior MinerU conserva incertidumbre.
-   Exportar o corregir crops sería otro incremento acordado, no hecho aquí.
-3. **Mezclas:** conservar y revisar LM r13/r16/r18/r19/r22 y r21 frente al alcance
-   de región deseado. No eliminarlas por una regla de área, confianza o IoU.
-4. **Contexto y clasificación:** verificar continuidad entre columnas y granularidad
-   de lista antes de calificar r12 o los text MinerU como errores semánticos.
-5. **Generalización:** proponer, sin ejecutar, un ensayo sobre12.pdf completo y
-   después1→2→4→8→14papersSiC, revisando diversidad, errores y coste en cada paso.
-   Más páginas requerirán acuerdo; cada nueva asignaciónColabT4 autorización.
+1. **Omissions:** to assert them, first agree on a reviewed reference;
+   neither model agreement nor the visual count19 replaces it.
+2. **Crops:** review caption labels and the two tables' borders, and the
+   preceding fragment in p0-b12. The lower MinerU border retains uncertainty.
+   Exporting or correcting crops would be another agreed increment, not done here.
+3. **Mixtures:** preserve and review LM r13/r16/r18/r19/r22 and r21 against the desired
+   region scope. Do not remove them through an area, confidence or IoU rule.
+4. **Context and classification:** verify cross-column continuity and list
+   granularity before labeling r12 or MinerU text as semantic errors.
+5. **Generalization:** propose, without executing, a trial on the complete12.pdf and
+   then1→2→4→8→14 SiC papers, reviewing diversity, errors and cost at each step.
+   More pages require agreement; each new ColabT4 allocation requires authorization.
 
-## Qué se comprobó y qué permanece abierto
+## What was checked and what remains open
 
-Hechos descriptivos: registros, categorías, disponibilidad y estados exportados.
-Juicios visuales: mezclas, contenido visible de crops y cumplimiento de criterios
-aprobados, atribuidos al asistente. Hipótesis: continuidad de lista y potencial
-complementariedad. Resultados técnicamente validados: hashes, referencias tipadas,
-alcance de parejas y aritmética S01; no exactitud de detección de los parsers.
+Descriptive facts: exported records, categories, availability and statuses.
+Visual judgments: mixtures, visible crop content and compliance with approved
+criteria, attributed to the assistant. Hypotheses: list continuity and potential
+complementarity. Technically validated results: hashes, typed references,
+pair scope and S01 arithmetic; not parser detection accuracy.
 
-Continúan abiertos, como límites científicos y no como tareas ejecutadas:
-omisiones sistemáticas, OCR/LaTeX, borde estrictamente indeterminado, crops LM
-ausentes, unidad semántica que cruza columnas, beneficio de integración y calidad
-de la colección. Se conserva cada incertidumbre en lugar de inventar umbrales,
-GT o una caja ganadora.
+The following remain open as scientific limitations, not executed tasks:
+systematic omissions, OCR/LaTeX, strictly indeterminate border, absent LM crops,
+semantic unit crossing columns, integration benefit and collection
+quality. Each uncertainty is preserved instead of inventing thresholds,
+GT or a winning box.
 
-## Evidencia trazable y cierre de las etapas autorizadas
+## Traceable evidence and closure of authorized stages
 
-Informes separados:
+Separate reports:
 
 - A03: `analytics/reports/sic12_page3-a03-associations.md`.
 - A04: `analytics/reports/sic12_page3-a04-completeness.md`.
 - A05: `analytics/reports/sic12_page3-a05-complementarity.md`.
-- A06: este informe; síntesis y aprobaciones registradas en
+- A06: this report; synthesis and approvals recorded in
   `analytics/results/sic12_page3/a06-20261024/`.
 
-Cada carpeta A03/A04/A05 conserva manifiesto, estado y verificador propio. A03
-incluye44pruebas locales (9nuevas y35previas) y auditoría de132medidas; A04
-verifica48referencias/21crops y muestras de bordes; A05 conserva18casos con tres
-ejes y estados A04 exactos. A06 enlaza esas dependencias y registra acciones
-futuras como execute_now=false. La auditoría final `completion-audit.json` y
-`synthesis-status.json` establecen el estado final, después de comprobar el
-alcance completo del objetivo.
+Each A03/A04/A05 folder preserves its own manifest, status and verifier. A03
+includes 44 local tests (9 new and 35 previous) and an audit of 132 measures; A04
+verifies 48 references/21 crops and border samples; A05 preserves 18 cases with three
+axes and exact A04 statuses. A06 links those dependencies and records future
+actions as execute_now=false. The final `completion-audit.json` audit and
+`synthesis-status.json` establish final status after checking the
+objective's full scope.
 
-No se ejecutaron E03, nuevas inferencias, conciliación automática, ampliaciones,
-instalaciones o asignacionesColab en estas etapas. No se modificaron predicciones,
-ZIP ni datasets anteriores; las revisiones interpretativas quedan documentadas
-con evidencia nueva y mantienen los registros históricos.
+E03, new inference, automatic reconciliation, expansions,
+installations or Colab allocations were not executed in these stages. Predictions,
+ZIPs and previous datasets were not modified; interpretive revisions are documented
+with new evidence and preserve historical records.
 
-Se cierra el trabajo autorizado A03–A06 con respuestas parciales fundamentadas,
-sin confundir cierre del piloto con validación de los parsers. Cualquier ensayo,
-referencia o cambio de exportación posterior necesita su acuerdo específico.
+Authorized A03–A06 work closes with substantiated partial answers,
+without confusing pilot closure with parser validation. Any subsequent trial,
+reference or export change requires its specific agreement.

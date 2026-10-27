@@ -1,1 +1,1 @@
-"""Ensayo independiente Table Transformer: detección de tablas en una imagen."""
+"""Independent Table Transformer trial: table detection in an image."""

@@ -1,8 +1,8 @@
 (()=>{'use strict';const $=id=>document.getElementById(id),data=JSON.parse($('comparison-data').textContent);
-const frames=[$('baseline'),$('docling')],names={main:'Principal',notes:'Notas',bibliography:'Bibliografía',metadata:'Metadatos',editorial_navigation:'Editorial y navegación',pending_structures:'Pendientes'};
+const frames=[$('baseline'),$('docling')],names={main:'Main',notes:'Notes',bibliography:'Bibliography',metadata:'Metadata',editorial_navigation:'Editorial and navigation',pending_structures:'Pending'};
 let state={page:data.pages.includes(3)?3:data.pages[0],route:'main',step:null};
 for(const n of data.pages)$('page').add(new Option(n,n));for(const r of data.routes)$('route').add(new Option(names[r]||r,r));
-function update(){ $('page').value=state.page;$('route').value=state.route;const r=data.comparison.find(r=>r.page===state.page&&r.route===state.route);$('stats').textContent=r?`${r.changed_positions} de ${r.content} posiciones de contenido distintas · ${r.reversed_pairs} de ${r.comparable_pairs} pares invertidos respecto del baseline · sin GT de lectura`:'';}
+function update(){ $('page').value=state.page;$('route').value=state.route;const r=data.comparison.find(r=>r.page===state.page&&r.route===state.route);$('stats').textContent=r?`${r.changed_positions} of ${r.content} different content positions · ${r.reversed_pairs} of ${r.comparable_pairs} reversed pairs relative to baseline · no reading-order GT`:'';}
 function broadcast(skip=null){const msg={kind:'trial-control',page:state.page,route:state.route};if(state.step!==undefined)msg.step=state.step;for(const f of frames)if(f!==skip)f.contentWindow.postMessage(msg,'*');}
 for(const id of ['page','route'])$(id).addEventListener('change',()=>{state={page:Number($('page').value),route:$('route').value,step:null};update();broadcast();});
 $('display').addEventListener('change',()=>{const d=$('display').value;for(const name of ['baseline','docling'])$(name+'-panel').hidden=d!=='both'&&d!==name;$('panels').className='panels'+(d==='both'?'':' single');broadcast();});

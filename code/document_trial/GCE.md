@@ -1,25 +1,18 @@
-# Parsing de un PDF en Google Compute Engine
+# Parsing a PDF on Google Compute Engine
 
-Preparación autorizada 26oct2026. Solo el usuario crea recursos y ejecuta parsing.
-Primer paquete: **10.pdf, nueve páginas, tres parsers**. Configuraciones, pesos,
-Python/Torch/CUDA y render200dpi originales. No conciliación automática.
+Preparation authorized October 26, 2026. Only the user creates resources and runs parsing. First package: **10.pdf, nine pages, three parsers**. Original configurations, weights, Python/Torch/CUDA, and 200 dpi rendering. No automatic reconciliation.
 
-El paquete es nuevo y declara USER_ONLY_GCE_SSH_T4; no simula ser Colab. Conserva
-/content para reutilizar los adaptadores originales sin editar rutas de inferencia.
-Las únicas fuentes originales modificadas en el ZIP derivado son las guardas y
-atribución de document_trial/remote.py y worker.py; originales intactos. Manifiestos
-y platform-change.json registran baseline y cambios.
+The package is new and declares USER_ONLY_GCE_SSH_T4; it does not pretend to be Colab. It preserves /content to reuse original adapters without editing inference paths. The only original sources modified in the derived ZIP are the guards and attribution in document_trial/remote.py and worker.py; originals remain intact. Manifests and platform-change.json record the baseline and changes.
 
-## 1. Subir un archivo a Cloud Shell, antes de crear la VM
+## 1. Upload a file to Cloud Shell before creating the VM
 
-Desde el menú **Upload file / Subir archivo** de Cloud Shell sube:
+From Cloud Shell's **Upload file / Subir archivo** menu, upload:
 
 `C:\Users\HP Victus\Desktop\nasa_research\code\packages\sic-gce-v1\sic-gce-v1-paper10.tar.gz`
 
-También puedes usar gcloud instalado en WSL, con acceso al proyecto; no es
-necesario instalarlo para la opción Cloud Shell. No pegues credenciales al chat.
+You can also use gcloud installed in WSL with project access; installation is unnecessary for the Cloud Shell option. Do not paste credentials into chat.
 
-En Cloud Shell, desde la carpeta que contiene el archivo:
+In Cloud Shell, from the folder containing the file:
 
 ```bash
 tar -xzf sic-gce-v1-paper10.tar.gz
@@ -29,152 +22,99 @@ export GCE_ZONE=us-central1-a
 export GCE_VM=nasa-parsing-t4
 ```
 
-El TAR solo debe extraerse una vez en un destino nuevo. SHA256 publicado junto
-al archivo local en `.tar.gz.sha256`; compara `sha256sum ../sic-gce-v1-paper10.tar.gz`
-contra ese valor si necesitas verificar transferencia. El envío vuelve a verificar
-ZIP, SHA, miembros y plan antes de contactar la VM.
+Extract the TAR once only into a new destination. Its SHA256 is published beside the local file in `.tar.gz.sha256`; compare `sha256sum ../sic-gce-v1-paper10.tar.gz` with that value if you need to verify transfer. Submission rechecks the ZIP, SHA, members, and plan before contacting the VM.
 
-## 2. Crear la VM y preparar el sistema
+## 2. Create the VM and prepare the system
 
-**Este comando empieza a generar cargos**: n1-standard-8 (8vCPU/30GB), una T4,
-disco persistente150GB, Ubuntu22.04, instancia estándar sin reinicio automático.
-No usa Spot ni cuenta de servicio dentro de la VM. Tiene una duración máxima4h
-con acción STOP; no es un tope monetario ni garantía de terminar el paper.
+**This command starts incurring charges**: n1-standard-8 (8 vCPU/30 GB), one T4, 150 GB persistent disk, Ubuntu 22.04, standard instance without automatic restart. It uses neither Spot nor a service account within the VM. It has a maximum duration of 4 hours with a STOP action; this is neither a monetary cap nor a guarantee of completing the paper.
 
 ```bash
 bash gce.sh create
 bash gce.sh bootstrap
 ```
 
-Si ya extrajiste la primera entrega y create informó que falta `--no-scopes`,
-desde `~/sic-gce-v1` corrige solo el lanzador; no extraigas de nuevo el paquete:
+If you already extracted the first delivery and create reported that `--no-scopes` is missing, correct only the launcher from `~/sic-gce-v1`; do not extract the package again:
 
 ```bash
 sed -i 's/--no-service-account$/--no-service-account --no-scopes/' gce.sh
 bash gce.sh create && bash gce.sh bootstrap
 ```
 
-La omisión impedía crear la VM. `&&` evita intentar bootstrap si create falla.
+The omission prevented VM creation. `&&` avoids attempting bootstrap if create fails.
 
-No repitas create si falla o pierde conexión: inspecciona si existe la VM.
-Cuota no garantiza capacidad. Si aparece RESOURCE_POOL_EXHAUSTED, conservar
-mensaje y decidir zona; no hay búsqueda/reintento automático. Red default/SSH
-y permisos de Compute Engine deben estar disponibles; no se cambian reglas IAM
-ni firewall automáticamente.
+Do not repeat create if it fails or loses connection: check whether the VM exists. Quota does not guarantee capacity. If RESOURCE_POOL_EXHAUSTED appears, retain the message and decide on a zone; there is no automatic search/retry. The default network/SSH and Compute Engine permissions must be available; IAM and firewall rules are not changed automatically.
 
-Bootstrap instala bibliotecas del sistema y driver570-server desde Ubuntu,
-sin modelos ni entornos de parsers. Si falla, conservar mensaje y
-`/content/gce-bootstrap.log`; no repetirlo ni actualizar modelos para sortearlo.
+Bootstrap installs system libraries and the 570-server driver from Ubuntu, without models or parser environments. If it fails, retain the message and `/content/gce-bootstrap.log`; do not repeat it or update models to work around the failure.
 
-Una vez que bootstrap muestre **Bootstrap terminado**, reinicia para cargar driver:
+Once bootstrap displays **Bootstrap terminado** (Bootstrap completed), reboot to load the driver:
 
 ```bash
 gcloud compute ssh "$GCE_VM" --project="$GCE_PROJECT" --zone="$GCE_ZONE" \
   --command='test -f /content/bootstrap-completed && test ! -e /content/gce-claimed && sudo systemctl reboot'
 ```
 
-La conexión SSH puede terminar con código255 por el reinicio. Espera a que la VM
-arranque y comprueba una vez:
+The SSH connection may end with code 255 because of the reboot. Wait for the VM to start and check once:
 
 ```bash
 gcloud compute ssh "$GCE_VM" --project="$GCE_PROJECT" --zone="$GCE_ZONE" \
   --command='nvidia-smi'
 ```
 
-Debe aparecer una sola TeslaT4 y driver>=560.28.03. El servicio comprueba de
-nuevo GPU, driver, metadata de proyecto/VM/zona/ID numérico y al menos60GiB libres antes
-de iniciar. Las comprobaciones originales de cada entorno siguen intactas.
+A single Tesla T4 and driver >=560.28.03 must appear. Before starting, the service rechecks GPU, driver, project/VM/zone/numeric-ID metadata, and at least 60 GiB of free disk space. Original checks for each environment remain intact.
 
-## 3. Enviar el intento una vez
+## 3. Submit the attempt once
 
-Desde `sic-gce-v1` en Cloud Shell:
+From `sic-gce-v1` in Cloud Shell:
 
 ```bash
 bash gce.sh submit package runs/paper10-01
 ```
 
-Genera UUID nuevo, verifica paquete, copia por SCP y crea servicio systemd
-`nasa-parsing-UUID`, sin Restart y con RemainAfterExit para conservar su estado
-al terminar. **Enviado no significa completado**. Puedes
-desconectar SSH/Cloud Shell: el servicio sigue dentro de la VM mientras esta
-permanezca encendida. No depende de una sesión Colab.
+Generates a new UUID, verifies the package, copies through SCP, and creates systemd service `nasa-parsing-UUID`, with no Restart and with RemainAfterExit to retain its state when finished. **Submitted does not mean completed**. You can disconnect SSH/Cloud Shell: the service continues inside the VM while it remains powered on. It does not depend on a Colab session.
 
-No vuelvas a ejecutar submit si tarda, pierde conexión o devuelve error. El
-directorio del intento y `/content/gce-claimed` evitan reutilizarlo. Un error
-ambiguo exige status y revisión del mismo intento, sin nueva inferencia.
+Do not rerun submit if it takes time, loses connection, or returns an error. The attempt directory and `/content/gce-claimed` prevent reuse. An ambiguous error requires status and review of the same attempt, without new inference.
 
-## 4. Consultar progreso
+## 4. Check progress
 
 ```bash
 bash gce.sh status package runs/paper10-01
 ```
 
-Muestra ActiveState/SubState/ExecMainStatus y últimas35 líneas. `active/running`
-puede incluir instalación o descarga; no certifica inferencia. `active/exited`
-significa que el proceso salió y systemd conserva la unidad. Registros detallados en
-`/content/nasa-sic12-document-v1/commands/` y consola en `/content/gce-console.log`.
-`failed` conserva el fallo; no lanza recuperación.
+Displays ActiveState/SubState/ExecMainStatus and the last 35 lines. `active/running` may include installation or download; it does not certify inference. `active/exited` means the process exited and systemd retains the unit. Detailed records are in `/content/nasa-sic12-document-v1/commands/`, and console output is in `/content/gce-console.log`. `failed` retains the failure; it does not launch recovery.
 
-## 5. Descargar y verificar al terminar
+## 5. Download and verify when finished
 
-Cuando el servicio termine:
+When the service finishes:
 
 ```bash
 bash gce.sh collect package runs/paper10-01
 bash gce.sh stop package runs/paper10-01
 ```
 
-collect exige ZIP/sidecar existentes, los descarga una vez y verifica SHA/CRC,
-plan, bundle, UUID, proyecto/VM/zona/ID numérico y estados por página/parser; para completed
-exige identidad/render y archivos nativos requeridos. Guarda backup-verified.json.
-Un respaldo **failed** puede estar técnicamente verificado: no significa éxito
-del parsing. stop revalida los bytes actuales y exige unidad existente y terminada
-(inactive, failed o active/exited por RemainAfterExit)
-antes de detener la VM. También verifica contra Compute Engine que la VM conserva
-el ID numérico ligado antes del envío: recrearla con el mismo nombre bloquea la
-acción. collect nunca detiene; stop nunca vuelve a inferir.
+collect requires an existing ZIP/sidecar, downloads them once, and verifies SHA/CRC, plan, bundle, UUID, project/VM/zone/numeric ID, and page/parser states; for completed status it requires identity/render and required native files. It saves backup-verified.json. A **failed** backup may be technically verified: this does not mean parsing succeeded. stop revalidates the current bytes and requires an existing, terminated unit (inactive, failed, or active/exited through RemainAfterExit) before stopping the VM. It also checks with Compute Engine that the VM retains the numeric ID bound before submission: recreating it with the same name blocks the action. collect never stops; stop never performs inference again.
 
-Resultados en `runs/paper10-01/result.zip`, `result.sha256`, attempt.json,
-backup-verified.json y logs de transferencia. Descarga la carpeta a tu PC mediante
-Cloud Shell antes de borrar nada. Para avisar al agente basta indicar dónde quedó
-el ZIP/sidecar; se verifican offline. No ejecutar document_trial.offline ni el
-reconciliador automáticamente: recepción comparable sigue siendo etapa separada.
+Results are in `runs/paper10-01/result.zip`, `result.sha256`, attempt.json, backup-verified.json, and transfer logs. Download the folder to your PC through Cloud Shell before deleting anything. To notify the agent, indicate where the ZIP/sidecar were saved; they are verified offline. Do not run document_trial.offline or the reconciler automatically: comparable result intake remains a separate stage.
 
-Si collect falla, **no hay permiso implícito para cerrar ni relanzar**. El primer
-fallo de disponibilidad remota no crea receipt-started; tras iniciar descarga,
-ese directorio evita repetirla automáticamente. Conserva parciales y solicita
-revisión. El ZIP solo se publica al finalizar: un archivo presente por sí solo
-no es respaldo verificado.
+If collect fails, **there is no implicit permission to shut down or relaunch**. The first remote-availability failure does not create receipt-started; once download starts, that directory prevents automatic repetition. Retain partial files and request review. The ZIP is published only at completion: a file's presence alone does not establish a verified backup.
 
-## Límite temporal, persistencia y presupuesto
+## Time limit, persistence, and budget
 
-La VM se detiene al alcanzar su límite4h; puede interrumpir instalación o parsing.
-El disco persistente conserva archivos, pero un intento interrumpido puede no
-tener ZIP terminal y no se reanuda/repite automáticamente. No habilitamos el
-servicio al arranque. Reiniciar/arrancar la VM para recuperar archivos no debe
-iniciar parsing; aun así verificar estado antes de intervenir. El límite de
-duración se aplica a la ejecución de VM y no promete presupuesto total de USD50.
+The VM stops when it reaches its 4-hour limit; this may interrupt installation or parsing. The persistent disk retains files, but an interrupted attempt may lack a terminal ZIP and is not resumed/repeated automatically. We do not enable the service at boot. Rebooting/starting the VM to recover files must not start parsing; nevertheless, check its state before intervening. The duration limit applies to VM execution and does not promise a total budget of USD 50.
 
-El almacenamiento persistente y otros recursos pueden seguir generando cargos
-con VM detenida. Tras copiar y verificar resultados en tu PC, puedes eliminar VM
-y disco desde Console; comprueba primero qué recurso estás borrando. Esta guía
-no ejecuta eliminación. No mantener una GPU encendida entre intentos.
+Persistent storage and other resources may continue to incur charges while the VM is stopped. After copying and verifying results on your PC, you can delete the VM and disk from Console; first check which resource you are deleting. This guide does not perform deletion. Do not leave a GPU powered on between attempts.
 
-No reutilizar este /content para otro PDF: revisión de la primera ejecución real
-antes de preparar siguiente incremento. No se ha validado todavía instalación
-ni parsing real en Compute Engine; pruebas offline no acreditan compatibilidad
-real o velocidad de ejecución.
+Do not reuse this /content for another PDF: review the first real execution before preparing the next increment. Neither installation nor actual parsing on Compute Engine has yet been validated; offline tests do not establish actual compatibility or execution speed.
 
-## Fuentes oficiales consultadas
+## Official sources consulted
 
-- [Crear N1 con GPU T4](https://docs.cloud.google.com/compute/docs/gpus/create-gpu-vm-general-purpose)
-- [Límite de duración de una VM](https://docs.cloud.google.com/compute/docs/instances/limit-vm-runtime)
-- [Instalación de drivers en Compute Engine](https://docs.cloud.google.com/compute/docs/gpus/install-drivers-gpu)
-- [Drivers NVIDIA en Ubuntu Server](https://ubuntu.com/server/docs/nvidia-drivers-installation/)
-- [Requisitos CUDA12.6](https://docs.nvidia.com/cuda/archive/12.6.0/cuda-toolkit-release-notes/index.html)
-- [Precios GPU](https://cloud.google.com/products/compute/gpus-pricing)
+- [Create an N1 VM with a T4 GPU](https://docs.cloud.google.com/compute/docs/gpus/create-gpu-vm-general-purpose)
+- [VM duration limit](https://docs.cloud.google.com/compute/docs/instances/limit-vm-runtime)
+- [Installing drivers on Compute Engine](https://docs.cloud.google.com/compute/docs/gpus/install-drivers-gpu)
+- [NVIDIA drivers on Ubuntu Server](https://ubuntu.com/server/docs/nvidia-drivers-installation/)
+- [CUDA 12.6 requirements](https://docs.nvidia.com/cuda/archive/12.6.0/cuda-toolkit-release-notes/index.html)
+- [GPU pricing](https://cloud.google.com/products/compute/gpus-pricing)
 
-## Preparación local adicional (offline, no ejecutar para el paquete entregado)
+## Additional local preparation (offline; do not run for the delivered package)
 
 ```bash
 PYTHONPATH=code python3 -B -m document_trial.gce_package \
@@ -183,5 +123,4 @@ PYTHONPATH=code python3 -B -m document_trial.gce_package \
   --release code/packages/ARCHIVO_NUEVO.tar.gz
 ```
 
-Nuevos destinos obligatorios. No reconstruye ni toca ZIP originales, no descarga
-pesos y no crea VM. Su uso para otros PDFs requiere decisión de alcance posterior.
+New destinations are required. This neither rebuilds nor touches original ZIPs, downloads weights, nor creates a VM. Use for other PDFs requires a later scope decision.

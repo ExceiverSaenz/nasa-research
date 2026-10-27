@@ -3,40 +3,40 @@
   'use strict';
   const data=JSON.parse(document.getElementById('data-model').textContent);
   const $=id=>document.getElementById(id),svgNS='http://www.w3.org/2000/svg';
-  const category={text:'Texto',title:'Título',figure:'Figura',table:'Tabla',caption:'Caption',equation:'Ecuación',margin:'Margen',other:'Otros',unresolved:'Ambigua'};
-  const func={main_body:'Cuerpo',metadata:'Metadatos',associated_content:'Contenido asociado',editorial:'Editorial',navigation:'Navegación',unresolved:'Sin resolver'};
+  const category={text:'Text',title:'Title',figure:'Figure',table:'Table',caption:'Caption',equation:'Equation',margin:'Margin',other:'Other',unresolved:'Ambiguous'};
+  const func={main_body:'Body',metadata:'Metadata',associated_content:'Associated content',editorial:'Editorial',navigation:'Navigation',unresolved:'Unresolved'};
   const colorFor={category:Object.fromEntries(Object.keys(category).map(k=>[k,`var(--${k})`])),function:{main_body:'var(--text)',metadata:'var(--title)',associated_content:'var(--figure)',editorial:'var(--equation)',navigation:'var(--margin)',unresolved:'var(--unresolved)'}};
-  const warningText={category_ambiguous:'Categoría ambigua',subtype_unresolved:'Subtipo pendiente',function_ambiguous:'Función ambigua',function_insufficient_evidence:'Función sin evidencia suficiente',retained_native_category_disagreement:'Diferencia entre categoría conciliada y nativa',parser_evidence_category_conflict:'Evidencia contradictoria de parsers',retained_group_member_overlap:'Solapamiento de miembros conservado',member_validation_pending:'Miembros con validación pendiente',container_function_unresolved:'Función de contenedor pendiente',geometry_deferred:'Geometría diferida',inherited_page_geometry_abstention:'Abstención geométrica de página conservada',inherited_page_incident:'Incidente de página conservado',unknown_native_class:'Clase desconocida',retained_classification_abstention:'Abstención de clasificación conservada'};
-  const subtype={paragraph_candidate:'Párrafo candidato',section_heading_candidate:'Encabezado de sección candidato',paper_title:'Título del paper',metadata_candidate:'Metadatos candidatos',bibliographic_reference:'Referencia bibliográfica',caption_candidate:'Caption candidato',native_caption:'Caption nativo',label_and_description:'Rótulo y descripción',display_equation:'Ecuación independiente',multipanel_group:'Grupo multipanel',recurring_margin_candidate:'Margen recurrente candidato',header:'Encabezado',footer:'Pie',page_number:'Número de página',page_footnote:'Nota al pie'};
+  const warningText={category_ambiguous:'Ambiguous category',subtype_unresolved:'Pending subtype',function_ambiguous:'Ambiguous function',function_insufficient_evidence:'Insufficient evidence for function',retained_native_category_disagreement:'Difference between reconciled and native category',parser_evidence_category_conflict:'Conflicting parser evidence',retained_group_member_overlap:'Retained member overlap',member_validation_pending:'Members awaiting validation',container_function_unresolved:'Pending container function',geometry_deferred:'Deferred geometry',inherited_page_geometry_abstention:'Retained page geometry abstention',inherited_page_incident:'Retained page incident',unknown_native_class:'Unknown class',retained_classification_abstention:'Retained classification abstention'};
+  const subtype={paragraph_candidate:'Candidate paragraph',section_heading_candidate:'Candidate section heading',paper_title:'Paper title',metadata_candidate:'Candidate metadata',bibliographic_reference:'Bibliographic reference',caption_candidate:'Candidate caption',native_caption:'Native caption',label_and_description:'Label and description',display_equation:'Display equation',multipanel_group:'Multipanel group',recurring_margin_candidate:'Candidate recurring margin',header:'Header',footer:'Footer',page_number:'Page number',page_footnote:'Footnote'};
   const regions=new Map(data.regions.map(r=>[r.id,r])), evidence=new Map(data.evidence.map(r=>[r.id,r]));
   let page=data.pages.some(p=>p.n===3)?3:data.pages[0].n,mode='category',zoom=1,selected=null,units=[];
   const create=(tag,text,className)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el;};
   const dim=(c,key)=>c[key].value||'unresolved';
-  function setZoom(){ $('stage').style.width=zoom===1?'100%':`${zoom*100}%`;$('zoom').textContent=zoom===1?'Ajustada':`${Math.round(zoom*100)}%`; }
+  function setZoom(){ $('stage').style.width=zoom===1?'100%':`${zoom*100}%`;$('zoom').textContent=zoom===1?'Fitted':`${Math.round(zoom*100)}%`; }
   function showDetail(){
     const u=units.find(x=>x.id===selected),panel=$('detail');panel.replaceChildren();
     const highlighted=new Set(u?.kind==='group'?u.members:[selected]);
     $('overlay').querySelectorAll('rect').forEach(r=>r.classList.toggle('active',highlighted.has(r.dataset.id)));
-    if(!u){panel.append(create('p','No hay objetos en esta página.'));return;}
+    if(!u){panel.append(create('p','There are no objects on this page.'));return;}
     const c=u.classification;
     panel.append(create('h2',`${category[dim(c,'category')]} · ${func[dim(c,'function')]}`));
-    panel.append(create('p',`Categoría conservada: ${u.retained_category||Object.values(c.retained_classification?.member_categories||{}).join(' / ')||'Ver miembros'}`,'label'));
-    if(c.category.candidates.length>1)panel.append(create('p','Categorías candidatas: '+c.category.candidates.map(x=>category[x]||x).join(' / ')));
-    if(c.function.value===null)panel.append(create('p','Funciones candidatas: '+(c.function.candidates.map(x=>func[x]||x).join(' / ')||'Pendiente')));
+    panel.append(create('p',`Retained category: ${u.retained_category||Object.values(c.retained_classification?.member_categories||{}).join(' / ')||'See members'}`,'label'));
+    if(c.category.candidates.length>1)panel.append(create('p','Candidate categories: '+c.category.candidates.map(x=>category[x]||x).join(' / ')));
+    if(c.function.value===null)panel.append(create('p','Candidate functions: '+(c.function.candidates.map(x=>func[x]||x).join(' / ')||'Pending')));
     const st=c.subtype.value?[c.subtype.value]:c.subtype.candidates;
-    panel.append(create('p','Subtipo: '+(st.map(x=>subtype[x]||x).join(' / ')||'Pendiente'),'label'));
-    if(c.warnings.length){const warning=create('div',undefined,'warning-text');warning.append(create('strong','Requiere validación humana'));warning.append(create('div',c.warnings.map(w=>warningText[w.code]||w.code).join(' · ')));panel.append(warning);}
-    panel.append(create('p','Propuesta automática · validación semántica pendiente','label'));
+    panel.append(create('p','Subtype: '+(st.map(x=>subtype[x]||x).join(' / ')||'Pending'),'label'));
+    if(c.warnings.length){const warning=create('div',undefined,'warning-text');warning.append(create('strong','Requires human validation'));warning.append(create('div',c.warnings.map(w=>warningText[w.code]||w.code).join(' · ')));panel.append(warning);}
+    panel.append(create('p','Automatic proposal · semantic validation pending','label'));
     if(u.kind==='group'){
-      panel.append(create('p',`${u.members.length} miembros · cajas originales, sin envolvente nueva`));
-      const caption=regions.get(u.caption_ref);if(caption)panel.append(create('p',caption.text||'Caption sin texto disponible','text'));
-    }else panel.append(create('p',u.text||'Sin texto nativo disponible.','text'));
-    const detail=create('details');detail.append(create('summary','Evidencia y procedencia'));
+      panel.append(create('p',`${u.members.length} members · original boxes, no new enclosing box`));
+      const caption=regions.get(u.caption_ref);if(caption)panel.append(create('p',caption.text||'Caption without available text','text'));
+    }else panel.append(create('p',u.text||'No native text available.','text'));
+    const detail=create('details');detail.append(create('summary','Evidence and provenance'));
     const body=create('div',undefined,'evidence');
-    body.append(create('p','Categoría y estado de la conciliación: '+JSON.stringify(c.retained_classification)));
-    (c.parser_evidence||[]).forEach(e=>{const r=evidence.get(e.record_ref);body.append(create('p',`${r?.parser||'Fuente'} · ${e.retained_source_category} · ${e.kind}`));});
-    body.append(create('p',`${c.reconciliation_decision_refs?.length||0} decisiones previas relacionadas`));
-    body.append(create('p','Reglas: '+c.rule_refs.join(', ')));body.append(create('p',u.id));detail.append(body);panel.append(detail);
+    body.append(create('p','Reconciliation category and status: '+JSON.stringify(c.retained_classification)));
+    (c.parser_evidence||[]).forEach(e=>{const r=evidence.get(e.record_ref);body.append(create('p',`${r?.parser||'Source'} · ${e.retained_source_category} · ${e.kind}`));});
+    body.append(create('p',`${c.reconciliation_decision_refs?.length||0} related previous decisions`));
+    body.append(create('p','Rules: '+c.rule_refs.join(', ')));body.append(create('p',u.id));detail.append(body);panel.append(detail);
   }
   function draw(){
     const p=data.pages.find(p=>p.n===page),all=data.regions.filter(r=>r.page===page);
@@ -45,9 +45,9 @@
     units=[...data.groups.filter(g=>g.page===page).map(g=>({...g,kind:'group'})),...visible];
     if(!units.some(x=>x.id===selected))selected=units.find(x=>x.kind!=='group')?.id||units[0]?.id||null;
     $('page').value=String(page);$('prev').disabled=page===data.pages[0].n;$('next').disabled=page===data.pages.at(-1).n;
-    $('paper').src=p.image;$('paper').alt=`12.pdf · página física ${page} · imagen original`;
+    $('paper').src=p.image;$('paper').alt=`12.pdf · physical page ${page} · original image`;
     $('overlay').setAttribute('viewBox',`0 0 ${p.w} ${p.h}`);$('overlay').replaceChildren();$('unit').replaceChildren();
-    units.forEach((u,i)=>$('unit').add(new Option(`${u.kind==='group'?'Grupo':u.kind==='container'?'Contenedor':'Región'} ${i+1} · ${category[dim(u.classification,'category')]}${u.classification.warnings.length?' ⚠':''}`,u.id)));
+    units.forEach((u,i)=>$('unit').add(new Option(`${u.kind==='group'?'Group':u.kind==='container'?'Container':'Region'} ${i+1} · ${category[dim(u.classification,'category')]}${u.classification.warnings.length?' ⚠':''}`,u.id)));
     $('unit').value=selected||'';
     for(const r of visible){
       const b=r.bbox;if(!Array.isArray(b)||b.length!==4||!b.every(Number.isFinite)||!(0<=b[0]&&b[0]<b[2]&&b[2]<=p.w&&0<=b[1]&&b[1]<b[3]&&b[3]<=p.h))continue;
@@ -59,7 +59,7 @@
       const title=document.createElementNS(svgNS,'title');title.textContent=attrs['aria-label'];rect.append(title);$('overlay').append(rect);
     }
     $('legend').replaceChildren();Object.entries(mode==='category'?category:func).forEach(([key,label])=>{const item=create('span',undefined,'key'),swatch=create('i');swatch.style.background=colorFor[mode][key];item.append(swatch,document.createTextNode(label));$('legend').append(item);});
-    $('status').textContent=`Página ${page} de ${data.pages.length} · ${all.filter(r=>r.kind!=='container').length} regiones conciliadas · ${all.filter(r=>r.kind==='container').length} contenedores · ${data.groups.filter(g=>g.page===page).length} grupos · ${p.w} × ${p.h} px originales`;
+    $('status').textContent=`Page ${page} of ${data.pages.length} · ${all.filter(r=>r.kind!=='container').length} reconciled regions · ${all.filter(r=>r.kind==='container').length} containers · ${data.groups.filter(g=>g.page===page).length} groups · ${p.w} × ${p.h} original px`;
     setZoom();showDetail();
   }
   data.pages.forEach(p=>$('page').add(new Option(String(p.n),p.n)));

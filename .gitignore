@@ -46,3 +46,4 @@ token*.json
 /Tensile_Properties_of_Sub-sized_Specimens_papers/
 /demo/integration_structure/run/
 /demo/integration_structure/runs/
+/demo/integration_structure/audit/

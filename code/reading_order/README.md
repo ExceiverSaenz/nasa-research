@@ -1,49 +1,49 @@
-# Orden documental MVP v1
+# Document order MVP v1
 
-## Papel actual de esta versión
+## Current role of this version
 
-Readingv1 es baseline histórico, con calidad insuficiente señalada en12.pdf; no es
-el recorrido activo. Docling geométrico y [document_pipeline](../document_pipeline/README.md)
-conectan estructura/semántica/recorrido en15 papers. Inventario/cápsulas/refs originales
-siguen conservados y estas utilidades se reutilizan sin cambios de procesamiento.
-No regenerar readingv1 ni confundir sus cifras con la salida canónica actual.
+Readingv1 is a historical baseline, with insufficient quality noted on 12.pdf; it is not
+the active traversal. Geometric Docling and [document_pipeline](../document_pipeline/README.md)
+connect structure/semantics/traversal in 15 papers. Original inventory/capsules/refs
+remain preserved and these utilities are reused without processing changes.
+Do not regenerate readingv1 or confuse its counts with the current canonical output.
 
-Capa offline aditiva sobre `functional-classification-reconciled-v2`. No ejecuta
-clasificadores, parsers, OCR ni modelos. No modifica entradas ni acepta sobrescribir
-la carpeta de salida. Diseño y parámetros congelados en
+Additive offline layer over `functional-classification-reconciled-v2`. Does not run
+classifiers, parsers, OCR or models. Does not modify inputs or allow overwriting
+the output folder. Design and parameters frozen in
 `analytics/analyses/collection/reading-order-reconciled-mvp-v1-{design,plan}.md`.
 
-`engine.order_document` conserva cada unidad original en `inventory`, propone rutas
-documentales y distingue `precedes`, `next_in_route` y `paragraph_continues`.
-`layout.py` aplica XY-cut recursivo local y grafo acíclico determinista. Los conflictos
-conservan restricciones suspendidas y alternativas; fallback no equivale a certeza.
-Captions preceden al cuerpo solo en asociaciones existentes utilizables. Contenido
-compartido aparece una vez; otras visitas son referencias.
+`engine.order_document` preserves each original unit in `inventory`, proposes document
+routes and distinguishes `precedes`, `next_in_route` and `paragraph_continues`.
+`layout.py` applies local recursive XY-cut and a deterministic acyclic graph. Conflicts
+preserve suspended constraints and alternatives; fallback is not equivalent to certainty.
+Captions precede the body only in usable existing associations. Shared
+content appears once; other visits are references.
 
-Los hijos sin caja permanecen como referencias diferidas sin orden individual ni
-coordenadas imputadas; sus contenedores se conservan. Las páginas abstendidas siguen
-abstendidas. La revisión semántica de todas las decisiones queda `after_full_mvp`.
+Children without boxes remain deferred references without individual order or
+imputed coordinates; their containers are preserved. Abstained pages remain
+abstained. Semantic review of all decisions remains `after_full_mvp`.
 
-## Artefactos
+## Artifacts
 
-- `export.py`: verifica hashes de entradas, exporta JSON por paper, resumen y cola.
-- `view.py`: genera sitio local responsive de 12.pdf usando copias idénticas de los
-  PNG originales; `viewer.html/css/js` sincronizan cajas, lista y flechas.
+- `export.py`: verifies input hashes, exports per-paper JSON, summary and queue.
+- `view.py`: generates a responsive local site for 12.pdf using identical copies of the
+  original PNGs; `viewer.html/css/js` synchronize boxes, list and arrows.
 
 - JSON: `analytics/results/sic_collection/reading-order-mvp-v1/`.
-- Sitio: `analytics/results/sic12_document/reading-order-mvp-v1-view/index.html`.
-- Informe: `analytics/reports/sic-reading-order-mvp-v1.md`.
+- Site: `analytics/results/sic12_document/reading-order-mvp-v1-view/index.html`.
+- Report: `analytics/reports/sic-reading-order-mvp-v1.md`.
 
-## Verificación offline
+## Offline verification
 
-Desde la raíz, con `PYTHONPATH=code`:
+From the root, with `PYTHONPATH=code`:
 
 ```text
 python -B -m unittest reading_order.test_engine reading_order.test_io -v
 node code/reading_order/test_view.js analytics/results/sic12_document/reading-order-mvp-v1-view/index.html
 ```
 
-`test_view.js` simula DOM y navegación; no sustituye inspección visual en navegador.
-La exportación de colección ya registrada no debe repetirse por rutina. Cobertura
-del inventario, posiciones propuestas, abstenciones y advertencias son descriptivas;
-no miden exactitud frente a GT ni validación humana.
+`test_view.js` simulates DOM and navigation; it does not replace visual browser inspection.
+The recorded collection export must not be routinely repeated. Inventory
+coverage, proposed positions, abstentions and warnings are descriptive;
+they do not measure accuracy against GT or human validation.

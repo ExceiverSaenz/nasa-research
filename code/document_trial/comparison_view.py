@@ -137,21 +137,21 @@ def safe_json(value):
     return json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
 
 
-HTML = '''<!doctype html><html lang="es"><head><meta charset="utf-8">
+HTML = '''<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>12.pdf · Comparación de segmentación</title><link rel="stylesheet" href="comparison_view.css"></head>
-<body><header><div class="brand"><b>12.pdf</b><span>Comparación de segmentación</span></div>
-<nav aria-label="Página"><button id="prev" aria-label="Página anterior">←</button><select id="page" aria-label="Página"></select><button id="next" aria-label="Página siguiente">→</button></nav>
+<title>12.pdf · Segmentation comparison</title><link rel="stylesheet" href="comparison_view.css"></head>
+<body><header><div class="brand"><b>12.pdf</b><span>Segmentation comparison</span></div>
+<nav aria-label="Page"><button id="prev" aria-label="Previous page">←</button><select id="page" aria-label="Page"></select><button id="next" aria-label="Next page">→</button></nav>
 <div class="zoom"><label for="zoom">Zoom</label><input id="zoom" type="range" min="100" max="250" step="25" value="100"><output id="zoomValue">100%</output></div>
-<button id="all">Ver las cuatro</button></header>
-<div class="workspace"><aside><section><h2>Vistas</h2><div id="viewOptions"></div></section>
-<section><h2>Capas</h2><label><input id="boxes" type="checkbox" checked>Regiones</label><label><input id="labels" type="checkbox">Identificadores</label><label><input id="containers" type="checkbox">Contenedores nativos</label><label><input id="groups" type="checkbox" checked>Vínculos aceptados</label><label><input id="historical" type="checkbox" checked>Recuperación histórica</label><label><input id="alternatives" type="checkbox">Alternativas en conciliada</label><div id="types" class="typeOptions"></div></section>
-<section><h2>Títulos y subsecciones</h2><p class="hint">Niveles nativos de MinerU. Pertenencia de párrafos y orden de lectura sin validar.</p><div id="outline"></div></section>
-<section><h2>Grupos aceptados</h2><div id="groupList"></div></section>
-<details><summary>Advertencias de página</summary><ul id="warnings"></ul></details></aside>
+<button id="all">Show all four</button></header>
+<div class="workspace"><aside><section><h2>Views</h2><div id="viewOptions"></div></section>
+<section><h2>Layers</h2><label><input id="boxes" type="checkbox" checked>Regions</label><label><input id="labels" type="checkbox">Identifiers</label><label><input id="containers" type="checkbox">Native containers</label><label><input id="groups" type="checkbox" checked>Accepted links</label><label><input id="historical" type="checkbox" checked>Historical recovery</label><label><input id="alternatives" type="checkbox">Alternatives in reconciled view</label><div id="types" class="typeOptions"></div></section>
+<section><h2>Titles and subsections</h2><p class="hint">Native MinerU levels. Paragraph membership and reading order remain unvalidated.</p><div id="outline"></div></section>
+<section><h2>Accepted groups</h2><div id="groupList"></div></section>
+<details><summary>Page warnings</summary><ul id="warnings"></ul></details></aside>
 <main><div id="summary" class="summary" aria-live="polite"></div><div id="panes" class="panes"></div>
-<section class="inspector" aria-live="polite"><div class="inspectorHead"><h2 id="detailTitle">Selecciona una región</h2><button id="clear">Limpiar selección</button></div><div id="detail"><p class="hint">Pulsa una caja, un título o un grupo para ver su texto, origen y estado.</p></div></section>
-<footer>Solo visualización de salidas existentes · Texto nativo, sin nueva validación OCR · TATR localiza tablas; no produce segmentación de texto ni figuras.</footer></main></div>
+<section class="inspector" aria-live="polite"><div class="inspectorHead"><h2 id="detailTitle">Select a region</h2><button id="clear">Clear selection</button></div><div id="detail"><p class="hint">Click a box, title, or group to view its text, source, and status.</p></div></section>
+<footer>Display of existing outputs only · Native text, without new OCR validation · TATR locates tables; it does not segment text or figures.</footer></main></div>
 <script id="view-data" type="application/json">__DATA__</script><script src="comparison_view.js"></script></body></html>'''
 
 

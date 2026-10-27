@@ -1,111 +1,111 @@
-# Estado vigente: parsing operativo de la colección SiC
+# Current status: operational parsing of the SiC collection
 
-Fuente narrativa canónica. Complementa [study_progress.json](../../analytics/config/study_progress.json)
-y el [handoff](session-handoff.md). El diagnóstico inicial de una página y los planes
-previos son historia; no describen por sí solos el alcance actual.
+Canonical narrative source. Complements [study_progress.json](../../analytics/config/study_progress.json)
+and the [handoff](session-handoff.md). The initial single-page diagnosis and previous plans
+are history; they do not by themselves describe the current scope.
 
-## Resultado activo
+## Active result
 
-`analytics/results/sic_collection/parsing-operational-v1/` es la salida canónica vigente
-de **esta etapa de parsing**. [Índice de vistas/JSON](../../analytics/results/sic_collection/parsing-operational-v1/index.html).
-Entrada reproducible: `code/document_pipeline/pipeline.py`. No sustituye los parsers
-remotos ni modifica sus ZIP, resultados, texto, cajas o clasificaciones originales.
+`analytics/results/sic_collection/parsing-operational-v1/` is the current canonical output
+of **this parsing stage**. [View/JSON index](../../analytics/results/sic_collection/parsing-operational-v1/index.html).
+Reproducible entry point: `code/document_pipeline/pipeline.py`. It does not replace remote
+parsers or modify their ZIPs, results, text, boxes or original classifications.
 
-Se ejecutaron **15 papers y 397 páginas**, con idénticos código/configuración y cero
-overrides manuales. En12.pdf se reutilizaron Docling y evidencia nativa verificados;
-en los otros14 se aplicaron el mismo componente geométrico y extracción nativa PDF.
-No se repitieron parsers, OCR, modelos neuronales ni GROBID. No es solo una prueba de12.pdf.
+**15 papers and 397 pages** were processed, with identical code/configuration and zero
+manual overrides. Verified Docling and native evidence were reused for 12.pdf;
+the same geometric component and native PDF extraction were applied to the other 14.
+Parsers, OCR, neural models and GROBID were not rerun. This is not only a test of 12.pdf.
 
-| Elemento | Estado y fuente |
+| Item | Status and source |
 | --- | --- |
-| Conciliación | Implementada con pendientes; `autonomous-reconciliation-v1` preservada |
-| Clasificación funcional | v2 sobre unidades conciliadas; parsers como evidencia. v1 por fuentes es intento histórico de alcance incorrecto |
-| Reading v1 | Baseline histórico; calidad insuficiente detectada en12.pdf |
-| Docling | Componente de orden geométrico, baseline aprobado con errores; no se ejecutó el pipeline neuronal completo de Docling |
-| Evidencia nativa | PyMuPDF, estilos, XMP, outlines, enlaces/estructura cuando existen; evidencia, no GT |
-| Estructura y recorrido operativos | Integrados automáticamente con cápsulas, zonas y precedencias locales; ambigüedad conservada |
-| Integración canónica | Completada técnicamente para los15 papers en parsing-operational-v1 |
-| Calidad semántica / QA visual / V&V de exactitud | Pendientes; no confundir con integridad técnica o pruebas DOM |
-| GROBID | Código offline preparado, pero pospuesto por peso/coste; sin inferencia ni C real |
+| Reconciliation | Implemented with pending issues; `autonomous-reconciliation-v1` preserved |
+| Functional classification | v2 on reconciled units; parsers as evidence. Source-based v1 is a historical attempt with incorrect scope |
+| Reading v1 | Historical baseline; insufficient quality detected in 12.pdf |
+| Docling | Geometric ordering component, approved baseline with errors; the full Docling neural pipeline was not run |
+| Native evidence | PyMuPDF, styles, XMP, outlines, links/structure where present; evidence, not GT |
+| Operational structure and route | Automatically integrated with capsules, zones and local precedence; ambiguity preserved |
+| Canonical integration | Technically completed for the 15 papers in parsing-operational-v1 |
+| Semantic quality / visual QA / accuracy V&V | Pending; do not confuse with technical integrity or DOM tests |
+| GROBID | Offline code prepared, but postponed due to size/cost; no inference or real C |
 
-## Cuentas verificadas
+## Verified counts
 
-- 5.374 unidades originales y4.512 apariciones de contenido; cero duplicación/pérdida según contratos.
-- 374 hijos sin bbox,19 padres y17 páginas con abstención preservados. No asignar caja del padre al hijo.
-- 478 nodos de sección propuestos,185con parent,198con nivel desconocido. No478secciones confirmadas.
-- 3.298 unidades con contexto de sección;1.622fragmentos de párrafo, sin concatenación irreversible.
-- 24 cápsulas pasan a metadata;4.595precedencias locales propuestas y4suspendidas; cero ciclos operativos.
-- 13 tests y4.764 casos DOM en397 páginas;397 renders copiados byte a byte. No QA visual real.
-- 176archivos protegidos previos,462fuentes de entrada y535archivos de salida verificados en la auditoría del run.
+- 5,374 original units and 4,512 content occurrences; zero duplication/loss according to contracts.
+- 374 children without bbox, 19 parents and 17 pages with abstention preserved. Do not assign the parent's box to the child.
+- 478 proposed section nodes, 185 with parent, 198 with unknown level. Not 478 confirmed sections.
+- 3,298 units with section context; 1,622 paragraph fragments, without irreversible concatenation.
+- 24 capsules move to metadata; 4,595 local precedence constraints proposed and 4 suspended; zero operational cycles.
+- 13 tests and 4,764 DOM cases on 397 pages; 397 renders copied byte for byte. No real visual QA.
+- 176 previous protected files, 462 input sources and 535 output files verified in the run audit.
 
-[Informe técnico](../../analytics/reports/sic-parsing-operational-v1.md),
-[auditoría](../../analytics/results/sic_collection/parsing-operational-v1-audit/verification.json),
-[comparación](../../analytics/results/sic_collection/parsing-operational-v1-audit/comparison.json).
-Esta actualización documental no reejecuta dichas pruebas ni modifica esas evidencias congeladas.
+[Technical report](../../analytics/reports/sic-parsing-operational-v1.md),
+[audit](../../analytics/results/sic_collection/parsing-operational-v1-audit/verification.json),
+[comparison](../../analytics/results/sic_collection/parsing-operational-v1-audit/comparison.json).
+This documentation update does not rerun those tests or modify that frozen evidence.
 
-## Evaluación y pendientes reales
+## Evaluation and actual pending issues
 
-El MVP es más completo y trazable que el baseline de orden aislado; no hay una tasa
-de exactitud global validada.174de23.563 pares comparables cambian de sentido (0,74%);
-no174correcciones demostradas.1.139posiciones distintas incluyen desplazamientos de
-índice al mover metadata. En12.pdf se mantienen129 relaciones previamente consideradas
-correcciones por el agente;4regresiones cambian de sentido y2quedan entre flujos
-separados. Es comparación acotada, no GT humano ni validación de los otros14 papers.
+The MVP is more complete and traceable than the isolated ordering baseline; there is no
+validated global accuracy rate. 174 of 23,563 comparable pairs reverse direction (0.74%);
+not 174 demonstrated corrections. 1,139 distinct positions include index shifts
+when moving metadata. In 12.pdf, 129 relations previously considered corrections by
+the agent are retained; 4 regressions reverse direction and 2 remain between separate
+flows. This is a bounded comparison, not human GT or validation of the other 14 papers.
 
-Todas5.374 unidades quedan en revisión final por política; no son5.374errores.
-1.292 unidades tienen categoría o función desconocida;25tienen contradicción semántica.
-La función no resuelta de1.127 unidades incluye374 hijos diferidos,457 contenedores y
-296 apariciones de contenido (6,6%de4.512). Además:10 nodos con numeración ambigua,
-10sin localizar,123 unidades principales sin contexto de sección,102 continuidades
-ambiguas y16bloqueadas. No sumar granularidades ni solapamientos.127 continuidades
-con soporte siguen siendo propuestas, no vínculos validados.
+All 5,374 units remain in final review by policy; they are not 5,374 errors.
+1,292 units have an unknown category or function; 25 have a semantic contradiction.
+The unresolved function of 1,127 units includes 374 deferred children, 457 containers and
+296 content occurrences (6.6% of 4,512). Also: 10 nodes with ambiguous numbering,
+10 unlocated, 123 main units without section context, 102 ambiguous continuities
+and 16 blocked. Do not add granularities or overlaps. 127 supported continuities
+remain proposals, not validated links.
 
-[Evaluación completa y tabla por paper](../../analytics/reports/sic-parsing-operational-v1-evaluation.md).
-La jerarquía es especialmente incompleta en1,11y17. Los cambios de orden se concentran
-en6,7y5; son prioridad de verificación, no errores confirmados. Persisten aliases de
-headings por codificación, niveles nativos vs profundidad de marcador, pertenencia
-temática visual y separación incierta de columnas/flujos. Metadatos mixtos pueden
-seguir en su ruta previa. Rol documental desconocido no elimina categoría/función anterior.
+[Full evaluation and per-paper table](../../analytics/reports/sic-parsing-operational-v1-evaluation.md).
+The hierarchy is especially incomplete in 1, 11 and 17. Order changes are concentrated
+in 6, 7 and 5; they are a verification priority, not confirmed errors. Encoding-related
+heading aliases, native levels vs marker depth, visual thematic membership and uncertain
+column/flow separation persist. Mixed metadata may remain on its previous route.
+An unknown document role does not remove the previous category/function.
 
-## Decisiones conservadas
+## Preserved decisions
 
-- Caption primero dentro de asociaciones utilizables existentes; captions compartidos sin duplicar contenido.
-- Precedencia, consecutividad, pertenencia y continuidad son relaciones distintas; no fusionar textos.
-- Evidencia directa verificable puede bastar por dimensión. Conflictos conservan alternativas/avisos; no votar fuentes correlacionadas.
-- Revisión humana after_full_mvp, agrupada y no bloqueante. No pedir etiquetado caso a caso ahora.
-- Sin reglas por autor/título/página/ID de12.pdf. La colección se ejecutó con configuración congelada.
-- Table1 de12.pdf:página3 sigue advertencia histórica, recuperación detenida; Table2 conserva su aceptación específica. No generalizar esos dictámenes.
-- Los seis vínculos multipanel revisados por usuario siguen aceptados en su alcance; no validan una regla global. Fig6 conserva pendiente de solapamiento.
+- Caption first within existing usable associations; shared captions without duplicating content.
+- Precedence, consecutiveness, membership and continuity are distinct relations; do not merge text.
+- Direct verifiable evidence may suffice per dimension. Conflicts preserve alternatives/warnings; do not vote across correlated sources.
+- Human review after_full_mvp, grouped and nonblocking. Do not request case-by-case labeling now.
+- No rules by author/title/page/ID of 12.pdf. The collection was run with frozen configuration.
+- Table1 in 12.pdf:page3 remains a historical warning, recovery stopped; Table2 retains its specific acceptance. Do not generalize those rulings.
+- The six multipanel links reviewed by the user remain accepted within their scope; they do not validate a global rule. Fig6 retains its pending overlap issue.
 
-## GROBID y entorno
+## GROBID and environment
 
-Se implementó adaptador/runner/exportador/evaluador/visor offline y se probó con
-fixtures, sin presentar datos simulados como resultados del paper. Docker Linux llegó
-a arrancar tras preservar directorios de sockets obsoletos; el antiguo diagnóstico
-«motor no disponible» ya no es el estado más reciente conocido. La descarga de la
-imagen fijada (~14,8GBcomprimidos) fue iniciada y después se detuvo1cliente al posponer
-GROBID. No se borraron imágenes/volúmenes/cachés ni se ejecutó el servicio GROBID.
-No se acredita descarga completa ni runtime/modelos/configuración G0 verificados.
-No consultar ni arrancar Docker/WSL/Colab/GCE para recuperar contexto.
+An offline adapter/runner/exporter/evaluator/viewer was implemented and tested with
+fixtures, without presenting simulated data as paper results. Docker Linux did
+start after preserving obsolete socket directories; the old “engine unavailable”
+diagnosis is no longer the latest known state. Download of the pinned image
+(~14.8 GB compressed) was started and then 1 client was stopped when GROBID
+was postponed. No images/volumes/caches were deleted and the GROBID service was not run.
+A completed download or verified G0 runtime/models/configuration is not established.
+Do not inspect or start Docker/WSL/Colab/GCE to recover context.
 
-## Continuación autorizada
+## Authorized continuation
 
-Entrega posterior de presentación: `analytics/results/sic_collection/collection-stage-view-v1/`
-ofrece HTML offline en inglés de los15 papers/397 páginas: comparación de parsers,
-clasificación Category/Subtype/Function con Route, orden Readingv1/Docling y recorrido
-operativo. No ejecuta etapas científicas ni reemplaza el canónico. Fuentes y cajas
-preservadas; QA visual pendiente por rechazo de file:// en la herramienta de navegador.
-Ver `code/collection_view/README.md` y verification.json del visor.
+Subsequent presentation delivery: `analytics/results/sic_collection/collection-stage-view-v1/`
+offers offline HTML in English for the 15 papers/397 pages: parser comparison,
+Category/Subtype/Function classification with Route, Readingv1/Docling order and operational
+route. It does not run scientific stages or replace the canonical artifact. Sources and boxes
+preserved; visual QA pending because the browser tool rejected file://.
+See `code/collection_view/README.md` and the viewer's verification.json.
 
-Petición anterior completada: preparar una demo Jupyter de toda la integración
-en `demo/integration_structure/`, con notebook y paquete autónomo para **A100**.
-Incluye las entradas existentes, PDFs y código científico copiado sin cambios;
-9 pruebas sintéticas con APIs reales y hashes/sintaxis verificados. No se ejecutó
-el notebook en A100 ni se volvió a exportar la colección. El usuario ejecutará
-la demo en un intento nuevo; [guía](../../demo/integration_structure/README.md).
-El resultado operativo canónico permanece congelado. Una futura mejora requiere problema/evidencia, alcance y criterio de
-aceptación/regresión; escribir una versión nueva y preservar la anterior.
-Las etapas Extract/Curate/Discover no se dan por implementadas por cerrar técnicamente Parse.
+Previous request completed: prepare a Jupyter demo of the full integration
+in `demo/integration_structure/`, with a notebook and standalone package for **A100**.
+Includes existing inputs, PDFs and scientific code copied unchanged;
+9 synthetic tests with real APIs and verified hashes/syntax. The notebook was not run
+on A100 and the collection was not re-exported. The user will run
+the demo in a new attempt; [guide](../../demo/integration_structure/README.md).
+The canonical operational result remains frozen. A future improvement requires a problem/evidence, scope and
+acceptance/regression criterion; write a new version and preserve the previous one.
+The Extract/Curate/Discover stages are not considered implemented merely because Parse is technically complete.
 
-Historial exacto anterior de esta consolidación en
+Exact history before this consolidation in
 [before](../history/parsing-operational-documentation-consolidation-v1/before/).

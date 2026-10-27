@@ -1,22 +1,22 @@
-# Ensayo Docling de orden geométrico
+# Docling geometric order trial
 
-Código nuevo, separado del MVP v1 y de los validadores T0:
-`docling_trial.py` propone orden entre cápsulas existentes;
-`docling_comparison.py` y `comparison.html/css/js` muestran baseline y candidato.
+New code, separate from MVP v1 and T0 validators:
+`docling_trial.py` proposes order between existing capsules;
+`docling_comparison.py` and `comparison.html/css/js` show the baseline and candidate.
 
-Docling2.123.1, docling-core2.92.0, rtree1.4.1, pydantic2.12.5. Usar únicamente
-ReadingOrderPredictor.predict_reading_order; no DocumentConverter, OCR, redes ni
-modelos neuronales. Las cajas se adaptan explícitamente a BOTTOMLEFT antes de crear
-PageElement: la conversión TOPLEFT de la dependencia devuelve BoundingBox y pierde
-cid. No se parchea la librería. Inputs, fuente y defaults quedan trazados.
+Docling2.123.1, docling-core2.92.0, rtree1.4.1, pydantic2.12.5. Use only
+ReadingOrderPredictor.predict_reading_order; no DocumentConverter, OCR, networks or
+neural models. Boxes are explicitly adapted to BOTTOMLEFT before creating
+PageElement: the dependency's TOPLEFT conversion returns BoundingBox and loses
+cid. The library is not patched. Inputs, source and defaults remain traceable.
 
-Conserva inventario, clasificación, rutas y orden interno de grupos del baseline;
-caption primero y referencias compartidas intactos. Orden de referencias compartidas
-puede restringir la propuesta Docling, registrando el override. No se ejecutan merges
-ni asociaciones de captions. Continuidades v1 quedan como evidencia histórica, no
-relaciones nuevas. Los fallos preservan baseline de la página/ruta con advertencia.
+Preserves the baseline inventory, classification, routes and internal group order;
+caption-first order and shared references remain intact. Shared-reference order
+may constrain the Docling proposal, recording the override. No merges
+or caption associations are performed. v1 continuities remain historical evidence, not
+new relationships. Failures preserve the page/route baseline with a warning.
 
-Pruebas desde raíz, PYTHONPATH=code:
+Tests from the root, PYTHONPATH=code:
 
 ```text
 python -B -m unittest document_structure.test_docling_trial -v
@@ -25,11 +25,11 @@ node code/document_structure/test_comparison_child.js analytics/results/sic12_do
 node code/document_structure/test_comparison_child.js analytics/results/sic12_document/docling-order-trial-v1-view/docling.html
 ```
 
-Nueve pruebas Python pasan; una expectedFailure mantiene visible una limitación
-semántica del componente: intercalar columnas bajo encabezado ancho en un fixture.
-No ajustar parámetros para hacerla pasar en este ensayo. DOM simulado no es QA visual.
+Nine Python tests pass; one expectedFailure keeps a semantic limitation
+of the component visible: interleaving columns under a wide heading in a fixture.
+Do not tune parameters to make it pass in this trial. Simulated DOM is not visual QA.
 
-Exportación de12.pdf ya ejecutada una vez: no repetir por rutina. Datos en
-`analytics/results/sic12_document/docling-order-trial-v1/`, vista en
-`analytics/results/sic12_document/docling-order-trial-v1-view/index.html`, informe
-`analytics/reports/sic12-docling-order-trial-v1.md`. Diferencias no son exactitud.
+The 12.pdf export has already run once: do not repeat routinely. Data in
+`analytics/results/sic12_document/docling-order-trial-v1/`, view in
+`analytics/results/sic12_document/docling-order-trial-v1-view/index.html`, report
+`analytics/reports/sic12-docling-order-trial-v1.md`. Differences are not accuracy.

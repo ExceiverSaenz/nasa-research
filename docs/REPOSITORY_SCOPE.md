@@ -1,6 +1,8 @@
 # Repository scope
 
-This is a portable review snapshot, not a replacement for the canonical research workspace. Original source files were copied without changing their logic. The snapshot manifest records their SHA-256 digests. Generated notebooks have outputs and execution counts cleared if present.
+This is a portable review snapshot, not a replacement for the canonical research workspace. Documentation and notebook explanations are translated into English. The snapshot manifest retains original source SHA-256 digests and separately records exported-file digests, so translated derivatives are not presented as byte-identical originals. Generated notebooks have outputs and execution counts cleared if present.
+
+Source-language category values, validation markers, test fixtures, paths and identifiers are retained where they belong to existing data or runtime contracts. Historical manifests inside the demo describe its original source bundle; they do not certify the translated documentation. The unchanged `demo/src/` source snapshot preserves that bundle's code contract. Local audit backups are excluded from this distribution and remain in the original research workspace.
 
 ## Included
 

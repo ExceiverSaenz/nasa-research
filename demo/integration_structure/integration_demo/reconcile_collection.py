@@ -38,7 +38,7 @@ def export_collection(prepared, pdf_directory, destination):
     destination.mkdir(parents=True, exist_ok=False)
     documents, totals, statuses, protected = [], Counter(), Counter(), {}
     for paper, entry, pdf, data in sorted(inputs, key=lambda row: row[0]):
-        print(f'Conciliación: {paper}.pdf ({len(data["pages"])} páginas)', flush=True)
+        print(f'Reconciliation: {paper}.pdf ({len(data["pages"])} pages)', flush=True)
         pages = [reconcile(p) for p in data['pages']]
         # The engine adds classifications/relations; all native records must survive.
         for original, result in zip(data['pages'], pages):

@@ -1,79 +1,79 @@
-# MinerU Basic: ensayo de una página en Colab T4
+# MinerU Basic: single-page trial in Colab T4
 
-Configuración aprobada: MinerU4.0.12, Basic, backendTorch, CUDA/T4; sin VLM.
+Approved configuration: MinerU4.0.12, Basic, backendTorch, CUDA/T4; no VLM.
 Python3.11.16, Torch2.7.1+cu126, torchvision0.22.1+cu126, Transformers5.10.1,
-DocVortex0.6.0. requirements.lock fija135 paquetes y hashes para Linux x86_64.
-Resolución y disponibilidad binaria comprobadas, salvo jieba0.42.1 (Python puro,
-sdist explícitamente permitido). No hay instalación/inferencia GPU acreditada aún.
+DocVortex0.6.0. requirements.lock pins135 packages and hashes for Linux x86_64.
+Resolution and binary availability checked, except jieba0.42.1 (pure Python,
+sdist explicitly allowed). No GPU installation/inference has yet been established.
 
-## Ejecutar solo sobre una sesión existente autorizada
+## Run only on an existing authorized session
 
-Desde la raíz en WSL:
+From the root in WSL:
 
 ```bash
 bash code/mineru_probe/test_page.sh NOMBRE_SESION
 ```
 
-No crea ni cierra sesiones. No ejecutar dos veces en la misma VM con estas rutas:
-lock y archivos existentes impiden sobrescribir evidencia. Un timeout del CLI no
-demuestra que el proceso haya terminado; comprobar antes de cualquier reintento.
-El script imprime estado/saldo cerca de la ejecución, no para recuperar contexto.
+Does not create or close sessions. Do not run twice in the same VM with these paths:
+the lock and existing files prevent overwriting evidence. A CLI timeout does not
+prove the process has ended; check before any retry.
+The script prints status/balance near execution, not to recover context.
 
-Se sube únicamente el PNG original verificado de12.pdf,página3 y código/lock/
-manifiesto propios. Paquete `code/packages/mineru-page.zip`. MinerU convierte el
-PNG internamente en PDF y puede redimensionarlo para sus modelos; registramos esa
-transformación y devolvemos cajas normalizadas al marco1654×2205 original.
-No se usa texto nativo del PDF fuente ni regiones de los modelos anteriores.
+Only the verified original PNG of12.pdf,page3 and this trial's code/lock/
+manifest are uploaded. Package `code/packages/mineru-page.zip`. MinerU internally converts the
+PNG to PDF and may resize it for its models; we record that
+transformation and return normalized boxes to the original1654×2205 frame.
+No native text from the source PDF or regions from previous models are used.
 
-Entorno `/content/mineru-probe/env`, separado del kernel y de LayoutLMv3/TATR.
-Bundle `opendatalab/MinerU-4_models_torch`, revisión fija
-`2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`:12archivos,894881298bytes.
-Cada descarga se verifica con tamaño y digest Git/LFS del manifiesto fijo,
-y se conserva un reciboSHA256. Los modelos ya verificados se activan mediante el
-flujo oficial de MinerU con proveedor local en lugar de descargar desde main:
-se revalidanSHA256 y luego el flujo oficial comprueba rutas y marca completitud.
-Este adaptador depende explícitamente del código4.0.12; no actualizarlo sin revisar.
+Environment `/content/mineru-probe/env`, separate from the kernel and LayoutLMv3/TATR.
+Bundle `opendatalab/MinerU-4_models_torch`, pinned revision
+`2b3afb86f4d23fa623f6b2f4b2279ed4ef93a89d`:12files,894881298bytes.
+Each download is verified using size and Git/LFS digest from the pinned manifest,
+and a SHA256 receipt is preserved. Already verified models are activated through
+the official MinerU workflow with a local provider instead of downloading from main:
+SHA256 values are revalidated, then the official workflow checks paths and marks completeness.
+This adapter explicitly depends on code4.0.12; do not update it without review.
 
-Layout/OCR/fórmulas usan el backendTorch solicitado en CUDA. Los modelos ONNX de
-tablas se mantienen explícitamente enCPU: no afirmar que todo el pipeline utiliza
-GPU. Los chequeos iniciales validan T4/versiones/backend/configuración; el runtime
-real completo solo se acredita tras ejecución. La dependencia obligatoria
-mineru-llama-cpp se instala por el paquete, pero Basic no carga ni descarga un VLM.
-Las funciones auxiliares LLM están desactivadas y no se requieren claves API.
+Layout/OCR/formulas use the requested Torch backend on CUDA. Table ONNX models
+explicitly remain on CPU: do not claim that the whole pipeline uses
+GPU. Initial checks validate T4/versions/backend/configuration; the complete
+real runtime is established only after execution. The mandatory
+mineru-llama-cpp dependency is installed by the package, but Basic does not load or download a VLM.
+Auxiliary LLM functions are disabled and no API keys are required.
 
-## Salidas y recuperación
+## Outputs and recovery
 
-Resultados locales `code/results/mineru-page/<fecha>/` con ZIP, sidecar y log CLI.
-El ZIP incluye configuración, input-manifest, lock/freeze, manifiesto de pesos y
-recibo de descarga, estado/log incluso si falla instalación o parsing.
-Dentro de `page/`:
+Local results `code/results/mineru-page/<fecha>/` with ZIP, sidecar and CLI log.
+The ZIP includes configuration, input-manifest, lock/freeze, weight manifest and
+download receipt, status/log even if installation or parsing fails.
+Inside `page/`:
 
-- `middle-native.json` y `model-native.json` (si disponible): guardados antes de
-  materializar imágenes/Markdown, con el contrato nativo sin reducir.
-- `native/`: exportación oficial de recursos, MiddleJson, ModelJson y Markdown.
-- `regions.json`: etiquetas nativas, índices, punteros JSON y relación padre/hijo;
-  bbox normalizada y XYXY en elPNG original. Score null si no existe.
-- `overlay.png` y `crops/`: derivados para revisión, sin padding. Verde para padres,
-  azul para hijos. Padre y cuerpo pueden compartir exactamente la misma caja:
-  no contarlos como detecciones independientes.
-- `run-manifest.json`, `page-status.json`, `error.log` ante fallo.
+- `middle-native.json` and `model-native.json` (if available): saved before
+  materializing images/Markdown, with the unreduced native contract.
+- `native/`: official export of resources, MiddleJson, ModelJson and Markdown.
+- `regions.json`: native labels, indices, JSON pointers and parent/child relationship;
+  normalized bbox and XYXY in the original PNG. Score null if absent.
+- `overlay.png` and `crops/`: review derivatives, without padding. Green for parents,
+  blue for children. Parent and body may share exactly the same box:
+  do not count them as independent detections.
+- `run-manifest.json`, `page-status.json`, `error.log` on failure.
 
-Las cajas faltantes se registran con bbox null y geometry_warnings, sin inventarlas.
-Un fallo de derivados permite reexportar localmente desde middle-native.json y
-elPNG original, sin volver a cargar modelos. Mantener el estado remoto original.
-Recuperar/verificar ZIP antes de detener exclusivamente la sesión propia.
+Missing boxes are recorded with bbox null and geometry_warnings, without inventing them.
+A derivative failure allows local reexport from middle-native.json and
+the original PNG, without loading models again. Preserve the original remote status.
+Recover/verify the ZIP before stopping only your own session.
 
-## Verificación local
+## Local verification
 
 ```bash
 python3 -m unittest discover -s code/mineru_probe -p 'test_*.py' -v
 bash -n code/mineru_probe/test_page.sh
 ```
 
-Pruebas con fixtures/dobles: geometría y jerarquía reales del contrato0.6.0,
-tiposJSON, entrada fija, conservación nativa ante fallo, seguridad del paquete,
-integridad de descarga y protección de evidencia. No prueban carga/inferencia real.
-No repetirlas al iniciar otro chat; consultar `code/results/mineru-local-checks/`.
+Fixture/test-double tests: actual geometry and hierarchy of contract0.6.0,
+JSON types, fixed input, native preservation on failure, package safety,
+download integrity and evidence protection. These do not test real loading/inference.
+Do not repeat them when starting another chat; consult `code/results/mineru-local-checks/`.
 
-Comparar visualmente título3.1, párrafos/lista, captions, dos figuras, ecuación,
-encabezado/página y tablas. Sin CER/WER, exactitudLaTeX, fusión o porcentaje de calidad.
+Visually compare heading3.1, paragraphs/list, captions, two figures, equation,
+header/page and tables. No CER/WER, LaTeX accuracy, fusion or quality percentage.

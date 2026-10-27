@@ -1,6 +1,6 @@
-"""Contratos de datos NumPy independientes de PyTorch/Detectron2.
+"""NumPy data contracts independent of PyTorch/Detectron2.
 
-Productores: render y detector; consumidores: outputs y run_page. Python 3.9 syntax.
+Producers: render and detector; consumers: outputs and run_page. Python 3.9 syntax.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -11,17 +11,17 @@ from numpy.typing import NDArray
 
 
 def _positive_int(value: int, name: str) -> None:
-    """Exige un int positivo, excluyendo bool.
+    """Requires a positive int, excluding bool.
 
     Args:
-        value: Valor por validar.
-        name: Nombre usado en el diagnóstico.
+        value: Value to validate.
+        name: Name used in the diagnostic.
     Returns:
         None.
     Raises:
-        ValueError: Tipo no int o valor <= 0.
+        ValueError: Non-int type or value <= 0.
     Notes:
-        No modifica el valor.
+        Does not modify the value.
     """
     if type(value) is not int or value <= 0:
         raise ValueError(name + ' must be a positive integer')
@@ -29,18 +29,18 @@ def _positive_int(value: int, name: str) -> None:
 
 @dataclass(frozen=True, eq=False)
 class RenderedPage:
-    """Render RGB con CropBox en puntos PDF y rotación aplicada.
+    """RGB render with CropBox in PDF points and applied rotation.
 
     Attributes:
-        pdf_path: Ruta de procedencia; no se comprueba aquí que exista.
-        page_number: Página física positiva desde 1.
-        dpi: Resolución positiva en puntos por pulgada.
-        image: NumPy uint8 (height, width, 3), copiado y marcado read-only.
-        crop_box_pt: (x0, y0, x1, y1) finitos con extensión positiva.
-        rotation_deg: 0, 90, 180 o 270 grados.
+        pdf_path: Provenance path; existence is not checked here.
+        page_number: Positive physical page starting at 1.
+        dpi: Positive resolution in dots per inch.
+        image: NumPy uint8 (height, width, 3), copied and marked read-only.
+        crop_box_pt: Finite (x0, y0, x1, y1) with positive extent.
+        rotation_deg: 0, 90, 180 or 270 degrees.
     Notes:
-        Origen del render superior izquierdo. Congelar la dataclass no implica
-        inmutabilidad absoluta de cualquier objeto NumPy. Doc-Refs: INF-003.
+        Top-left render origin. Freezing the dataclass does not imply
+        absolute immutability of any NumPy object. Doc-Refs: INF-003.
     """
     pdf_path: Path
     page_number: int
@@ -50,15 +50,15 @@ class RenderedPage:
     rotation_deg: int
 
     def __post_init__(self) -> None:
-        """Valida geometría/tipo de imagen y conserva una copia read-only.
+        """Validates image geometry/type and preserves a read-only copy.
 
         Returns:
             None.
         Raises:
-            TypeError: image no es NumPy uint8.
-            ValueError: Dimensiones, página, dpi, caja o rotación inválidos.
+            TypeError: image is not NumPy uint8.
+            ValueError: Invalid dimensions, page, dpi, box or rotation.
         Notes:
-            Normaliza pdf_path a Path; no lee el PDF.
+            Normalizes pdf_path to Path; does not read the PDF.
         """
         for name in ('page_number', 'dpi'):
             _positive_int(getattr(self, name), name)
@@ -79,29 +79,29 @@ class RenderedPage:
 
     @property
     def width_px(self) -> int:
-        """Devuelve el ancho de image como int, en píxeles; sin efectos externos."""
+        """Returns image width as an int, in pixels; no external effects."""
         return int(self.image.shape[1])
 
     @property
     def height_px(self) -> int:
-        """Devuelve el alto de image como int, en píxeles; sin efectos externos."""
+        """Returns image height as an int, in pixels; no external effects."""
         return int(self.image.shape[0])
 
 
 @dataclass(frozen=True, eq=False)
 class Predictions:
-    """Detecciones postprocessed en coordenadas del render original.
+    """Postprocessed detections in original-render coordinates.
 
     Attributes:
-        boxes_xyxy: float32 (N, 4), cajas finitas dentro de la imagen y área positiva.
-        class_ids: int64 (N,), índices válidos de class_names.
-        scores: float32 (N,), valores finitos en [0, 1].
-        class_names: Nombres únicos; la colección no puede estar vacía.
-        image_width_px: Ancho positivo en píxeles.
-        image_height_px: Alto positivo en píxeles.
+        boxes_xyxy: float32 (N, 4), finite boxes inside the image with positive area.
+        class_ids: int64 (N,), valid class_names indices.
+        scores: float32 (N,), finite values in [0, 1].
+        class_names: Unique names; the collection cannot be empty.
+        image_width_px: Positive width in pixels.
+        image_height_px: Positive height in pixels.
     Notes:
-        N puede ser cero. Los tres arrays se copian y marcan read-only.
-        No establece orden de lectura ni calidad de detección. Doc-Refs: INF-005.
+        N may be zero. The three arrays are copied and marked read-only.
+        Does not establish reading order or detection quality. Doc-Refs: INF-005.
     """
     boxes_xyxy: NDArray[np.float32] = field(repr=False)
     class_ids: NDArray[np.int64] = field(repr=False)
@@ -111,15 +111,15 @@ class Predictions:
     image_height_px: int
 
     def __post_init__(self) -> None:
-        """Valida shapes, dtypes, rangos y alineación de arrays.
+        """Validates array shapes, dtypes, ranges and alignment.
 
         Returns:
             None.
         Raises:
-            TypeError: Arrays con tipos/dtypes no admitidos.
-            ValueError: Shapes, tamaños, nombres, cajas, IDs o scores inválidos.
+            TypeError: Arrays with unsupported types/dtypes.
+            ValueError: Invalid shapes, sizes, names, boxes, IDs or scores.
         Notes:
-            Copia boxes_xyxy, class_ids y scores y activa read-only.
+            Copies boxes_xyxy, class_ids and scores and enables read-only.
         """
         _positive_int(self.image_width_px, 'image_width_px')
         _positive_int(self.image_height_px, 'image_height_px')
@@ -151,20 +151,20 @@ class Predictions:
 
     @property
     def count(self) -> int:
-        """Devuelve N como int desde scores; cero es una predicción vacía válida."""
+        """Returns N as an int from scores; zero is a valid empty prediction."""
         return len(self.scores)
 
 
 @dataclass(frozen=True)
 class LoadReport:
-    """Diagnóstico de nombres/shapes de parámetros, no de calidad del modelo.
+    """Parameter name/shape diagnostics, not model quality diagnostics.
 
     Attributes:
-        missing_keys: Claves esperadas ausentes.
-        unexpected_keys: Claves encontradas no esperadas.
-        shape_mismatches: Tuplas (clave, shape esperado, shape encontrado).
+        missing_keys: Missing expected keys.
+        unexpected_keys: Unexpected found keys.
+        shape_mismatches: Tuples (key, expected shape, found shape).
     Notes:
-        El detector bloquea la carga si alguna colección no está vacía.
+        The detector blocks loading if any collection is nonempty.
     """
     missing_keys: Tuple[str, ...] = ()
     unexpected_keys: Tuple[str, ...] = ()
@@ -172,24 +172,24 @@ class LoadReport:
 
     @property
     def is_exact_match(self) -> bool:
-        """Devuelve bool si no hay diferencias de claves/shapes; no compara valores."""
+        """Returns bool indicating no key/shape differences; does not compare values."""
         return not (self.missing_keys or self.unexpected_keys or self.shape_mismatches)
 
 
 @dataclass(frozen=True)
 class RunResult:
-    """Resultado terminal del coordinador, con tiempo en segundos.
+    """Coordinator terminal result, with time in seconds.
 
     Attributes:
-        run_id: ID de ejecución.
-        status: completed o failed.
-        stage: Última etapa registrada; no es una lista validada por esta dataclass.
-        output_dir: Directorio de resultados.
-        region_count: Cantidad no negativa; None si predict no completó.
-        elapsed_seconds: Tiempo finito no negativo.
-        error: Texto obligatorio para failed y ausente para completed.
+        run_id: Run ID.
+        status: completed or failed.
+        stage: Last recorded stage; not a list validated by this dataclass.
+        output_dir: Results directory.
+        region_count: Nonnegative count; None if predict did not complete.
+        elapsed_seconds: Finite nonnegative time.
+        error: Required text for failed and absent for completed.
     Notes:
-        completed admite cero regiones y no acredita calidad ni integración real.
+        completed allows zero regions and does not establish quality or real integration.
     """
     run_id: str
     status: Literal['completed', 'failed']
@@ -200,14 +200,14 @@ class RunResult:
     error: Optional[str] = None
 
     def __post_init__(self) -> None:
-        """Valida estado, tiempo, conteo y coherencia del error.
+        """Validates status, time, count and error consistency.
 
         Returns:
             None.
         Raises:
-            ValueError: Algún campo validado incumple sus restricciones.
+            ValueError: A validated field violates its constraints.
         Notes:
-            No verifica existencia de archivos ni contenido del directorio.
+            Does not verify file existence or directory contents.
         """
         if self.status not in ('completed', 'failed'):
             raise ValueError('Unknown run status')
@@ -222,5 +222,5 @@ class RunResult:
 
     @property
     def succeeded(self) -> bool:
-        """Devuelve bool cuando status es completed; no revisa archivos ni calidad."""
+        """Returns bool when status is completed; does not inspect files or quality."""
         return self.status == 'completed'

@@ -1,1 +1,1 @@
-"""Evaluación de resultados guardados; no importa ni ejecuta el detector."""
+"""Evaluation of saved results; does not import or run the detector."""

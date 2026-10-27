@@ -1,18 +1,18 @@
-# Evidencia nativa y ensayos estructurales
+# Native evidence and structural trials
 
-El paquete ya no contiene solo T0. Sus módulos offline se reutilizan en la
-[integración canónica de15 papers](../document_pipeline/README.md), vigente y congelada.
-La existencia de código no autoriza relanzar modelos o exportaciones.
+The package no longer contains only T0. Its offline modules are reused in the
+[canonical integration of 15 papers](../document_pipeline/README.md), which is current and frozen.
+The existence of code does not authorize relaunching models or exports.
 
-| Componente | Guía / estado |
+| Component | Guide / status |
 | --- | --- |
-| T0/LayoutReader | Validación estática histórica; incompatibilidades no reparadas por rutina |
-| Docling ReadingOrderPredictor | [DOCLING_TRIAL.md](DOCLING_TRIAL.md); baseline geométrico aprobado de12, mismo componente usado en otros14 |
-| Evidencia nativa/B-native | [NATIVE_STRUCTURE.md](NATIVE_STRUCTURE.md); capa offline implementada, fuentes conservadas |
-| GROBID adaptador/cliente/evaluación/visor | [GROBID_TRIAL.md](GROBID_TRIAL.md); probado con fixtures, sin ensayo ni C real; pospuesto por usuario |
-| Estructura y orden operativos activos | [document_pipeline](../document_pipeline/README.md); JSON/vista canónicos por paper |
+| T0/LayoutReader | Historical static validation; incompatibilities are not routinely repaired |
+| Docling ReadingOrderPredictor | [DOCLING_TRIAL.md](DOCLING_TRIAL.md); approved geometric baseline for 12, same component used for the other 14 |
+| Native evidence/B-native | [NATIVE_STRUCTURE.md](NATIVE_STRUCTURE.md); implemented offline layer, sources preserved |
+| GROBID adapter/client/evaluation/viewer | [GROBID_TRIAL.md](GROBID_TRIAL.md); tested with fixtures, no trial or real C; postponed by the user |
+| Active operational structure and order | [document_pipeline](../document_pipeline/README.md); canonical JSON/view per paper |
 
-No se usa LayoutReader ni GROBID para el resultado activo. No ejecutar un pipeline
-neuronal completo de Docling: la integración actual usa su componente geométrico.
-Fuente/metadatos/T0 no equivalen a runtime de modelos verificado. Ver
-[estado narrativo](../../docs/continuidad/13-estado-y-ciclo-experimental.md).
+Neither LayoutReader nor GROBID is used for the active result. Do not run a full
+neural Docling pipeline: the current integration uses its geometric component.
+Source/metadata/T0 are not equivalent to verified model runtime. See the
+[narrative state](../../docs/continuidad/13-estado-y-ciclo-experimental.md).

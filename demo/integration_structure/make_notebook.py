@@ -14,66 +14,66 @@ def build_notebook():
         cells.append(dict(cell_type=kind, metadata={}, source=textwrap.dedent(source).strip() + '\n',
                           **(dict(execution_count=None, outputs=[]) if kind == 'code' else {})))
     cell('markdown', '''
-    # SiC · integración completa · Jupyter / A100
+    # SiC · full integration · Jupyter / A100
 
-    Ejecuta las celdas **en orden, una sola vez, en una sesión Linux x86_64 con A100**.
-    En Colab selecciona A100 en el tipo de entorno. Son 15 papers / 397 páginas.
-    La integración actual usa CPU: la A100 identifica el entorno solicitado.
+    Run the cells **in order, once only, in a Linux x86_64 session with an A100**.
+    In Colab, select A100 as the runtime type. There are 15 papers / 397 pages.
+    The current integration uses the CPU: the A100 identifies the requested environment.
 
-    Se ejecutan conciliación, clasificación v2, Docling geométrico, evidencia nativa,
-    estructura, conexión operativa y exportación. Los tres parsers ya se ejecutaron;
-    aquí se consumen sus resultados conservados. Se preservan cajas, texto, scores,
-    procedencia, contradicciones y abstenciones. Los 374 hijos sin bbox siguen diferidos.
+    The stages run reconciliation, classification v2, geometric Docling, native evidence,
+    structure, operational integration, and export. The three parsers have already run;
+    this notebook consumes their preserved results. It preserves boxes, text, scores,
+    provenance, contradictions, and abstentions. The 374 children without bounding boxes remain deferred.
 
-    `upload.zip` y `upload.sha256` de **demo/integration_structure** contienen código,
-    los 15 PDFs y las salidas nativas. No uses el ZIP de la demo de parsing.
-    La instalación necesita Internet para descargar el intérprete y los paquetes
-    fijados; el procesamiento posterior usa solo los archivos incluidos.
+    `upload.zip` and `upload.sha256` from **demo/integration_structure** contain code,
+    the 15 PDFs, and native outputs. Do not use the parsing demo ZIP.
+    Installation needs the Internet to download the interpreter and pinned
+    packages; subsequent processing uses only the included files.
 
-    Reserva al menos 16 GiB de RAM y 20 GiB libres en disco; son márgenes recomendados,
-    no medidas de un ensayo A100. Usa Drive para conservar el resultado en Colab.
-    No hay reintentos ni recuperación automática. Ante fallo puedes respaldar el
-    intento sin declarar que la integración se completó.
+    Reserve at least 16 GiB of RAM and 20 GiB of free disk space; these are recommended margins,
+    not measurements from an A100 trial. Use Drive to retain the result in Colab.
+    There are no retries or automatic recovery. On failure, you can back up the
+    attempt without claiming that integration completed.
 
-    El run histórico reutilizó cachés aprobados de 12.pdf; esta demo recalcula Docling
-    y evidencia nativa para todos. No se promete igualdad binaria con ese run.
-    Integridad técnica no equivale a exactitud semántica ni a QA visual.
+    The historical run reused approved caches for 12.pdf; this demo recalculates Docling
+    and native evidence for all papers. Binary equality with that run is not promised.
+    Technical integrity does not establish semantic accuracy or visual QA.
     ''')
     cell('markdown', '''
-    ## Flujo de integración
+    ## Integration workflow
 
     ```mermaid
     flowchart TD
-        P["Parsing y fuentes existentes"] --> C["Conciliación: unidades comunes"]
-        C --> F["Clasificación funcional v2"]
-        P --> O["Orden geométrico Docling"]
-        P --> N["Evidencia nativa del PDF"]
-        F --> S["Estructura propuesta"]
+        P["Existing parsing outputs and sources"] --> C["Reconciliation: common units"]
+        C --> F["Functional classification v2"]
+        P --> O["Docling geometric order"]
+        P --> N["Native PDF evidence"]
+        F --> S["Proposed structure"]
         N --> S
-        F --> I["Conexión operativa"]
+        F --> I["Operational integration"]
         O --> I
         N --> I
         S --> I
-        I --> R["Relaciones y recorrido"]
-        R --> E["Ensamblar y validar"]
+        I --> R["Relations and traversal"]
+        R --> E["Assemble and validate"]
         S --> E
-        E --> J["JSON por paper"]
-        E --> V["Vistas e índice"]
-        E --> H["Revisión humana after_full_mvp"]
-        A["Ambigüedad o contradicción"] -.-> E
+        E --> J["JSON per paper"]
+        E --> V["Views and index"]
+        E --> H["Human review after_full_mvp"]
+        A["Ambiguity or contradiction"] -.-> E
         A -.-> H
     ```
 
-    El paso auxiliar de inventario/cápsulas usa el contrato reading-v1 existente.
-    Después Docling establece el baseline de orden que consume la integración
-    operativa. Se conservan las salidas intermedias para inspección.
+    The inventory/capsule helper step uses the existing reading-v1 contract.
+    Docling then establishes the ordering baseline consumed by operational
+    integration. Intermediate outputs are retained for inspection.
     ''')
     cell('markdown', '''
-    ## 1 · Configuración y comprobación A100
+    ## 1 · Configuration and A100 check
 
-    Si guardaste los archivos en Drive, cambia `INPUT_ZIP` y `INPUT_SHA` a sus rutas
-    bajo `/content/drive/MyDrive/…`; Drive se monta en la siguiente celda.
-    En Jupyter normal déjalos junto al notebook. El directorio del intento será nuevo.
+    If you saved the files in Drive, set `INPUT_ZIP` and `INPUT_SHA` to their paths
+    under `/content/drive/MyDrive/…`; Drive is mounted in the next cell.
+    In regular Jupyter, leave them next to the notebook. The attempt directory will be new.
     ''')
     cell('code', '''
     from pathlib import Path
@@ -82,7 +82,7 @@ def build_notebook():
     from IPython.display import display, FileLink, HTML
 
     if 'ATTEMPT' in globals():
-        raise RuntimeError('Este kernel ya tiene un intento. Conserva sus salidas; no reinicies esta celda.')
+        raise RuntimeError('This kernel already has an attempt. Retain its outputs; do not restart this cell.')
     try:
         from google.colab import drive, files
         IS_COLAB = True
@@ -93,47 +93,47 @@ def build_notebook():
     INPUT_SHA = INPUT_ZIP.with_suffix('.sha256')
     USE_DRIVE = IS_COLAB
     WORK_ROOT = Path('/content') if IS_COLAB else Path.cwd() / 'integration-runs'
-    assert platform.system() == 'Linux' and platform.machine() == 'x86_64', 'Se requiere Linux x86_64.'
+    assert platform.system() == 'Linux' and platform.machine() == 'x86_64', 'Linux x86_64 is required.'
     GPU = subprocess.check_output([
         'nvidia-smi', '--query-gpu=name,memory.total,driver_version',
         '--format=csv,noheader,nounits'], text=True).strip().splitlines()
-    assert len(GPU) == 1 and 'A100' in GPU[0], 'Selecciona una sola A100.'
+    assert len(GPU) == 1 and 'A100' in GPU[0], 'Select a single A100.'
     WORK_ROOT.mkdir(parents=True, exist_ok=True)
-    assert shutil.disk_usage(WORK_ROOT).free >= 20 * 1024**3, 'Se recomiendan al menos 20 GiB libres.'
+    assert shutil.disk_usage(WORK_ROOT).free >= 20 * 1024**3, 'At least 20 GiB of free disk space is recommended.'
     ATTEMPT = WORK_ROOT / ('sic-integration-a100-' + uuid.uuid4().hex)
     ATTEMPT.mkdir(exist_ok=False)
     PAYLOAD, STATE = ATTEMPT / 'payload', ATTEMPT / 'run'
     PROCESS = None
     print('GPU / MiB / driver:', GPU[0])
-    print('Intento:', ATTEMPT)
-    print('Cálculo de integración: CPU; sin inferencia de modelos.')
+    print('Attempt:', ATTEMPT)
+    print('Integration computation: CPU; no model inference.')
     ''')
     cell('markdown', '''
-    ## 2 · Drive y archivos de entrada
+    ## 2 · Drive and input files
 
-    En Colab se autoriza Drive para respaldo persistente. Si los archivos ya están
-    en el panel o en la ruta configurada no se vuelven a subir.
+    In Colab, Drive is authorized for persistent backup. Files already present
+    in the panel or configured path are not uploaded again.
     ''')
     cell('code', '''
     DRIVE_RUN = None
     if USE_DRIVE:
-        assert IS_COLAB, 'El montaje automático de Drive corresponde a Colab.'
+        assert IS_COLAB, 'Automatic Drive mounting is for Colab.'
         drive.mount('/content/drive')
         DRIVE_RUN = Path('/content/drive/MyDrive/nasa-sic-integration') / ATTEMPT.name
         DRIVE_RUN.mkdir(parents=True, exist_ok=False)
-        print('Destino persistente:', DRIVE_RUN)
+        print('Persistent destination:', DRIVE_RUN)
     if not INPUT_ZIP.is_file() or not INPUT_SHA.is_file():
         if IS_COLAB:
-            print('Selecciona upload.zip y upload.sha256 de demo/integration_structure.')
+            print('Select upload.zip and upload.sha256 from demo/integration_structure.')
             files.upload()
-        assert INPUT_ZIP.is_file() and INPUT_SHA.is_file(), 'Faltan los dos archivos en las rutas configuradas.'
-    print('Entradas:', INPUT_ZIP, INPUT_SHA)
+        assert INPUT_ZIP.is_file() and INPUT_SHA.is_file(), 'Both files must be present at the configured paths.'
+    print('Inputs:', INPUT_ZIP, INPUT_SHA)
     ''')
     cell('markdown', '''
-    ## 3 · Verificar todo el paquete antes de extraer o importar su código
+    ## 3 · Verify the entire package before extracting or importing its code
 
-    Se comprueba el SHA256 esperado, la lista de miembros y el hash individual de
-    todos los archivos. La extracción rechaza rutas inseguras, duplicados y symlinks.
+    The expected SHA256, member list, and individual hash of every file
+    are checked. Extraction rejects unsafe paths, duplicates, and symlinks.
     ''')
     common = (DEMO / 'integration_demo/common.py').read_text(encoding='utf-8')
     tree = ast.parse(common)
@@ -142,22 +142,22 @@ def build_notebook():
                             if isinstance(n, (ast.Import, ast.ImportFrom))
                             or isinstance(n, ast.FunctionDef) and n.name in wanted)
     cell('code', bootstrap + '\n\n' + f"EXPECTED_BUNDLE_SHA256 = {expected!r}\n" + '''
-assert INPUT_SHA.read_text(encoding='ascii').strip() == EXPECTED_BUNDLE_SHA256, 'Sidecar de otro paquete.'
+assert INPUT_SHA.read_text(encoding='ascii').strip() == EXPECTED_BUNDLE_SHA256, 'Sidecar belongs to another package.'
 PACKAGE = extract_bundle(INPUT_ZIP, PAYLOAD, EXPECTED_BUNDLE_SHA256)
-sys.path.insert(0, str(PAYLOAD / 'code'))  # Solo después de verificar todos los miembros.
+sys.path.insert(0, str(PAYLOAD / 'code'))  # Only after verifying all members.
 from integration_demo.runner import initialize, execute_stage, replace_json
 from integration_demo.common import make_archive, verify_archive, durable_copy
 initialize(PAYLOAD, STATE, GPU)
-print('Paquete íntegro:', len(PACKAGE['files']), 'archivos y manifest.')
-print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nuevo.')
+print('Package integrity verified:', len(PACKAGE['files']), 'files and manifest.')
+print('15 PDFs + native results included; sources copied to a new attempt.')
 ''')
     cell('markdown', '''
-    ## 4 · Entorno aislado y probe real del ordenador geométrico
+    ## 4 · Isolated environment and real geometric ordering probe
 
-    Se instala Python **3.13.5** y las dependencias exactas dentro del intento,
-    sin cambiar el kernel. Los comandos y errores quedan en `run/logs/`.
-    El hash del postprocesador Docling debe coincidir con el baseline conservado.
-    Un fallo deja el intento registrado; pasa a la celda de respaldo para conservarlo.
+    Python **3.13.5** and exact dependencies are installed within the attempt,
+    without changing the kernel. Commands and errors are saved in `run/logs/`.
+    The Docling postprocessor hash must match the preserved baseline.
+    A failure leaves the attempt recorded; proceed to the backup cell to retain it.
     ''')
     cell('code', '''
     def run_logged(command, label, env=None):
@@ -184,7 +184,7 @@ print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nue
                         PROCESS.wait()
                 raise
         if returncode != 0:
-            raise RuntimeError(f'Comando fallido ({returncode}); consultar {log_path}. No reintentar.')
+            raise RuntimeError(f'Command failed ({returncode}); see {log_path}. Do not retry.')
 
     STAGE_ENV = dict(os.environ, PYTHONPATH=str(STATE / 'source-code'),
         PYTHONDONTWRITEBYTECODE='1', PYTHONIOENCODING='utf-8', PYTHONUNBUFFERED='1',
@@ -203,7 +203,7 @@ print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nue
 
     def run_stage(name):
         if (STATE / 'stages' / (name + '.json')).exists():
-            raise FileExistsError('Etapa ya iniciada; conservar intento: ' + name)
+            raise FileExistsError('Stage already started; retain attempt: ' + name)
         try:
             run_logged([PYTHON, '-B', '-m', 'integration_demo.runner', name, STATE], name, STAGE_ENV)
         except BaseException:
@@ -211,34 +211,34 @@ print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nue
                 replace_json(STATE / 'status.json', {'status': 'failed', 'failed_stage': name,
                     'error': traceback.format_exc(), 'automatic_retries': False})
             raise
-    print('Entorno y probe completados; continuar con las etapas de integración.')
+    print('Environment and probe completed; continue with the integration stages.')
     ''')
     steps = [
-        ('prepare', '5 · Preparar entradas portables',
-         'Verifica el ZIP nativo conservado y regenera los punteros de procedencia en este entorno. No cambia cajas ni texto.'),
-        ('reconcile', '6 · Conciliar los tres parsings',
-         'Ejecuta el motor congelado por página. MinerU, LayoutLMv3 y Table Transformer aportan evidencia. Las geometrías inválidas conservan abstención.'),
-        ('classify', '7 · Clasificación funcional v2',
-         'Clasifica las unidades conciliadas; conserva categorías previas, contradicciones y referencias a la evidencia.'),
-        ('capsules', '8 · Inventario y cápsulas intermedias',
-         'Construye el contrato existente de inventario/cápsulas; mantiene caption primero en asociaciones utilizables y contenido compartido por referencia.'),
-        ('integrate', '9 · Docling + nativo + estructura + conexión + exportación',
-         'Ejecuta el pipeline canónico: baseline geométrico Docling, evidencia nativa del PDF, estructura propuesta, relaciones y recorrido. Escribe JSON, vistas, índice y colas de revisión.'),
-        ('verify', '10 · Validar el nuevo intento',
-         'Comprueba manifests, código, PDFs, fuentes, renders y conservación del alcance. No vuelve a ejecutar las etapas anteriores. La calidad semántica y el QA visual siguen pendientes.'),
+        ('prepare', '5 · Prepare portable inputs',
+         'Verifies the preserved native ZIP and regenerates provenance pointers in this environment. Boxes and text remain unchanged.'),
+        ('reconcile', '6 · Reconcile the three parsing outputs',
+         'Runs the frozen engine per page. MinerU, LayoutLMv3, and Table Transformer provide evidence. Invalid geometries retain abstention.'),
+        ('classify', '7 · Functional classification v2',
+         'Classifies reconciled units; preserves previous categories, contradictions, and evidence references.'),
+        ('capsules', '8 · Intermediate inventory and capsules',
+         'Builds the existing inventory/capsule contract; keeps captions first in usable associations and shares content by reference.'),
+        ('integrate', '9 · Docling + native + structure + integration + export',
+         'Runs the canonical pipeline: Docling geometric baseline, native PDF evidence, proposed structure, relations, and traversal. Writes JSON, views, index, and review queues.'),
+        ('verify', '10 · Validate the new attempt',
+         'Checks manifests, code, PDFs, sources, renders, and scope preservation. Does not rerun previous stages. Semantic quality and visual QA remain pending.'),
     ]
     for stage, title, description in steps:
         cell('markdown', '## ' + title + '\n\n' + description)
         cell('code', f"run_stage({stage!r})")
     cell('markdown', '''
-    ## 11 · Inspeccionar métricas y localizar los resultados
+    ## 11 · Inspect metrics and locate results
 
-    El índice y las vistas viajarán con sus imágenes relativas en el respaldo.
-    Los avisos son una cola de revisión, no un recuento de errores confirmados.
+    The index and views travel with their relative images in the backup.
+    Warnings form a review queue, not a count of confirmed errors.
     ''')
     cell('code', '''
     terminal = read_json(STATE / 'status.json')
-    print('Estado técnico:', terminal['status'])
+    print('Technical status:', terminal['status'])
     summary_path = STATE / 'operational/summary.json'
     if summary_path.is_file():
         summary = read_json(summary_path)
@@ -246,45 +246,45 @@ print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nue
             'papers', 'pages', 'inventory_units', 'content_appearances',
             'deferred_children', 'abstained_pages', 'sections', 'semantic_accuracy')},
             ensure_ascii=False, indent=2))
-        print('Índice:', STATE / 'operational/index.html')
-        print('Cola:', STATE / 'operational/review-queue.json')
+        print('Index:', STATE / 'operational/index.html')
+        print('Queue:', STATE / 'operational/review-queue.json')
         if not IS_COLAB:
             display(FileLink(os.path.relpath(STATE / 'operational/index.html', Path.cwd())))
     else:
-        print('No hay salida operativa completa. Conserva el registro y respalda el intento.')
+        print('There is no complete operational output. Retain the log and back up the attempt.')
     ''')
     cell('markdown', '''
-    ## Solo si interrumpiste manualmente una celda
+    ## Only if you manually interrupted a cell
 
-    **Deja `CLOSE_INTERRUPTED_RUN = False` en la ejecución normal.**
-    Cambiarlo a `True` cierra como parcial el intento interrumpido, después de
-    confirmar que el subproceso controlado por este kernel ya terminó. No reanuda.
-    No usar tras reiniciar el kernel o si hay procesos lanzados por otro medio.
+    **Leave `CLOSE_INTERRUPTED_RUN = False` during normal execution.**
+    Setting it to `True` closes the interrupted attempt as partial, after
+    confirming that the subprocess controlled by this kernel has terminated. It does not resume.
+    Do not use after restarting the kernel or if processes were launched through another mechanism.
     ''')
     cell('code', '''
     CLOSE_INTERRUPTED_RUN = False
     if CLOSE_INTERRUPTED_RUN:
-        assert PROCESS is None or PROCESS.poll() is not None, 'Todavía hay un proceso activo.'
+        assert PROCESS is None or PROCESS.poll() is not None, 'A process is still active.'
         status = read_json(STATE / 'status.json')
-        assert status['status'] in ('running', 'prepared'), 'El intento ya tiene estado terminal.'
+        assert status['status'] in ('running', 'prepared'), 'The attempt already has a terminal status.'
         replace_json(STATE / 'status.json', {'status': 'partial',
             'reason': 'User closed an interrupted attempt after controlled child termination',
             'automatic_retries': False, 'semantic_validation': 'pending_after_full_mvp'})
-        print('Intento parcial cerrado; puede respaldarse.')
+        print('Partial attempt closed; it can be backed up.')
     else:
-        print('Cierre de interrupción omitido (ejecución normal).')
+        print('Interruption closure skipped (normal execution).')
     ''')
     cell('markdown', '''
-    ## 12 · Respaldar, verificar y descargar
+    ## 12 · Back up, verify, and download
 
-    Esta celda sirve para un intento completado, fallido o cerrado como parcial.
-    Incluye etapas, fuentes consumidas, PDFs, código ejecutado, vistas y logs.
-    No respalda un proceso activo. El estado fallido se conserva como tal.
-    En Colab copia el ZIP, SHA256 y recibo a Drive antes de iniciar la descarga.
-    Conserva `upload.zip` original como fuente de la procedencia completa del parsing.
+    This cell supports a completed, failed, or closed partial attempt.
+    It includes stages, consumed sources, PDFs, executed code, views, and logs.
+    It does not back up an active process. Failed status is preserved as such.
+    In Colab, it copies the ZIP, SHA256, and receipt to Drive before starting the download.
+    Retain the original `upload.zip` as the source of complete parsing provenance.
     ''')
     cell('code', '''
-    assert PROCESS is None or PROCESS.poll() is not None, 'Todavía hay un proceso activo.'
+    assert PROCESS is None or PROCESS.poll() is not None, 'A process is still active.'
     RESULT = ATTEMPT / 'result.zip'
     receipt = make_archive(STATE, RESULT)
     assert verify_archive(RESULT, RESULT.with_suffix('.sha256')) == receipt
@@ -295,16 +295,16 @@ print('15 PDFs + resultados nativos incluidos; fuentes copiadas a un intento nue
         durable_copy(RESULT.with_suffix('.sha256'), DRIVE_RUN / 'result.sha256')
         durable_copy(receipt_path, DRIVE_RUN / receipt_path.name)
         assert verify_archive(DRIVE_RUN / 'result.zip', DRIVE_RUN / 'result.sha256') == receipt
-        print('Respaldo Drive íntegro:', DRIVE_RUN)
-    print('Estado conservado:', receipt['status'])
+        print('Drive backup integrity verified:', DRIVE_RUN)
+    print('Preserved status:', receipt['status'])
     print('SHA256:', receipt['sha256'])
-    print('Entrega:', RESULT)
+    print('Delivery:', RESULT)
     if IS_COLAB:
         files.download(str(RESULT))
     else:
         display(FileLink(os.path.relpath(RESULT, Path.cwd())))
         display(FileLink(os.path.relpath(RESULT.with_suffix('.sha256'), Path.cwd())))
-    print('Descarga y conserva el respaldo antes de cerrar el runtime.')
+    print('Download and retain the backup before closing the runtime.')
     ''')
     for i, c in enumerate(cells):
         c['id'] = f'integration-{i:02d}'

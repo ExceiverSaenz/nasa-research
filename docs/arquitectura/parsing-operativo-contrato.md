@@ -1,87 +1,87 @@
-# Contrato vigente: parsing-operational/1
+# Current contract: parsing-operational/1
 
-Describe los archivos ya exportados, no propone cambios. Fuente:
-[README](../../code/document_pipeline/README.md), [informe técnico](../../analytics/reports/sic-parsing-operational-v1.md)
-y [manifest canónico](../../analytics/results/sic_collection/parsing-operational-v1/manifest.json).
-Estado técnico operativo, con exactitud semántica/QA visual pendientes.
+Describes the files already exported; does not propose changes. Source:
+[README](../../code/document_pipeline/README.md), [technical report](../../analytics/reports/sic-parsing-operational-v1.md)
+and [canonical manifest](../../analytics/results/sic_collection/parsing-operational-v1/manifest.json).
+Technically operational status, with semantic accuracy/visual QA pending.
 
-## Organización de archivos
+## File organization
 
-Raíz `analytics/results/sic_collection/parsing-operational-v1/`:
+Root `analytics/results/sic_collection/parsing-operational-v1/`:
 `index.html`, `summary.json`, `manifest.json`, `review-queue.json`, `papers/{id}/`.
-Cada paper contiene `document.json`, `baseline-docling.json`, `native-evidence.json`,
+Each paper contains `document.json`, `baseline-docling.json`, `native-evidence.json`,
 `native-analysis.json`, `review-queue.json`, `verification.json`, `manifest.json`
-y `view/index.html` con `images/` originales. El índice enlaza todos15 papers.
+and `view/index.html` with original `images/`. The index links all 15 papers.
 
-| Campo / archivo | Qué representa |
+| Field / file | What it represents |
 | --- | --- |
-| inventory | Unidades conciliadas y grupos originales íntegros; original_unit conserva texto/bbox/clasificación y origen |
-| classification_source / reconciliation_source | Refs y hashes de fuentes originales |
-| canonical_sources | Baselinev1, Docling y archivos nativos; cachés reutilizados por identidad cuando corresponde |
-| operational_semantics | Función, rol, flow, ruta efectiva, decisiones, alternativas y avisos por unidad; no edición de original_unit |
-| native-analysis.json | Propuestas de clasificación/evidencia nativa previas a la conexión operativa |
-| native_links / native-evidence.json | Alineación de spans, fuente, texto de comparación y transformación; no texto OCR reemplazado |
-| structure | Secciones, raíces candidatas, pertenencias, fragmentos y continuidades candidatas |
-| steps / routes | Cápsulas y recorrido de presentación operativo; referencias compartidas sin duplicar contenido |
-| relations | Precedencia, consecutividad y continuidad con ámbitos explícitos |
-| operational_connection | Routing, zonas, precedencias propuestas y suspendidas, alternativa baseline |
-| original_page_context | Identidades y estados/incidentes conservados de páginas; no levantar abstenciones |
-| operational_config / metrics / validation | Configuración congelada, contabilidad y validación técnica; semantic_accuracy=null |
-| manifest.json | Hashes de inputs, outputs, código nuevo/reutilizado y runtime; no sustituye evaluación semántica |
+| inventory | Complete original reconciled units and groups; original_unit preserves text/bbox/classification and origin |
+| classification_source / reconciliation_source | Original source refs and hashes |
+| canonical_sources | Baselinev1, Docling and native files; caches reused by identity where appropriate |
+| operational_semantics | Function, role, flow, effective route, decisions, alternatives and warnings per unit; no editing of original_unit |
+| native-analysis.json | Native classification/evidence proposals before the operational connection |
+| native_links / native-evidence.json | Span alignment, source, comparison text and transformation; no replaced OCR text |
+| structure | Sections, candidate roots, memberships, fragments and candidate continuities |
+| steps / routes | Capsules and operational presentation route; shared references without duplicating content |
+| relations | Precedence, consecutiveness and continuity with explicit scopes |
+| operational_connection | Routing, zones, proposed and suspended precedence constraints, baseline alternative |
+| original_page_context | Preserved page identities and statuses/incidents; no lifting of abstentions |
+| operational_config / metrics / validation | Frozen configuration, accounting and technical validation; semantic_accuracy=null |
+| manifest.json | Hashes of inputs, outputs, new/reused code and runtime; does not replace semantic evaluation |
 
-## Identidades y referencias
+## Identities and references
 
-IDs de unidades no se regeneran por parser/página/visualización. El paper es la
-unidad documental; su recorrido atraviesa páginas. Inventario, apariciones y visitas
-no son el mismo denominador. Resolver `unit_ref` contra inventory, `step` contra
-steps y refs de sección contra structure.sections. Referencias compartidas apuntan a
-la primera aparición, no a una copia del texto.
+Unit IDs are not regenerated per parser/page/visualization. The paper is the
+documentary unit; its route crosses pages. Inventory, occurrences and visits
+are not the same denominator. Resolve `unit_ref` against inventory, `step` against
+steps and section refs against structure.sections. Shared references point to
+the first occurrence, not a copy of the text.
 
-Claims nativos `baseline:/...` se interpretan respecto a baseline-docling.json.
-Refs `native:...` y punteros de spans se resuelven en native-evidence.json.
-Texto normalizado/alineado se usa para comparación y no reemplaza el original.
-Sin bbox propia no se dibuja posición inventada; padre conservado no localiza al hijo.
+Native claims `baseline:/...` are interpreted relative to baseline-docling.json.
+Refs `native:...` and span pointers resolve in native-evidence.json.
+Normalized/aligned text is used for comparison and does not replace the original.
+Without its own bbox, no invented position is drawn; a preserved parent does not locate the child.
 
-## Semántica y jerarquía parcial
+## Semantics and partial hierarchy
 
-`operational_semantics.role` puede incorporar section_heading_candidate desde la
-capa estructural; `decisions.document_role` conserva la decisión de la capa nativa.
-No son dos etiquetas confirmadas ni deben sobrescribirse para aparentar acuerdo.
-Rol auxiliar desconocido no borra categoría/función anterior.
+`operational_semantics.role` may incorporate section_heading_candidate from the
+structural layer; `decisions.document_role` preserves the native layer's decision.
+These are not two confirmed labels and must not be overwritten to suggest agreement.
+An unknown auxiliary role does not erase the previous category/function.
 
-Las secciones son propuestas. `heading_ref` puede ser null; heading_candidates y
-parent_candidates conservan alternativas no operativas. `parent_ref` forma jerarquía
-operativa acíclica. Ausencia de parent puede ser raíz válida o desconocimiento.
-`level` conserva el nivel declarado por PDF si existe; numbering_level_candidate
-es profundidad del marcador y puede excluir la raíz de artículo. No equiparar
-ambas escalas; interpretar basis y parent_ref. Diferencias de codificación pueden
-mantener aliases/hipótesis distintas del mismo encabezado sin afirmar identidad.
+Sections are proposals. `heading_ref` may be null; heading_candidates and
+parent_candidates preserve nonoperational alternatives. `parent_ref` forms an
+acyclic operational hierarchy. Absence of a parent may mean a valid root or lack of knowledge.
+`level` preserves the level declared by the PDF if present; numbering_level_candidate
+is the marker depth and may exclude the article root. Do not equate
+both scales; interpret basis and parent_ref. Encoding differences may
+retain distinct aliases/hypotheses for the same heading without asserting identity.
 
-Pertenencia física usa contexto del recorrido; thematic_section_candidates puede
-estar vacío aun con figura localizada y caption vinculado. No implica pérdida.
-Cada paragraph fragment conserva sus unit refs y text_concatenated=false.
+Physical membership uses route context; thematic_section_candidates may
+be empty even with a located figure and linked caption. This does not imply loss.
+Each paragraph fragment preserves its unit refs and text_concatenated=false.
 
-## Estados y advertencias
+## Statuses and warnings
 
-| Estado o medida | Interpretación |
+| Status or measure | Interpretation |
 | --- | --- |
-| aligned_unique | Alineación nativa única; no validación humana |
-| heading_proposal / unresolved_heading_candidate | Propuesta basada en clasificación/estilo; no sección confirmada |
-| ambiguous_numbering / unlocated | Ambigüedad o falta de localización explícita, sin descartar nodo |
-| inferred_from_operational_order / physical_context_only | Contexto propuesto, no pertenencia temática demostrada |
-| deferred / geometry abstention | Decisión conservada; no inferir coordenadas ni orden de hijos |
-| candidate_supported | Continuidad con soporte heurístico; no párrafo aceptado |
-| candidate_ambiguous / blocked_deferred | Continuidad incierta/bloqueada por abstención o alineación no utilizable; no equiparar con cuenta de hijos |
-| Suspended constraint | Conflicto conservado como alternativa; no usado para producir un ciclo |
-| after_full_mvp | Cola de revisión final no bloqueante, incluso para decisiones automáticas únicas |
+| aligned_unique | Unique native alignment; not human validation |
+| heading_proposal / unresolved_heading_candidate | Proposal based on classification/style; not a confirmed section |
+| ambiguous_numbering / unlocated | Explicit ambiguity or lack of location, without discarding the node |
+| inferred_from_operational_order / physical_context_only | Proposed context, not demonstrated thematic membership |
+| deferred / geometry abstention | Preserved decision; do not infer coordinates or child order |
+| candidate_supported | Continuity with heuristic support; not an accepted paragraph |
+| candidate_ambiguous / blocked_deferred | Uncertain continuity/blocked by abstention or unusable alignment; do not equate with the child count |
+| Suspended constraint | Conflict preserved as an alternative; not used to produce a cycle |
+| after_full_mvp | Nonblocking final review queue, including unique automatic decisions |
 
-Todas5.374 unidades requieren revisión por política, no5.374errores. No sumar
-nodos/relaciones/unidades ni avisos solapados. Los pares reordenados y posiciones
-cambiadas no miden errores corregidos; cambios de ruta pueden desplazar índices.
+All 5,374 units require review by policy, not 5,374 errors. Do not add
+nodes/relations/units or overlapping warnings. Reordered pairs and changed
+positions do not measure corrected errors; route changes may shift indices.
 
-## Conservación y uso
+## Preservation and use
 
-No modificar originales ni resultados congelados. No introducir overrides manuales
-por paper para aparentar calidad. Una nueva corrección requiere incremento y destino
-separados. El visor alterna Docling/operativo sin recalcular, conserva los renders
-por bytes y ajusta ancho con CSS. DOM no es QA visual ni prueba de exactitud.
+Do not modify originals or frozen results. Do not introduce manual overrides
+per paper to suggest quality. A new correction requires a separate increment and
+destination. The viewer switches between Docling/operational without recalculating, preserves renders
+byte for byte and fits width with CSS. DOM is neither visual QA nor proof of accuracy.

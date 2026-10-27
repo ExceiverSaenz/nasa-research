@@ -47,8 +47,8 @@ def build_comparison(baseline_path,candidate_path,destination):
         if digest(target)!=sha:raise ValueError('image bytes changed')
     for name,d in [('baseline',a),('docling',b)]:
         model=dict(pages=pages,units=units,steps=d['steps'],routes=d['routes'],relations=d['relations'],metrics=d['metrics'])
-        title='Baseline v1' if name=='baseline' else 'Docling · reglas geométricas'
-        html=template.replace('Orden de lectura · versión conciliada · propuesta sin validar',title+' · sin validación semántica')
+        title='Baseline v1' if name=='baseline' else 'Docling · geometric rules'
+        html=template.replace('Reading order · reconciled version · unvalidated proposal',title+' · without semantic validation')
         html=html.replace('__CSS__',css).replace('__JS__',js).replace('__DATA__',json.dumps(model,ensure_ascii=False).replace('</','<\\/'))
         (dest/(name+'.html')).write_text(html,encoding='utf-8')
     model=dict(pages=[p['n'] for p in pages],routes=list(a['routes']),comparison=b['trial']['comparison'],metrics=b['metrics'])
