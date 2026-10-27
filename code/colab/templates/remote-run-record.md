@@ -1,0 +1,22 @@
+# Registro de ejecución remota
+
+- Run ID:
+- Estado: `prepared` / `uploaded` / `running` / `backup_verified` / `accepted` / `failed` / `timeout_manual_review` / `closed`
+- Incremento:
+- Alcance:
+- Paquete y versión:
+- Documento/páginas:
+- Configuración:
+- Pesos:
+- Sesión autorizada:
+- Comando exacto:
+- Baseline:
+- Resultado esperado:
+- Terminal/log:
+- ZIP/sidecar:
+- SHA/CRC:
+- Manifest:
+- Verificación:
+- Decisión:
+- No repetir:
+- Siguiente acción:

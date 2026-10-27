@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>12.pdf · Orden de lectura</title><style>__CSS__</style></head>
+<body><header><div class="heading"><strong>12.pdf</strong><span>Orden de lectura · versión conciliada · propuesta sin validar</span></div>
+<div class="toolbar">
+<label>Página <select id="page" aria-label="Página física"></select></label>
+<label>Recorrido <select id="route"><option value="main">Principal</option><option value="notes">Notas</option><option value="bibliography">Bibliografía</option><option value="metadata">Metadatos</option><option value="editorial_navigation">Editorial y navegación</option><option value="pending_structures">Referencias pendientes</option></select></label>
+<div class="navigation"><button id="previous" aria-label="Paso anterior">←</button><output id="position"></output><button id="next" aria-label="Paso siguiente">→</button></div>
+<div class="zoom"><button id="fit">Ajustar</button><button id="out" aria-label="Reducir zoom">−</button><output id="zoom">Ajustada</output><button id="in" aria-label="Aumentar zoom">+</button></div>
+<label class="check"><input id="arrows" type="checkbox" checked>Flechas</label><label class="check"><input id="containers" type="checkbox">Contenedores</label>
+</div></header><main><div id="status" role="status" aria-live="polite"></div>
+<div class="legend"><span>Azul: paso propuesto</span><span>Naranja discontinuo: orden provisional o abstendido</span><span>Cajas numeradas según el recorrido</span></div>
+<div class="layout"><section id="viewport" aria-label="Cajas y flechas del recorrido"><div id="stage"><img id="paper" alt="Página original"><svg id="overlay" aria-label="Orden de lectura sobre cajas originales"></svg></div></section>
+<aside><div id="detail" aria-live="polite"></div><details id="list-wrap" open><summary>Lista del recorrido en esta página</summary><div id="step-list"></div></details></aside></div>
+<footer>Captions antes del cuerpo visual cuando existe asociación utilizable. Referencias compartidas no duplican contenido. Hijos sin caja: pendientes, sin posición inventada. Revisión humana al final del MVP completo.</footer></main>
+<script id="data-model" type="application/json">__DATA__</script><script>__JS__</script></body></html>

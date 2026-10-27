@@ -1,0 +1,16 @@
+{
+  "copied_files": 304,
+  "total_files_before_verification": 311,
+  "total_bytes": 2074195,
+  "secret_pattern_findings": [],
+  "python_syntax_errors": [],
+  "files_over_10MiB": [],
+  "sanitized_notebooks": [],
+  "historical_absolute_path_files": [
+    "demo/integration_structure/audit/tests.txt",
+    "code/document_trial/GCE.md"
+  ],
+  "original_source_hashes_unchanged": true,
+  "processing_executed": false,
+  "note": "Pattern scan is not a guarantee that all sensitive information is absent. Historical local paths retained in source/documentation; remote-run logs excluded."
+}

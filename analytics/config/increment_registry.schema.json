@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Registro de incrementos técnicos",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "increments"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "increments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["increment_id", "scope", "status", "problem", "baseline", "single_variable", "acceptance_test", "decision", "do_not_repeat"],
+        "properties": {
+          "increment_id": {"type": "string", "minLength": 1},
+          "scope": {"type": "string", "minLength": 1},
+          "status": {"enum": ["proposed", "approved", "prepared", "executed", "verified", "accepted", "rejected", "blocked", "closed"]},
+          "problem": {"type": "string", "minLength": 1},
+          "hypothesis": {"type": "string"},
+          "baseline": {"type": "array", "items": {"type": "string"}},
+          "single_variable": {"type": "string", "minLength": 1},
+          "acceptance_test": {"type": "string", "minLength": 1},
+          "expected_result": {"type": "string"},
+          "decision": {"type": "string", "minLength": 1},
+          "evidence": {"type": "array", "items": {"type": "string"}},
+          "do_not_repeat": {"type": "array", "items": {"type": "string"}},
+          "next_action": {"type": "string"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Localized table-label recovery v1 (evaluation result)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "page",
+    "objects",
+    "text_evidence",
+    "reference_sha256",
+    "result_archive_sha256",
+    "input_plan_sha256",
+    "runtime",
+    "checks",
+    "failures",
+    "integrity_verified",
+    "registry_implemented",
+    "labels_recovered",
+    "links_verified",
+    "human_review"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "page": {
+      "type": "object",
+      "required": [
+        "document_id",
+        "physical_page",
+        "render_sha256",
+        "width_px",
+        "height_px"
+      ]
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "object_id",
+          "caption_id",
+          "body_id",
+          "description",
+          "state",
+          "candidates",
+          "selected_label",
+          "links_verified",
+          "label_recovered",
+          "method"
+        ],
+        "properties": {
+          "state": {
+            "enum": [
+              "both_linked",
+              "description_only",
+              "ambiguous"
+            ]
+          },
+          "candidates": {
+            "type": "array"
+          },
+          "links_verified": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "text_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "bbox",
+          "bbox_native",
+          "source_pointer",
+          "fragments",
+          "source_member",
+          "source_sha256",
+          "roi_id",
+          "roundtrip_error_px"
+        ]
+      }
+    },
+    "checks": {
+      "type": "array"
+    },
+    "failures": {
+      "type": "array"
+    },
+    "registry_implemented": {
+      "const": true
+    },
+    "integrity_verified": {
+      "type": "boolean"
+    },
+    "labels_recovered": {
+      "type": "boolean"
+    },
+    "links_verified": {
+      "type": "boolean"
+    },
+    "human_review": {
+      "const": "pending"
+    }
+  },
+  "$defs": {
+    "table2_lines": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "scope",
+        "page",
+        "proposal",
+        "label_geometry",
+        "tolerances",
+        "automatic_acceptance_passed",
+        "visual_review",
+        "visual_review_valid",
+        "labels_recovered",
+        "links_verified",
+        "original_native_evidence",
+        "middle_caption_evidence",
+        "unchanged_table1",
+        "result_archive_sha256",
+        "reference_sha256",
+        "input_plan_sha256",
+        "integrity_verified",
+        "ocr_executed"
+      ],
+      "properties": {
+        "scope": {
+          "const": [
+            "p0-b4"
+          ]
+        },
+        "ocr_executed": {
+          "const": false
+        },
+        "labels_recovered": {
+          "type": "boolean"
+        },
+        "links_verified": {
+          "type": "boolean"
+        },
+        "automatic_acceptance_passed": {
+          "type": "boolean"
+        },
+        "visual_review_valid": {
+          "type": "boolean"
+        },
+        "proposal": {
+          "type": "object",
+          "required": [
+            "object_id",
+            "caption_id",
+            "body_id",
+            "status",
+            "candidates",
+            "selected_candidate",
+            "links_verified"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "proposed_pending_visual_review",
+                "ambiguous",
+                "verified_by_visual_review"
+              ]
+            }
+          }
+        },
+        "tolerances": {
+          "const": {
+            "iou_min": 0.5,
+            "expanded_reference_coverage_min": 0.9,
+            "reference_expansion_px": 2,
+            "roundtrip_max_px": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "links_verified": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "automatic_acceptance_passed": {
+                "const": true
+              },
+              "visual_review_valid": {
+                "const": true
+              },
+              "visual_review": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

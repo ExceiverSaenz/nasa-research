@@ -1,0 +1,9 @@
+transformers==4.12.5
+tokenizers==0.10.3
+huggingface-hub==0.10.1
+timm==0.4.12
+einops==0.4.1
+sentencepiece==0.1.99
+scipy==1.10.1
+shapely==1.8.5.post1
+lxml==4.9.4

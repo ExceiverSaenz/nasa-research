@@ -1,0 +1,23 @@
+test_backup_contains_sources_and_detects_changed_sidecar (test_demo.DemoTests.test_backup_contains_sources_and_detects_changed_sidecar) ... ok
+test_bundle_verifies_all_members_before_extracting (test_demo.DemoTests.test_bundle_verifies_all_members_before_extracting) ... ok
+START prepare
+test_failed_stage_preserved_and_never_retried (test_demo.DemoTests.test_failed_stage_preserved_and_never_retried) ... Traceback (most recent call last):
+  File "C:\Users\HP Victus\Desktop\nasa_research\demo\integration_structure\integration_demo\runner.py", line 37, in execute_stage
+    result = action()
+  File "C:\Users\HP Victus\Desktop\nasa_research\demo\integration_structure\tests\test_demo.py", line 212, in broken
+    raise RuntimeError('fixture failure')
+RuntimeError: fixture failure
+
+ok
+test_frozen_runtime_probe_with_real_docling (test_demo.DemoTests.test_frozen_runtime_probe_with_real_docling) ... ok
+test_pdf_mismatch_and_source_corruption_rejected (test_demo.DemoTests.test_pdf_mismatch_and_source_corruption_rejected) ... ok
+Conciliación: 1.pdf (2 páginas)
+test_reconciliation_to_real_classification_and_operational_export (test_demo.DemoTests.test_reconciliation_to_real_classification_and_operational_export) ... ok
+test_runtime_setup_uses_managed_python_exact_locks_and_no_retry (test_demo.DemoTests.test_runtime_setup_uses_managed_python_exact_locks_and_no_retry) ... ok
+test_subprocess_controller_verifies_and_archives_full_synthetic_run (test_demo.DemoTests.test_subprocess_controller_verifies_and_archives_full_synthetic_run) ... ok
+test_unsafe_duplicate_and_symlink_members_rejected (test_demo.DemoTests.test_unsafe_duplicate_and_symlink_members_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 16.273s
+
+OK

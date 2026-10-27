@@ -1,0 +1,72 @@
+Package: PLAN.md
+Package: README.md
+Package: code/document_pipeline/__init__.py
+Package: code/document_pipeline/order.py
+Package: code/document_pipeline/pipeline.py
+Package: code/document_pipeline/structure.py
+Package: code/document_pipeline/view.py
+Package: code/document_pipeline/viewer_extra.js
+Package: code/document_structure/__init__.py
+Package: code/document_structure/align.py
+Package: code/document_structure/claims.py
+Package: code/document_structure/docling_trial.py
+Package: code/document_structure/native.py
+Package: code/document_structure/structure.py
+Package: code/functional_classification/__init__.py
+Package: code/functional_classification/classifier.py
+Package: code/functional_classification/export_reconciled.py
+Package: code/functional_classification/reconciled.py
+Package: code/integration_demo/__init__.py
+Package: code/integration_demo/common.py
+Package: code/integration_demo/reconcile_collection.py
+Package: code/integration_demo/runner.py
+Package: code/integration_demo/runtime.py
+Package: code/reading_order/__init__.py
+Package: code/reading_order/engine.py
+Package: code/reading_order/export.py
+Package: code/reading_order/layout.py
+Package: code/reading_order/viewer.css
+Package: code/reading_order/viewer.html
+Package: code/reading_order/viewer.js
+Package: code/reconciliation/__init__.py
+Package: code/reconciliation/consolidated_inputs.py
+Package: code/reconciliation/engine.py
+Package: code/reconciliation/export.py
+Package: code/reconciliation/inputs.py
+Package: documentation/architecture.md
+Package: documentation/output-contract.md
+Package: inputs/native.sha256
+Package: inputs/native.zip
+Package: package-spec.json
+Package: pdfs/1.pdf
+Package: pdfs/10.pdf
+Package: pdfs/11.pdf
+Package: pdfs/12.pdf
+Package: pdfs/14.pdf
+Package: pdfs/15.pdf
+Package: pdfs/17.pdf
+Package: pdfs/2.pdf
+Package: pdfs/3.pdf
+Package: pdfs/4.pdf
+Package: pdfs/5.pdf
+Package: pdfs/6.pdf
+Package: pdfs/7.pdf
+Package: pdfs/8.pdf
+Package: pdfs/9.pdf
+Package: requirements-docling.txt
+Package: requirements-runtime.lock
+Package: source-snapshot.json
+Package: tests/test_demo.py
+{
+  "package_sha256": "025d8e307e13780884609d2528839217610346e41c2907ef0d784adfd0c18c7a",
+  "bytes": 1284284562,
+  "members": 60,
+  "all_member_hashes_verified": true,
+  "scientific_files_copied_unchanged": 28,
+  "native_archive_preserved": true,
+  "native_archive_sha256": "2c9227257d3c79d8aa9477e80786a3f0e393c18fd29b6ef913f7907d6f917894",
+  "baseline_manifest_sha256": "07f1073ecfc87f5e3687755008ca9dd7e364429f05964f757ffb6ff429d055ff",
+  "models_executed": false,
+  "canonical_collection_reexported": false,
+  "A100_executed": false
+}

@@ -1,0 +1,13 @@
+{
+  "A100_executed": false,
+  "all_member_hashes_verified": true,
+  "baseline_manifest_sha256": "07f1073ecfc87f5e3687755008ca9dd7e364429f05964f757ffb6ff429d055ff",
+  "bytes": 1284283961,
+  "canonical_collection_reexported": false,
+  "members": 60,
+  "models_executed": false,
+  "native_archive_preserved": true,
+  "native_archive_sha256": "2c9227257d3c79d8aa9477e80786a3f0e393c18fd29b6ef913f7907d6f917894",
+  "package_sha256": "9fce7521e57fb319012f35d5adfb978c31a2cc07c71e2a750be1a520344d3332",
+  "scientific_files_copied_unchanged": 28
+}

@@ -1,0 +1,114 @@
+{
+  "reconciliation/__init__.py": {
+    "original": "code/reconciliation/__init__.py",
+    "sha256": "6fbc0016c8c6bf2739a361220a9602e7030e2f3833492e1c5e663bdb9617e3e7"
+  },
+  "reconciliation/engine.py": {
+    "original": "code/reconciliation/engine.py",
+    "sha256": "e6ec29feca5779c76fc78f23dac0ae278905b65f82fcdddc86e67759a72561b3"
+  },
+  "reconciliation/inputs.py": {
+    "original": "code/reconciliation/inputs.py",
+    "sha256": "735924dfd522a76fbd8e00e2f69f83aca7139452eebc7815d2d17192cfc1bf28"
+  },
+  "reconciliation/export.py": {
+    "original": "code/reconciliation/export.py",
+    "sha256": "6f999d025d550fce9876c0410c101c5ce1a5f0bdf0e3153d080e2605893f3bb7"
+  },
+  "reconciliation/consolidated_inputs.py": {
+    "original": "code/reconciliation/consolidated_inputs.py",
+    "sha256": "c6ed5e6918c7a3e5e5c409df515d3d71f644b8407d97ac0f114e7a3e8f4abd8c"
+  },
+  "functional_classification/__init__.py": {
+    "original": "code/functional_classification/__init__.py",
+    "sha256": "2070cf5cf622ac4f4ffaedb360272a9059bcd56552b655e2e1d7610172830472"
+  },
+  "functional_classification/classifier.py": {
+    "original": "code/functional_classification/classifier.py",
+    "sha256": "3cf3f60dcc8d802f624483de75a201f348d1a57a6b2578c25a3426b4a362a83e"
+  },
+  "functional_classification/reconciled.py": {
+    "original": "code/functional_classification/reconciled.py",
+    "sha256": "b9d07556c2cc157bfe2034ee9bac01dfffd8e4b56612908b25ab03404015714b"
+  },
+  "functional_classification/export_reconciled.py": {
+    "original": "code/functional_classification/export_reconciled.py",
+    "sha256": "d992eed811c0951012d5fdb2eebd4533c90a31af2879b0b886e2e051254e6621"
+  },
+  "reading_order/__init__.py": {
+    "original": "code/reading_order/__init__.py",
+    "sha256": "4a8acbdad9a71f825620c1324e0ff7038f72b91da9a36ed26d42c7d24f59adca"
+  },
+  "reading_order/engine.py": {
+    "original": "code/reading_order/engine.py",
+    "sha256": "b89a009b3f8c9c7cdb1d31299282bc1b03bfad2a6b7ea3a32faf930a70f88b46"
+  },
+  "reading_order/layout.py": {
+    "original": "code/reading_order/layout.py",
+    "sha256": "b112aa2e870b748204381027124f66152bce04964a8e237e6cf86979065daede"
+  },
+  "reading_order/export.py": {
+    "original": "code/reading_order/export.py",
+    "sha256": "54855f9a2a76aca21927e0788df31625e4907bfa7e753148d482165c5e5adf48"
+  },
+  "reading_order/viewer.html": {
+    "original": "code/reading_order/viewer.html",
+    "sha256": "b590ed6da4176d34ea33c413663fccb37e372dca69db61f151329d4dc75ff0bc"
+  },
+  "reading_order/viewer.js": {
+    "original": "code/reading_order/viewer.js",
+    "sha256": "a2759e4d0ec33252e0aac2762215db665096f24ea3ffc8c8890e01a5eaee67cc"
+  },
+  "reading_order/viewer.css": {
+    "original": "code/reading_order/viewer.css",
+    "sha256": "c4eaa629a71023e133d20febfc93d34d064419525c880e26489bf838b71bc33b"
+  },
+  "document_structure/__init__.py": {
+    "original": "code/document_structure/__init__.py",
+    "sha256": "a983df40528ea858cbb77a4bedb661c24f5f75844abdd50c352770e0556a974f"
+  },
+  "document_structure/native.py": {
+    "original": "code/document_structure/native.py",
+    "sha256": "12caef342cf05162db528028ad7d4494f7b4526f53adc0b1f01f9e7cfcd75cdb"
+  },
+  "document_structure/align.py": {
+    "original": "code/document_structure/align.py",
+    "sha256": "51645f83c4723a09934cd64e4504f532ba553671882b23078242e38b6badffe7"
+  },
+  "document_structure/claims.py": {
+    "original": "code/document_structure/claims.py",
+    "sha256": "b0d21447df0bebdfe6e175febe0499e17e93532bc2e1fe4867e61ed1d49ebda5"
+  },
+  "document_structure/structure.py": {
+    "original": "code/document_structure/structure.py",
+    "sha256": "2c0a16a174e992b314a0485792057e8682102f2f56c22cfc057446994879e8fb"
+  },
+  "document_structure/docling_trial.py": {
+    "original": "code/document_structure/docling_trial.py",
+    "sha256": "b06b55d21b5ef278b054f6629821c79ffcbb4ff6a2b499e15592ee8917a625d3"
+  },
+  "document_pipeline/__init__.py": {
+    "original": "code/document_pipeline/__init__.py",
+    "sha256": "16c898659e49694698f0bf7ca22c3bb42b6897d2183cbb87af17ad258131cb62"
+  },
+  "document_pipeline/pipeline.py": {
+    "original": "code/document_pipeline/pipeline.py",
+    "sha256": "7ed2b4933e6323d265b47d326296f2280fe2c1a2fc344ad3e799a145a89e0805"
+  },
+  "document_pipeline/structure.py": {
+    "original": "code/document_pipeline/structure.py",
+    "sha256": "38a2702c5a246ecc03ab7803e312ecd20d3aecbf53250302b30c8c6fc4fa4c01"
+  },
+  "document_pipeline/order.py": {
+    "original": "code/document_pipeline/order.py",
+    "sha256": "37198ca42fa91dee86bafc2547294b5287acd04a39a064611ac3620cfc361930"
+  },
+  "document_pipeline/view.py": {
+    "original": "code/document_pipeline/view.py",
+    "sha256": "bf95dca97a47ae72653dbd8ccc2d52371fcb007e36e183200792833f2a4ecbaf"
+  },
+  "document_pipeline/viewer_extra.js": {
+    "original": "code/document_pipeline/viewer_extra.js",
+    "sha256": "6a62ec59e5f1cfb236fd28572acda40c558c605b9eb7e6eb3fbd79688d654434"
+  }
+}
