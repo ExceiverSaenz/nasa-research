@@ -1,4 +1,0 @@
-# Exact upstream wheels; only the pinned rule-based postprocessor is used.
-# Install with --no-deps alongside requirements-runtime.lock to omit neural extras.
-docling==2.123.1
-docling-slim==2.123.1

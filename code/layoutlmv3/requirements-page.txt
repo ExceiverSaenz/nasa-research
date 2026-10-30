@@ -1,4 +1,0 @@
-# Additional page-rendering dependencies. Install in the existing isolated env.
-# numpy==1.23.5 and Pillow==9.5.0 remain supplied by setup_env.py.
-pypdfium2==5.14.0
-pypdf==6.10.0

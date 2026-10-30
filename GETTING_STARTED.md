@@ -1,9 +1,8 @@
 # Ejecutar new_code desde un clon
 
-Esta rama incorpora las fuentes actuales de `new_code/`, sus manifiestos de
-modelos y dependencias, y las pruebas de desarrollo de `tests/`. Las carpetas
-`code/`, `analytics/`, `demo/` y `docs/` heredadas de main son material anterior;
-el flujo actual no depende de ellas. Guía operativa: [new_code/README.md](new_code/README.md).
+El repositorio contiene las fuentes actuales de `new_code/`, sus manifiestos de
+modelos y dependencias, y las pruebas de desarrollo de `tests/`.
+Guía operativa: [new_code/README.md](new_code/README.md).
 
 ## Preparación local
 
@@ -12,7 +11,7 @@ El controlador usa una sesión nueva A100; ejecutar un comando sin `--plan`
 puede consumir recursos de Colab.
 
 ```bash
-git clone --branch develop https://github.com/ExceiverSaenz/nasa-research.git
+git clone --branch main https://github.com/ExceiverSaenz/nasa-research.git
 cd nasa-research
 mkdir -p papers/SiC_papers
 ```
