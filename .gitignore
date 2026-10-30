@@ -47,3 +47,10 @@ token*.json
 /demo/integration_structure/run/
 /demo/integration_structure/runs/
 /demo/integration_structure/audit/
+
+# Current standalone workflow: generated/local data never belongs in Git.
+/new_code/runtime/
+/new_code/results/
+/new_code/inputs/
+/papers/
+*.env

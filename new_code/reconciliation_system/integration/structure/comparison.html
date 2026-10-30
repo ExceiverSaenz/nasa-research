@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>12.pdf · Baseline y Docling</title><style>__CSS__</style></head>
+<body><header><h1>12.pdf · comparación de orden</h1><p>Solo cambia el orden entre bloques y grupos. Clasificación, rutas, asociaciones y orden interno conservados. Cambios no equivalen a mejoras.</p>
+<div class="controls"><label>Página <select id="page"></select></label><label>Recorrido <select id="route"></select></label><label>Mostrar <select id="display"><option value="both">Ambas versiones</option><option value="baseline">Baseline</option><option value="docling">Docling</option></select></label><label><input id="link" type="checkbox" checked> Selección sincronizada</label></div>
+<div id="stats" role="status" aria-live="polite"></div><details><summary>Diferencias de todas las páginas</summary><div class="table-wrap"><table><thead><tr><th>Página</th><th>Recorrido</th><th>Contenido</th><th>Posiciones distintas</th><th>Pares invertidos</th></tr></thead><tbody id="rows"></tbody></table></div></details>
+<p class="warning">Requiere validación humana al final del MVP. Continúan las advertencias heredadas. No se recalculó continuidad de párrafos ni se corrigió clasificación.</p></header>
+<main class="panels" id="panels"><section id="baseline-panel"><h2>Baseline v1</h2><iframe id="baseline" src="baseline.html" title="Orden baseline de 12.pdf"></iframe></section><section id="docling-panel"><h2>Docling · componente basado en reglas</h2><iframe id="docling" src="docling.html" title="Orden Docling de 12.pdf"></iframe></section></main>
+<script id="comparison-data" type="application/json">__DATA__</script><script>__JS__</script></body></html>

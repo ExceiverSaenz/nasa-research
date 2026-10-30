@@ -1,0 +1,2 @@
+# Frozen native-only runtime, Python 3.13.5. No model framework required.
+PyMuPDF==1.27.2.3

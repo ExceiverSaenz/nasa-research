@@ -1,0 +1,22 @@
+{
+  "repository": "HYPJUDY/layoutlmv3-base-finetuned-publaynet",
+  "revision": "1c4d2cf657feafac1f53b6f92afe23b279d4f45b",
+  "files": {
+    "config.json": {
+      "bytes": 897,
+      "sha256": "7307bb409ac684650cfef5b3c31145fdbeb347d62de1bf2d6251d179288f847d"
+    },
+    "config.yaml": {
+      "bytes": 6431,
+      "sha256": "3f018b65c200f768ff7b907982a512e73a0709e2f9e3a2cd65556c5285db286c"
+    },
+    "model_final.pth": {
+      "bytes": 563985959,
+      "sha256": "6a00f69371203a19a5815896ab849e61956bea1fa8f3bdc831ee560dd0c2ce2b"
+    },
+    "README.md": {
+      "bytes": 1375,
+      "sha256": "9a6d4082af61c3b88b0c55fade6d67a2e8ee70ef02c70956b0c6e98139eff643"
+    }
+  }
+}

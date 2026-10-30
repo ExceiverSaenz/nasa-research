@@ -1,0 +1,9 @@
+/* Execute actual exported HTML in a minimal DOM; not browser/visual QA. */
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const html=fs.readFileSync(process.argv[2],'utf8'),model=JSON.parse(html.match(/<script id="data-model" type="application\/json">([\s\S]*?)<\/script>/)[1]);
+class E{constructor(){this.children=[];this.style={};this.handlers={};this.value='';this.checked=false;this.textContent='';}append(...x){this.children.push(...x);}replaceChildren(...x){this.children=[...x];}add(x){this.append(x);}setAttribute(k,v){this[k]=v;}addEventListener(k,v){this.handlers[k]=v;}getBoundingClientRect(){return {width:800,height:1000};}get selectedOptions(){return [{textContent:this.value}];}fire(k){this.handlers[k]?.({key:'Enter',preventDefault(){}});}}
+const els=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(m=>[m[1],new E()]));els['data-model'].textContent=JSON.stringify(model);els.arrows.checked=true;els['order-mode'].value='operational';
+vm.runInNewContext(html.match(/<script>([\s\S]*?)<\/script>/)[1],{document:{body:new E(),getElementById:id=>els[id],createElement:()=>new E(),createElementNS:()=>new E()},Option:function(t,v){this.textContent=t;this.value=v;}});
+let cases=0,selections=0;
+for(const mode of ['baseline','operational']){els['order-mode'].value=mode;els['order-mode'].fire('change');for(const route of Object.keys(model.routes))for(const page of model.pages){els.route.value=route;els.route.fire('change');els.page.value=String(page.n);els.page.fire('change');assert.strictEqual(els.paper.src,page.image);for(const b of [...els['step-list'].children]){b.fire('click');selections++;}cases++;}}
+for(const button of els['sections-tree'].children)button.fire('click');
+console.log(JSON.stringify({pages:model.pages.length,page_route_version_cases:cases,step_selections:selections,section_navigation:model.structure.sections.length,visual_QA:false}));

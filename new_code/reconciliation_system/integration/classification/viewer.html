@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>12.pdf · Versión conciliada</title><style>__CSS__</style></head>
+<body>
+<header>
+  <div class="heading"><strong>12.pdf</strong><span>Versión conciliada · clasificación funcional</span></div>
+  <div class="toolbar">
+    <div class="page-nav"><button id="prev" aria-label="Página anterior">←</button><label>Página <select id="page" aria-label="Página física"></select></label><button id="next" aria-label="Página siguiente">→</button></div>
+    <label>Color <select id="mode"><option value="category">Categoría</option><option value="function">Función</option></select></label>
+    <div class="zoom"><button id="fit">Ajustar al ancho</button><button id="out" aria-label="Reducir zoom">−</button><output id="zoom">Ajustada</output><button id="in" aria-label="Aumentar zoom">+</button></div>
+    <label class="check"><input id="containers" type="checkbox">Contenedores</label>
+  </div>
+</header>
+<main>
+  <div id="legend" aria-label="Leyenda"></div>
+  <div id="status" role="status" aria-live="polite"></div>
+  <div class="layout">
+    <section class="paper-column" aria-label="Página conciliada">
+      <div id="viewport"><div id="stage"><img id="paper" alt="Página original de 12.pdf"><svg id="overlay" role="group" aria-label="Cajas de la versión conciliada"></svg></div></div>
+    </section>
+    <aside>
+      <label for="unit">Objeto conciliado</label><select id="unit"></select>
+      <div id="detail" aria-live="polite"></div>
+    </aside>
+  </div>
+  <footer>Imágenes originales sin recomprimir. Ajuste y zoom solo cambian la visualización. Trazos discontinuos: advertencia pendiente. Validación humana al final del MVP completo.</footer>
+</main>
+<script id="data-model" type="application/json">__DATA__</script>
+<script>__JS__</script>
+</body></html>

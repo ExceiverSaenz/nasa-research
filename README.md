@@ -1,3 +1,7 @@
+> **Flujo actual en develop:** [preparar un clon y ejecutar new_code](GETTING_STARTED.md).
+> Código operativo: [new_code/README.md](new_code/README.md).
+> El contenido siguiente documenta la versión anterior heredada de main.
+
 # Scientific paper parsing research
 
 Research code for integrating document-parser outputs into a traceable representation for future extraction of varied scientific features.

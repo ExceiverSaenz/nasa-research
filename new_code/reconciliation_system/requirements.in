@@ -1,0 +1,10 @@
+# Candidate integration additions for the same Python 3.11.16 environment as
+# parse_system/parsing/unified/requirements.in. Resolve both before installation
+# and before recording the parser environment fingerprint; this is not a lock.
+# Preserve the exact scientific predictor/native extractor, without copying the
+# historical Python3.13 closure (its numpy/Pillow pins differ from the parser).
+PyMuPDF==1.27.2.3
+docling==2.123.1
+docling-slim==2.123.1
+docling-core==2.92.0
+rtree==1.4.1

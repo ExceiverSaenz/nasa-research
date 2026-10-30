@@ -1,0 +1,24 @@
+{
+  "model_id": "microsoft/table-transformer-detection",
+  "revision": "2357cbe2b5a5d1c03e54f32764f06058933b65ab",
+  "files": {
+    "config.json": {
+      "bytes": 1228,
+      "sha256": "ed5b93df2c3a59d473ddea853553a6d545d52bd4e9f8f72bf40b8a974aba4c1d",
+      "source_digest": "3e86a23acda6963625462a7d0b91266ade10511e",
+      "source_digest_type": "git_blob_sha1"
+    },
+    "preprocessor_config.json": {
+      "bytes": 273,
+      "sha256": "86a8837ae440456b0a9aef788b064921df29c20f0b67040954ce5c2fbd352c4f",
+      "source_digest": "545efb61a3801bbeaf579c6d552321d575a38308",
+      "source_digest_type": "git_blob_sha1"
+    },
+    "model.safetensors": {
+      "bytes": 115317516,
+      "sha256": "8f1aa73170102c038d40155e2734b343bf07e0fe12594228a8590943b01dccf7",
+      "source_digest": "8f1aa73170102c038d40155e2734b343bf07e0fe12594228a8590943b01dccf7",
+      "source_digest_type": "sha256"
+    }
+  }
+}

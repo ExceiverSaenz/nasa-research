@@ -4,3 +4,7 @@
 *.js text eol=lf
 *.json text eol=lf
 *.ipynb text eol=lf
+
+# Preserve source bytes used by runtime fingerprints and bundle hashes.
+new_code/** -text
+tests/** -text
