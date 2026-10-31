@@ -1,13 +1,13 @@
 # NASA Research — new_code
 
-Procesamiento de papers con parser, reconciliación y automatización Colab/R2.
+Paper processing with parsing, reconciliation, and Colab/R2 automation.
 
-- [Preparar un clon y ejecutar](GETTING_STARTED.md)
-- [Guía de new_code](new_code/README.md)
-- [Automatización](new_code/automation/README.md)
-- [Pruebas](tests/README.md)
+- [Prepare a clone and run](GETTING_STARTED.md)
+- [new_code guide](new_code/README.md)
+- [Automation](new_code/automation/README.md)
+- [Tests](tests/README.md)
 
-Las fuentes operativas están en `new_code/`. Para ejecutar se requieren Ubuntu/WSL,
-Colab CLI autenticada, configuración privada R2 y PDFs originales de referencia.
-Los pesos se descargan según los manifiestos; los datos, resultados y credenciales
-se mantienen fuera de Git.
+The operational source code is in `new_code/`. Running it requires Ubuntu/WSL,
+an authenticated Colab CLI, private R2 configuration, and the original reference PDFs.
+Model weights are downloaded according to the manifests; data, results, and credentials
+are kept out of Git.
