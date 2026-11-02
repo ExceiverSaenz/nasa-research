@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "parsed_output_counts": {
+    "detections.jsonl": 35240,
+    "agreement_edges.jsonl": 35778,
+    "agreement_components.jsonl": 24878,
+    "native_patterns.jsonl": 1588
+  },
+  "review_batches": 15,
+  "review_pages": 397,
+  "unique_pages": 397,
+  "human_reviewed_pages": 0,
+  "broken_review_links": [],
+  "source_geometry_errors_observed": 0,
+  "detector_page_timing_observations": 794,
+  "separate_attempt_tool_rows": 6,
+  "historical_failure_records": 22,
+  "frozen_implementation_and_plan_current_hashes_match": true,
+  "checked_frozen_files": [
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis_tools\\core.py",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis_tools\\reporting.py",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis_tools\\run_analysis.py",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\history\\bounding-boxes-cleanup-20261101T050218\\preserved\\docs\\methodology\\analysis-plan.md"
+  ],
+  "semantic_validation": "not_performed"
+}

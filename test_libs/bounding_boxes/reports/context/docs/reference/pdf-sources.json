@@ -1,0 +1,396 @@
+{
+  "schema": "bounding-box-pdf-references/1",
+  "frozen_inventory_sha256": "fd28a9ec1cc69216f7566a14e1226e08948630de4103634fb3cf8a9bd2d79e34",
+  "original_inventory_unchanged": true,
+  "papers": [
+    {
+      "name": "1.pdf",
+      "bytes": 50705515,
+      "sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "pages": 26,
+      "local_pdf": "papers/SiC_papers/1.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1007/978-3-030-16347-1_20"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/1/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "10.pdf",
+      "bytes": 144075,
+      "sha256": "87261b3f60e1f0aa62e37d357d419febf17c43f1beb0e3cccbfb0450c0d6b81b",
+      "pages": 9,
+      "local_pdf": "papers/SiC_papers/10.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/10/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "11.pdf",
+      "bytes": 16382256,
+      "sha256": "b807cb5cace5892e88fa4d42556add46e403a9f1a632b36296342e8250826fde",
+      "pages": 21,
+      "local_pdf": "papers/SiC_papers/11.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1080/00295450.2025.2480978"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/11/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "12.pdf",
+      "bytes": 4874584,
+      "sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660",
+      "pages": 13,
+      "local_pdf": "papers/SiC_papers/12.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1016/j.jnucmat.2017.10.059"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/12/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "14.pdf",
+      "bytes": 2998149,
+      "sha256": "c456d6a6e32e397b65418be76ba53ec58d7ecfe880af0f0afdddbb505e464d52",
+      "pages": 68,
+      "local_pdf": "papers/SiC_papers/14.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/14/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "15.pdf",
+      "bytes": 2209132,
+      "sha256": "7316a0858c49a13194fd9337995ea1c249661fa58acf569891c1294d6610c461",
+      "pages": 59,
+      "local_pdf": "papers/SiC_papers/15.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/15/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "17.pdf",
+      "bytes": 2050847,
+      "sha256": "e77b377fb151c9c5d5b19b269f0c248148d1475a82af1f8dd1e73498c77bbef5",
+      "pages": 71,
+      "local_pdf": "papers/SiC_papers/17.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/17/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "2.pdf",
+      "bytes": 3459054,
+      "sha256": "f4621f172d9857687da7b8ba88f691846fad5821900d9c5f39a951a0c0307727",
+      "pages": 12,
+      "local_pdf": "papers/SiC_papers/2.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1016/j.jnucmat.2018.06.017"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/2/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "3.pdf",
+      "bytes": 391487,
+      "sha256": "e38ad810e4d9deaf5902ccdda688da4ed586e2531bc0153efbedc89d3c77a727",
+      "pages": 4,
+      "local_pdf": "papers/SiC_papers/3.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/3/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "4.pdf",
+      "bytes": 501270,
+      "sha256": "ec268ee6720e067d4d146335e834f85bd354346ef2fe0764e50444b73997608e",
+      "pages": 4,
+      "local_pdf": "papers/SiC_papers/4.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/4/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "5.pdf",
+      "bytes": 2830388,
+      "sha256": "09ae42cc0fd9c939df8f416cdb5750e8f356a1fe315431ab6ef6211810f92af6",
+      "pages": 9,
+      "local_pdf": "papers/SiC_papers/5.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1016/j.jnucmat.2017.12.009"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/5/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "6.pdf",
+      "bytes": 3894699,
+      "sha256": "81dc7433ff7ab1e75cb148f184c3969f82ed9b014782fa36416a3188c7bfc539",
+      "pages": 26,
+      "local_pdf": "papers/SiC_papers/6.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/6/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "7.pdf",
+      "bytes": 11637340,
+      "sha256": "390ddeed7b5d6b1c8c3e3892036b87e5600481ca3b560c80bf58ccbe7f9a82f5",
+      "pages": 14,
+      "local_pdf": "papers/SiC_papers/7.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.1016/j.jnucmat.2023.154784"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/7/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "8.pdf",
+      "bytes": 956328,
+      "sha256": "150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5",
+      "pages": 49,
+      "local_pdf": "papers/SiC_papers/8.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/8/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    },
+    {
+      "name": "9.pdf",
+      "bytes": 6366963,
+      "sha256": "3e8ac0d09b0628f5c4467dc15e9eac47e01166f5c049834a243ea6fb8156b217",
+      "pages": 12,
+      "local_pdf": "papers/SiC_papers/9.pdf",
+      "source_url": null,
+      "source_url_status": "not_verified",
+      "candidate_doi_urls": [
+        "https://doi.org/10.3390/en17236124"
+      ],
+      "candidate_evidence": "raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/9/middle.json#/pages/0",
+      "page_reference": {
+        "index_base": 0,
+        "display_page": "page_idx + 1"
+      },
+      "region_reference": {
+        "coordinate_system": "relative_page",
+        "format": "[left, top, right, bottom]",
+        "range": [
+          0,
+          1
+        ],
+        "optional": true
+      },
+      "existing_references": "Retain paper_sha256, page_idx and existing region coordinates; do not invent regions."
+    }
+  ]
+}

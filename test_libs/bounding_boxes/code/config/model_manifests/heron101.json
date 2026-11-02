@@ -1,0 +1,18 @@
+{
+  "repo": "docling-project/docling-layout-heron-101",
+  "revision": "2e4993cf6bb211112084a2f80938f26138008917",
+  "files": {
+    "config.json": {
+      "bytes": 3269,
+      "sha256": "8cf34c2562f519819fe83dd3a0e53502c447161dd73c8956ce59323b201b350d"
+    },
+    "model.safetensors": {
+      "bytes": 306814140,
+      "sha256": "c11fe1df2087f29c77359834ac34700a5d9a41516b3387a3df0d7c3d52440c4e"
+    },
+    "preprocessor_config.json": {
+      "bytes": 444,
+      "sha256": "cd38cd59999e7a95d68e487fbe5132df3d4e5c32a0836add57e6126ba0c4eaf1"
+    }
+  }
+}

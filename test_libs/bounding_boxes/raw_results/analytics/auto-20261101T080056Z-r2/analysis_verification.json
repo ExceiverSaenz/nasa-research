@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "all_inputs_unchanged": true,
+  "changed_inputs": [],
+  "verified_input_files": 2452,
+  "expected_papers": 15,
+  "expected_pages": 397,
+  "tool_page_outputs": 1588,
+  "metrics_reconciled": true,
+  "human_reviewed_pages": 0,
+  "no_reparse": true,
+  "no_colab": true,
+  "no_renders": true,
+  "scope": "technical_identity_and_automatic_output_consistency_not_semantic_validation",
+  "analysis_process_memory": {
+    "peak_rss_bytes": 224997376,
+    "scope": "offline_analysis_process_os_peak_not_parser_memory"
+  },
+  "elapsed_s": 114.46418239999912
+}

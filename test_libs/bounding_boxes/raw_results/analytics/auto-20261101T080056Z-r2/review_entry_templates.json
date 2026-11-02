@@ -1,0 +1,30 @@
+{
+  "instruction": "Templates only; not observations. Create case IDs from PDF inventory, not predicted rows.",
+  "case_template": {
+    "case_id": null,
+    "paper_sha256": null,
+    "page_idx": null,
+    "observed_type": null,
+    "visual_locator": null,
+    "created_at": null,
+    "page_case_inventory_complete": false,
+    "evidence_level": null,
+    "author": null
+  },
+  "assessment_template": {
+    "case_id": null,
+    "tool": null,
+    "detection_uids": [],
+    "evidence_refs": [],
+    "evidence_level": null,
+    "reviewed_at": null,
+    "author": null,
+    "coverage_status": "not_reviewed",
+    "coverage_support": [],
+    "segmentation_status": "not_reviewed",
+    "relation_status": "undetermined",
+    "tag_status": "not_reviewed",
+    "issues": [],
+    "human_approved": false
+  }
+}

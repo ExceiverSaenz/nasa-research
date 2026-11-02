@@ -1,0 +1,10 @@
+# Isolated Standard candidate; never install into environment A.
+mineru[full]==4.0.12
+vllm==0.19.1
+torch==2.10.0
+torchvision==0.25.0
+transformers==5.10.1
+psutil
+
+# MinerU 4.0.12 uses the single private_range native ABI (changed in DocVortex 0.6.8).
+docvortex==0.6.7

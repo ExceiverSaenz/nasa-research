@@ -1,0 +1,61 @@
+tool,source_run_id,paper,status,completed_pages,recorded_s,recorded_scope,recorded_load_s,isolated_inference_s,recorded_s_per_completed_page,per_page_value_meaning,unknown_timing_reason
+heron,collection-20261101T015723Z,1.pdf,complete,26,1.339131952000571,detector_page_inference_sum,0.7800620490002075,,0.05150507507694503,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,10.pdf,complete,9,0.27098158600074385,detector_page_inference_sum,0,,0.03010906511119376,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,11.pdf,complete,21,0.6332201780005562,detector_page_inference_sum,0,,0.030153341809550295,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,12.pdf,complete,13,0.3911387819994161,detector_page_inference_sum,0,,0.0300875986153397,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,14.pdf,complete,68,2.079536623999502,detector_page_inference_sum,0,,0.030581420941169144,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,15.pdf,complete,59,1.8005784450006104,detector_page_inference_sum,0,,0.030518278728823903,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,17.pdf,complete,71,2.1635027369989075,detector_page_inference_sum,0,,0.03047186953519588,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,2.pdf,complete,12,0.36122082199972283,detector_page_inference_sum,0,,0.030101735166643568,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,3.pdf,complete,4,0.11970378400064874,detector_page_inference_sum,0,,0.029925946000162185,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,4.pdf,complete,4,0.12227684799927374,detector_page_inference_sum,0,,0.030569211999818435,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,5.pdf,complete,9,0.27180619299952014,detector_page_inference_sum,0,,0.03020068811105779,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,6.pdf,complete,26,0.7796914140012632,detector_page_inference_sum,0,,0.029988131307740893,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,7.pdf,complete,14,0.42674043800116124,detector_page_inference_sum,0,,0.030481459857225803,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,8.pdf,complete,49,1.4794967079983508,detector_page_inference_sum,0,,0.030193810367313282,ratio_not_individual_page_observation,
+heron,collection-20261101T015723Z,9.pdf,complete,12,0.359099826000147,detector_page_inference_sum,0,,0.02992498550001225,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,1.pdf,complete,26,1.6235715510001683,detector_page_inference_sum,1.1008076690000053,,0.06244505965385262,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,10.pdf,complete,9,0.36404069999889543,detector_page_inference_sum,0,,0.040448966666543934,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,11.pdf,complete,21,0.8568990500007203,detector_page_inference_sum,0,,0.04080471666670097,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,12.pdf,complete,13,0.5223703230003593,detector_page_inference_sum,0,,0.04018233253848918,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,14.pdf,complete,68,2.7510235690001537,detector_page_inference_sum,0,,0.04045622895588461,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,15.pdf,complete,59,2.406593056000929,detector_page_inference_sum,0,,0.040789712813575074,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,17.pdf,complete,71,2.8923449389981215,detector_page_inference_sum,0,,0.040737252661945375,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,2.pdf,complete,12,0.4858866879985726,detector_page_inference_sum,0,,0.04049055733321438,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,3.pdf,complete,4,0.16141828299987537,detector_page_inference_sum,0,,0.04035457074996884,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,4.pdf,complete,4,0.16146546900063186,detector_page_inference_sum,0,,0.040366367250157964,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,5.pdf,complete,9,0.36351437299981626,detector_page_inference_sum,0,,0.040390485888868476,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,6.pdf,complete,26,1.0519852020011058,detector_page_inference_sum,0,,0.04046096930773484,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,7.pdf,complete,14,0.5747399190013311,detector_page_inference_sum,0,,0.04105285135723794,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,8.pdf,complete,49,1.9857261860001927,detector_page_inference_sum,0,,0.04052502420408557,ratio_not_individual_page_observation,
+heron101,collection-20261101T015723Z,9.pdf,complete,12,0.48372439000058876,detector_page_inference_sum,0,,0.0403103658333824,ratio_not_individual_page_observation,
+basic,mineru-nativefix-20261101T034122Z,1.pdf,complete,26,44.5133652049999,sdk_parse_excluding_export,,,1.7120525078846116,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,10.pdf,complete,9,6.886105135999969,sdk_parse_excluding_export,,,0.7651227928888855,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,11.pdf,complete,21,18.072362521000287,sdk_parse_excluding_export,,,0.8605886914762041,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,12.pdf,complete,13,12.673956866000026,sdk_parse_excluding_export,,,0.9749197589230789,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,14.pdf,complete,68,38.049475105000056,sdk_parse_excluding_export,,,0.559551104485295,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,15.pdf,complete,59,29.268217800000002,sdk_parse_excluding_export,,,0.49607148813559326,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,17.pdf,complete,71,32.114923137000005,sdk_parse_excluding_export,,,0.4523228610845071,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,2.pdf,complete,12,12.682654414999888,sdk_parse_excluding_export,,,1.0568878679166573,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,3.pdf,complete,4,6.340511693999815,sdk_parse_excluding_export,,,1.5851279234999538,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,4.pdf,complete,4,7.5998625739998715,sdk_parse_excluding_export,,,1.8999656434999679,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,5.pdf,complete,9,10.391277557000194,sdk_parse_excluding_export,,,1.1545863952222437,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,6.pdf,complete,26,24.64938359300004,sdk_parse_excluding_export,,,0.9480532151153861,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,7.pdf,complete,14,21.1526040939998,sdk_parse_excluding_export,,,1.510900292428557,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,8.pdf,complete,49,26.147636496999894,sdk_parse_excluding_export,,,0.5336252346326509,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+basic,mineru-nativefix-20261101T034122Z,9.pdf,complete,12,10.809886527000344,sdk_parse_excluding_export,,,0.9008238772500287,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,1.pdf,complete,26,79.70768546199997,sdk_parse_excluding_export,,,3.065680210076922,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,10.pdf,complete,9,14.340256070999658,sdk_parse_excluding_export,,,1.5933617856666287,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,11.pdf,complete,21,16.718347412000185,sdk_parse_excluding_export,,,0.7961117815238183,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,12.pdf,complete,13,11.196687058999942,sdk_parse_excluding_export,,,0.8612836199230725,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,14.pdf,complete,68,36.88703761400029,sdk_parse_excluding_export,,,0.5424564355000043,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,15.pdf,complete,59,29.87657207500024,sdk_parse_excluding_export,,,0.5063825775423769,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,17.pdf,complete,71,30.74766291600008,sdk_parse_excluding_export,,,0.4330656748732406,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,2.pdf,complete,12,12.498975119000079,sdk_parse_excluding_export,,,1.0415812599166732,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,3.pdf,complete,4,3.7596604020000086,sdk_parse_excluding_export,,,0.9399151005000022,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,4.pdf,complete,4,4.221564116000081,sdk_parse_excluding_export,,,1.0553910290000204,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,5.pdf,complete,9,10.23707523100029,sdk_parse_excluding_export,,,1.1374528034444766,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,6.pdf,complete,26,16.331059543000265,sdk_parse_excluding_export,,,0.6281176747307794,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,7.pdf,complete,14,20.40667081499987,sdk_parse_excluding_export,,,1.457619343928562,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,8.pdf,complete,49,26.02406509299999,sdk_parse_excluding_export,,,0.5311033692448978,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing
+standard,mineru-nativefix-20261101T034122Z,9.pdf,complete,12,8.93721788000039,sdk_parse_excluding_export,,,0.7447681566666992,ratio_not_individual_page_observation,Public SDK does not expose isolated inference timing

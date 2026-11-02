@@ -1,0 +1,13 @@
+# Target and label method
+
+Purpose: distinguish an engine's vocabulary from the function of a visible region. Current evidence: [target report](../../../final-target-analysis.md). Detailed sources: [protocol](targets-protocol.md), [execution](../../reports/execution/targets-execution.md), [module README](../../../../analytics/targets/README.md) and [analysis plan](analysis-plan.md).
+
+The census describes all 35,240 records, preserving native labels, level and provenance. Spatial correspondences make regions comparable; they do not establish the true class. Vocabulary, semantic family, subtype and structural function remain separate. For example, `header` can describe position without identifying a logo; `list_item` and `ref_text` can both be useful; a correct caption family can have the wrong figure/table subtype. Body children are not independent panels by name.
+
+The agent inspected 65 targeted ROIs on preserved PNG backgrounds with labels hidden. After repetitions and references without a single class were excluded, the scored sample contains 59 unique objects and 236 tool/case assessments. It is selected for discrepancies and controls, not random; 12 of its 19 headings come from `8.pdf`. Neither sample rates nor census counts estimate semantic accuracy across all 397 pages.
+
+Reference cases preserve visible type, acceptable alternatives, confidence, abstention, ROI and evidence. Assessments distinguish appropriate, usable general label, imprecise subtype, incorrect, contradictory, group coverage, no dedicated correspondence and undetermined. A missing box is separate from a well-located box with a wrong label. Confusion counts include only applicable unequivocal decisions; multilabel and grouping states remain explicit.
+
+Title→text and text→title are reported directionally because the user's priorities value recovering lost titles more highly; no numerical cost weight is invented. Basic/Standard and Heron/Heron-101 are dependent families, so consensus is not an independent reference. No overall accuracy ranking or classifier is produced.
+
+Reviewed references and box evidence live in [agent reference cases](../../../../raw_results/analytics/targets-20261101-v1/agent_reference_cases.jsonl) and [assessments](../../../../raw_results/analytics/targets-20261101-v1/agent_assessments.jsonl). [Audit verification](../../../../raw_results/analytics/targets-20261101-v1/audit_verification.json) and [final checks](../../../../raw_results/analytics/targets-20261101-v1/final_checks.json) document technical integrity. Earlier audit/report versions remain diagnostics after duplicate, compatibility and subtype corrections. Agent visual assessment is separate from pending human review and independent semantic V&V.
