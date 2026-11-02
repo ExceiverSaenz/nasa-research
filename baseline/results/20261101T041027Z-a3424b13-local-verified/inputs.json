@@ -1,0 +1,134 @@
+[
+  {
+    "name": "1.pdf",
+    "key": "tensile_papers/1.pdf",
+    "bytes": 1772044,
+    "sha256": "ad5a5d94c1289245763182e7470d7cfec44eb24c51f2c838585586d6be6a2f5e"
+  },
+  {
+    "name": "10.pdf",
+    "key": "tensile_papers/10.pdf",
+    "bytes": 3061652,
+    "sha256": "2e20d741280268286c011738feee7b88d430b9ffb389dce865621291e6252d6f"
+  },
+  {
+    "name": "11.pdf",
+    "key": "tensile_papers/11.pdf",
+    "bytes": 2585877,
+    "sha256": "7b89c307d8ff74976003ab3b335484b8f3546f8891e0ef242bae009524e6386f"
+  },
+  {
+    "name": "12.pdf",
+    "key": "tensile_papers/12.pdf",
+    "bytes": 746047,
+    "sha256": "118678ea043758d2833d7c71be400fd5b426dae7e0f1eef1f6bdacd4e6e20428"
+  },
+  {
+    "name": "13.pdf",
+    "key": "tensile_papers/13.pdf",
+    "bytes": 865846,
+    "sha256": "22ceb547b41a34045b900a8ee71bc4866f5b26047dd11e6d41d02a17f163150c"
+  },
+  {
+    "name": "14.pdf",
+    "key": "tensile_papers/14.pdf",
+    "bytes": 1633009,
+    "sha256": "e8757a86514f31c0bd22457ffe9a846e29b9ba141d418ef66839a2f1e7a5db8a"
+  },
+  {
+    "name": "15.pdf",
+    "key": "tensile_papers/15.pdf",
+    "bytes": 34516999,
+    "sha256": "442e146a134b81288e61f12e213ec6ed2456b3abdfcba9122b084e3b25bf0ac2"
+  },
+  {
+    "name": "16.pdf",
+    "key": "tensile_papers/16.pdf",
+    "bytes": 16103608,
+    "sha256": "b5b5c9e7b971d2f1d8e366b97f7717a5d888b534e25be52533403087721f0f76"
+  },
+  {
+    "name": "17.pdf",
+    "key": "tensile_papers/17.pdf",
+    "bytes": 2732871,
+    "sha256": "fd3e0f7f11ae46ce1073703275b6e68e256a4e620206b40881ec4d6f761ed68b"
+  },
+  {
+    "name": "18.pdf",
+    "key": "tensile_papers/18.pdf",
+    "bytes": 2831475,
+    "sha256": "ea96c73a192bbabc4c31e21e0ed7835fcaded6defaf90fb514cbd911023795e5"
+  },
+  {
+    "name": "19.pdf",
+    "key": "tensile_papers/19.pdf",
+    "bytes": 9214513,
+    "sha256": "5548f655bf12e3714b1511f0f2d0e413042dfdf526697994cf7d398bfdf465b9"
+  },
+  {
+    "name": "2.pdf",
+    "key": "tensile_papers/2.pdf",
+    "bytes": 216895,
+    "sha256": "0008cb250c34904d0dd9297a2f260113d911c0e68ed5e86a854d87586c0fd12e"
+  },
+  {
+    "name": "20.pdf",
+    "key": "tensile_papers/20.pdf",
+    "bytes": 447224,
+    "sha256": "9e860ea7a4b3fc1b1436d00600871ce595c7a178e3e1c6dbf1dc803b8cc853b7"
+  },
+  {
+    "name": "21.pdf",
+    "key": "tensile_papers/21.pdf",
+    "bytes": 5647823,
+    "sha256": "b7ce9a68d18442652b13911833cc60dd37184c9e6fe6cc7a3d7d9054ec9b13d4"
+  },
+  {
+    "name": "22.pdf",
+    "key": "tensile_papers/22.pdf",
+    "bytes": 2391711,
+    "sha256": "758f4650126e473d5c8862461eb2920d79e2d938da80258843ff18354e0bd97d"
+  },
+  {
+    "name": "23.pdf",
+    "key": "tensile_papers/23.pdf",
+    "bytes": 3531406,
+    "sha256": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af"
+  },
+  {
+    "name": "24.pdf",
+    "key": "tensile_papers/24.pdf",
+    "bytes": 5671827,
+    "sha256": "b4299b070792c260ed87a8f72f94e0ef6c500240ebae705e2f54b5d57bbe005e"
+  },
+  {
+    "name": "3.pdf",
+    "key": "tensile_papers/3.pdf",
+    "bytes": 3763176,
+    "sha256": "1c551f5b6a2e8e0d53a11de6094e2796204921f2efd9c7e6ad601cd8617a1558"
+  },
+  {
+    "name": "4.pdf",
+    "key": "tensile_papers/4.pdf",
+    "bytes": 305614,
+    "sha256": "ddc9d40cd1b63f436e16a9bc0852272199d161d4f23ca806d006c20986e3153a"
+  },
+  {
+    "name": "5.pdf",
+    "key": "tensile_papers/5.pdf",
+    "bytes": 752398,
+    "sha256": "85cf88e52b1f31489ecfe0f951046d63fab68faba8a7548ba9d9321f0d272284"
+  },
+  {
+    "name": "7.pdf",
+    "key": "tensile_papers/7.pdf",
+    "bytes": 4664553,
+    "sha256": "098cd5413f772bdfe278a8a53c68d6d2e3451872a180418414e61f90310c4ab2"
+  },
+  {
+    "name": "8.pdf",
+    "key": "tensile_papers/8.pdf",
+    "bytes": 3591649,
+    "sha256": "e3c7bbcae390f84f794306d7e28288a45247fe8c469f0e9877eb9275b32dccaa"
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "schema": "baseline-asset-deduplication/1",
+  "inference_repeated": false,
+  "source_directory": "../../../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T041027Z-a3424b13-local-verified/papers/0008cb250c34904d0dd9297a2f260113d911c0e68ed5e86a854d87586c0fd12e",
+  "source_files_manifest_sha256": "7dd1e24695f122a2a3ac792d99d7804a466b19577a517ad2e499f3564f0870c8",
+  "aliases": [
+    {
+      "path": "assets/figure-0001.png",
+      "reference": "assets/image_000000_0f8071d7ec9daa72b6c355ebf9c3c66c657a4babe96e630ab7f1ac53105d80c5.png",
+      "sha256": "275291d833808083c5ec016677a69b10c28120d1c614c61a0328921b22714e27",
+      "bytes": 10390
+    },
+    {
+      "path": "assets/figure-0002.png",
+      "reference": "assets/image_000001_f929fb861b83e92f1b601abaeb34d8e084fa214c4c1f74ecc6ed074bdc3e023c.png",
+      "sha256": "becf846b55e7b8f347b0c817fa160237a69ade92ee62075849ceddd43bdaeb22",
+      "bytes": 14427
+    },
+    {
+      "path": "assets/figure-0003.png",
+      "reference": "assets/image_000002_953560f86e5d7b373418769554aa52ea007b460c65f8e0aa4e6c0ab3616aeb97.png",
+      "sha256": "8a86b82ad9760ccf55d308a6971a23c224e0ea230f9987534182a27fc6d7a08c",
+      "bytes": 5110
+    },
+    {
+      "path": "assets/figure-0004.png",
+      "reference": "assets/image_000003_0ad69aef8377fe2b69623a5911de4c72bd652ca162084b4c26c445822b4f25a3.png",
+      "sha256": "d9cc9b528cc34c47d5f458aaacfbad38fd4c938b9c8c0d53e1486ac5ca98275a",
+      "bytes": 66893
+    },
+    {
+      "path": "assets/figure-0005.png",
+      "reference": "assets/image_000004_28e95085ce87d042fc42b3d0eb893a242ffcda827fb90ab15825a323d8e3bedf.png",
+      "sha256": "a804672facac3a140ea700cacc809a155ff1af24e0675b9811da77a803a3718c",
+      "bytes": 20330
+    },
+    {
+      "path": "assets/figure-0006.png",
+      "reference": "assets/image_000005_04814da01ca8e505522f9c24f4a8b234185ff315abee63c79a43d0aff31a8153.png",
+      "sha256": "2ee96942b368f3f592bd3d898ff42bd441fbc0442445f378276f3e74399f240e",
+      "bytes": 66782
+    },
+    {
+      "path": "assets/figure-0007.png",
+      "reference": "assets/image_000006_6c794b4744e7261bfacdbf9243fb053966225f11ccba6dbb4ff08a97a778cfa2.png",
+      "sha256": "6b3b197e50bafed0fe630aabc8c4d5753dc890ca03d4be26487e948018c5bc9b",
+      "bytes": 87431
+    }
+  ],
+  "preserved": "Text, order, geometry, associations, model outputs and all distinct image bytes; only image paths and integrity metadata changed."
+}

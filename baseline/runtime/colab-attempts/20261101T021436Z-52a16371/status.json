@@ -1,0 +1,31 @@
+{
+  "schema": "baseline-plan/1",
+  "gpu": "A100",
+  "python": "3.11.16",
+  "r2_prefix": "tensile_papers/",
+  "papers": [
+    {
+      "name": "9.pdf",
+      "key": "tensile_papers/9.pdf",
+      "bytes": 2430060,
+      "sha256": "d303ac3b3a920fc58975a41dbe291886e9844fa8396ae6bd5f32c3be98aaed91"
+    }
+  ],
+  "lock_sha256": "a5f0ad8bb846270a6477226d8d6ec51578f062432c9ed8ecb48fce9a8e24ca17",
+  "input_sha256": "106b4859e19eff22771ea862d71ce20ba6a20b466e84fc4227fdb32f92d3db0f",
+  "install_command_flags": [
+    "--require-hashes",
+    "--only-binary=:all:"
+  ],
+  "a100_validation": "pending",
+  "automatic_retries": false,
+  "id": "20261101T021436Z-52a16371",
+  "session": "baseline-20261101t021436z-52a16371",
+  "status": "manual_review",
+  "session_closed": true,
+  "session_creation_attempted": true,
+  "session_created": true,
+  "error": "RuntimeError: Remote phase has no explicit completion marker: prepare",
+  "recovery_downloaded": true,
+  "closure_output": "\n[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)\n[colab] Run 'colab update' to update.\n[colab] To silence this check, set \"enable_update_check\": false in ~/.config/colab-cli/settings.json\n\n[colab] Stopping session 'baseline-20261101t021436z-52a16371'...\n[colab] Session terminated.\n"
+}

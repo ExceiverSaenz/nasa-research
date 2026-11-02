@@ -1,0 +1,3 @@
+# Bootstrap tooling only; Linux x86_64. No dependencies.
+uv==0.12.21 \
+    --hash=sha256:0083454d25479f1cd03547c8c98c235b4af92bd07f0e61c3eae5d1cbb0c1834c

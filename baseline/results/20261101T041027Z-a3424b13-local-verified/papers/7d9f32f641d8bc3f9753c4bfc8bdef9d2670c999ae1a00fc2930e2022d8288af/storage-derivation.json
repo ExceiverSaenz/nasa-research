@@ -1,0 +1,87 @@
+{
+  "schema": "baseline-asset-deduplication/1",
+  "inference_repeated": false,
+  "source_directory": "../../../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T041027Z-a3424b13-local-verified/papers/7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af",
+  "source_files_manifest_sha256": "ccda565afc76304a05127208d85baeee2e26a63343e27fef79739b78e85e41b4",
+  "aliases": [
+    {
+      "path": "assets/figure-0001.png",
+      "reference": "assets/image_000000_a20df384ebf00502e5853f0edc3faa4b1319a451e12c2d55ff6308c7556a296a.png",
+      "sha256": "8ee47908084a16ce58c5997f209f2dd54bd03e78a4b8f6a8c8351d4c0679d090",
+      "bytes": 12590
+    },
+    {
+      "path": "assets/figure-0002.png",
+      "reference": "assets/image_000001_372f80a8853cc5f1c5f3851a3516158d73a0b275e1bc6e12ff28c6222bcd4cd3.png",
+      "sha256": "bbaf2a208ec9782dfe807e34e211bf5c66a344d32035b39524118ba183a55533",
+      "bytes": 1100
+    },
+    {
+      "path": "assets/figure-0003.png",
+      "reference": "assets/image_000002_0c1e0fd9c12ccf4537d2704cddee6b8d78ca1297070fa640cdda4081441fe724.png",
+      "sha256": "8007e9c1c9dade05545d8781714c30a7cf13e324624001547caf97ab9a7132ad",
+      "bytes": 992
+    },
+    {
+      "path": "assets/figure-0004.png",
+      "reference": "assets/image_000003_734ee631db5065fe5262e80731d62560c7f20520cb6171180b8956fe41e27533.png",
+      "sha256": "9003b53138ac8870b32dddeafd06cdb627cba337ce253666e902ede821a0b782",
+      "bytes": 4171
+    },
+    {
+      "path": "assets/figure-0005.png",
+      "reference": "assets/image_000004_084179e22722c062cce4b6b2da8a54780300f0699a7dcae19aa23f6c1185e43e.png",
+      "sha256": "9f728fe9b0bdc9e5cebb348fb8cc76fc1a99474c1106ad1ce67e85690e622a76",
+      "bytes": 4360
+    },
+    {
+      "path": "assets/figure-0006.png",
+      "reference": "assets/image_000005_d837d9e01ef3109dd90ab630c7fc8787e4cabbc6fe18dad8e5a75daee8eeb82a.png",
+      "sha256": "a103059c4e0782973bdd187fe4eb08ac87cd0a13cf1814920596da3e0b611fcd",
+      "bytes": 4138
+    },
+    {
+      "path": "assets/figure-0007.png",
+      "reference": "assets/image_000006_e8dbf3e77616e0e250599e9c86a9eb6cd43b6f1d9f0733666bbd69a9b4408085.png",
+      "sha256": "f91155c9876cb14d66d492bf2ed8c4a6dcc50e08c103638b0e42f5dbb3819582",
+      "bytes": 29706
+    },
+    {
+      "path": "assets/figure-0008.png",
+      "reference": "assets/image_000007_b2d466a51a963726cdf11f1f5fd0276b950bc196e73b9b0b1baf4201c6fee088.png",
+      "sha256": "cfdc4c257ba4f2519d12822ca0393a4cf62a9d62ee3169ae18ae86be6add9dec",
+      "bytes": 121741
+    },
+    {
+      "path": "assets/figure-0009.png",
+      "reference": "assets/image_000008_984ece52ce59c0b640ea525a9db362d707716e94effb18f39efb5eb97ba00dc3.png",
+      "sha256": "2a6188a6debcc9be42167a6bf94d51592386761c029350b97356b41e153521e9",
+      "bytes": 482854
+    },
+    {
+      "path": "assets/figure-0010.png",
+      "reference": "assets/image_000009_006eff30df93600ef2d450842c6c869a9fd77d2cd2e00855fc7eeda32900c812.png",
+      "sha256": "5a720567a34ff88f0742c43236164f547c75b0f07b01ed6557f40caa53f105fd",
+      "bytes": 528057
+    },
+    {
+      "path": "assets/figure-0011.png",
+      "reference": "assets/image_000010_17a38a07ae19e17f460da26f04d05912fd812f5de9cdbe8b4daceb6c43188401.png",
+      "sha256": "c16da3efa8379f3aa041d8fed2351ebb737013e96e516ffb9338f893aa109286",
+      "bytes": 322080
+    },
+    {
+      "path": "assets/figure-0012.png",
+      "reference": "assets/image_000011_17be3637f424400eb077f734be924ba099a63bf091c68bd574fa15be001f7d70.png",
+      "sha256": "43e8fb38c8f5d22acfb100068163263b4a2299f0f808e944f0f98f565219290c",
+      "bytes": 198561
+    },
+    {
+      "path": "assets/figure-0013.png",
+      "reference": "assets/image_000012_b264139fda0b8a3db0c9800e277c16b8ca33af3b4fb650d27b4af04276ddfe71.png",
+      "sha256": "3320e0a9276b9ae8d19ff458e75a76f06b9438807a9268d2df322fcdc6ac2d41",
+      "bytes": 667260
+    }
+  ],
+  "preserved": "Text, order, geometry, associations, model outputs and all distinct image bytes; only image paths and integrity metadata changed."
+}

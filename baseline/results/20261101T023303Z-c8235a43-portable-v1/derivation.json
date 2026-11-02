@@ -1,0 +1,6 @@
+{
+  "source_run": "20261101T023303Z-c8235a43",
+  "source_files_manifest_sha256": "08ce104f67d69a7b61c2e55c0102d298468315672f7a175a8b5b3faea64e21dd",
+  "transformation": "Only image URI paths in document.json and document.md made relative; all input, text, geometry, model outputs and original results preserved.",
+  "inference_repeated": false
+}

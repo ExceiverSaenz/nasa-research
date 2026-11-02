@@ -1,0 +1,1607 @@
+{
+  "schema": "baseline-assets/1",
+  "paper_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af",
+  "elements": [
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/0",
+      "docling_ref": "#/pictures/0",
+      "image_path": "assets/image_000000_a20df384ebf00502e5853f0edc3faa4b1319a451e12c2d55ff6308c7556a296a.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/1",
+      "docling_ref": "#/texts/1",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/2",
+      "docling_ref": "#/texts/2",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/1",
+      "docling_ref": "#/pictures/1",
+      "image_path": "assets/image_000001_372f80a8853cc5f1c5f3851a3516158d73a0b275e1bc6e12ff28c6222bcd4cd3.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/3",
+      "docling_ref": "#/texts/3",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/4",
+      "docling_ref": "#/texts/4",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/5",
+      "docling_ref": "#/texts/5",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/6",
+      "docling_ref": "#/texts/6",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/7",
+      "docling_ref": "#/texts/7",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/8",
+      "docling_ref": "#/texts/8",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/9",
+      "docling_ref": "#/texts/9",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/10",
+      "docling_ref": "#/texts/10",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/11",
+      "docling_ref": "#/texts/11",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/12",
+      "docling_ref": "#/texts/12",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/13",
+      "docling_ref": "#/texts/13",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/2",
+      "docling_ref": "#/pictures/2",
+      "image_path": "assets/image_000002_0c1e0fd9c12ccf4537d2704cddee6b8d78ca1297070fa640cdda4081441fe724.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/3",
+      "docling_ref": "#/pictures/3",
+      "image_path": "assets/image_000003_734ee631db5065fe5262e80731d62560c7f20520cb6171180b8956fe41e27533.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/14",
+      "docling_ref": "#/texts/14",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/15",
+      "docling_ref": "#/texts/15",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/16",
+      "docling_ref": "#/texts/16",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/17",
+      "docling_ref": "#/texts/17",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/4",
+      "docling_ref": "#/pictures/4",
+      "image_path": "assets/image_000004_084179e22722c062cce4b6b2da8a54780300f0699a7dcae19aa23f6c1185e43e.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/20",
+      "docling_ref": "#/texts/20",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/5",
+      "docling_ref": "#/pictures/5",
+      "image_path": "assets/image_000005_d837d9e01ef3109dd90ab630c7fc8787e4cabbc6fe18dad8e5a75daee8eeb82a.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/26",
+      "docling_ref": "#/texts/26",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/27",
+      "docling_ref": "#/texts/27",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/28",
+      "docling_ref": "#/texts/28",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/29",
+      "docling_ref": "#/texts/29",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/30",
+      "docling_ref": "#/texts/30",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/31",
+      "docling_ref": "#/texts/31",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/32",
+      "docling_ref": "#/texts/32",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/tables/0",
+      "docling_ref": "#/tables/0",
+      "image_path": null,
+      "caption_refs": [
+        "#/texts/33"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/33",
+      "docling_ref": "#/texts/33",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/34",
+      "docling_ref": "#/texts/34",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/35",
+      "docling_ref": "#/texts/35",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/38",
+      "docling_ref": "#/texts/38",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/39",
+      "docling_ref": "#/texts/39",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/40",
+      "docling_ref": "#/texts/40",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/41",
+      "docling_ref": "#/texts/41",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/42",
+      "docling_ref": "#/texts/42",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/43",
+      "docling_ref": "#/texts/43",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/44",
+      "docling_ref": "#/texts/44",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/45",
+      "docling_ref": "#/texts/45",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/46",
+      "docling_ref": "#/texts/46",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/47",
+      "docling_ref": "#/texts/47",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/48",
+      "docling_ref": "#/texts/48",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/49",
+      "docling_ref": "#/texts/49",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/tables/1",
+      "docling_ref": "#/tables/1",
+      "image_path": null,
+      "caption_refs": [
+        "#/texts/50"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/50",
+      "docling_ref": "#/texts/50",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/6",
+      "docling_ref": "#/pictures/6",
+      "image_path": "assets/image_000006_e8dbf3e77616e0e250599e9c86a9eb6cd43b6f1d9f0733666bbd69a9b4408085.png",
+      "caption_refs": [
+        "#/texts/51"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/51",
+      "docling_ref": "#/texts/51",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/61",
+      "docling_ref": "#/texts/61",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/62",
+      "docling_ref": "#/texts/62",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/65",
+      "docling_ref": "#/texts/65",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/66",
+      "docling_ref": "#/texts/66",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/67",
+      "docling_ref": "#/texts/67",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/tables/2",
+      "docling_ref": "#/tables/2",
+      "image_path": null,
+      "caption_refs": [
+        "#/texts/68"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/68",
+      "docling_ref": "#/texts/68",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/69",
+      "docling_ref": "#/texts/69",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/70",
+      "docling_ref": "#/texts/70",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/73",
+      "docling_ref": "#/texts/73",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/7",
+      "docling_ref": "#/pictures/7",
+      "image_path": "assets/image_000007_b2d466a51a963726cdf11f1f5fd0276b950bc196e73b9b0b1baf4201c6fee088.png",
+      "caption_refs": [
+        "#/texts/74"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/74",
+      "docling_ref": "#/texts/74",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/175",
+      "docling_ref": "#/texts/175",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/tables/3",
+      "docling_ref": "#/tables/3",
+      "image_path": null,
+      "caption_refs": [
+        "#/texts/178"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/178",
+      "docling_ref": "#/texts/178",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/179",
+      "docling_ref": "#/texts/179",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/180",
+      "docling_ref": "#/texts/180",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/181",
+      "docling_ref": "#/texts/181",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/182",
+      "docling_ref": "#/texts/182",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/183",
+      "docling_ref": "#/texts/183",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/186",
+      "docling_ref": "#/texts/186",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/187",
+      "docling_ref": "#/texts/187",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/188",
+      "docling_ref": "#/texts/188",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/189",
+      "docling_ref": "#/texts/189",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/190",
+      "docling_ref": "#/texts/190",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/191",
+      "docling_ref": "#/texts/191",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/192",
+      "docling_ref": "#/texts/192",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/193",
+      "docling_ref": "#/texts/193",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/194",
+      "docling_ref": "#/texts/194",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/195",
+      "docling_ref": "#/texts/195",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/8",
+      "docling_ref": "#/pictures/8",
+      "image_path": "assets/image_000008_984ece52ce59c0b640ea525a9db362d707716e94effb18f39efb5eb97ba00dc3.png",
+      "caption_refs": [
+        "#/texts/196"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/196",
+      "docling_ref": "#/texts/196",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/243",
+      "docling_ref": "#/texts/243",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/244",
+      "docling_ref": "#/texts/244",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/245",
+      "docling_ref": "#/texts/245",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/248",
+      "docling_ref": "#/texts/248",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/249",
+      "docling_ref": "#/texts/249",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/250",
+      "docling_ref": "#/texts/250",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/251",
+      "docling_ref": "#/texts/251",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/252",
+      "docling_ref": "#/texts/252",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/253",
+      "docling_ref": "#/texts/253",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/254",
+      "docling_ref": "#/texts/254",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/255",
+      "docling_ref": "#/texts/255",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/256",
+      "docling_ref": "#/texts/256",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/257",
+      "docling_ref": "#/texts/257",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/258",
+      "docling_ref": "#/texts/258",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/9",
+      "docling_ref": "#/pictures/9",
+      "image_path": "assets/image_000009_006eff30df93600ef2d450842c6c869a9fd77d2cd2e00855fc7eeda32900c812.png",
+      "caption_refs": [
+        "#/texts/259"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/259",
+      "docling_ref": "#/texts/259",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/282",
+      "docling_ref": "#/texts/282",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/283",
+      "docling_ref": "#/texts/283",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/284",
+      "docling_ref": "#/texts/284",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/287",
+      "docling_ref": "#/texts/287",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/288",
+      "docling_ref": "#/texts/288",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/289",
+      "docling_ref": "#/texts/289",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/290",
+      "docling_ref": "#/texts/290",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/291",
+      "docling_ref": "#/texts/291",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/292",
+      "docling_ref": "#/texts/292",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/10",
+      "docling_ref": "#/pictures/10",
+      "image_path": "assets/image_000010_17a38a07ae19e17f460da26f04d05912fd812f5de9cdbe8b4daceb6c43188401.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/303",
+      "docling_ref": "#/texts/303",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/304",
+      "docling_ref": "#/texts/304",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/305",
+      "docling_ref": "#/texts/305",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/306",
+      "docling_ref": "#/texts/306",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/307",
+      "docling_ref": "#/texts/307",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/308",
+      "docling_ref": "#/texts/308",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/309",
+      "docling_ref": "#/texts/309",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/310",
+      "docling_ref": "#/texts/310",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/311",
+      "docling_ref": "#/texts/311",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/312",
+      "docling_ref": "#/texts/312",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/313",
+      "docling_ref": "#/texts/313",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/314",
+      "docling_ref": "#/texts/314",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/315",
+      "docling_ref": "#/texts/315",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/316",
+      "docling_ref": "#/texts/316",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/317",
+      "docling_ref": "#/texts/317",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/318",
+      "docling_ref": "#/texts/318",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/319",
+      "docling_ref": "#/texts/319",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/320",
+      "docling_ref": "#/texts/320",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/321",
+      "docling_ref": "#/texts/321",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/322",
+      "docling_ref": "#/texts/322",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/323",
+      "docling_ref": "#/texts/323",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/324",
+      "docling_ref": "#/texts/324",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/325",
+      "docling_ref": "#/texts/325",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/326",
+      "docling_ref": "#/texts/326",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/327",
+      "docling_ref": "#/texts/327",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/328",
+      "docling_ref": "#/texts/328",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/11",
+      "docling_ref": "#/pictures/11",
+      "image_path": "assets/image_000011_17be3637f424400eb077f734be924ba099a63bf091c68bd574fa15be001f7d70.png",
+      "caption_refs": [
+        "#/texts/329"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/329",
+      "docling_ref": "#/texts/329",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/360",
+      "docling_ref": "#/texts/360",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/361",
+      "docling_ref": "#/texts/361",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/362",
+      "docling_ref": "#/texts/362",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/363",
+      "docling_ref": "#/texts/363",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/364",
+      "docling_ref": "#/texts/364",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/365",
+      "docling_ref": "#/texts/365",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/366",
+      "docling_ref": "#/texts/366",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/367",
+      "docling_ref": "#/texts/367",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/370",
+      "docling_ref": "#/texts/370",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/371",
+      "docling_ref": "#/texts/371",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/372",
+      "docling_ref": "#/texts/372",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/373",
+      "docling_ref": "#/texts/373",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/374",
+      "docling_ref": "#/texts/374",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/375",
+      "docling_ref": "#/texts/375",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/377",
+      "docling_ref": "#/texts/377",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/378",
+      "docling_ref": "#/texts/378",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/379",
+      "docling_ref": "#/texts/379",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/380",
+      "docling_ref": "#/texts/380",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/381",
+      "docling_ref": "#/texts/381",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/382",
+      "docling_ref": "#/texts/382",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/383",
+      "docling_ref": "#/texts/383",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/384",
+      "docling_ref": "#/texts/384",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/385",
+      "docling_ref": "#/texts/385",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/386",
+      "docling_ref": "#/texts/386",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/387",
+      "docling_ref": "#/texts/387",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/388",
+      "docling_ref": "#/texts/388",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/389",
+      "docling_ref": "#/texts/389",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/pictures/12",
+      "docling_ref": "#/pictures/12",
+      "image_path": "assets/image_000012_b264139fda0b8a3db0c9800e277c16b8ca33af3b4fb650d27b4af04276ddfe71.png",
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/503",
+      "docling_ref": "#/texts/503",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/504",
+      "docling_ref": "#/texts/504",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/505",
+      "docling_ref": "#/texts/505",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/506",
+      "docling_ref": "#/texts/506",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/507",
+      "docling_ref": "#/texts/507",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/508",
+      "docling_ref": "#/texts/508",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/509",
+      "docling_ref": "#/texts/509",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/512",
+      "docling_ref": "#/texts/512",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/513",
+      "docling_ref": "#/texts/513",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/514",
+      "docling_ref": "#/texts/514",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/515",
+      "docling_ref": "#/texts/515",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/516",
+      "docling_ref": "#/texts/516",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/517",
+      "docling_ref": "#/texts/517",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/518",
+      "docling_ref": "#/texts/518",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/519",
+      "docling_ref": "#/texts/519",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/tables/4",
+      "docling_ref": "#/tables/4",
+      "image_path": null,
+      "caption_refs": [
+        "#/texts/520"
+      ]
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/520",
+      "docling_ref": "#/texts/520",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/521",
+      "docling_ref": "#/texts/521",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/522",
+      "docling_ref": "#/texts/522",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/523",
+      "docling_ref": "#/texts/523",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/524",
+      "docling_ref": "#/texts/524",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/525",
+      "docling_ref": "#/texts/525",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/526",
+      "docling_ref": "#/texts/526",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/527",
+      "docling_ref": "#/texts/527",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/528",
+      "docling_ref": "#/texts/528",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/529",
+      "docling_ref": "#/texts/529",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/530",
+      "docling_ref": "#/texts/530",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/531",
+      "docling_ref": "#/texts/531",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/534",
+      "docling_ref": "#/texts/534",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/535",
+      "docling_ref": "#/texts/535",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/536",
+      "docling_ref": "#/texts/536",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/537",
+      "docling_ref": "#/texts/537",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/538",
+      "docling_ref": "#/texts/538",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/539",
+      "docling_ref": "#/texts/539",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/540",
+      "docling_ref": "#/texts/540",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/541",
+      "docling_ref": "#/texts/541",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/542",
+      "docling_ref": "#/texts/542",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/543",
+      "docling_ref": "#/texts/543",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/544",
+      "docling_ref": "#/texts/544",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/545",
+      "docling_ref": "#/texts/545",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/546",
+      "docling_ref": "#/texts/546",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/547",
+      "docling_ref": "#/texts/547",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/548",
+      "docling_ref": "#/texts/548",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/549",
+      "docling_ref": "#/texts/549",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/550",
+      "docling_ref": "#/texts/550",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/551",
+      "docling_ref": "#/texts/551",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/552",
+      "docling_ref": "#/texts/552",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/553",
+      "docling_ref": "#/texts/553",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/554",
+      "docling_ref": "#/texts/554",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/555",
+      "docling_ref": "#/texts/555",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/556",
+      "docling_ref": "#/texts/556",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/557",
+      "docling_ref": "#/texts/557",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/558",
+      "docling_ref": "#/texts/558",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/559",
+      "docling_ref": "#/texts/559",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/560",
+      "docling_ref": "#/texts/560",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/561",
+      "docling_ref": "#/texts/561",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/562",
+      "docling_ref": "#/texts/562",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/563",
+      "docling_ref": "#/texts/563",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/566",
+      "docling_ref": "#/texts/566",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/567",
+      "docling_ref": "#/texts/567",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/568",
+      "docling_ref": "#/texts/568",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/569",
+      "docling_ref": "#/texts/569",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/570",
+      "docling_ref": "#/texts/570",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/571",
+      "docling_ref": "#/texts/571",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/572",
+      "docling_ref": "#/texts/572",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/573",
+      "docling_ref": "#/texts/573",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/574",
+      "docling_ref": "#/texts/574",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/575",
+      "docling_ref": "#/texts/575",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/576",
+      "docling_ref": "#/texts/576",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/577",
+      "docling_ref": "#/texts/577",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/578",
+      "docling_ref": "#/texts/578",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/579",
+      "docling_ref": "#/texts/579",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/580",
+      "docling_ref": "#/texts/580",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/581",
+      "docling_ref": "#/texts/581",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/582",
+      "docling_ref": "#/texts/582",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/583",
+      "docling_ref": "#/texts/583",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/584",
+      "docling_ref": "#/texts/584",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/585",
+      "docling_ref": "#/texts/585",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/586",
+      "docling_ref": "#/texts/586",
+      "image_path": null,
+      "caption_refs": []
+    },
+    {
+      "element_id": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af:#/texts/587",
+      "docling_ref": "#/texts/587",
+      "image_path": null,
+      "caption_refs": []
+    }
+  ],
+  "assets": {
+    "image_000000_a20df384ebf00502e5853f0edc3faa4b1319a451e12c2d55ff6308c7556a296a.png": {
+      "sha256": "8ee47908084a16ce58c5997f209f2dd54bd03e78a4b8f6a8c8351d4c0679d090",
+      "bytes": 12590
+    },
+    "image_000001_372f80a8853cc5f1c5f3851a3516158d73a0b275e1bc6e12ff28c6222bcd4cd3.png": {
+      "sha256": "bbaf2a208ec9782dfe807e34e211bf5c66a344d32035b39524118ba183a55533",
+      "bytes": 1100
+    },
+    "image_000002_0c1e0fd9c12ccf4537d2704cddee6b8d78ca1297070fa640cdda4081441fe724.png": {
+      "sha256": "8007e9c1c9dade05545d8781714c30a7cf13e324624001547caf97ab9a7132ad",
+      "bytes": 992
+    },
+    "image_000003_734ee631db5065fe5262e80731d62560c7f20520cb6171180b8956fe41e27533.png": {
+      "sha256": "9003b53138ac8870b32dddeafd06cdb627cba337ce253666e902ede821a0b782",
+      "bytes": 4171
+    },
+    "image_000004_084179e22722c062cce4b6b2da8a54780300f0699a7dcae19aa23f6c1185e43e.png": {
+      "sha256": "9f728fe9b0bdc9e5cebb348fb8cc76fc1a99474c1106ad1ce67e85690e622a76",
+      "bytes": 4360
+    },
+    "image_000005_d837d9e01ef3109dd90ab630c7fc8787e4cabbc6fe18dad8e5a75daee8eeb82a.png": {
+      "sha256": "a103059c4e0782973bdd187fe4eb08ac87cd0a13cf1814920596da3e0b611fcd",
+      "bytes": 4138
+    },
+    "image_000006_e8dbf3e77616e0e250599e9c86a9eb6cd43b6f1d9f0733666bbd69a9b4408085.png": {
+      "sha256": "f91155c9876cb14d66d492bf2ed8c4a6dcc50e08c103638b0e42f5dbb3819582",
+      "bytes": 29706
+    },
+    "image_000007_b2d466a51a963726cdf11f1f5fd0276b950bc196e73b9b0b1baf4201c6fee088.png": {
+      "sha256": "cfdc4c257ba4f2519d12822ca0393a4cf62a9d62ee3169ae18ae86be6add9dec",
+      "bytes": 121741
+    },
+    "image_000008_984ece52ce59c0b640ea525a9db362d707716e94effb18f39efb5eb97ba00dc3.png": {
+      "sha256": "2a6188a6debcc9be42167a6bf94d51592386761c029350b97356b41e153521e9",
+      "bytes": 482854
+    },
+    "image_000009_006eff30df93600ef2d450842c6c869a9fd77d2cd2e00855fc7eeda32900c812.png": {
+      "sha256": "5a720567a34ff88f0742c43236164f547c75b0f07b01ed6557f40caa53f105fd",
+      "bytes": 528057
+    },
+    "image_000010_17a38a07ae19e17f460da26f04d05912fd812f5de9cdbe8b4daceb6c43188401.png": {
+      "sha256": "c16da3efa8379f3aa041d8fed2351ebb737013e96e516ffb9338f893aa109286",
+      "bytes": 322080
+    },
+    "image_000011_17be3637f424400eb077f734be924ba099a63bf091c68bd574fa15be001f7d70.png": {
+      "sha256": "43e8fb38c8f5d22acfb100068163263b4a2299f0f808e944f0f98f565219290c",
+      "bytes": 198561
+    },
+    "image_000012_b264139fda0b8a3db0c9800e277c16b8ca33af3b4fb650d27b4af04276ddfe71.png": {
+      "sha256": "3320e0a9276b9ae8d19ff458e75a76f06b9438807a9268d2df322fcdc6ac2d41",
+      "bytes": 667260
+    },
+    "page_000001_6b763ce7166ac6fb55c5aae07d8a10eb9afe2695ed7592c418fdd79427557f01.png": {
+      "sha256": "d006424d8548227f6737b4cccfa0295840dd9bb9c3d2f59596afd4889746c72d",
+      "bytes": 798563
+    },
+    "page_000002_c8f27a489b228b02b3f558564c15d2f8bd7020cc35116154c29e26f4719e8ecf.png": {
+      "sha256": "cea745f366190813ebd70f34fdd30aa267d5b93f96fb04befe89e41a566886d1",
+      "bytes": 753137
+    },
+    "page_000003_870c924d886ad6d070cfbee10f7928ef807bad26d211ce6785b32e6f43522cc1.png": {
+      "sha256": "f83b4ed1449942981589d020614b10409d6cb1aea333e83419556e36ae6ce8f3",
+      "bytes": 603786
+    },
+    "page_000004_82edfb7cdb35ef1a0428e9ebd81a6d3f4b2598cccb0e1f52c3c1e2653314a9fc.png": {
+      "sha256": "58f54957ad470d6113d3ebb1ee1530aa34d1760c6b0b8e7800951db39536cda3",
+      "bytes": 749496
+    },
+    "page_000005_605c2bd0ae81899a8ea4dc56b3df3f9e09aa2db3c0b4d0e14fb0fcb384e4653b.png": {
+      "sha256": "807d0e3376095b90106ac74c8e66fac7d134083fbc2f59d074e42deffe940011",
+      "bytes": 263305
+    },
+    "page_000006_da81424959bc82a414f128ec437b41af6bcf614f658c02288637fdbcfe91104d.png": {
+      "sha256": "e93d2f2f2cf4b1993dc6add6a9b99e73850dbf7ea4ec2ae08e01c359180f89fc",
+      "bytes": 663460
+    },
+    "page_000007_4385138df3643fe79458be05e4bd067c52eb289c1c114b8a2712ed758ab177ab.png": {
+      "sha256": "6235647d813a3045efd57ff03f74f2a8436aa45efd8dfc7bb8c97af77ee3c6d2",
+      "bytes": 873522
+    },
+    "page_000008_e902e48df775b84630ea3107e9cc2b4622136c5d1b59a6c7b736a3025abf2e85.png": {
+      "sha256": "f6fb5dac215d5b383d63712c6d7763cb261f84fca034f3c81caf02481b809420",
+      "bytes": 1020326
+    },
+    "page_000009_9affa6a60dde2a694a6da1e770b528305f68ae5db69bb592d0d743bada6be46d.png": {
+      "sha256": "6811465665e95cc8ba6c58b8c69a3c4bbff11d09ff3a1e1f74e415b78f071147",
+      "bytes": 673610
+    },
+    "page_000010_a903353ca59a580f5658371813483a0ec027034be6bb0b6429e450dba0d9e5af.png": {
+      "sha256": "722ac4c8efc37bd8026f9c2a3df569028b1965c54150b2a93c82932e87a26e37",
+      "bytes": 847989
+    },
+    "page_000011_ca0e1ddaaf475c3344131e23c44fb9685e9aa1fa01d9d2db8f3615f3a8cbbce3.png": {
+      "sha256": "0dd3e3a2de9855959546acaad56c428c2ac967cd5ae2e6d9051ef1e13c59b30b",
+      "bytes": 793408
+    },
+    "page_000012_42b8355cba5ce6e0581997480b61b08af6fce610985bd7fe7a36098775c5d6be.png": {
+      "sha256": "b977aa1f54d3948303caf7066b1b9520c8906dd10b72e3dd4fe573c1f2c4adec",
+      "bytes": 672583
+    },
+    "page_000013_73adf6fac2abd5cbd2e6a55c1865e3e7689df0f264a2a0eac68685897a9ded28.png": {
+      "sha256": "90adf4185e3ea6048f2f9ff11fdac2994fcc39eb3b6814232990035d7c3d59f5",
+      "bytes": 1049881
+    },
+    "page_000014_ce3440ad1322a8372c51bfda7a5d7605fb645e7263301c61dbd2ab2e47c2af51.png": {
+      "sha256": "43a6401b020bbacf4bba42fcf12b017f6ec3508928afaa195777fea3c16f6aab",
+      "bytes": 835634
+    }
+  },
+  "problems": []
+}

@@ -1,0 +1,6478 @@
+{
+  "schema_name": "DoclingDocument",
+  "version": "1.10.0",
+  "name": "2",
+  "origin": {
+    "mimetype": "application/pdf",
+    "binary_hash": 9605482394090983726,
+    "filename": "2.pdf"
+  },
+  "furniture": {
+    "self_ref": "#/furniture",
+    "children": [],
+    "content_layer": "furniture",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "body": {
+    "self_ref": "#/body",
+    "children": [
+      {
+        "$ref": "#/pictures/0"
+      },
+      {
+        "$ref": "#/texts/2"
+      },
+      {
+        "$ref": "#/texts/3"
+      },
+      {
+        "$ref": "#/texts/4"
+      },
+      {
+        "$ref": "#/texts/5"
+      },
+      {
+        "$ref": "#/texts/6"
+      },
+      {
+        "$ref": "#/texts/7"
+      },
+      {
+        "$ref": "#/texts/8"
+      },
+      {
+        "$ref": "#/groups/0"
+      },
+      {
+        "$ref": "#/groups/1"
+      },
+      {
+        "$ref": "#/texts/12"
+      },
+      {
+        "$ref": "#/texts/13"
+      },
+      {
+        "$ref": "#/texts/14"
+      },
+      {
+        "$ref": "#/texts/15"
+      },
+      {
+        "$ref": "#/texts/16"
+      },
+      {
+        "$ref": "#/groups/2"
+      },
+      {
+        "$ref": "#/texts/18"
+      },
+      {
+        "$ref": "#/groups/3"
+      },
+      {
+        "$ref": "#/pictures/1"
+      },
+      {
+        "$ref": "#/texts/24"
+      },
+      {
+        "$ref": "#/texts/25"
+      },
+      {
+        "$ref": "#/texts/26"
+      },
+      {
+        "$ref": "#/texts/27"
+      },
+      {
+        "$ref": "#/texts/28"
+      },
+      {
+        "$ref": "#/texts/29"
+      },
+      {
+        "$ref": "#/texts/30"
+      },
+      {
+        "$ref": "#/texts/31"
+      },
+      {
+        "$ref": "#/texts/32"
+      },
+      {
+        "$ref": "#/texts/33"
+      },
+      {
+        "$ref": "#/pictures/2"
+      },
+      {
+        "$ref": "#/tables/0"
+      },
+      {
+        "$ref": "#/texts/39"
+      },
+      {
+        "$ref": "#/groups/4"
+      },
+      {
+        "$ref": "#/texts/43"
+      },
+      {
+        "$ref": "#/texts/44"
+      },
+      {
+        "$ref": "#/texts/45"
+      },
+      {
+        "$ref": "#/pictures/3"
+      },
+      {
+        "$ref": "#/tables/1"
+      },
+      {
+        "$ref": "#/texts/52"
+      },
+      {
+        "$ref": "#/texts/53"
+      },
+      {
+        "$ref": "#/texts/54"
+      },
+      {
+        "$ref": "#/texts/55"
+      },
+      {
+        "$ref": "#/texts/56"
+      },
+      {
+        "$ref": "#/texts/57"
+      },
+      {
+        "$ref": "#/pictures/4"
+      },
+      {
+        "$ref": "#/pictures/5"
+      },
+      {
+        "$ref": "#/texts/107"
+      },
+      {
+        "$ref": "#/texts/108"
+      },
+      {
+        "$ref": "#/texts/109"
+      },
+      {
+        "$ref": "#/texts/110"
+      },
+      {
+        "$ref": "#/pictures/6"
+      },
+      {
+        "$ref": "#/texts/114"
+      },
+      {
+        "$ref": "#/texts/115"
+      },
+      {
+        "$ref": "#/texts/116"
+      },
+      {
+        "$ref": "#/groups/5"
+      }
+    ],
+    "content_layer": "body",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "groups": [
+    {
+      "self_ref": "#/groups/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/9"
+        },
+        {
+          "$ref": "#/texts/10"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "key_value_area"
+    },
+    {
+      "self_ref": "#/groups/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/11"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "key_value_area"
+    },
+    {
+      "self_ref": "#/groups/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/17"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "key_value_area"
+    },
+    {
+      "self_ref": "#/groups/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/19"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "key_value_area"
+    },
+    {
+      "self_ref": "#/groups/4",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/40"
+        },
+        {
+          "$ref": "#/texts/41"
+        },
+        {
+          "$ref": "#/texts/42"
+        }
+      ],
+      "content_layer": "body",
+      "name": "list",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/117"
+        },
+        {
+          "$ref": "#/texts/118"
+        },
+        {
+          "$ref": "#/texts/119"
+        },
+        {
+          "$ref": "#/texts/120"
+        },
+        {
+          "$ref": "#/texts/121"
+        },
+        {
+          "$ref": "#/texts/122"
+        },
+        {
+          "$ref": "#/texts/123"
+        },
+        {
+          "$ref": "#/texts/124"
+        }
+      ],
+      "content_layer": "body",
+      "name": "list",
+      "label": "list"
+    }
+  ],
+  "texts": [
+    {
+      "self_ref": "#/texts/0",
+      "parent": {
+        "$ref": "#/pictures/0"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 49.0,
+            "t": 696.6666666666666,
+            "r": 78.0,
+            "b": 682.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "NH",
+      "text": "NH"
+    },
+    {
+      "self_ref": "#/texts/1",
+      "parent": {
+        "$ref": "#/pictures/0"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 41.0,
+            "t": 643.0,
+            "r": 86.0,
+            "b": 633.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            8
+          ]
+        }
+      ],
+      "orig": "ELSEVIER",
+      "text": "ELSEVIER"
+    },
+    {
+      "self_ref": "#/texts/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 59.6409,
+            "t": 511.7883249,
+            "r": 62.9404248,
+            "b": 507.064423216318,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "b",
+      "text": "b"
+    },
+    {
+      "self_ref": "#/texts/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.5197,
+            "t": 459.0227481,
+            "r": 74.71768329999999,
+            "b": 450.9710107,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            8
+          ]
+        }
+      ],
+      "orig": "Abstract",
+      "text": "Abstract",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/4",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.5197,
+            "t": 437.19608401,
+            "r": 496.8152221,
+            "b": 363.46107443811707,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            746
+          ]
+        }
+      ],
+      "orig": "The influence of tensile specimen geometry on the deformation behavior of flat Zircaloy-4 tensile specimens has been examined for gauge length-to-width ratios that range from 1:1 to 4:1. Specimen geometry has only minor effects on the values of the yield stress, tensile strength, apparent uniform strain at maximum load, and strain-hardening exponent. However, in all geometries but the 4:1 configuration, diffuse necking occurs before maximum load. As a result, strain distributions at maximum load are uniform only in the 4:1 geometry. The elongation to failure is also affected by specimen geometry with the shorter gauge sections exhibiting much higher total elongation values, due in large part to the concomitant specimen necking behavior.",
+      "text": "The influence of tensile specimen geometry on the deformation behavior of flat Zircaloy-4 tensile specimens has been examined for gauge length-to-width ratios that range from 1:1 to 4:1. Specimen geometry has only minor effects on the values of the yield stress, tensile strength, apparent uniform strain at maximum load, and strain-hardening exponent. However, in all geometries but the 4:1 configuration, diffuse necking occurs before maximum load. As a result, strain distributions at maximum load are uniform only in the 4:1 geometry. The elongation to failure is also affected by specimen geometry with the shorter gauge sections exhibiting much higher total elongation values, due in large part to the concomitant specimen necking behavior."
+    },
+    {
+      "self_ref": "#/texts/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.5197,
+            "t": 360.49207739999986,
+            "r": 232.7818961099998,
+            "b": 352.51949854811704,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            49
+          ]
+        }
+      ],
+      "orig": "Ó 2003 Elsevier Science B.V. All rights reserved.",
+      "text": "Ó 2003 Elsevier Science B.V. All rights reserved."
+    },
+    {
+      "self_ref": "#/texts/6",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.5197,
+            "t": 311.9628752799999,
+            "r": 98.55459184999998,
+            "b": 303.9111378799999,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            15
+          ]
+        }
+      ],
+      "orig": "1. Introduction",
+      "text": "1. Introduction",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/7",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.5197,
+            "t": 290.0223391799999,
+            "r": 257.73062585999986,
+            "b": 117.64278689811704,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            871
+          ]
+        }
+      ],
+      "orig": "Predicting the deformation response of a Zircaloy component under stresses arising from in-reactor operation depends on an accurate description of its constitutive stress-strain response. Determining the stress-strain response of an alloy is normally straightforward, and many researchers have relied on the use of tensile tests using ASTM-recommended geometries [1] or compression testing [2]. However, for the in-service loading of Zircaloy cladding tubes, the dominant mode of deformation is often hoop tension. In order to determine the constitutive behavior of the cladding tube under hoop tension, it may be experimentally desirable to utilize specimen geometries that have a gauge length ( l ) to width ð w Þ ratio ð l = w Þ less than the 4:1 ratio recommended by ASTM [1]. One difficulty with the short tensile specimens is illustrated in a recent analysis of the",
+      "text": "Predicting the deformation response of a Zircaloy component under stresses arising from in-reactor operation depends on an accurate description of its constitutive stress-strain response. Determining the stress-strain response of an alloy is normally straightforward, and many researchers have relied on the use of tensile tests using ASTM-recommended geometries [1] or compression testing [2]. However, for the in-service loading of Zircaloy cladding tubes, the dominant mode of deformation is often hoop tension. In order to determine the constitutive behavior of the cladding tube under hoop tension, it may be experimentally desirable to utilize specimen geometries that have a gauge length ( l ) to width ð w Þ ratio ð l = w Þ less than the 4:1 ratio recommended by ASTM [1]. One difficulty with the short tensile specimens is illustrated in a recent analysis of the"
+    },
+    {
+      "self_ref": "#/texts/8",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "footnote",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.51939772,
+            "t": 91.86392490000003,
+            "r": 257.7546487199997,
+            "b": 72.99644736719665,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            68
+          ]
+        }
+      ],
+      "orig": "* Corresponding author. Tel.: +1-814 865 5447; fax: +1-814 865 2917.",
+      "text": "* Corresponding author. Tel.: +1-814 865 5447; fax: +1-814 865 2917."
+    },
+    {
+      "self_ref": "#/texts/9",
+      "parent": {
+        "$ref": "#/groups/0"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 54.42528248,
+            "t": 70.00978666000003,
+            "r": 106.72414084000002,
+            "b": 63.09922308259411,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            15
+          ]
+        }
+      ],
+      "orig": "E-mail address:",
+      "text": "E-mail address:"
+    },
+    {
+      "self_ref": "#/texts/10",
+      "parent": {
+        "$ref": "#/groups/0"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 109.30409458,
+            "t": 70.10542906,
+            "r": 219.80852651999996,
+            "b": 63.0185539871967,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            29
+          ]
+        }
+      ],
+      "orig": "koss@ems.psu.edu (D.A. Koss).",
+      "text": "koss@ems.psu.edu (D.A. Koss)."
+    },
+    {
+      "self_ref": "#/texts/11",
+      "parent": {
+        "$ref": "#/groups/1"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.52019473999998,
+            "t": 38.86782419999997,
+            "r": 156.77380875999998,
+            "b": 31.780949127196664,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            26
+          ]
+        }
+      ],
+      "orig": "PII: S0022-3115(02)01554-4",
+      "text": "PII: S0022-3115(02)01554-4"
+    },
+    {
+      "self_ref": "#/texts/12",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 162.9354,
+            "t": 642.2502274000001,
+            "r": 332.16028043999984,
+            "b": 635.1633523271967,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            47
+          ]
+        }
+      ],
+      "orig": "Journal of Nuclear Materials 312 (2003) 257-261",
+      "text": "Journal of Nuclear Materials 312 (2003) 257-261"
+    },
+    {
+      "self_ref": "#/texts/13",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 216.17,
+            "t": 620.0429537,
+            "r": 323.1370617399999,
+            "b": 609.4128189251046,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            21
+          ]
+        }
+      ],
+      "orig": "Letter to the Editors",
+      "text": "Letter to the Editors",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/14",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 96.548,
+            "t": 597.0462067999999,
+            "r": 442.64502763999997,
+            "b": 562.0882654324686,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            69
+          ]
+        }
+      ],
+      "orig": "Tensile specimen geometry and the constitutive behavior of Zircaloy-4",
+      "text": "Tensile specimen geometry and the constitutive behavior of Zircaloy-4",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/15",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 145.0771,
+            "t": 552.9608084,
+            "r": 394.275152,
+            "b": 538.6853751945607,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            46
+          ]
+        }
+      ],
+      "orig": "O.N. Pierron a , D.A. Koss a, * , A.T. Motta b",
+      "text": "O.N. Pierron a , D.A. Koss a, * , A.T. Motta b"
+    },
+    {
+      "self_ref": "#/texts/16",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 82.4315,
+            "t": 531.7442249,
+            "r": 456.9663265399993,
+            "b": 522.9920214225941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            108
+          ]
+        }
+      ],
+      "orig": "a Department of Materials Science and Engineering, The Pennsylvania State University, 202A Steidle Building,",
+      "text": "a Department of Materials Science and Engineering, The Pennsylvania State University, 202A Steidle Building,"
+    },
+    {
+      "self_ref": "#/texts/17",
+      "parent": {
+        "$ref": "#/groups/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 213.10929032,
+            "t": 519.9812800399999,
+            "r": 326.2701899199999,
+            "b": 513.0707164625941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            30
+          ]
+        }
+      ],
+      "orig": "University Park, PA 16802, USA",
+      "text": "University Park, PA 16802, USA"
+    },
+    {
+      "self_ref": "#/texts/18",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 65.5937,
+            "t": 510.003385,
+            "r": 479.72449497999935,
+            "b": 503.0928214225941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            115
+          ]
+        }
+      ],
+      "orig": "Department of Mechanical and Nuclear Engineering, The Pennsylvania State University, University Park, PA 16802, USA",
+      "text": "Department of Mechanical and Nuclear Engineering, The Pennsylvania State University, University Park, PA 16802, USA"
+    },
+    {
+      "self_ref": "#/texts/19",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 184.76253636,
+            "t": 496.71945265999994,
+            "r": 354.6178596199998,
+            "b": 489.63257758719664,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            47
+          ]
+        }
+      ],
+      "orig": "Received 12 July 2002; accepted 15 October 2002",
+      "text": "Received 12 July 2002; accepted 15 October 2002"
+    },
+    {
+      "self_ref": "#/texts/20",
+      "parent": {
+        "$ref": "#/pictures/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 383.981,
+            "t": 628.4738274,
+            "r": 496.86852173999984,
+            "b": 621.3869523271966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            31
+          ]
+        }
+      ],
+      "orig": "www.elsevier.com/locate/jnucmat",
+      "text": "www.elsevier.com/locate/jnucmat"
+    },
+    {
+      "self_ref": "#/texts/21",
+      "parent": {
+        "$ref": "#/pictures/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 427.3333333333333,
+            "t": 690.6666666666666,
+            "r": 482.0,
+            "b": 667.6666666666666,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            10
+          ]
+        }
+      ],
+      "orig": "journal of",
+      "text": "journal of"
+    },
+    {
+      "self_ref": "#/texts/22",
+      "parent": {
+        "$ref": "#/pictures/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 432.0,
+            "t": 674.3333333333334,
+            "r": 475.3333333333333,
+            "b": 654.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            7
+          ]
+        }
+      ],
+      "orig": "nuclear",
+      "text": "nuclear"
+    },
+    {
+      "self_ref": "#/texts/23",
+      "parent": {
+        "$ref": "#/pictures/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 427.6666666666667,
+            "t": 658.3333333333334,
+            "r": 479.6666666666667,
+            "b": 637.6666666666666,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            9
+          ]
+        }
+      ],
+      "orig": "materials",
+      "text": "materials"
+    },
+    {
+      "self_ref": "#/texts/24",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 281.65181763000004,
+            "t": 311.9655651699999,
+            "r": 496.8394311100005,
+            "b": 62.88110964811699,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1261
+          ]
+        }
+      ],
+      "orig": "strain distributions within uniaxial ring-stretch specimens geometries ranging from ð l = w Þ ¼ 4 : 1 to ð l = w Þ ¼ 1 : 1; based on Zircaloy-4 cladding, those results identify specimen necking upon yielding in the short 1:1 specimen [3]. The presence of specimen necking (and the concomitant absence of uniform deformation) indicates that the apparent constitutive stress-strain behavior, as well as parameters such as Ô uniform Õ strain at maximum load, must be sensitive to specimen design, at least at small ð l = w Þ values. It is also well known that specimen design can affect the failure strain, as shown in research based on subsized Zircaloy specimens [4] and in a study of necking behavior in round-bar tensile specimens of HY-100 steel [5]. In this communication, we present a straight-forward experimental analysis of the tensile behavior of flat Zircaloy-4 sheet (avoiding the complicating effects of friction/bending present during ring-stretch testing) tested using four different specimen geometries with ð l = w Þ -ratios ranging from 4:1 to 1:1. We devote specific attention to the influence of specimen geometry on the constitutive stress-strain response as well as material parameters such as uniform strain and total elongation to failure.",
+      "text": "strain distributions within uniaxial ring-stretch specimens geometries ranging from ð l = w Þ ¼ 4 : 1 to ð l = w Þ ¼ 1 : 1; based on Zircaloy-4 cladding, those results identify specimen necking upon yielding in the short 1:1 specimen [3]. The presence of specimen necking (and the concomitant absence of uniform deformation) indicates that the apparent constitutive stress-strain behavior, as well as parameters such as Ô uniform Õ strain at maximum load, must be sensitive to specimen design, at least at small ð l = w Þ values. It is also well known that specimen design can affect the failure strain, as shown in research based on subsized Zircaloy specimens [4] and in a study of necking behavior in round-bar tensile specimens of HY-100 steel [5]. In this communication, we present a straight-forward experimental analysis of the tensile behavior of flat Zircaloy-4 sheet (avoiding the complicating effects of friction/bending present during ring-stretch testing) tested using four different specimen geometries with ð l = w Þ -ratios ranging from 4:1 to 1:1. We devote specific attention to the influence of specimen geometry on the constitutive stress-strain response as well as material parameters such as uniform strain and total elongation to failure."
+    },
+    {
+      "self_ref": "#/texts/25",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 42.520194739999994,
+            "t": 48.84571758000004,
+            "r": 328.90223305999984,
+            "b": 41.75884250719662,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            83
+          ]
+        }
+      ],
+      "orig": "0022-3115/03/$ - see front matter Ó 2003 Elsevier Science B.V. All rights reserved.",
+      "text": "0022-3115/03/$ - see front matter Ó 2003 Elsevier Science B.V. All rights reserved."
+    },
+    {
+      "self_ref": "#/texts/26",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.45098378,
+            "t": 694.5216083600002,
+            "r": 59.40628378000001,
+            "b": 687.4347332871968,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "258",
+      "text": "258"
+    },
+    {
+      "self_ref": "#/texts/27",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 153.92090048,
+            "t": 694.4259659600001,
+            "r": 395.3151448999996,
+            "b": 687.5154023825943,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            69
+          ]
+        }
+      ],
+      "orig": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261",
+      "text": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261"
+    },
+    {
+      "self_ref": "#/texts/28",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.452,
+            "t": 673.6054481,
+            "r": 147.31057972999994,
+            "b": 665.5537107,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            25
+          ]
+        }
+      ],
+      "orig": "2. Experimental procedure",
+      "text": "2. Experimental procedure",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/29",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.45099678,
+            "t": 651.7222963199999,
+            "r": 262.6457833,
+            "b": 468.39920210811715,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            919
+          ]
+        }
+      ],
+      "orig": "For this study, we used flat Zircaloy-4 sheet material (0.64 mm thick) that was furnished by Teledyne Wah Chang. The material was cold-rolled and recrystallized at 650 ° C for 30 min in a vacuum ( \u0019 10 \u0000 3 Pa). The sheet possessed a strong crystallographic texture with the following Kearns factors: f N ¼ 0 : 60, f L ¼ 0 : 06, and f T ¼ 0 : 34 (importantly, these values are similar to those reported for unirradiated cold worked and stress-relieved Zircaloy-4 cladding tubes [6]). As a result of the texture, the recrystallized sheet exhibited considerable plastic anisotropy such that R ¼ e width = e thickness ¼ 5 : 2, where e width is the width strain and e thickness is the thickness strain within the uniform strain region of a uniaxial tension test. Thus, owing to the texture, through-thickness slip is difficult, as is the case for cold worked and stress relieved (but unirradiated) Zircaloy-4 cladding tubes.",
+      "text": "For this study, we used flat Zircaloy-4 sheet material (0.64 mm thick) that was furnished by Teledyne Wah Chang. The material was cold-rolled and recrystallized at 650 ° C for 30 min in a vacuum ( \u0019 10 \u0000 3 Pa). The sheet possessed a strong crystallographic texture with the following Kearns factors: f N ¼ 0 : 60, f L ¼ 0 : 06, and f T ¼ 0 : 34 (importantly, these values are similar to those reported for unirradiated cold worked and stress-relieved Zircaloy-4 cladding tubes [6]). As a result of the texture, the recrystallized sheet exhibited considerable plastic anisotropy such that R ¼ e width = e thickness ¼ 5 : 2, where e width is the width strain and e thickness is the thickness strain within the uniform strain region of a uniaxial tension test. Thus, owing to the texture, through-thickness slip is difficult, as is the case for cold worked and stress relieved (but unirradiated) Zircaloy-4 cladding tubes."
+    },
+    {
+      "self_ref": "#/texts/30",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.45134521,
+            "t": 465.43020506999994,
+            "r": 262.63268227999976,
+            "b": 347.87010210811707,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            598
+          ]
+        }
+      ],
+      "orig": "Assuming that the rolling direction of the sheet corresponds to the extrusion direction of tube materials, we performed tests on our sheet material with the tensile axis oriented transverse to the rolling direction. Tests were conducted at room temperature and an initial strain rate of 10 \u0000 3 s \u0000 1 . Three specimens per condition were tested. The specimens were carefully scribed at the ends of the gauge section to assist in determining strain values. In addition, microhardness indentations (1 kg load) were used as Ô grids Õ to determine strain distributions along the length of the specimens.",
+      "text": "Assuming that the rolling direction of the sheet corresponds to the extrusion direction of tube materials, we performed tests on our sheet material with the tensile axis oriented transverse to the rolling direction. Tests were conducted at room temperature and an initial strain rate of 10 \u0000 3 s \u0000 1 . Three specimens per condition were tested. The specimens were carefully scribed at the ends of the gauge section to assist in determining strain values. In addition, microhardness indentations (1 kg load) were used as Ô grids Õ to determine strain distributions along the length of the specimens."
+    },
+    {
+      "self_ref": "#/texts/31",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.451417150000026,
+            "t": 322.9605689699999,
+            "r": 140.965443,
+            "b": 314.9088315699999,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            25
+          ]
+        }
+      ],
+      "orig": "3. Results and discussion",
+      "text": "3. Results and discussion",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/32",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.451417150000026,
+            "t": 301.0200328699999,
+            "r": 262.63365084999987,
+            "b": 216.34344740811707,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            409
+          ]
+        }
+      ],
+      "orig": "Based on the schematic shown in Fig. 1, the four different specimen geometries described in Table 1 were examined. As listed in Table 1, the ratios of gauge length ( l ) to width ( w ) ranged from 1:1 to 4:1, the latter being the ratio specified by ASTM [1]. In addition, two fillet radii were examined for the case of the 3:2 specimens - a 5 mm radius (designated 3:2A) and a 7.5 mm radius (designated 3:2B).",
+      "text": "Based on the schematic shown in Fig. 1, the four different specimen geometries described in Table 1 were examined. As listed in Table 1, the ratios of gauge length ( l ) to width ( w ) ranged from 1:1 to 4:1, the latter being the ratio specified by ASTM [1]. In addition, two fillet radii were examined for the case of the 3:2 specimens - a 5 mm radius (designated 3:2A) and a 7.5 mm radius (designated 3:2B)."
+    },
+    {
+      "self_ref": "#/texts/33",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.45231378000003,
+            "t": 213.37445036999986,
+            "r": 262.6399272599998,
+            "b": 172.52065615811705,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            212
+          ]
+        },
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.5259,
+            "t": 579.8312273800002,
+            "r": 501.7468046399998,
+            "b": 562.7664589271968,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            213,
+            305
+          ]
+        }
+      ],
+      "orig": "We show in Fig. 2 the true stress-true strain behavior of the Zircaloy-4 sheet, as determined from the four specimen geometries listed in Table 1, assuming uniform strain for displacements up to maximum load. The Specimen identification is based on the ratio of gauge length to gauge width (i.e., l = w ).",
+      "text": "We show in Fig. 2 the true stress-true strain behavior of the Zircaloy-4 sheet, as determined from the four specimen geometries listed in Table 1, assuming uniform strain for displacements up to maximum load. The Specimen identification is based on the ratio of gauge length to gauge width (i.e., l = w )."
+    },
+    {
+      "self_ref": "#/texts/34",
+      "parent": {
+        "$ref": "#/pictures/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.452,
+            "t": 80.31022740000003,
+            "r": 262.62588045999996,
+            "b": 63.24545894719665,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            65
+          ]
+        }
+      ],
+      "orig": "Fig. 1. Geometry of the tensile specimens examined in this study.",
+      "text": "Fig. 1. Geometry of the tensile specimens examined in this study."
+    },
+    {
+      "self_ref": "#/texts/35",
+      "parent": {
+        "$ref": "#/pictures/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 164.8611,
+            "t": 98.29060000000004,
+            "r": 170.1971,
+            "b": 91.35049127324748,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "R",
+      "text": "R"
+    },
+    {
+      "self_ref": "#/texts/36",
+      "parent": {
+        "$ref": "#/pictures/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 117.02669999999999,
+            "t": 119.26580000000001,
+            "r": 122.36269999999999,
+            "b": 112.50972560801142,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "w",
+      "text": "w"
+    },
+    {
+      "self_ref": "#/texts/37",
+      "parent": {
+        "$ref": "#/pictures/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 148.91629999999998,
+            "t": 151.1554,
+            "r": 151.14029999999997,
+            "b": 144.3993256080114,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "l",
+      "text": "l"
+    },
+    {
+      "self_ref": "#/texts/38",
+      "parent": {
+        "$ref": "#/tables/0"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.5259,
+            "t": 673.6014274,
+            "r": 485.1775558599999,
+            "b": 656.5932473671966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            65
+          ]
+        }
+      ],
+      "orig": "Table 1 A comparison of the different tensile specimen geometries",
+      "text": "Table 1 A comparison of the different tensile specimen geometries"
+    },
+    {
+      "self_ref": "#/texts/39",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.52704709000005,
+            "t": 542.1390825799998,
+            "r": 501.72900665000026,
+            "b": 512.226864258117,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            125
+          ]
+        }
+      ],
+      "orig": "stress-strain responses in Fig. 2 and most of the tabulated material property values in Table 2 may be summarized as follows:",
+      "text": "stress-strain responses in Fig. 2 and most of the tabulated material property values in Table 2 may be summarized as follows:"
+    },
+    {
+      "self_ref": "#/texts/40",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.52704709000005,
+            "t": 498.2589070099998,
+            "r": 501.7510795900005,
+            "b": 402.6350538881171,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            489
+          ]
+        }
+      ],
+      "orig": "· Importantly, there are only small differences in the measured Ô strain hardening behavior Õ among the four specimen geometries. In all cases, fitting the stressstrain data over the strain increment 0 : 015 < e < e max : load results in good fit values ( R 2 > 0 : 99) of the strain hardening exponent, n ¼ ½ dln r = dln e  ave . These results indicate a slightly higher n -value ( n ¼ 0 : 090) for the 1:1 geometry, compared to n ¼ 0 : 080-0.084 for the other three specimen geometries.",
+      "text": "Importantly, there are only small differences in the measured Ô strain hardening behavior Õ among the four specimen geometries. In all cases, fitting the stressstrain data over the strain increment 0 : 015 < e < e max : load results in good fit values ( R 2 > 0 : 99) of the strain hardening exponent, n ¼ ½ dln r = dln e  ave . These results indicate a slightly higher n -value ( n ¼ 0 : 090) for the 1:1 geometry, compared to n ¼ 0 : 080-0.084 for the other three specimen geometries.",
+      "enumerated": false,
+      "marker": "·"
+    },
+    {
+      "self_ref": "#/texts/41",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.5258076500003,
+            "t": 399.6660568499999,
+            "r": 501.74104654000007,
+            "b": 270.4374442175732,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            607
+          ]
+        }
+      ],
+      "orig": "· Small differences in apparent yield stress ( r y) values also occur as a result of specimen geometry with the 4:1 specimen exhibiting a slightly higher yield stress value ( r y ffi 469 MPa) when compared to the other geometries. Such behavior suggests non-uniform deformation might cause Ô premature Õ yielding in the specimens with shorter gauge sections and therefore suppress the yield drop behavior present in the 4:1 specimen. We also note that there are no significant differences in ultimate tensile strength ( S uts ), with all four geometries providing values in the range of S uts ¼ 482-488 MPa.",
+      "text": "Small differences in apparent yield stress ( r y) values also occur as a result of specimen geometry with the 4:1 specimen exhibiting a slightly higher yield stress value ( r y ffi 469 MPa) when compared to the other geometries. Such behavior suggests non-uniform deformation might cause Ô premature Õ yielding in the specimens with shorter gauge sections and therefore suppress the yield drop behavior present in the 4:1 specimen. We also note that there are no significant differences in ultimate tensile strength ( S uts ), with all four geometries providing values in the range of S uts ¼ 482-488 MPa.",
+      "enumerated": false,
+      "marker": "·"
+    },
+    {
+      "self_ref": "#/texts/42",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.52534043,
+            "t": 268.13787220999995,
+            "r": 501.7422124400001,
+            "b": 171.79184421757327,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            488
+          ]
+        }
+      ],
+      "orig": "· Based on the definition of Ô uniform strain Õ , e uniform , as the specimen strain at maximum load, Fig. 2 (which is based on data up to maximum load) indicates small, but possibly significant, differences in uniform strain values. The 1:1 specimen geometry exhibits the highest Ô uniform Õ strain value ( e uniform ¼ 0 : 105). In contrast, the other specimens had significantly lower uniform strain values ( e uniform ¼ 0 : 076 for 3:2A, and e uniform ¼ 0 : 088 for both 3:2B and 4:1).",
+      "text": "Based on the definition of Ô uniform strain Õ , e uniform , as the specimen strain at maximum load, Fig. 2 (which is based on data up to maximum load) indicates small, but possibly significant, differences in uniform strain values. The 1:1 specimen geometry exhibits the highest Ô uniform Õ strain value ( e uniform ¼ 0 : 105). In contrast, the other specimens had significantly lower uniform strain values ( e uniform ¼ 0 : 076 for 3:2A, and e uniform ¼ 0 : 088 for both 3:2B and 4:1).",
+      "enumerated": false,
+      "marker": "·"
+    },
+    {
+      "self_ref": "#/texts/43",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 286.52549801,
+            "t": 158.55001200000004,
+            "r": 501.7382171300004,
+            "b": 62.87489030811719,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            495
+          ]
+        }
+      ],
+      "orig": "In summary, the influence of tensile specimen geometry on the deformation response of the Zircaloy-4 sheet indicates that the wide range of tensile specimen geometries results in only minor differences among the values of r y , S uts , n , and e uniform. The 4:1 specimen geometry, which is based on ASTM standards [1], provides the highest values of the yield stress and lowest strain hardening, but the differences are relatively small with the possible exception of the 1:1 specimen geometry.",
+      "text": "In summary, the influence of tensile specimen geometry on the deformation response of the Zircaloy-4 sheet indicates that the wide range of tensile specimen geometries results in only minor differences among the values of r y , S uts , n , and e uniform. The 4:1 specimen geometry, which is based on ASTM standards [1], provides the highest values of the yield stress and lowest strain hardening, but the differences are relatively small with the possible exception of the 1:1 specimen geometry."
+    },
+    {
+      "self_ref": "#/texts/44",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 149.04464642000002,
+            "t": 694.4265507399999,
+            "r": 390.3815053999995,
+            "b": 687.5159871625941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            69
+          ]
+        }
+      ],
+      "orig": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261",
+      "text": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261"
+    },
+    {
+      "self_ref": "#/texts/45",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 484.89452805999997,
+            "t": 694.52219314,
+            "r": 496.84982805999994,
+            "b": 687.4353180671966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "259",
+      "text": "259"
+    },
+    {
+      "self_ref": "#/texts/46",
+      "parent": {
+        "$ref": "#/pictures/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 147.1748,
+            "t": 463.6675274,
+            "r": 392.18034203999986,
+            "b": 456.5806523271967,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            72
+          ]
+        }
+      ],
+      "orig": "Fig. 2. True stress-true strain curves for the four specimen geometries.",
+      "text": "Fig. 2. True stress-true strain curves for the four specimen geometries."
+    },
+    {
+      "self_ref": "#/texts/47",
+      "parent": {
+        "$ref": "#/pictures/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 363.8835,
+            "t": 601.2436210000001,
+            "r": 368.73698670000005,
+            "b": 590.6865847,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "σ",
+      "text": "σ"
+    },
+    {
+      "self_ref": "#/texts/48",
+      "parent": {
+        "$ref": "#/pictures/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 363.67744816000004,
+            "t": 591.0997918,
+            "r": 368.53093486000006,
+            "b": 580.5427555,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "σ",
+      "text": "σ"
+    },
+    {
+      "self_ref": "#/texts/49",
+      "parent": {
+        "$ref": "#/pictures/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 368.38605466,
+            "t": 581.12205565,
+            "r": 373.23954136000003,
+            "b": 570.56501935,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "σ",
+      "text": "σ"
+    },
+    {
+      "self_ref": "#/texts/50",
+      "parent": {
+        "$ref": "#/pictures/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 368.41825026000004,
+            "t": 571.06815976,
+            "r": 373.27173696000006,
+            "b": 560.5111234599999,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "σ",
+      "text": "σ"
+    },
+    {
+      "self_ref": "#/texts/51",
+      "parent": {
+        "$ref": "#/tables/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 42.5197,
+            "t": 429.14162739999995,
+            "r": 464.90363707999995,
+            "b": 412.0768589471966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            133
+          ]
+        }
+      ],
+      "orig": "Table 2 A summary of the influence of tensile specimen geometry on the values of selected Ô material Õ properties of Zircaloy-4 sheet",
+      "text": "Table 2 A summary of the influence of tensile specimen geometry on the values of selected Ô material Õ properties of Zircaloy-4 sheet"
+    },
+    {
+      "self_ref": "#/texts/52",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 42.51995917,
+            "t": 322.90314809999995,
+            "r": 257.72281535999986,
+            "b": 183.462195498117,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            687
+          ]
+        }
+      ],
+      "orig": "In the case of the 1:1 specimen geometry, previous tensile test results indicate that the strong interaction of the fillets with the gauge section results in premature diffuse necking of the specimen soon after yielding at strains less than 0.02 [3]. The presence of specimen necking induces a multiaxial stress state within the gauge section and, with it, stress-state hardening/notch strengthening (which for this plastically anisotropic material can be significant). As a result, the flow stress for the 1:1 specimen is elevated and, as the diffuse necking develops with strain, there is an accompanying increase in the Ô apparent Õ strain hardening, evident in Fig. 2 and in Table 2.",
+      "text": "In the case of the 1:1 specimen geometry, previous tensile test results indicate that the strong interaction of the fillets with the gauge section results in premature diffuse necking of the specimen soon after yielding at strains less than 0.02 [3]. The presence of specimen necking induces a multiaxial stress state within the gauge section and, with it, stress-state hardening/notch strengthening (which for this plastically anisotropic material can be significant). As a result, the flow stress for the 1:1 specimen is elevated and, as the diffuse necking develops with strain, there is an accompanying increase in the Ô apparent Õ strain hardening, evident in Fig. 2 and in Table 2."
+    },
+    {
+      "self_ref": "#/texts/53",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 42.51995916999999,
+            "t": 180.43671076999988,
+            "r": 257.7228153599998,
+            "b": 95.76012530811704,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            396
+          ]
+        }
+      ],
+      "orig": "In contrast to most of the material parameters reported in Table 2, the total elongation to failure (%EL) is quite sensitive, consistent with results on round-bar steel test specimens [5]. As shown in Fig. 3, the elongation values differ by roughly a factor of two , with the 4:1 specimen exhibiting only 30% elongation to failure while the corresponding value for the 1:1 specimen is nearly 60%.",
+      "text": "In contrast to most of the material parameters reported in Table 2, the total elongation to failure (%EL) is quite sensitive, consistent with results on round-bar steel test specimens [5]. As shown in Fig. 3, the elongation values differ by roughly a factor of two , with the 4:1 specimen exhibiting only 30% elongation to failure while the corresponding value for the 1:1 specimen is nearly 60%."
+    },
+    {
+      "self_ref": "#/texts/54",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 42.519959169999964,
+            "t": 92.79112826999994,
+            "r": 257.71026254,
+            "b": 62.878909948116984,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            163
+          ]
+        },
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 281.6496643500001,
+            "t": 323.1721371,
+            "r": 496.8180816800001,
+            "b": 183.46172316811715,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            164,
+            871
+          ]
+        }
+      ],
+      "orig": "The cause of the large differences in elongation values can be inferred from measurements of uniform strain . With the possible exception of the 1:1 specimen geom- etry, Table 2 indicates that e uniform \u0019 n , as expected from the Considere Criterion [7]. (In fact, given the strain-rate hardening of Zircaloy 4 at room temperature, we would expect e uniform > n , based on theory; for example, see Ref. [8]). However, at maximum load, Fig. 4 shows that strain distributions at maximum load are non-uniform in all but the 4:1 specimens . Only the 4:1 specimen shows an extensive region of uniform strain over the central \u0018 80% of the gauge length. In contrast, the strain at maximum load along the gauge length in the 3:2 specimens is much less uniform than in the 4:1 specimens with only perhaps the central 60% of the gauge length exhibiting Ô nearuniform Õ deformation.",
+      "text": "The cause of the large differences in elongation values can be inferred from measurements of uniform strain . With the possible exception of the 1:1 specimen geom- etry, Table 2 indicates that e uniform \u0019 n , as expected from the Considere Criterion [7]. (In fact, given the strain-rate hardening of Zircaloy 4 at room temperature, we would expect e uniform > n , based on theory; for example, see Ref. [8]). However, at maximum load, Fig. 4 shows that strain distributions at maximum load are non-uniform in all but the 4:1 specimens . Only the 4:1 specimen shows an extensive region of uniform strain over the central \u0018 80% of the gauge length. In contrast, the strain at maximum load along the gauge length in the 3:2 specimens is much less uniform than in the 4:1 specimens with only perhaps the central 60% of the gauge length exhibiting Ô nearuniform Õ deformation."
+    },
+    {
+      "self_ref": "#/texts/55",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 281.6519873199999,
+            "t": 180.4362384399999,
+            "r": 496.8297378700003,
+            "b": 62.87843761811712,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            594
+          ]
+        },
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 47.451999999999984,
+            "t": 213.31574810000006,
+            "r": 262.6503730399998,
+            "b": 62.87493865811712,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            595,
+            1398
+          ]
+        },
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 286.52673331,
+            "t": 213.31754136000006,
+            "r": 501.7143467900004,
+            "b": 194.34600229811713,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            1399,
+            1507
+          ]
+        }
+      ],
+      "orig": "The results in Fig. 4 indicate that, due to presence of the fillets, the gauge sections in the short 3:2 and 1:1 specimens exhibit specimen necking before maximum load is achieved and that the strain at maximum load is non-uniform. During deformation after maximum load, specimen necking becomes pronounced in these specimens, involving much of the gauge section, especially in the short 1:1 specimen geometry. A pronounced example of such necking behavior is shown Fig. 5, which illustrates a ring-stretch Zircaloy-4 cladding tube specimen with the same 1:1 geometry examined here [3]. In this case, the interaction between the fillets at either end of the gauge section and gauge section deformation [3,5] results in strain distributions that create triangular shaped Ô dead zones Õ (i.e., regions of nearly zero strain) that form near the fillets [3]. As a consequence, the initiation of a diffuse neck occurs shortly after yielding, and it develops into the pronounced double-edge notched configuration shown in Fig. 5. The resulting constraints of the fillets on the deformation within the necked region results in stress-state hardening (magnified by the plastic anisotropy), which in turn inhibits failure (fracture initiates at the center of the specimen where the stress triaxiality is the greatest). The result is the higher total elongation values for the 3:2 specimens and especially of the 1:1 geometry when compared to the 4:1 geometry where such constraints are minimized, as shown in Fig. 3.",
+      "text": "The results in Fig. 4 indicate that, due to presence of the fillets, the gauge sections in the short 3:2 and 1:1 specimens exhibit specimen necking before maximum load is achieved and that the strain at maximum load is non-uniform. During deformation after maximum load, specimen necking becomes pronounced in these specimens, involving much of the gauge section, especially in the short 1:1 specimen geometry. A pronounced example of such necking behavior is shown Fig. 5, which illustrates a ring-stretch Zircaloy-4 cladding tube specimen with the same 1:1 geometry examined here [3]. In this case, the interaction between the fillets at either end of the gauge section and gauge section deformation [3,5] results in strain distributions that create triangular shaped Ô dead zones Õ (i.e., regions of nearly zero strain) that form near the fillets [3]. As a consequence, the initiation of a diffuse neck occurs shortly after yielding, and it develops into the pronounced double-edge notched configuration shown in Fig. 5. The resulting constraints of the fillets on the deformation within the necked region results in stress-state hardening (magnified by the plastic anisotropy), which in turn inhibits failure (fracture initiates at the center of the specimen where the stress triaxiality is the greatest). The result is the higher total elongation values for the 3:2 specimens and especially of the 1:1 geometry when compared to the 4:1 geometry where such constraints are minimized, as shown in Fig. 3."
+    },
+    {
+      "self_ref": "#/texts/56",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 47.45172410000001,
+            "t": 694.5229725,
+            "r": 59.407024100000015,
+            "b": 687.4360974271966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "260",
+      "text": "260"
+    },
+    {
+      "self_ref": "#/texts/57",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 153.9216408,
+            "t": 694.4273301,
+            "r": 395.3158852199996,
+            "b": 687.5167665225941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            69
+          ]
+        }
+      ],
+      "orig": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261",
+      "text": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261"
+    },
+    {
+      "self_ref": "#/texts/58",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 152.2204,
+            "t": 492.69432739999996,
+            "r": 396.98603901999985,
+            "b": 485.60745232719665,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            71
+          ]
+        }
+      ],
+      "orig": "Fig. 3. Total elongation to failure as a function of specimen geometry.",
+      "text": "Fig. 3. Total elongation to failure as a function of specimen geometry."
+    },
+    {
+      "self_ref": "#/texts/59",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 131.0,
+            "t": 675.3333333333334,
+            "r": 141.33333333333334,
+            "b": 666.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "70",
+      "text": "70"
+    },
+    {
+      "self_ref": "#/texts/60",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 130.33333333333334,
+            "t": 654.3333333333334,
+            "r": 142.0,
+            "b": 644.3333333333334,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "60",
+      "text": "60"
+    },
+    {
+      "self_ref": "#/texts/61",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 117.0,
+            "t": 646.3333333333334,
+            "r": 127.66666666666667,
+            "b": 533.3333333333334,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            27
+          ]
+        }
+      ],
+      "orig": "Total Elongation to Failure",
+      "text": "Total Elongation to Failure"
+    },
+    {
+      "self_ref": "#/texts/62",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 130.66666666666666,
+            "t": 632.0,
+            "r": 142.0,
+            "b": 622.6666666666666,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "50",
+      "text": "50"
+    },
+    {
+      "self_ref": "#/texts/63",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 177.0,
+            "t": 620.6666666666666,
+            "r": 184.33333333333331,
+            "b": 612.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "I",
+      "text": "I"
+    },
+    {
+      "self_ref": "#/texts/64",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 131.0,
+            "t": 611.0,
+            "r": 141.33333333333334,
+            "b": 601.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "40",
+      "text": "40"
+    },
+    {
+      "self_ref": "#/texts/65",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 248.33333333333334,
+            "t": 604.3333333333333,
+            "r": 256.0,
+            "b": 595.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "I",
+      "text": "I"
+    },
+    {
+      "self_ref": "#/texts/66",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 130.33333333333334,
+            "t": 589.3333333333333,
+            "r": 142.0,
+            "b": 579.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "30",
+      "text": "30"
+    },
+    {
+      "self_ref": "#/texts/67",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 320.33333333333337,
+            "t": 586.0,
+            "r": 327.0,
+            "b": 578.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "I",
+      "text": "I"
+    },
+    {
+      "self_ref": "#/texts/68",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 130.33333333333334,
+            "t": 567.6666666666667,
+            "r": 141.66666666666666,
+            "b": 558.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "20",
+      "text": "20"
+    },
+    {
+      "self_ref": "#/texts/69",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 130.66666666666666,
+            "t": 546.3333333333334,
+            "r": 142.0,
+            "b": 536.6666666666666,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "10",
+      "text": "10"
+    },
+    {
+      "self_ref": "#/texts/70",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 134.0,
+            "t": 524.3333333333334,
+            "r": 146.33333333333334,
+            "b": 515.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            2
+          ]
+        }
+      ],
+      "orig": "0+",
+      "text": "0+"
+    },
+    {
+      "self_ref": "#/texts/71",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 166.0,
+            "t": 511.33333333333337,
+            "r": 196.0,
+            "b": 500.66666666666663,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            6
+          ]
+        }
+      ],
+      "orig": "\"3:2B\"",
+      "text": "\"3:2B\""
+    },
+    {
+      "self_ref": "#/texts/72",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 237.0,
+            "t": 511.66666666666663,
+            "r": 267.66666666666663,
+            "b": 500.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            6
+          ]
+        }
+      ],
+      "orig": "\"3:2A\"",
+      "text": "\"3:2A\""
+    },
+    {
+      "self_ref": "#/texts/73",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 311.66666666666663,
+            "t": 512.0,
+            "r": 335.66666666666663,
+            "b": 500.66666666666663,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            5
+          ]
+        }
+      ],
+      "orig": "\"4:1\"",
+      "text": "\"4:1\""
+    },
+    {
+      "self_ref": "#/texts/74",
+      "parent": {
+        "$ref": "#/pictures/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 383.0,
+            "t": 512.0,
+            "r": 406.6666666666667,
+            "b": 500.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            5
+          ]
+        }
+      ],
+      "orig": "\"1:1\"",
+      "text": "\"1:1\""
+    },
+    {
+      "self_ref": "#/texts/75",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 79.7669,
+            "t": 245.7967274,
+            "r": 469.46982899999995,
+            "b": 238.7098523271967,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            110
+          ]
+        }
+      ],
+      "orig": "Fig. 4. Strain distributions along the gauge length at maximum load for the four specimen geometries examined.",
+      "text": "Fig. 4. Strain distributions along the gauge length at maximum load for the four specimen geometries examined."
+    },
+    {
+      "self_ref": "#/texts/76",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 120.0,
+            "t": 456.6666666666667,
+            "r": 135.33333333333334,
+            "b": 446.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.2",
+      "text": "0.2"
+    },
+    {
+      "self_ref": "#/texts/77",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.66666666666667,
+            "t": 440.3333333333333,
+            "r": 134.66666666666666,
+            "b": 430.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.18",
+      "text": "0.18"
+    },
+    {
+      "self_ref": "#/texts/78",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 370.0,
+            "t": 432.0,
+            "r": 399.0,
+            "b": 422.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "3:2B",
+      "text": "3:2B"
+    },
+    {
+      "self_ref": "#/texts/79",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.33333333333333,
+            "t": 424.0,
+            "r": 135.33333333333334,
+            "b": 413.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.16",
+      "text": "0.16"
+    },
+    {
+      "self_ref": "#/texts/80",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 370.0,
+            "t": 422.0,
+            "r": 398.6666666666667,
+            "b": 413.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "3:2A",
+      "text": "3:2A"
+    },
+    {
+      "self_ref": "#/texts/81",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 103.33333333333333,
+            "t": 410.6666666666667,
+            "r": 113.66666666666667,
+            "b": 379.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            6
+          ]
+        }
+      ],
+      "orig": "Strain",
+      "text": "Strain"
+    },
+    {
+      "self_ref": "#/texts/82",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 369.6666666666667,
+            "t": 413.0,
+            "r": 394.3333333333333,
+            "b": 404.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "1:1",
+      "text": "1:1"
+    },
+    {
+      "self_ref": "#/texts/83",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.33333333333333,
+            "t": 407.3333333333333,
+            "r": 134.33333333333334,
+            "b": 397.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.14",
+      "text": "0.14"
+    },
+    {
+      "self_ref": "#/texts/84",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 369.3333333333333,
+            "t": 404.3333333333333,
+            "r": 394.3333333333333,
+            "b": 395.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "4:1",
+      "text": "4:1"
+    },
+    {
+      "self_ref": "#/texts/85",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.66666666666667,
+            "t": 391.0,
+            "r": 134.66666666666666,
+            "b": 381.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.12",
+      "text": "0.12"
+    },
+    {
+      "self_ref": "#/texts/86",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 103.0,
+            "t": 384.6666666666667,
+            "r": 113.66666666666667,
+            "b": 328.66666666666663,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            10
+          ]
+        }
+      ],
+      "orig": "True Major",
+      "text": "True Major"
+    },
+    {
+      "self_ref": "#/texts/87",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 120.0,
+            "t": 375.0,
+            "r": 134.33333333333334,
+            "b": 364.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.1",
+      "text": "0.1"
+    },
+    {
+      "self_ref": "#/texts/88",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 224.33333333333334,
+            "t": 367.3333333333333,
+            "r": 235.33333333333334,
+            "b": 357.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "米",
+      "text": "米"
+    },
+    {
+      "self_ref": "#/texts/89",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.33333333333333,
+            "t": 358.6666666666667,
+            "r": 134.33333333333334,
+            "b": 349.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.08",
+      "text": "0.08"
+    },
+    {
+      "self_ref": "#/texts/90",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 286.33333333333337,
+            "t": 361.3333333333333,
+            "r": 294.0,
+            "b": 351.3333333333333,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "*",
+      "text": "*"
+    },
+    {
+      "self_ref": "#/texts/91",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.0,
+            "t": 342.0,
+            "r": 134.33333333333334,
+            "b": 332.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.06",
+      "text": "0.06"
+    },
+    {
+      "self_ref": "#/texts/92",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.66666666666667,
+            "t": 325.66666666666663,
+            "r": 134.66666666666666,
+            "b": 315.66666666666663,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.04",
+      "text": "0.04"
+    },
+    {
+      "self_ref": "#/texts/93",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 115.66666666666667,
+            "t": 309.33333333333337,
+            "r": 134.33333333333334,
+            "b": 299.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            4
+          ]
+        }
+      ],
+      "orig": "0.02",
+      "text": "0.02"
+    },
+    {
+      "self_ref": "#/texts/94",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 126.66666666666666,
+            "t": 292.66666666666663,
+            "r": 134.33333333333334,
+            "b": 283.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "0",
+      "text": "0"
+    },
+    {
+      "self_ref": "#/texts/95",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 135.0,
+            "t": 281.33333333333337,
+            "r": 142.33333333333334,
+            "b": 271.66666666666663,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "0",
+      "text": "0"
+    },
+    {
+      "self_ref": "#/texts/96",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 161.66666666666669,
+            "t": 282.0,
+            "r": 176.0,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.1",
+      "text": "0.1"
+    },
+    {
+      "self_ref": "#/texts/97",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 192.0,
+            "t": 282.0,
+            "r": 206.66666666666669,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.2",
+      "text": "0.2"
+    },
+    {
+      "self_ref": "#/texts/98",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 222.0,
+            "t": 282.0,
+            "r": 237.0,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.3",
+      "text": "0.3"
+    },
+    {
+      "self_ref": "#/texts/99",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 252.33333333333334,
+            "t": 282.0,
+            "r": 267.33333333333337,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.4",
+      "text": "0.4"
+    },
+    {
+      "self_ref": "#/texts/100",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 282.66666666666663,
+            "t": 282.0,
+            "r": 298.0,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.5",
+      "text": "0.5"
+    },
+    {
+      "self_ref": "#/texts/101",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 312.66666666666663,
+            "t": 282.0,
+            "r": 327.66666666666663,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.6",
+      "text": "0.6"
+    },
+    {
+      "self_ref": "#/texts/102",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 343.33333333333337,
+            "t": 282.0,
+            "r": 358.0,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.7",
+      "text": "0.7"
+    },
+    {
+      "self_ref": "#/texts/103",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 373.6666666666667,
+            "t": 282.0,
+            "r": 388.3333333333333,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.8",
+      "text": "0.8"
+    },
+    {
+      "self_ref": "#/texts/104",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 403.6666666666667,
+            "t": 282.0,
+            "r": 418.3333333333333,
+            "b": 271.33333333333337,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "0.9",
+      "text": "0.9"
+    },
+    {
+      "self_ref": "#/texts/105",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 438.3333333333333,
+            "t": 281.0,
+            "r": 444.3333333333333,
+            "b": 273.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "1",
+      "text": "1"
+    },
+    {
+      "self_ref": "#/texts/106",
+      "parent": {
+        "$ref": "#/pictures/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 269.66666666666663,
+            "t": 268.33333333333337,
+            "r": 310.33333333333337,
+            "b": 254.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            8
+          ]
+        }
+      ],
+      "orig": "I/Igauge",
+      "text": "I/Igauge"
+    },
+    {
+      "self_ref": "#/texts/107",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 286.52673331,
+            "t": 169.43646916,
+            "r": 332.5731669600001,
+            "b": 161.38473176000002,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            10
+          ]
+        }
+      ],
+      "orig": "4. Summary",
+      "text": "4. Summary",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/108",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 286.52673331,
+            "t": 147.55331738000007,
+            "r": 501.7502119900005,
+            "b": 62.87583528811717,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            434
+          ]
+        },
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 42.5197,
+            "t": 436.0621481,
+            "r": 257.7252460799998,
+            "b": 362.3271385281171,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            435,
+            816
+          ]
+        }
+      ],
+      "orig": "Within the range of specimen shapes examined for Zircaloy-4 sheet, the geometry of the tensile specimen has only minor effects on the following material parameters: yield stress, tensile strength, apparent Ô uniform Õ strain values at maximum load, and strain-hardening exponent. However, the strain distributions indicate that the long ASTM - type 4:1 specimen geometry is the only geometry that exhibits uniform deformation behavior at maximum load, and it therefore provides the most accurate indications of the constitutive behavior this material. Nevertheless, the differences between the 4:1 geometry and the shorter 3:2 geometries are small with only the total elongation being strongly affected by the geometry; in this case, the shorter gauge-section specimens exhibits much greater total elongation values.",
+      "text": "Within the range of specimen shapes examined for Zircaloy-4 sheet, the geometry of the tensile specimen has only minor effects on the following material parameters: yield stress, tensile strength, apparent Ô uniform Õ strain values at maximum load, and strain-hardening exponent. However, the strain distributions indicate that the long ASTM - type 4:1 specimen geometry is the only geometry that exhibits uniform deformation behavior at maximum load, and it therefore provides the most accurate indications of the constitutive behavior this material. Nevertheless, the differences between the 4:1 geometry and the shorter 3:2 geometries are small with only the total elongation being strongly affected by the geometry; in this case, the shorter gauge-section specimens exhibits much greater total elongation values."
+    },
+    {
+      "self_ref": "#/texts/109",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 149.04461108000004,
+            "t": 694.4263341799999,
+            "r": 390.3814700599996,
+            "b": 687.5157706025941,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            69
+          ]
+        }
+      ],
+      "orig": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261",
+      "text": "O.N. Pierron et al. / Journal of Nuclear Materials 312 (2003) 257-261"
+    },
+    {
+      "self_ref": "#/texts/110",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 484.89449272,
+            "t": 694.52197658,
+            "r": 496.84979272,
+            "b": 687.4351015071966,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            3
+          ]
+        }
+      ],
+      "orig": "261",
+      "text": "261"
+    },
+    {
+      "self_ref": "#/texts/111",
+      "parent": {
+        "$ref": "#/pictures/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "caption",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 42.518105960000014,
+            "t": 508.1715274,
+            "r": 257.7788616,
+            "b": 461.22966722719667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            275
+          ]
+        }
+      ],
+      "orig": "Fig. 5. Deformation behavior at fracture of a Zircaloy-4 ringstretch specimen with l = w ¼ 1. Note the presence of pronounced strain gradients typified by triangular-shaped Ô dead zones Õ of low plastic strain, and fracture initiation at the specimen center (after Ref. [3]).",
+      "text": "Fig. 5. Deformation behavior at fracture of a Zircaloy-4 ringstretch specimen with l = w ¼ 1. Note the presence of pronounced strain gradients typified by triangular-shaped Ô dead zones Õ of low plastic strain, and fracture initiation at the specimen center (after Ref. [3])."
+    },
+    {
+      "self_ref": "#/texts/112",
+      "parent": {
+        "$ref": "#/pictures/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 80.33333333333334,
+            "t": 595.3333333333333,
+            "r": 87.66666666666666,
+            "b": 587.6666666666667,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "W",
+      "text": "W"
+    },
+    {
+      "self_ref": "#/texts/113",
+      "parent": {
+        "$ref": "#/pictures/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 101.0,
+            "t": 593.0,
+            "r": 106.0,
+            "b": 587.0,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            1
+          ]
+        }
+      ],
+      "orig": "0",
+      "text": "0"
+    },
+    {
+      "self_ref": "#/texts/114",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.65092100000004,
+            "t": 673.6081272599998,
+            "r": 352.8612756000002,
+            "b": 665.5563898599999,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            16
+          ]
+        }
+      ],
+      "orig": "Acknowledgements",
+      "text": "Acknowledgements",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/115",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "text",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.65092100000004,
+            "t": 651.8379508599999,
+            "r": 496.81701536000037,
+            "b": 610.984156648117,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            176
+          ]
+        }
+      ],
+      "orig": "We would like to thank Rob Daum and Mike Billone for technical discussions and Ralph Meyer for his continued encouragement. This research was supported by the Fermi Consortium.",
+      "text": "We would like to thank Rob Daum and Mike Billone for technical discussions and Ralph Meyer for his continued encouragement. This research was supported by the Fermi Consortium."
+    },
+    {
+      "self_ref": "#/texts/116",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.65092100000004,
+            "t": 590.3264429699999,
+            "r": 322.0530688000002,
+            "b": 582.2747055699999,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            10
+          ]
+        }
+      ],
+      "orig": "References",
+      "text": "References",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/117",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 568.7762274,
+            "r": 496.8798646599997,
+            "b": 531.7556721871968,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            173
+          ]
+        }
+      ],
+      "orig": "[1] ASTM, 2001, Standard Methods for Tension Testing of Metallic Materials, ASTM E8-00b, Annual Book of ASTM Standards, vol. 03.01, ASTM, West Conshohocken, PA, 2001, p. 56.",
+      "text": "ASTM, 2001, Standard Methods for Tension Testing of Metallic Materials, ASTM E8-00b, Annual Book of ASTM Standards, vol. 03.01, ASTM, West Conshohocken, PA, 2001, p. 56.",
+      "enumerated": true,
+      "marker": "[1]"
+    },
+    {
+      "self_ref": "#/texts/118",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 528.9212423000001,
+            "r": 496.8400136599996,
+            "b": 521.8343672271967,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            61
+          ]
+        }
+      ],
+      "orig": "[2] M.L. Lovato, M.G. Stout, Metall. Trans. A 23A (1992) 935.",
+      "text": "M.L. Lovato, M.G. Stout, Metall. Trans. A 23A (1992) 935.",
+      "enumerated": true,
+      "marker": "[2]"
+    },
+    {
+      "self_ref": "#/texts/119",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 518.9433489200002,
+            "r": 496.8758795599999,
+            "b": 481.9793821271968,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            184
+          ]
+        }
+      ],
+      "orig": "[3] D.W. Bates, D.A. Koss, A.T. Motta, S. Majumdar, Proceedings of the ANS International Topical Meeting on Fuel Performance, American Nuclear Society, LaGrange Park, IL, 2000, p. 296.",
+      "text": "D.W. Bates, D.A. Koss, A.T. Motta, S. Majumdar, Proceedings of the ANS International Topical Meeting on Fuel Performance, American Nuclear Society, LaGrange Park, IL, 2000, p. 296.",
+      "enumerated": true,
+      "marker": "[3]"
+    },
+    {
+      "self_ref": "#/texts/120",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 479.0883638200001,
+            "r": 496.87348849999984,
+            "b": 442.1243970271968,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            177
+          ]
+        }
+      ],
+      "orig": "[4] R.B. Adamson, S.B. Wisner, R.P. Tucker, R.A. Rand, in: The Use of Small-Scale Specimens for Testing Irradiated Materials, ASTM STP 888, ASTM, Philadelphia, PA, 1986, p. 171.",
+      "text": "R.B. Adamson, S.B. Wisner, R.P. Tucker, R.A. Rand, in: The Use of Small-Scale Specimens for Testing Irradiated Materials, ASTM STP 888, ASTM, Philadelphia, PA, 1986, p. 171.",
+      "enumerated": true,
+      "marker": "[4]"
+    },
+    {
+      "self_ref": "#/texts/121",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 439.2333787200001,
+            "r": 496.80653881999973,
+            "b": 422.16861026719675,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            78
+          ]
+        }
+      ],
+      "orig": "[5] P. Matic, G.C. Kirby, M.I. Jolles, Proc. Roy. Soc. Lond. A 417 (1988) 309.",
+      "text": "P. Matic, G.C. Kirby, M.I. Jolles, Proc. Roy. Soc. Lond. A 417 (1988) 309.",
+      "enumerated": true,
+      "marker": "[5]"
+    },
+    {
+      "self_ref": "#/texts/122",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 419.3341803800001,
+            "r": 496.8942110199999,
+            "b": 382.31362516719673,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            198
+          ]
+        }
+      ],
+      "orig": "[6] P. Delobelle, P. Robinet, P. Bouffioux, P. Geyer, I. Le Pichon, in: Zirconium in the Nuclear Industry: Eleventh International Symposium, ASTM STP 1295, ASTM, West Conshohocken, PA, 1996, p. 373.",
+      "text": "P. Delobelle, P. Robinet, P. Bouffioux, P. Geyer, I. Le Pichon, in: Zirconium in the Nuclear Industry: Eleventh International Symposium, ASTM STP 1295, ASTM, West Conshohocken, PA, 1996, p. 373.",
+      "enumerated": true,
+      "marker": "[6]"
+    },
+    {
+      "self_ref": "#/texts/123",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 379.47919528000006,
+            "r": 491.1724044399998,
+            "b": 372.39232020719675,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            61
+          ]
+        }
+      ],
+      "orig": "[7] A. Considere, in: Ann. Ponts et Chausses 9, 1885, p. 574.",
+      "text": "A. Considere, in: Ann. Ponts et Chausses 9, 1885, p. 574.",
+      "enumerated": true,
+      "marker": "[7]"
+    },
+    {
+      "self_ref": "#/texts/124",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 281.1401,
+            "t": 369.50130190000004,
+            "r": 428.6406062999997,
+            "b": 362.41442682719673,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            42
+          ]
+        }
+      ],
+      "orig": "[8] E.W. Hart, Acta Metall. 15 (1967) 351.",
+      "text": "E.W. Hart, Acta Metall. 15 (1967) 351.",
+      "enumerated": true,
+      "marker": "[8]"
+    }
+  ],
+  "pictures": [
+    {
+      "self_ref": "#/pictures/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/0"
+        },
+        {
+          "$ref": "#/texts/1"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 41.47410583496094,
+            "t": 696.1847229003906,
+            "r": 84.8468246459961,
+            "b": 634.3353576660156,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 87.0,
+          "height": 123.0
+        },
+        "uri": "assets/image_000000_0f8071d7ec9daa72b6c355ebf9c3c66c657a4babe96e630ab7f1ac53105d80c5.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/20"
+        },
+        {
+          "$ref": "#/texts/21"
+        },
+        {
+          "$ref": "#/texts/22"
+        },
+        {
+          "$ref": "#/texts/23"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 382.9655456542969,
+            "t": 689.9517822265625,
+            "r": 497.1261291503906,
+            "b": 621.2164535522461,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 228.0,
+          "height": 138.0
+        },
+        "uri": "assets/image_000001_f929fb861b83e92f1b601abaeb34d8e084fa214c4c1f74ecc6ed074bdc3e023c.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/34"
+        },
+        {
+          "$ref": "#/texts/35"
+        },
+        {
+          "$ref": "#/texts/36"
+        },
+        {
+          "$ref": "#/texts/37"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 47.182777404785156,
+            "t": 153.02996826171875,
+            "r": 261.965576171875,
+            "b": 89.908203125,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/34"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 430.0,
+          "height": 126.0
+        },
+        "uri": "assets/image_000002_953560f86e5d7b373418769554aa52ea007b460c65f8e0aa4e6c0ab3616aeb97.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/46"
+        },
+        {
+          "$ref": "#/texts/47"
+        },
+        {
+          "$ref": "#/texts/48"
+        },
+        {
+          "$ref": "#/texts/49"
+        },
+        {
+          "$ref": "#/texts/50"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 112.61933898925781,
+            "t": 674.1138534545898,
+            "r": 424.0853576660156,
+            "b": 473.078857421875,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/46"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 623.0,
+          "height": 402.0
+        },
+        "uri": "assets/image_000003_0ad69aef8377fe2b69623a5911de4c72bd652ca162084b4c26c445822b4f25a3.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/4",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/58"
+        },
+        {
+          "$ref": "#/texts/59"
+        },
+        {
+          "$ref": "#/texts/60"
+        },
+        {
+          "$ref": "#/texts/61"
+        },
+        {
+          "$ref": "#/texts/62"
+        },
+        {
+          "$ref": "#/texts/63"
+        },
+        {
+          "$ref": "#/texts/64"
+        },
+        {
+          "$ref": "#/texts/65"
+        },
+        {
+          "$ref": "#/texts/66"
+        },
+        {
+          "$ref": "#/texts/67"
+        },
+        {
+          "$ref": "#/texts/68"
+        },
+        {
+          "$ref": "#/texts/69"
+        },
+        {
+          "$ref": "#/texts/70"
+        },
+        {
+          "$ref": "#/texts/71"
+        },
+        {
+          "$ref": "#/texts/72"
+        },
+        {
+          "$ref": "#/texts/73"
+        },
+        {
+          "$ref": "#/texts/74"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 117.13407897949219,
+            "t": 674.4837417602539,
+            "r": 432.0375061035156,
+            "b": 501.7370300292969,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/58"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 630.0,
+          "height": 346.0
+        },
+        "uri": "assets/image_000004_28e95085ce87d042fc42b3d0eb893a242ffcda827fb90ab15825a323d8e3bedf.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/75"
+        },
+        {
+          "$ref": "#/texts/76"
+        },
+        {
+          "$ref": "#/texts/77"
+        },
+        {
+          "$ref": "#/texts/78"
+        },
+        {
+          "$ref": "#/texts/79"
+        },
+        {
+          "$ref": "#/texts/80"
+        },
+        {
+          "$ref": "#/texts/81"
+        },
+        {
+          "$ref": "#/texts/82"
+        },
+        {
+          "$ref": "#/texts/83"
+        },
+        {
+          "$ref": "#/texts/84"
+        },
+        {
+          "$ref": "#/texts/85"
+        },
+        {
+          "$ref": "#/texts/86"
+        },
+        {
+          "$ref": "#/texts/87"
+        },
+        {
+          "$ref": "#/texts/88"
+        },
+        {
+          "$ref": "#/texts/89"
+        },
+        {
+          "$ref": "#/texts/90"
+        },
+        {
+          "$ref": "#/texts/91"
+        },
+        {
+          "$ref": "#/texts/92"
+        },
+        {
+          "$ref": "#/texts/93"
+        },
+        {
+          "$ref": "#/texts/94"
+        },
+        {
+          "$ref": "#/texts/95"
+        },
+        {
+          "$ref": "#/texts/96"
+        },
+        {
+          "$ref": "#/texts/97"
+        },
+        {
+          "$ref": "#/texts/98"
+        },
+        {
+          "$ref": "#/texts/99"
+        },
+        {
+          "$ref": "#/texts/100"
+        },
+        {
+          "$ref": "#/texts/101"
+        },
+        {
+          "$ref": "#/texts/102"
+        },
+        {
+          "$ref": "#/texts/103"
+        },
+        {
+          "$ref": "#/texts/104"
+        },
+        {
+          "$ref": "#/texts/105"
+        },
+        {
+          "$ref": "#/texts/106"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 4,
+          "bbox": {
+            "l": 102.87367248535156,
+            "t": 454.8993225097656,
+            "r": 445.9898986816406,
+            "b": 255.23583984375,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/75"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 686.0,
+          "height": 400.0
+        },
+        "uri": "assets/image_000005_04814da01ca8e505522f9c24f4a8b234185ff315abee63c79a43d0aff31a8153.png"
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/pictures/6",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/111"
+        },
+        {
+          "$ref": "#/texts/112"
+        },
+        {
+          "$ref": "#/texts/113"
+        }
+      ],
+      "content_layer": "body",
+      "label": "picture",
+      "prov": [
+        {
+          "page_no": 5,
+          "bbox": {
+            "l": 42.363197326660156,
+            "t": 674.6997299194336,
+            "r": 256.9160461425781,
+            "b": 518.0044097900391,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/111"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 429.0,
+          "height": 313.0
+        },
+        "uri": "assets/image_000006_6c794b4744e7261bfacdbf9243fb053966225f11ccba6dbb4ff08a97a778cfa2.png"
+      },
+      "annotations": []
+    }
+  ],
+  "tables": [
+    {
+      "self_ref": "#/tables/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/38"
+        }
+      ],
+      "content_layer": "body",
+      "label": "table",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 285.5620422363281,
+            "t": 654.3247528076172,
+            "r": 502.09429931640625,
+            "b": 585.2884826660156,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/38"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "data": {
+        "table_cells": [
+          {
+            "bbox": {
+              "l": 295.0301034,
+              "t": 94.00337702000002,
+              "r": 327.38114519999993,
+              "b": 101.09025209280344,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "Specimen",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 348.8305474399999,
+              "t": 94.00337702000002,
+              "r": 394.16743609999986,
+              "b": 111.0681454728034,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "Gauge length l (mm)",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 402.63417956,
+              "t": 94.00337702000002,
+              "r": 446.96283791999997,
+              "b": 111.0681454728034,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "Gauge width w (mm)",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 456.43542062,
+              "t": 94.00337702000002,
+              "r": 498.03030037999997,
+              "b": 111.0681454728034,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "Fillet radius R (mm)",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 295.0301034,
+              "t": 118.60818143999995,
+              "r": 305.15225739999994,
+              "b": 125.69505651280338,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "1:1",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 348.83134445999997,
+              "t": 118.60818143999995,
+              "r": 356.80154445999995,
+              "b": 125.69505651280338,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 402.63258551999996,
+              "t": 118.60818143999995,
+              "r": 410.60278551999994,
+              "b": 125.69505651280338,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 459.83550793999996,
+              "t": 118.60818143999995,
+              "r": 469.9576619399999,
+              "b": 125.69505651280338,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "7.5",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 295.0301034,
+              "t": 128.5860748199999,
+              "r": 311.2893113999999,
+              "b": 135.67294989280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "3:2A",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 348.8313444599999,
+              "t": 128.5860748199999,
+              "r": 356.8015444599999,
+              "b": 135.67294989280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "15",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 402.6325855199999,
+              "t": 128.5860748199999,
+              "r": 410.6027855199999,
+              "b": 135.67294989280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 459.8355079399999,
+              "t": 128.5860748199999,
+              "r": 463.8206079399999,
+              "b": 135.67294989280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "5",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 295.0301034,
+              "t": 138.56396819999986,
+              "r": 310.46041059999993,
+              "b": 145.6508432728033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "3:2B",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 348.8313444599999,
+              "t": 138.56396819999986,
+              "r": 356.8015444599999,
+              "b": 145.6508432728033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "15",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 402.6325855199999,
+              "t": 138.56396819999986,
+              "r": 410.6027855199999,
+              "b": 145.6508432728033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 459.8355079399999,
+              "t": 138.56396819999986,
+              "r": 469.95766193999987,
+              "b": 145.6508432728033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "7.5",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 295.0301034,
+              "t": 148.54186157999982,
+              "r": 305.15225739999994,
+              "b": 155.62873665280324,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "4:1",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 348.83134445999997,
+              "t": 148.54186157999982,
+              "r": 356.80154445999995,
+              "b": 155.62873665280324,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "40",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 402.63258551999996,
+              "t": 148.54186157999982,
+              "r": 410.60278551999994,
+              "b": 155.62873665280324,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 455.86714535999994,
+              "t": 148.54186157999982,
+              "r": 463.8373453599999,
+              "b": 155.62873665280324,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "10",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          }
+        ],
+        "num_rows": 5,
+        "num_cols": 4,
+        "orientation": "rot_0",
+        "grid": [
+          [
+            {
+              "bbox": {
+                "l": 295.0301034,
+                "t": 94.00337702000002,
+                "r": 327.38114519999993,
+                "b": 101.09025209280344,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "Specimen",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 348.8305474399999,
+                "t": 94.00337702000002,
+                "r": 394.16743609999986,
+                "b": 111.0681454728034,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "Gauge length l (mm)",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 402.63417956,
+                "t": 94.00337702000002,
+                "r": 446.96283791999997,
+                "b": 111.0681454728034,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "Gauge width w (mm)",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 456.43542062,
+                "t": 94.00337702000002,
+                "r": 498.03030037999997,
+                "b": 111.0681454728034,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "Fillet radius R (mm)",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 295.0301034,
+                "t": 118.60818143999995,
+                "r": 305.15225739999994,
+                "b": 125.69505651280338,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "1:1",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 348.83134445999997,
+                "t": 118.60818143999995,
+                "r": 356.80154445999995,
+                "b": 125.69505651280338,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 402.63258551999996,
+                "t": 118.60818143999995,
+                "r": 410.60278551999994,
+                "b": 125.69505651280338,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 459.83550793999996,
+                "t": 118.60818143999995,
+                "r": 469.9576619399999,
+                "b": 125.69505651280338,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "7.5",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 295.0301034,
+                "t": 128.5860748199999,
+                "r": 311.2893113999999,
+                "b": 135.67294989280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "3:2A",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 348.8313444599999,
+                "t": 128.5860748199999,
+                "r": 356.8015444599999,
+                "b": 135.67294989280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "15",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 402.6325855199999,
+                "t": 128.5860748199999,
+                "r": 410.6027855199999,
+                "b": 135.67294989280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 459.8355079399999,
+                "t": 128.5860748199999,
+                "r": 463.8206079399999,
+                "b": 135.67294989280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "5",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 295.0301034,
+                "t": 138.56396819999986,
+                "r": 310.46041059999993,
+                "b": 145.6508432728033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "3:2B",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 348.8313444599999,
+                "t": 138.56396819999986,
+                "r": 356.8015444599999,
+                "b": 145.6508432728033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "15",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 402.6325855199999,
+                "t": 138.56396819999986,
+                "r": 410.6027855199999,
+                "b": 145.6508432728033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 459.8355079399999,
+                "t": 138.56396819999986,
+                "r": 469.95766193999987,
+                "b": 145.6508432728033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "7.5",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 295.0301034,
+                "t": 148.54186157999982,
+                "r": 305.15225739999994,
+                "b": 155.62873665280324,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "4:1",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 348.83134445999997,
+                "t": 148.54186157999982,
+                "r": 356.80154445999995,
+                "b": 155.62873665280324,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "40",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 402.63258551999996,
+                "t": 148.54186157999982,
+                "r": 410.60278551999994,
+                "b": 155.62873665280324,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 455.86714535999994,
+                "t": 148.54186157999982,
+                "r": 463.8373453599999,
+                "b": 155.62873665280324,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "10",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ]
+        ]
+      },
+      "annotations": []
+    },
+    {
+      "self_ref": "#/tables/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/51"
+        }
+      ],
+      "content_layer": "body",
+      "label": "table",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 41.66012954711914,
+            "t": 410.1239318847656,
+            "r": 496.9412841796875,
+            "b": 349.71142578125,
+            "coord_origin": "BOTTOMLEFT"
+          },
+          "charspan": [
+            0,
+            0
+          ]
+        }
+      ],
+      "captions": [
+        {
+          "$ref": "#/texts/51"
+        }
+      ],
+      "references": [],
+      "footnotes": [],
+      "data": {
+        "table_cells": [
+          {
+            "bbox": {
+              "l": 51.023903399999995,
+              "t": 338.46317702000005,
+              "r": 85.200121,
+              "b": 345.55005209280336,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "Geometry",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 126.76551101999999,
+              "t": 338.57475982,
+              "r": 133.721,
+              "b": 346.23326992217574,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "r y",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 202.4503,
+              "t": 338.6624276,
+              "r": 212.99712588000003,
+              "b": 346.23326992217574,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "S uts",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 278.192,
+              "t": 338.57475539999996,
+              "r": 299.20945959999995,
+              "b": 346.23326992217574,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "e uniform",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 353.8771,
+              "t": 338.22406659999996,
+              "r": 411.72048608000006,
+              "b": 347.2537699221757,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 4,
+            "end_col_offset_idx": 5,
+            "text": "n ¼ ½ dln r = ln e  ave",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 429.6188,
+              "t": 338.4631726,
+              "r": 446.7866108,
+              "b": 345.5500476728033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 0,
+            "end_row_offset_idx": 1,
+            "start_col_offset_idx": 5,
+            "end_col_offset_idx": 6,
+            "text": "%EL",
+            "column_header": true,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 51.02234470000002,
+              "t": 353.14667206,
+              "r": 61.14449870000003,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "1:1",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 126.76395232000003,
+              "t": 353.14667206,
+              "r": 158.01510652,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "446 MPa",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 202.4481745,
+              "t": 353.14667206,
+              "r": 233.28487829999995,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "488 Mpa",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 278.18898509999997,
+              "t": 353.14667206,
+              "r": 296.2813390999999,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "0.105",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 353.8732072799999,
+              "t": 353.14667206,
+              "r": 371.96556127999986,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 4,
+            "end_col_offset_idx": 5,
+            "text": "0.090",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 429.6148148999999,
+              "t": 353.14667206,
+              "r": 437.58501489999986,
+              "b": 360.2335471328033,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 1,
+            "end_row_offset_idx": 2,
+            "start_col_offset_idx": 5,
+            "end_col_offset_idx": 6,
+            "text": "59",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 51.02234470000002,
+              "t": 363.12456544,
+              "r": 67.28155270000003,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "3:2A",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 126.76395232000004,
+              "t": 363.12456544,
+              "r": 138.71925232,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "448",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 202.44897152000001,
+              "t": 363.12456544,
+              "r": 214.40427151999998,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "482",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 278.19057913999995,
+              "t": 363.12456544,
+              "r": 296.2829331399999,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "0.076",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 353.8748013199999,
+              "t": 363.12456544,
+              "r": 371.96715531999985,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 4,
+            "end_col_offset_idx": 5,
+            "text": "0.081",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 429.61640893999987,
+              "t": 363.12456544,
+              "r": 437.58660893999985,
+              "b": 370.21144051280334,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 2,
+            "end_row_offset_idx": 3,
+            "start_col_offset_idx": 5,
+            "end_col_offset_idx": 6,
+            "text": "37",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 51.02234470000002,
+              "t": 373.10245882000004,
+              "r": 66.45265190000003,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "3:2B",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 126.76395232000004,
+              "t": 373.10245882000004,
+              "r": 138.71925232,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "450",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 202.44897152000001,
+              "t": 373.10245882000004,
+              "r": 214.40427151999998,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "483",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 278.19057913999995,
+              "t": 373.10245882000004,
+              "r": 296.2829331399999,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "0.088",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 353.8748013199999,
+              "t": 373.10245882000004,
+              "r": 371.96715531999985,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 4,
+            "end_col_offset_idx": 5,
+            "text": "0.084",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 429.61640893999987,
+              "t": 373.10245882000004,
+              "r": 437.58660893999985,
+              "b": 380.18933389280335,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 3,
+            "end_row_offset_idx": 4,
+            "start_col_offset_idx": 5,
+            "end_col_offset_idx": 6,
+            "text": "44",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 51.02234470000002,
+              "t": 383.02376378,
+              "r": 61.14449870000003,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 0,
+            "end_col_offset_idx": 1,
+            "text": "4:1",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 126.76395232000003,
+              "t": 383.02376378,
+              "r": 138.71925232,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 1,
+            "end_col_offset_idx": 2,
+            "text": "469",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 202.44897152000001,
+              "t": 383.02376378,
+              "r": 214.40427151999998,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 2,
+            "end_col_offset_idx": 3,
+            "text": "488",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 278.19057913999995,
+              "t": 383.02376378,
+              "r": 296.2829331399999,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 3,
+            "end_col_offset_idx": 4,
+            "text": "0.088",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 353.8748013199999,
+              "t": 383.02376378,
+              "r": 371.96715531999985,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 4,
+            "end_col_offset_idx": 5,
+            "text": "0.080",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          },
+          {
+            "bbox": {
+              "l": 429.61640893999987,
+              "t": 383.02376378,
+              "r": 437.58660893999985,
+              "b": 390.11063885280333,
+              "coord_origin": "TOPLEFT"
+            },
+            "row_span": 1,
+            "col_span": 1,
+            "start_row_offset_idx": 4,
+            "end_row_offset_idx": 5,
+            "start_col_offset_idx": 5,
+            "end_col_offset_idx": 6,
+            "text": "28",
+            "column_header": false,
+            "row_header": false,
+            "row_section": false,
+            "fillable": false
+          }
+        ],
+        "num_rows": 5,
+        "num_cols": 6,
+        "orientation": "rot_0",
+        "grid": [
+          [
+            {
+              "bbox": {
+                "l": 51.023903399999995,
+                "t": 338.46317702000005,
+                "r": 85.200121,
+                "b": 345.55005209280336,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "Geometry",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 126.76551101999999,
+                "t": 338.57475982,
+                "r": 133.721,
+                "b": 346.23326992217574,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "r y",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 202.4503,
+                "t": 338.6624276,
+                "r": 212.99712588000003,
+                "b": 346.23326992217574,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "S uts",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 278.192,
+                "t": 338.57475539999996,
+                "r": 299.20945959999995,
+                "b": 346.23326992217574,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "e uniform",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 353.8771,
+                "t": 338.22406659999996,
+                "r": 411.72048608000006,
+                "b": 347.2537699221757,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 4,
+              "end_col_offset_idx": 5,
+              "text": "n ¼ ½ dln r = ln e  ave",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 429.6188,
+                "t": 338.4631726,
+                "r": 446.7866108,
+                "b": 345.5500476728033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 0,
+              "end_row_offset_idx": 1,
+              "start_col_offset_idx": 5,
+              "end_col_offset_idx": 6,
+              "text": "%EL",
+              "column_header": true,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 51.02234470000002,
+                "t": 353.14667206,
+                "r": 61.14449870000003,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "1:1",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 126.76395232000003,
+                "t": 353.14667206,
+                "r": 158.01510652,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "446 MPa",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 202.4481745,
+                "t": 353.14667206,
+                "r": 233.28487829999995,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "488 Mpa",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 278.18898509999997,
+                "t": 353.14667206,
+                "r": 296.2813390999999,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "0.105",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 353.8732072799999,
+                "t": 353.14667206,
+                "r": 371.96556127999986,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 4,
+              "end_col_offset_idx": 5,
+              "text": "0.090",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 429.6148148999999,
+                "t": 353.14667206,
+                "r": 437.58501489999986,
+                "b": 360.2335471328033,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 1,
+              "end_row_offset_idx": 2,
+              "start_col_offset_idx": 5,
+              "end_col_offset_idx": 6,
+              "text": "59",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 51.02234470000002,
+                "t": 363.12456544,
+                "r": 67.28155270000003,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "3:2A",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 126.76395232000004,
+                "t": 363.12456544,
+                "r": 138.71925232,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "448",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 202.44897152000001,
+                "t": 363.12456544,
+                "r": 214.40427151999998,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "482",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 278.19057913999995,
+                "t": 363.12456544,
+                "r": 296.2829331399999,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "0.076",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 353.8748013199999,
+                "t": 363.12456544,
+                "r": 371.96715531999985,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 4,
+              "end_col_offset_idx": 5,
+              "text": "0.081",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 429.61640893999987,
+                "t": 363.12456544,
+                "r": 437.58660893999985,
+                "b": 370.21144051280334,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 2,
+              "end_row_offset_idx": 3,
+              "start_col_offset_idx": 5,
+              "end_col_offset_idx": 6,
+              "text": "37",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 51.02234470000002,
+                "t": 373.10245882000004,
+                "r": 66.45265190000003,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "3:2B",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 126.76395232000004,
+                "t": 373.10245882000004,
+                "r": 138.71925232,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "450",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 202.44897152000001,
+                "t": 373.10245882000004,
+                "r": 214.40427151999998,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "483",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 278.19057913999995,
+                "t": 373.10245882000004,
+                "r": 296.2829331399999,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "0.088",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 353.8748013199999,
+                "t": 373.10245882000004,
+                "r": 371.96715531999985,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 4,
+              "end_col_offset_idx": 5,
+              "text": "0.084",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 429.61640893999987,
+                "t": 373.10245882000004,
+                "r": 437.58660893999985,
+                "b": 380.18933389280335,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 3,
+              "end_row_offset_idx": 4,
+              "start_col_offset_idx": 5,
+              "end_col_offset_idx": 6,
+              "text": "44",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ],
+          [
+            {
+              "bbox": {
+                "l": 51.02234470000002,
+                "t": 383.02376378,
+                "r": 61.14449870000003,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 0,
+              "end_col_offset_idx": 1,
+              "text": "4:1",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 126.76395232000003,
+                "t": 383.02376378,
+                "r": 138.71925232,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 1,
+              "end_col_offset_idx": 2,
+              "text": "469",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 202.44897152000001,
+                "t": 383.02376378,
+                "r": 214.40427151999998,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 2,
+              "end_col_offset_idx": 3,
+              "text": "488",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 278.19057913999995,
+                "t": 383.02376378,
+                "r": 296.2829331399999,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 3,
+              "end_col_offset_idx": 4,
+              "text": "0.088",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 353.8748013199999,
+                "t": 383.02376378,
+                "r": 371.96715531999985,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 4,
+              "end_col_offset_idx": 5,
+              "text": "0.080",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            },
+            {
+              "bbox": {
+                "l": 429.61640893999987,
+                "t": 383.02376378,
+                "r": 437.58660893999985,
+                "b": 390.11063885280333,
+                "coord_origin": "TOPLEFT"
+              },
+              "row_span": 1,
+              "col_span": 1,
+              "start_row_offset_idx": 4,
+              "end_row_offset_idx": 5,
+              "start_col_offset_idx": 5,
+              "end_col_offset_idx": 6,
+              "text": "28",
+              "column_header": false,
+              "row_header": false,
+              "row_section": false,
+              "fillable": false
+            }
+          ]
+        ]
+      },
+      "annotations": []
+    }
+  ],
+  "key_value_items": [],
+  "form_items": [],
+  "pages": {
+    "1": {
+      "size": {
+        "width": 544.0,
+        "height": 743.0
+      },
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 1088.0,
+          "height": 1486.0
+        },
+        "uri": "assets/page_000001_2f3d4d4fbeb53b6ae26f54d4e6a95965f5180c3fcb7b89156736759239cd56c2.png"
+      },
+      "page_no": 1
+    },
+    "2": {
+      "size": {
+        "width": 544.0,
+        "height": 743.0
+      },
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 1088.0,
+          "height": 1486.0
+        },
+        "uri": "assets/page_000002_dcc4f1aaea0dd71f0139af33220040e1336dd24c1b5d130e6fe5b2b5c4591daf.png"
+      },
+      "page_no": 2
+    },
+    "3": {
+      "size": {
+        "width": 544.0,
+        "height": 743.0
+      },
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 1088.0,
+          "height": 1486.0
+        },
+        "uri": "assets/page_000003_c9ce584df3fac0936f3810300905a077c87bfeaeebfcfb8cb3c10baf484170ae.png"
+      },
+      "page_no": 3
+    },
+    "4": {
+      "size": {
+        "width": 544.0,
+        "height": 743.0
+      },
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 1088.0,
+          "height": 1486.0
+        },
+        "uri": "assets/page_000004_c3f30f01415d906d8d3ae368d07b12a6d66c5d27a218ce7eb394f0980cc601db.png"
+      },
+      "page_no": 4
+    },
+    "5": {
+      "size": {
+        "width": 544.0,
+        "height": 743.0
+      },
+      "image": {
+        "mimetype": "image/png",
+        "dpi": 144,
+        "size": {
+          "width": 1088.0,
+          "height": 1486.0
+        },
+        "uri": "assets/page_000005_7d2fb64fc363a3621b9107fcc0d6564913f59bc8d5bf87937edca1ea1461a03e.png"
+      },
+      "page_no": 5
+    }
+  }
+}

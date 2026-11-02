@@ -1,0 +1,574 @@
+{
+  "status": "all_23_pdfs_technically_verified",
+  "verified_at_utc": "2026-11-01T04:51:03.762215+00:00",
+  "bucket": "papers",
+  "prefix": "tensile_papers/",
+  "total_papers": 23,
+  "newly_processed": 22,
+  "reused_papers": [
+    "9.pdf"
+  ],
+  "pages": 237,
+  "elements": 3047,
+  "elements_by_type": {
+    "picture": 298,
+    "text": 1237,
+    "section_header": 356,
+    "list_item": 709,
+    "footnote": 40,
+    "caption": 273,
+    "table": 60,
+    "formula": 74
+  },
+  "lock_sha256": "b2068f7e5fb87b498b9a76f10150d314cdfbf1eafe33b993c696685f4c26dd2a",
+  "records": [
+    {
+      "name": "1.pdf",
+      "sha256": "ad5a5d94c1289245763182e7470d7cfec44eb24c51f2c838585586d6be6a2f5e",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/ad5a5d94c1289245763182e7470d7cfec44eb24c51f2c838585586d6be6a2f5e",
+      "metrics": {
+        "pages": 11,
+        "elements": 196,
+        "by_type": {
+          "picture": 12,
+          "text": 77,
+          "section_header": 19,
+          "list_item": 64,
+          "footnote": 5,
+          "caption": 14,
+          "table": 5
+        }
+      },
+      "original_png_files": 35,
+      "png_files": 23
+    },
+    {
+      "name": "2.pdf",
+      "sha256": "0008cb250c34904d0dd9297a2f260113d911c0e68ed5e86a854d87586c0fd12e",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/0008cb250c34904d0dd9297a2f260113d911c0e68ed5e86a854d87586c0fd12e",
+      "metrics": {
+        "pages": 5,
+        "elements": 60,
+        "by_type": {
+          "picture": 7,
+          "text": 23,
+          "section_header": 9,
+          "footnote": 1,
+          "caption": 7,
+          "table": 2,
+          "list_item": 11
+        }
+      },
+      "original_png_files": 19,
+      "png_files": 12
+    },
+    {
+      "name": "3.pdf",
+      "sha256": "1c551f5b6a2e8e0d53a11de6094e2796204921f2efd9c7e6ad601cd8617a1558",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/1c551f5b6a2e8e0d53a11de6094e2796204921f2efd9c7e6ad601cd8617a1558",
+      "metrics": {
+        "pages": 20,
+        "elements": 147,
+        "by_type": {
+          "section_header": 20,
+          "picture": 17,
+          "text": 62,
+          "footnote": 4,
+          "table": 2,
+          "caption": 11,
+          "list_item": 31
+        }
+      },
+      "original_png_files": 54,
+      "png_files": 37
+    },
+    {
+      "name": "4.pdf",
+      "sha256": "ddc9d40cd1b63f436e16a9bc0852272199d161d4f23ca806d006c20986e3153a",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/ddc9d40cd1b63f436e16a9bc0852272199d161d4f23ca806d006c20986e3153a",
+      "metrics": {
+        "pages": 4,
+        "elements": 74,
+        "by_type": {
+          "picture": 9,
+          "text": 29,
+          "section_header": 11,
+          "footnote": 2,
+          "caption": 7,
+          "list_item": 16
+        }
+      },
+      "original_png_files": 22,
+      "png_files": 13
+    },
+    {
+      "name": "5.pdf",
+      "sha256": "85cf88e52b1f31489ecfe0f951046d63fab68faba8a7548ba9d9321f0d272284",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/85cf88e52b1f31489ecfe0f951046d63fab68faba8a7548ba9d9321f0d272284",
+      "metrics": {
+        "pages": 6,
+        "elements": 62,
+        "by_type": {
+          "picture": 11,
+          "section_header": 12,
+          "text": 22,
+          "footnote": 1,
+          "caption": 8,
+          "table": 1,
+          "list_item": 7
+        }
+      },
+      "original_png_files": 28,
+      "png_files": 17
+    },
+    {
+      "name": "7.pdf",
+      "sha256": "098cd5413f772bdfe278a8a53c68d6d2e3451872a180418414e61f90310c4ab2",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/098cd5413f772bdfe278a8a53c68d6d2e3451872a180418414e61f90310c4ab2",
+      "metrics": {
+        "pages": 9,
+        "elements": 116,
+        "by_type": {
+          "picture": 19,
+          "text": 32,
+          "section_header": 11,
+          "list_item": 30,
+          "footnote": 2,
+          "caption": 18,
+          "table": 2,
+          "formula": 2
+        }
+      },
+      "original_png_files": 47,
+      "png_files": 28
+    },
+    {
+      "name": "8.pdf",
+      "sha256": "e3c7bbcae390f84f794306d7e28288a45247fe8c469f0e9877eb9275b32dccaa",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/e3c7bbcae390f84f794306d7e28288a45247fe8c469f0e9877eb9275b32dccaa",
+      "metrics": {
+        "pages": 11,
+        "elements": 118,
+        "by_type": {
+          "section_header": 19,
+          "picture": 18,
+          "text": 48,
+          "footnote": 7,
+          "caption": 14,
+          "table": 2,
+          "list_item": 10
+        }
+      },
+      "original_png_files": 47,
+      "png_files": 29
+    },
+    {
+      "name": "9.pdf",
+      "sha256": "d303ac3b3a920fc58975a41dbe291886e9844fa8396ae6bd5f32c3be98aaed91",
+      "status": "verified",
+      "reused": true,
+      "result_directory": "results/20261101T023303Z-c8235a43-portable-v1/papers/d303ac3b3a920fc58975a41dbe291886e9844fa8396ae6bd5f32c3be98aaed91",
+      "metrics": {
+        "pages": 9,
+        "elements": 94,
+        "by_type": {
+          "section_header": 17,
+          "text": 37,
+          "list_item": 17,
+          "table": 3,
+          "caption": 11,
+          "picture": 8,
+          "formula": 1
+        }
+      },
+      "original_png_files": 25,
+      "png_files": 17
+    },
+    {
+      "name": "10.pdf",
+      "sha256": "2e20d741280268286c011738feee7b88d430b9ffb389dce865621291e6252d6f",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/2e20d741280268286c011738feee7b88d430b9ffb389dce865621291e6252d6f",
+      "metrics": {
+        "pages": 14,
+        "elements": 172,
+        "by_type": {
+          "picture": 17,
+          "section_header": 19,
+          "text": 66,
+          "footnote": 2,
+          "list_item": 45,
+          "table": 4,
+          "caption": 16,
+          "formula": 3
+        }
+      },
+      "original_png_files": 48,
+      "png_files": 31
+    },
+    {
+      "name": "11.pdf",
+      "sha256": "7b89c307d8ff74976003ab3b335484b8f3546f8891e0ef242bae009524e6386f",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/7b89c307d8ff74976003ab3b335484b8f3546f8891e0ef242bae009524e6386f",
+      "metrics": {
+        "pages": 11,
+        "elements": 110,
+        "by_type": {
+          "picture": 20,
+          "text": 35,
+          "section_header": 19,
+          "caption": 16,
+          "list_item": 14,
+          "table": 3,
+          "formula": 3
+        }
+      },
+      "original_png_files": 51,
+      "png_files": 31
+    },
+    {
+      "name": "12.pdf",
+      "sha256": "118678ea043758d2833d7c71be400fd5b426dae7e0f1eef1f6bdacd4e6e20428",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/118678ea043758d2833d7c71be400fd5b426dae7e0f1eef1f6bdacd4e6e20428",
+      "metrics": {
+        "pages": 9,
+        "elements": 111,
+        "by_type": {
+          "section_header": 20,
+          "picture": 19,
+          "text": 38,
+          "list_item": 20,
+          "table": 4,
+          "caption": 10
+        }
+      },
+      "original_png_files": 47,
+      "png_files": 25
+    },
+    {
+      "name": "13.pdf",
+      "sha256": "22ceb547b41a34045b900a8ee71bc4866f5b26047dd11e6d41d02a17f163150c",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/22ceb547b41a34045b900a8ee71bc4866f5b26047dd11e6d41d02a17f163150c",
+      "metrics": {
+        "pages": 7,
+        "elements": 98,
+        "by_type": {
+          "section_header": 14,
+          "text": 47,
+          "picture": 8,
+          "list_item": 20,
+          "footnote": 1,
+          "caption": 5,
+          "table": 1,
+          "formula": 2
+        }
+      },
+      "original_png_files": 23,
+      "png_files": 15
+    },
+    {
+      "name": "14.pdf",
+      "sha256": "e8757a86514f31c0bd22457ffe9a846e29b9ba141d418ef66839a2f1e7a5db8a",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/e8757a86514f31c0bd22457ffe9a846e29b9ba141d418ef66839a2f1e7a5db8a",
+      "metrics": {
+        "pages": 7,
+        "elements": 79,
+        "by_type": {
+          "section_header": 10,
+          "text": 32,
+          "picture": 6,
+          "footnote": 4,
+          "formula": 2,
+          "caption": 4,
+          "list_item": 21
+        }
+      },
+      "original_png_files": 19,
+      "png_files": 13
+    },
+    {
+      "name": "15.pdf",
+      "sha256": "442e146a134b81288e61f12e213ec6ed2456b3abdfcba9122b084e3b25bf0ac2",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/442e146a134b81288e61f12e213ec6ed2456b3abdfcba9122b084e3b25bf0ac2",
+      "metrics": {
+        "pages": 10,
+        "elements": 231,
+        "by_type": {
+          "picture": 15,
+          "text": 151,
+          "section_header": 9,
+          "list_item": 38,
+          "caption": 15,
+          "table": 3
+        }
+      },
+      "original_png_files": 40,
+      "png_files": 25
+    },
+    {
+      "name": "16.pdf",
+      "sha256": "b5b5c9e7b971d2f1d8e366b97f7717a5d888b534e25be52533403087721f0f76",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/b5b5c9e7b971d2f1d8e366b97f7717a5d888b534e25be52533403087721f0f76",
+      "metrics": {
+        "pages": 12,
+        "elements": 186,
+        "by_type": {
+          "picture": 14,
+          "text": 52,
+          "section_header": 21,
+          "list_item": 82,
+          "footnote": 1,
+          "table": 2,
+          "caption": 12,
+          "formula": 2
+        }
+      },
+      "original_png_files": 40,
+      "png_files": 26
+    },
+    {
+      "name": "17.pdf",
+      "sha256": "fd3e0f7f11ae46ce1073703275b6e68e256a4e620206b40881ec4d6f761ed68b",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/fd3e0f7f11ae46ce1073703275b6e68e256a4e620206b40881ec4d6f761ed68b",
+      "metrics": {
+        "pages": 10,
+        "elements": 105,
+        "by_type": {
+          "section_header": 9,
+          "text": 48,
+          "list_item": 15,
+          "picture": 10,
+          "caption": 15,
+          "table": 6,
+          "formula": 2
+        }
+      },
+      "original_png_files": 30,
+      "png_files": 20
+    },
+    {
+      "name": "18.pdf",
+      "sha256": "ea96c73a192bbabc4c31e21e0ed7835fcaded6defaf90fb514cbd911023795e5",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/ea96c73a192bbabc4c31e21e0ed7835fcaded6defaf90fb514cbd911023795e5",
+      "metrics": {
+        "pages": 11,
+        "elements": 69,
+        "by_type": {
+          "section_header": 11,
+          "picture": 12,
+          "text": 21,
+          "footnote": 1,
+          "caption": 11,
+          "table": 1,
+          "list_item": 12
+        }
+      },
+      "original_png_files": 35,
+      "png_files": 23
+    },
+    {
+      "name": "19.pdf",
+      "sha256": "5548f655bf12e3714b1511f0f2d0e413042dfdf526697994cf7d398bfdf465b9",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/5548f655bf12e3714b1511f0f2d0e413042dfdf526697994cf7d398bfdf465b9",
+      "metrics": {
+        "pages": 18,
+        "elements": 163,
+        "by_type": {
+          "section_header": 16,
+          "text": 65,
+          "picture": 14,
+          "caption": 17,
+          "table": 4,
+          "formula": 3,
+          "list_item": 44
+        }
+      },
+      "original_png_files": 46,
+      "png_files": 32
+    },
+    {
+      "name": "20.pdf",
+      "sha256": "9e860ea7a4b3fc1b1436d00600871ce595c7a178e3e1c6dbf1dc803b8cc853b7",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/9e860ea7a4b3fc1b1436d00600871ce595c7a178e3e1c6dbf1dc803b8cc853b7",
+      "metrics": {
+        "pages": 5,
+        "elements": 48,
+        "by_type": {
+          "section_header": 8,
+          "text": 18,
+          "table": 1,
+          "caption": 7,
+          "picture": 4,
+          "list_item": 10
+        }
+      },
+      "original_png_files": 13,
+      "png_files": 9
+    },
+    {
+      "name": "21.pdf",
+      "sha256": "b7ce9a68d18442652b13911833cc60dd37184c9e6fe6cc7a3d7d9054ec9b13d4",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/b7ce9a68d18442652b13911833cc60dd37184c9e6fe6cc7a3d7d9054ec9b13d4",
+      "metrics": {
+        "pages": 11,
+        "elements": 197,
+        "by_type": {
+          "picture": 14,
+          "text": 73,
+          "section_header": 28,
+          "footnote": 5,
+          "table": 2,
+          "caption": 13,
+          "formula": 28,
+          "list_item": 34
+        }
+      },
+      "original_png_files": 39,
+      "png_files": 25
+    },
+    {
+      "name": "22.pdf",
+      "sha256": "758f4650126e473d5c8862461eb2920d79e2d938da80258843ff18354e0bd97d",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/758f4650126e473d5c8862461eb2920d79e2d938da80258843ff18354e0bd97d",
+      "metrics": {
+        "pages": 10,
+        "elements": 194,
+        "by_type": {
+          "picture": 16,
+          "section_header": 19,
+          "text": 73,
+          "list_item": 49,
+          "footnote": 2,
+          "table": 4,
+          "caption": 15,
+          "formula": 16
+        }
+      },
+      "original_png_files": 42,
+      "png_files": 26
+    },
+    {
+      "name": "23.pdf",
+      "sha256": "7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/7d9f32f641d8bc3f9753c4bfc8bdef9d2670c999ae1a00fc2930e2022d8288af",
+      "metrics": {
+        "pages": 14,
+        "elements": 245,
+        "by_type": {
+          "picture": 13,
+          "text": 134,
+          "section_header": 13,
+          "list_item": 68,
+          "table": 5,
+          "caption": 12
+        }
+      },
+      "original_png_files": 40,
+      "png_files": 27
+    },
+    {
+      "name": "24.pdf",
+      "sha256": "b4299b070792c260ed87a8f72f94e0ef6c500240ebae705e2f54b5d57bbe005e",
+      "status": "verified",
+      "reused": false,
+      "result_directory": "results/20261101T041027Z-a3424b13-local-verified/papers/b4299b070792c260ed87a8f72f94e0ef6c500240ebae705e2f54b5d57bbe005e",
+      "metrics": {
+        "pages": 13,
+        "elements": 172,
+        "by_type": {
+          "section_header": 22,
+          "picture": 15,
+          "text": 54,
+          "footnote": 2,
+          "table": 3,
+          "caption": 15,
+          "formula": 10,
+          "list_item": 51
+        }
+      },
+      "original_png_files": 43,
+      "png_files": 28
+    }
+  ],
+  "sessions": [
+    {
+      "session": "baseline-20261101t021436z-52a16371",
+      "closed": true
+    },
+    {
+      "session": "baseline-20261101t021528z-65bf2557",
+      "closed": true
+    },
+    {
+      "session": "baseline-20261101t021636z-4b6c7866",
+      "closed": true
+    },
+    {
+      "session": "baseline-20261101t023303z-c8235a43",
+      "closed": true
+    },
+    {
+      "session": "baseline-20261101t041027z-a3424b13",
+      "closed": true
+    }
+  ],
+  "owned_sessions_open": 0,
+  "current_batch_session": "baseline-20261101t041027z-a3424b13",
+  "notes": [
+    "Full result transport verified by SHA256 and per-file manifests.",
+    "Native local extraction used after WSL I/O delay; original local extraction remains incomplete evidence, not the approved result directory.",
+    "Current own WSL controller stopped only after full independent backup verification and confirmed A100 closure.",
+    "First order-audit assumption corrected to match Docling Core captions references; no document modified or inference repeated.",
+    "Semantic accuracy and exhaustive visual QA remain unmeasured."
+  ],
+  "historical_receipt": "../../history/baseline-reorganization-20261102T000522Z/before/baseline/runtime/collection-validation.json",
+  "original_png_files_verified": 833,
+  "png_files": 532,
+  "storage_migration": {
+    "id": "baseline-reorganization-20261102T000522Z",
+    "verification": "../../history/baseline-reorganization-20261102T000522Z/verification.json",
+    "inference_repeated": false,
+    "removed_duplicate_pngs": 301
+  }
+}

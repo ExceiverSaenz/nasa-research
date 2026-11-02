@@ -1,0 +1,117 @@
+{
+  "schema": "baseline-asset-deduplication/1",
+  "inference_repeated": false,
+  "source_directory": "../../../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T041027Z-a3424b13-local-verified/papers/e3c7bbcae390f84f794306d7e28288a45247fe8c469f0e9877eb9275b32dccaa",
+  "source_files_manifest_sha256": "a0fd997c127fa254e57d3e891663b4627de686d754a01275da18261a2821107b",
+  "aliases": [
+    {
+      "path": "assets/figure-0001.png",
+      "reference": "assets/image_000000_cb80b70b8456d1a313159fdcb5efaf9926dcc4c0af23ab772f6750d85a60ded7.png",
+      "sha256": "512e38d863e23817e3671d0180b309b6f45ff4690c7aba0934bb57323b194d75",
+      "bytes": 157320
+    },
+    {
+      "path": "assets/figure-0002.png",
+      "reference": "assets/image_000001_febe1d1c14855df8a14206f3365e02c1bd7d22d37e82994445cdd067e5f83d63.png",
+      "sha256": "684e11790fbf268816dba1872906daab23fe016a4292816f5a3bb1f5fa5a72ec",
+      "bytes": 20994
+    },
+    {
+      "path": "assets/figure-0003.png",
+      "reference": "assets/image_000002_37d52858e8490cf123acbd284f5d122665af6dedb9b3c055f5a2e0ab1aed9ff0.png",
+      "sha256": "144195ac8934139a1d859d954f3dc7883a20f8063f2e9898a3a97550b727dd51",
+      "bytes": 70053
+    },
+    {
+      "path": "assets/figure-0004.png",
+      "reference": "assets/image_000003_8996cd35b7f35044045198edd694ce3a8956b7af696999af6904923f77a15e6c.png",
+      "sha256": "e8d98c0a6b8c883c656d3b2983d03da1b7c1f5d069da041909c5aae46aba9e0c",
+      "bytes": 78906
+    },
+    {
+      "path": "assets/figure-0005.png",
+      "reference": "assets/image_000004_079ee6484351e8314d29f4a36aa2c7381d025df9c4ff69378f232b8baa8364d0.png",
+      "sha256": "eff1e13112c6e73a5091bbbbcd88fe908b64919758e72bc4b12162d7c491b02e",
+      "bytes": 74978
+    },
+    {
+      "path": "assets/figure-0006.png",
+      "reference": "assets/image_000005_1954ec8b8e3138443b6c965f6f7f58ed928f0253e27febf3a27a6815e00fc77d.png",
+      "sha256": "c6b46d8e4fd91a6e2d6b15facbc081147d60ba8440e134e240dc94f4708853eb",
+      "bytes": 128278
+    },
+    {
+      "path": "assets/figure-0007.png",
+      "reference": "assets/image_000006_ab8f355791ebf352155856ed2cbbb7edf5907f8f621f83ab6d0c518a961020b5.png",
+      "sha256": "c260db4c52e8c560b3ebe6e354d068f321c06ebf49cb3f73e9d40f9ca1accb46",
+      "bytes": 100669
+    },
+    {
+      "path": "assets/figure-0008.png",
+      "reference": "assets/image_000007_e2eedc1265f4c0ec69545aee4a40c6c5eac8c29cf2cce96baa8334b99989b32b.png",
+      "sha256": "75cc23eb398b0d76f82349ea22dab894a199651d9c7b755ba5b40b4327071717",
+      "bytes": 118889
+    },
+    {
+      "path": "assets/figure-0009.png",
+      "reference": "assets/image_000008_bab7e48caa8293ad13b4e2a9f3cdbb8219207b7e766d9ec614faec997bfec652.png",
+      "sha256": "b7821c63c847e81342df198015a9b0a53f77785d9aa2c9ee2771088acea62339",
+      "bytes": 124216
+    },
+    {
+      "path": "assets/figure-0010.png",
+      "reference": "assets/image_000009_83e170c485cfb66e6f41d3a11a967055959fff8ad9481ad76a1ad80b662c27a2.png",
+      "sha256": "968684ee11b00e8dabb4e179db33e00c0cf369a99ad2330295f65ae584fe9225",
+      "bytes": 130490
+    },
+    {
+      "path": "assets/figure-0011.png",
+      "reference": "assets/image_000010_3c5cc466672f1d13668dd5a8e936ba0893b5f6c9f43f606cb494e08a91577901.png",
+      "sha256": "20a738637d13ec80c8bab04ee791752fefa38e2ef298dd3bd8b87e395cd3be74",
+      "bytes": 215961
+    },
+    {
+      "path": "assets/figure-0012.png",
+      "reference": "assets/image_000011_1dd56145440d94e92019fb9ba4f1e93798a5610a5ec4c07f60e4255bac405f37.png",
+      "sha256": "57c47a644966ee7ddbfae59b6dc6eb252e25272d477d1a159762d924177dd8cc",
+      "bytes": 124406
+    },
+    {
+      "path": "assets/figure-0013.png",
+      "reference": "assets/image_000012_4e03f1971459ea9da2d51285809f15cf611f284c67a15001c92d89707e3f2ea7.png",
+      "sha256": "a74de7abd3c10aebb8aba3cdc63c1677a7345ed15cde42b318c53f24cd3621aa",
+      "bytes": 96229
+    },
+    {
+      "path": "assets/figure-0014.png",
+      "reference": "assets/image_000013_b4d208b81846da64fa52e35553c5185bc58f3ca77989753c1c586e5ad3cf6194.png",
+      "sha256": "4bfebeaba4f1104951d7921f2934493890b69d07c68e6fe5974dd14585a052a8",
+      "bytes": 308539
+    },
+    {
+      "path": "assets/figure-0015.png",
+      "reference": "assets/image_000014_48e4aaed1e858a41a99f10703e1585d6eaf909dcc7a66acfc93468472140725b.png",
+      "sha256": "df4cfc52321825a75b681d0ba445e1dc865bc0a20cf14876e63bb5189bd78c4a",
+      "bytes": 156047
+    },
+    {
+      "path": "assets/figure-0016.png",
+      "reference": "assets/image_000015_b1b02df6ff59c67a0daec4b5a1905bd6f0536e9161e02b9e92d42d4d7df69899.png",
+      "sha256": "bf93d4a63167c9f7fc5e0465547c4870599a82ff89d1339c8fd8e5abfef3e1f8",
+      "bytes": 166474
+    },
+    {
+      "path": "assets/figure-0017.png",
+      "reference": "assets/image_000016_f8503c13dd1675d61a9fe1dbc97633e09864009c5f5f13d9292fb44fb932f1d2.png",
+      "sha256": "791e2162d57be943c214a9e5821d1776b13b41c6d5fc5244dbe40ad9e007b221",
+      "bytes": 219415
+    },
+    {
+      "path": "assets/figure-0018.png",
+      "reference": "assets/image_000017_da23e12e2a254927e4aaf150198a89e266d9cc9cfa5dda57fce5e12ef47e1743.png",
+      "sha256": "b5d18b714b50b96b9bcce6dec4e388caa202f3646493ab98e34e3d1375e88874",
+      "bytes": 174051
+    }
+  ],
+  "preserved": "Text, order, geometry, associations, model outputs and all distinct image bytes; only image paths and integrity metadata changed."
+}

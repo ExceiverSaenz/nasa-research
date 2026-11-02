@@ -1,0 +1,33 @@
+{
+  "schema": "baseline-asset-deduplication/1",
+  "inference_repeated": false,
+  "source_directory": "../../../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T041027Z-a3424b13-local-verified/papers/9e860ea7a4b3fc1b1436d00600871ce595c7a178e3e1c6dbf1dc803b8cc853b7",
+  "source_files_manifest_sha256": "bf7e84390150dc981ed33803ebcbd525768bf33f7b644af7ee359da77515e989",
+  "aliases": [
+    {
+      "path": "assets/figure-0001.png",
+      "reference": "assets/image_000000_ea2e4aa324921b6576c3bd7c9f43acc1fe9edb6d6e42e39697b3c55436792b3d.png",
+      "sha256": "3db3c6dccf4e0e0445e740c8006a66d4684b6f8e84ac6df8e1411e219789ca2b",
+      "bytes": 210760
+    },
+    {
+      "path": "assets/figure-0002.png",
+      "reference": "assets/image_000001_f985176610d3297fa5d5363b01087658710ac3720cd98db9ab91f1ceae8a474b.png",
+      "sha256": "b0d116445195d112d61009c4db38d36178910c24b5e0e9093a36285f593afa1f",
+      "bytes": 182494
+    },
+    {
+      "path": "assets/figure-0003.png",
+      "reference": "assets/image_000002_10d1facd239b9543f18ca0aa7bd1a51f3ed4c720d94f55e4dc387ec30f90300c.png",
+      "sha256": "c1daa0f2ed9d380c32622ae063417161dd626f68f78d757109ed903af31dd712",
+      "bytes": 31109
+    },
+    {
+      "path": "assets/figure-0004.png",
+      "reference": "assets/image_000003_f9a21c9f3598596f2da27b05c4cf7f89798d8343fa833704e5f5b837a53baf4c.png",
+      "sha256": "e6fe1ee94ec2f6d8ce1be4eabc8ea963ba4e879fae620354ad9633ce84c61de5",
+      "bytes": 27239
+    }
+  ],
+  "preserved": "Text, order, geometry, associations, model outputs and all distinct image bytes; only image paths and integrity metadata changed."
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "baseline-batch/1",
+  "status": "completed",
+  "papers": [
+    {
+      "name": "9.pdf",
+      "key": "tensile_papers/9.pdf",
+      "bytes": 2430060,
+      "sha256": "d303ac3b3a920fc58975a41dbe291886e9844fa8396ae6bd5f32c3be98aaed91",
+      "status": "completed"
+    }
+  ],
+  "configuration": {
+    "schema": "docling-baseline/1",
+    "device": "cuda:0",
+    "do_ocr": true,
+    "ocr_backend": "onnxruntime",
+    "ocr_language": "en",
+    "ocr_device": "cpu",
+    "do_table_structure": true,
+    "table_mode": "accurate",
+    "images_scale": 2.0,
+    "generate_page_images": true,
+    "generate_picture_images": true,
+    "do_formula_enrichment": true,
+    "do_code_enrichment": false,
+    "do_picture_classification": false,
+    "do_picture_description": false
+  }
+}

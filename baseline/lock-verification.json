@@ -1,0 +1,3303 @@
+{
+  "generated_at_utc": "2026-11-01T02:35:05.660549+00:00",
+  "resolver": "uv 0.12.21 (7af826859 2026-09-29 x86_64-pc-windows-msvc)",
+  "target": {
+    "implementation": "CPython",
+    "python": "3.11.16",
+    "platform": "x86_64-manylinux_2_28"
+  },
+  "input_sha256": "530051f3fdfe94d899e739a8def8a9b24a5829ca0ecb85563660414bfba43c66",
+  "lock_sha256": "b2068f7e5fb87b498b9a76f10150d314cdfbf1eafe33b993c696685f4c26dd2a",
+  "package_count": 121,
+  "hash_count": 1911,
+  "pypi_metadata_edges_verified": 196,
+  "offline_constrained_resolution_identical": true,
+  "builds_performed": false,
+  "packages_installed": false,
+  "colab_sessions_started": false,
+  "a100_validation": "passed_9.pdf_runtime_and_export_integrity",
+  "limitations": [
+    "Hashes compared to publisher metadata; distribution bytes were not independently downloaded and hashed.",
+    "Direct Torch/torchvision wheel dependencies checked by uv resolution, not by this independent PyPI audit.",
+    "No imports, ABI, system libraries, GPU execution or model weights validated."
+  ],
+  "packages": {
+    "accelerate": {
+      "source": "https://pypi.org/pypi/accelerate/1.15.0/json",
+      "metadata_sha256": "72df5a25c2aaa301042570b013c71113157d476719772fd1d1958e08a506f529",
+      "kind": "pypi",
+      "version": "1.15.0",
+      "requires_python": ">=3.10.0",
+      "requires_dist": [
+        "numpy>=1.17",
+        "packaging>=20.0",
+        "psutil",
+        "pyyaml",
+        "torch>=2.0.0",
+        "huggingface_hub>=0.21.0",
+        "safetensors>=0.4.3",
+        "ruff==0.13.1; extra == \"quality\"",
+        "pytest>=7.2.0; extra == \"test-prod\"",
+        "pytest-xdist; extra == \"test-prod\"",
+        "pytest-subtests; extra == \"test-prod\"",
+        "parameterized; extra == \"test-prod\"",
+        "pytest-order; extra == \"test-prod\"",
+        "datasets; extra == \"test-dev\"",
+        "diffusers; extra == \"test-dev\"",
+        "evaluate; extra == \"test-dev\"",
+        "peft; extra == \"test-dev\"",
+        "torchdata>=0.8.0; extra == \"test-dev\"",
+        "torchpippy>=0.2.0; extra == \"test-dev\"",
+        "transformers; extra == \"test-dev\"",
+        "scipy; extra == \"test-dev\"",
+        "scikit-learn; extra == \"test-dev\"",
+        "tqdm; extra == \"test-dev\"",
+        "bitsandbytes; extra == \"test-dev\"",
+        "timm; extra == \"test-dev\"",
+        "pytest>=7.2.0; extra == \"testing\"",
+        "pytest-xdist; extra == \"testing\"",
+        "pytest-subtests; extra == \"testing\"",
+        "parameterized; extra == \"testing\"",
+        "pytest-order; extra == \"testing\"",
+        "datasets; extra == \"testing\"",
+        "diffusers; extra == \"testing\"",
+        "evaluate; extra == \"testing\"",
+        "peft; extra == \"testing\"",
+        "torchdata>=0.8.0; extra == \"testing\"",
+        "torchpippy>=0.2.0; extra == \"testing\"",
+        "transformers; extra == \"testing\"",
+        "scipy; extra == \"testing\"",
+        "scikit-learn; extra == \"testing\"",
+        "tqdm; extra == \"testing\"",
+        "bitsandbytes; extra == \"testing\"",
+        "timm; extra == \"testing\"",
+        "deepspeed; extra == \"deepspeed\"",
+        "rich; extra == \"rich\"",
+        "torchao; extra == \"test-fp8\"",
+        "wandb; extra == \"test-trackers\"",
+        "tensorboard; extra == \"test-trackers\"",
+        "dvclive; extra == \"test-trackers\"",
+        "matplotlib; extra == \"test-trackers\"",
+        "swanlab[dashboard]; extra == \"test-trackers\"",
+        "trackio; extra == \"test-trackers\"",
+        "ruff==0.13.1; extra == \"dev\"",
+        "pytest>=7.2.0; extra == \"dev\"",
+        "pytest-xdist; extra == \"dev\"",
+        "pytest-subtests; extra == \"dev\"",
+        "parameterized; extra == \"dev\"",
+        "pytest-order; extra == \"dev\"",
+        "datasets; extra == \"dev\"",
+        "diffusers; extra == \"dev\"",
+        "evaluate; extra == \"dev\"",
+        "peft; extra == \"dev\"",
+        "torchdata>=0.8.0; extra == \"dev\"",
+        "torchpippy>=0.2.0; extra == \"dev\"",
+        "transformers; extra == \"dev\"",
+        "scipy; extra == \"dev\"",
+        "scikit-learn; extra == \"dev\"",
+        "tqdm; extra == \"dev\"",
+        "bitsandbytes; extra == \"dev\"",
+        "timm; extra == \"dev\"",
+        "rich; extra == \"dev\"",
+        "sagemaker; extra == \"sagemaker\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "accelerate-1.15.0-py3-none-any.whl"
+      ]
+    },
+    "annotated-doc": {
+      "source": "https://pypi.org/pypi/annotated-doc/0.0.5/json",
+      "metadata_sha256": "1aab691a5f37dd292e6d93ab53f7da5d839f56ba605345f017022ec75eb643af",
+      "kind": "pypi",
+      "version": "0.0.5",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "annotated_doc-0.0.5-py3-none-any.whl"
+      ]
+    },
+    "annotated-types": {
+      "source": "https://pypi.org/pypi/annotated-types/0.8.0/json",
+      "metadata_sha256": "a6e8e5b10c8fd2f596bba53e015cd37f6279fb5cec26ce0c5e9968625be4fefa",
+      "kind": "pypi",
+      "version": "0.8.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "annotated_types-0.8.0-py3-none-any.whl"
+      ]
+    },
+    "anyio": {
+      "source": "https://pypi.org/pypi/anyio/4.15.1/json",
+      "metadata_sha256": "e2ee22fad2fab3e66be503cba9b41945607d3076c9b7aa49b6e2f95ac323efab",
+      "kind": "pypi",
+      "version": "4.15.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+        "idna>=2.8",
+        "typing_extensions>=4.16.0; python_version < \"3.15\"",
+        "trio>=0.32.0; extra == \"trio\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "anyio-4.15.1-py3-none-any.whl"
+      ]
+    },
+    "attrs": {
+      "source": "https://pypi.org/pypi/attrs/26.1.0/json",
+      "metadata_sha256": "a882bf941fb4a0bb748d0194df544121cc130f5fb15a710ab6b804c17d2899b7",
+      "kind": "pypi",
+      "version": "26.1.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "attrs-26.1.0-py3-none-any.whl"
+      ]
+    },
+    "beautifulsoup4": {
+      "source": "https://pypi.org/pypi/beautifulsoup4/4.15.0/json",
+      "metadata_sha256": "96c502f9035ea8dd04730834389a7ae8f2bd0079e24fa4083e8569b0f70e5054",
+      "kind": "pypi",
+      "version": "4.15.0",
+      "requires_python": ">=3.7.0",
+      "requires_dist": [
+        "soupsieve>=1.6.1",
+        "typing-extensions>=4.0.0",
+        "cchardet; extra == \"cchardet\"",
+        "chardet; extra == \"chardet\"",
+        "charset-normalizer; extra == \"charset-normalizer\"",
+        "html5lib; extra == \"html5lib\"",
+        "lxml; extra == \"lxml\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "beautifulsoup4-4.15.0-py3-none-any.whl"
+      ]
+    },
+    "certifi": {
+      "source": "https://pypi.org/pypi/certifi/2026.10.23/json",
+      "metadata_sha256": "546ce90e02c152f5ff565baca6bc2a8f43c355855f637756f49a0143e312bdb2",
+      "kind": "pypi",
+      "version": "2026.10.23",
+      "requires_python": ">=3.7",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "certifi-2026.10.23-py3-none-any.whl"
+      ]
+    },
+    "charset-normalizer": {
+      "source": "https://pypi.org/pypi/charset-normalizer/3.5.2/json",
+      "metadata_sha256": "9fda300857ae6a0486b4cd2d2fec7817ed2d45657249a6dfc0c2bbd1a44267b6",
+      "kind": "pypi",
+      "version": "3.5.2",
+      "requires_python": ">=3.7",
+      "requires_dist": [],
+      "hash_count": 172,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "charset_normalizer-3.5.2-cp37-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "charset_normalizer-3.5.2-py3-none-any.whl"
+      ]
+    },
+    "click": {
+      "source": "https://pypi.org/pypi/click/8.5.0/json",
+      "metadata_sha256": "4e36adc9b46f837e10ce801b7a478f9146fefdfb287292b7668fc64b1474e41d",
+      "kind": "pypi",
+      "version": "8.5.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "click-8.5.0-py3-none-any.whl"
+      ]
+    },
+    "coloredlogs": {
+      "source": "https://pypi.org/pypi/coloredlogs/15.0.1/json",
+      "metadata_sha256": "9867a11ae01df4d7097b75b7d86809fa0b75c3d066d6b05ff0eb613b68bda901",
+      "kind": "pypi",
+      "version": "15.0.1",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "requires_dist": [
+        "humanfriendly (>=9.1)",
+        "capturer (>=2.4) ; extra == 'cron'"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "coloredlogs-15.0.1-py2.py3-none-any.whl"
+      ]
+    },
+    "colorlog": {
+      "source": "https://pypi.org/pypi/colorlog/6.12.0/json",
+      "metadata_sha256": "2434300056fcad31ad40ebc0d723d54976393fd73d41c6fd2146dc09011d5927",
+      "kind": "pypi",
+      "version": "6.12.0",
+      "requires_python": ">=3.6",
+      "requires_dist": [
+        "colorama; sys_platform == \"win32\"",
+        "black; extra == \"development\"",
+        "flake8; extra == \"development\"",
+        "mypy; extra == \"development\"",
+        "pytest; extra == \"development\"",
+        "types-colorama; extra == \"development\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "colorlog-6.12.0-py3-none-any.whl"
+      ]
+    },
+    "defusedxml": {
+      "source": "https://pypi.org/pypi/defusedxml/0.7.1/json",
+      "metadata_sha256": "f015c37fa0b87a1d7fad57bea96c5c34856df2cbb29626004dee2122d510136a",
+      "kind": "pypi",
+      "version": "0.7.1",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "defusedxml-0.7.1-py2.py3-none-any.whl"
+      ]
+    },
+    "dill": {
+      "source": "https://pypi.org/pypi/dill/0.4.1/json",
+      "metadata_sha256": "3f326608b5939dfc66291b30ac368c5667f082dbd307a6434428e02b9639ee02",
+      "kind": "pypi",
+      "version": "0.4.1",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "objgraph>=1.7.2; extra == \"graph\"",
+        "gprof2dot>=2022.7.29; extra == \"profile\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "dill-0.4.1-py3-none-any.whl"
+      ]
+    },
+    "doclang": {
+      "source": "https://pypi.org/pypi/doclang/0.7.4/json",
+      "metadata_sha256": "e10e2f72472ce7d5742dc9839f5e987336779bcd3c4c5fc08ec20a1c5536a453",
+      "kind": "pypi",
+      "version": "0.7.4",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "lxml>=4.8.0",
+        "typer>=0.15.1",
+        "saxonche>=12.9.0; extra == \"schematron-saxon\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "doclang-0.7.4-py3-none-any.whl"
+      ]
+    },
+    "docling-core": {
+      "source": "https://pypi.org/pypi/docling-core/2.92.0/json",
+      "metadata_sha256": "3e98ec7914afc4aa50c438e8011d3c32a0a8bd5d62b8d6ace7de57666478ea28",
+      "kind": "pypi",
+      "version": "2.92.0",
+      "requires_python": "<4.0,>=3.10",
+      "requires_dist": [
+        "jsonschema<5.0.0,>=4.16.0",
+        "pydantic!=2.10.0,!=2.10.1,!=2.10.2,<3.0.0,>=2.6.0",
+        "jsonref<2.0.0,>=1.1.0",
+        "tabulate<0.11.0,>=0.9.0",
+        "pandas<4.0.0,>=2.1.4",
+        "pillow<13.0.0,>=10.0.0",
+        "pyyaml<7.0.0,>=5.1",
+        "typing-extensions<5.0.0,>=4.12.2",
+        "typer<0.27.0,>=0.12.5",
+        "latex2mathml<4.0.0,>=3.77.0",
+        "defusedxml<0.8.0,>=0.7.1",
+        "pydantic-settings>=2.14.0",
+        "doclang<0.8,>=0.7",
+        "doclang<0.8,>=0.7; extra == \"dclq\"",
+        "typer<0.25.0,>=0.15.1; extra == \"dclq\"",
+        "click>=8.0.0; extra == \"dclq\"",
+        "lxml>=6.0.2; extra == \"dclq\"",
+        "semchunk<4.0.0,>=2.2.0; extra == \"chunking\"",
+        "tree-sitter<0.27.0,>=0.25.0; extra == \"chunking\"",
+        "tree-sitter-python>=0.23.6; extra == \"chunking\"",
+        "tree-sitter-c>=0.23.4; extra == \"chunking\"",
+        "tree-sitter-javascript>=0.23.1; extra == \"chunking\"",
+        "tree-sitter-typescript>=0.23.2; extra == \"chunking\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.34.0; sys_platform == \"darwin\" and extra == \"chunking\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<6.0.0,>=4.34.0; sys_platform != \"darwin\" and extra == \"chunking\"",
+        "semchunk<4.0.0,>=2.2.0; extra == \"chunking-openai\"",
+        "tree-sitter<0.27.0,>=0.25.0; extra == \"chunking-openai\"",
+        "tree-sitter-python>=0.23.6; extra == \"chunking-openai\"",
+        "tree-sitter-c>=0.23.4; extra == \"chunking-openai\"",
+        "tree-sitter-javascript>=0.23.1; extra == \"chunking-openai\"",
+        "tree-sitter-typescript>=0.23.2; extra == \"chunking-openai\"",
+        "tiktoken<0.13.0,>=0.9.0; extra == \"chunking-openai\"",
+        "datasets>=4.0.0; extra == \"examples\"",
+        "matplotlib>=3.7.0; extra == \"examples\"",
+        "openpyxl>=3.1.5; extra == \"examples\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "docling_core-2.92.0-py3-none-any.whl"
+      ]
+    },
+    "docling-parse": {
+      "source": "https://pypi.org/pypi/docling-parse/7.17.0/json",
+      "metadata_sha256": "2471aac9364365bee17762d4ffa81284ec7587affbd0425ab2497b71e99a53a4",
+      "kind": "pypi",
+      "version": "7.17.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "pillow<13.0.0,>=10.0.0",
+        "pydantic>=2.0.0",
+        "docling-core<3.0.0,>=2.85.0",
+        "pywin32>=305; sys_platform == \"win32\""
+      ],
+      "hash_count": 26,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "docling_parse-7.17.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "et-xmlfile": {
+      "source": "https://pypi.org/pypi/et-xmlfile/2.0.0/json",
+      "metadata_sha256": "807b439c620d04dc8b1680d18d462233b4c4711d11a32a2e6d74b47949af9bf0",
+      "kind": "pypi",
+      "version": "2.0.0",
+      "requires_python": ">=3.8",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "et_xmlfile-2.0.0-py3-none-any.whl"
+      ]
+    },
+    "faker": {
+      "source": "https://pypi.org/pypi/faker/40.44.0/json",
+      "metadata_sha256": "e72f1ee7ba6182d8500d43301d428bdb73c1f07f3cb10e7df3342f703867831c",
+      "kind": "pypi",
+      "version": "40.44.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "tzdata; platform_system == \"Windows\"",
+        "tzdata; extra == \"tzdata\"",
+        "pillow; extra == \"image\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "faker-40.44.0-py3-none-any.whl"
+      ]
+    },
+    "filelock": {
+      "source": "https://pypi.org/pypi/filelock/4.2.6/json",
+      "metadata_sha256": "b41fd205f9a016c5da0e3f3576106bbc0077fd0027702977549e0a7bf9d99922",
+      "kind": "pypi",
+      "version": "4.2.6",
+      "requires_python": ">=3.11",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "filelock-4.2.6-py3-none-any.whl"
+      ]
+    },
+    "filetype": {
+      "source": "https://pypi.org/pypi/filetype/1.2.0/json",
+      "metadata_sha256": "2861359cbfafd6a5518073592195be7ff47c7ec5c703f76811e5ee41aac565be",
+      "kind": "pypi",
+      "version": "1.2.0",
+      "requires_python": "",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "filetype-1.2.0-py2.py3-none-any.whl"
+      ]
+    },
+    "flatbuffers": {
+      "source": "https://pypi.org/pypi/flatbuffers/25.12.19/json",
+      "metadata_sha256": "3800bcba3177624044bb53f06f4a588061c10034f93467a0d163549b0928045a",
+      "kind": "pypi",
+      "version": "25.12.19",
+      "requires_python": null,
+      "requires_dist": [],
+      "hash_count": 1,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "flatbuffers-25.12.19-py2.py3-none-any.whl"
+      ]
+    },
+    "fsspec": {
+      "source": "https://pypi.org/pypi/fsspec/2026.9.0/json",
+      "metadata_sha256": "4a93a853911936a59262f3ccc1a36a42cfbff106beec53d6e247d00f7a3aa1e9",
+      "kind": "pypi",
+      "version": "2026.9.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "adlfs; extra == \"abfs\"",
+        "adlfs; extra == \"adl\"",
+        "pyarrow>=1; extra == \"arrow\"",
+        "dask; extra == \"dask\"",
+        "distributed; extra == \"dask\"",
+        "pre-commit; extra == \"dev\"",
+        "ruff>=0.5; extra == \"dev\"",
+        "numpydoc; extra == \"doc\"",
+        "sphinx; extra == \"doc\"",
+        "sphinx-design; extra == \"doc\"",
+        "sphinx-rtd-theme; extra == \"doc\"",
+        "yarl; extra == \"doc\"",
+        "dropbox; extra == \"dropbox\"",
+        "dropboxdrivefs; extra == \"dropbox\"",
+        "requests; extra == \"dropbox\"",
+        "adlfs; extra == \"full\"",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == \"full\"",
+        "dask; extra == \"full\"",
+        "distributed; extra == \"full\"",
+        "dropbox; extra == \"full\"",
+        "dropboxdrivefs; extra == \"full\"",
+        "fusepy; extra == \"full\"",
+        "gcsfs>=2026.4.0; extra == \"full\"",
+        "libarchive-c; extra == \"full\"",
+        "ocifs; extra == \"full\"",
+        "panel; extra == \"full\"",
+        "paramiko; extra == \"full\"",
+        "pyarrow>=1; extra == \"full\"",
+        "pygit2; extra == \"full\"",
+        "requests; extra == \"full\"",
+        "s3fs>=2026.6.0; extra == \"full\"",
+        "smbprotocol; extra == \"full\"",
+        "tqdm; extra == \"full\"",
+        "fusepy; extra == \"fuse\"",
+        "gcsfs>=2026.4.0; extra == \"gcs\"",
+        "pygit2; extra == \"git\"",
+        "requests; extra == \"github\"",
+        "gcsfs>=2026.4.0; extra == \"gs\"",
+        "panel; extra == \"gui\"",
+        "pyarrow>=1; extra == \"hdfs\"",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == \"http\"",
+        "libarchive-c; extra == \"libarchive\"",
+        "ocifs; extra == \"oci\"",
+        "s3fs>=2026.6.0; extra == \"s3\"",
+        "paramiko; extra == \"sftp\"",
+        "smbprotocol; extra == \"smb\"",
+        "paramiko; extra == \"ssh\"",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == \"test\"",
+        "numpy; extra == \"test\"",
+        "pytest; extra == \"test\"",
+        "pytest-asyncio!=0.22.0; extra == \"test\"",
+        "pytest-benchmark; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-mock; extra == \"test\"",
+        "pytest-recording; extra == \"test\"",
+        "pytest-rerunfailures; extra == \"test\"",
+        "requests; extra == \"test\"",
+        "aiobotocore<3.0.0,>=2.5.4; extra == \"test-downstream\"",
+        "dask[dataframe,test]; extra == \"test-downstream\"",
+        "moto[server]<5,>4; extra == \"test-downstream\"",
+        "pytest-timeout; extra == \"test-downstream\"",
+        "xarray; extra == \"test-downstream\"",
+        "zarr; extra == \"test-downstream\"",
+        "adlfs; extra == \"test-full\"",
+        "aiohttp!=4.0.0a0,!=4.0.0a1; extra == \"test-full\"",
+        "backports-zstd; python_version < \"3.14\" and extra == \"test-full\"",
+        "cloudpickle; extra == \"test-full\"",
+        "dask; extra == \"test-full\"",
+        "distributed; extra == \"test-full\"",
+        "dropbox; extra == \"test-full\"",
+        "dropboxdrivefs; extra == \"test-full\"",
+        "fastparquet; extra == \"test-full\"",
+        "fusepy; extra == \"test-full\"",
+        "gcsfs>=2026.4.0; extra == \"test-full\"",
+        "jinja2; extra == \"test-full\"",
+        "kerchunk; extra == \"test-full\"",
+        "libarchive-c; extra == \"test-full\"",
+        "lz4; extra == \"test-full\"",
+        "notebook; extra == \"test-full\"",
+        "numpy; extra == \"test-full\"",
+        "ocifs; extra == \"test-full\"",
+        "pandas<3.0.0; extra == \"test-full\"",
+        "panel; extra == \"test-full\"",
+        "paramiko; extra == \"test-full\"",
+        "pyarrow>=1; extra == \"test-full\"",
+        "pyftpdlib; extra == \"test-full\"",
+        "pygit2; extra == \"test-full\"",
+        "pytest; extra == \"test-full\"",
+        "pytest-asyncio!=0.22.0; extra == \"test-full\"",
+        "pytest-benchmark; extra == \"test-full\"",
+        "pytest-cov; extra == \"test-full\"",
+        "pytest-mock; extra == \"test-full\"",
+        "pytest-recording; extra == \"test-full\"",
+        "pytest-rerunfailures; extra == \"test-full\"",
+        "python-snappy; extra == \"test-full\"",
+        "requests; extra == \"test-full\"",
+        "s3fs>=2026.6.0; extra == \"test-full\"",
+        "smbprotocol; extra == \"test-full\"",
+        "tqdm; extra == \"test-full\"",
+        "urllib3; extra == \"test-full\"",
+        "zarr<3.2.0; extra == \"test-full\"",
+        "zstandard; python_version < \"3.14\" and extra == \"test-full\"",
+        "tqdm; extra == \"tqdm\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "fsspec-2026.9.0-py3-none-any.whl"
+      ]
+    },
+    "h11": {
+      "source": "https://pypi.org/pypi/h11/0.16.0/json",
+      "metadata_sha256": "97f4efb9cc00826f0408076983adc1a1e48e8f2cabf403aaf250f724e081440d",
+      "kind": "pypi",
+      "version": "0.16.0",
+      "requires_python": ">=3.8",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "h11-0.16.0-py3-none-any.whl"
+      ]
+    },
+    "hf-xet": {
+      "source": "https://pypi.org/pypi/hf-xet/1.8.0/json",
+      "metadata_sha256": "80b2cd269ee7e7907b0565cb2c89733eab049f5263dfaffca608bf6965f0d075",
+      "kind": "pypi",
+      "version": "1.8.0",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "pytest; extra == \"tests\""
+      ],
+      "hash_count": 17,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "hf_xet-1.8.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "httpcore": {
+      "source": "https://pypi.org/pypi/httpcore/1.0.9/json",
+      "metadata_sha256": "e26eca5c3d288fe9e6446af9bcbca1038ba688629d5c8a2886c47d74718d87a2",
+      "kind": "pypi",
+      "version": "1.0.9",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "certifi",
+        "h11>=0.16",
+        "anyio<5.0,>=4.0; extra == \"asyncio\"",
+        "h2<5,>=3; extra == \"http2\"",
+        "socksio==1.*; extra == \"socks\"",
+        "trio<1.0,>=0.22.0; extra == \"trio\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "httpcore-1.0.9-py3-none-any.whl"
+      ]
+    },
+    "httpx": {
+      "source": "https://pypi.org/pypi/httpx/0.28.1/json",
+      "metadata_sha256": "293bfab7bf587fcd0825f1bd8eed8e6303285ba14801b15659853827cbe30796",
+      "kind": "pypi",
+      "version": "0.28.1",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "anyio",
+        "certifi",
+        "httpcore==1.*",
+        "idna",
+        "brotli; platform_python_implementation == \"CPython\" and extra == \"brotli\"",
+        "brotlicffi; platform_python_implementation != \"CPython\" and extra == \"brotli\"",
+        "click==8.*; extra == \"cli\"",
+        "pygments==2.*; extra == \"cli\"",
+        "rich<14,>=10; extra == \"cli\"",
+        "h2<5,>=3; extra == \"http2\"",
+        "socksio==1.*; extra == \"socks\"",
+        "zstandard>=0.18.0; extra == \"zstd\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "httpx-0.28.1-py3-none-any.whl"
+      ]
+    },
+    "huggingface-hub": {
+      "source": "https://pypi.org/pypi/huggingface-hub/1.33.0/json",
+      "metadata_sha256": "cbb5c8feeaa6e5bb95c5dd4c95cb8e0277c7279892476bde6c3dad53e1beefca",
+      "kind": "pypi",
+      "version": "1.33.0",
+      "requires_python": ">=3.10.0",
+      "requires_dist": [
+        "click<9.0.0,>=8.4.2",
+        "filelock>=3.10.0",
+        "fsspec>=2023.5.0",
+        "hf-xet<2.0.0,>=1.6.0; platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"arm64\" or platform_machine == \"aarch64\"",
+        "httpx<1,>=0.23.0",
+        "packaging>=20.9",
+        "pyyaml>=5.1",
+        "tomli>=1.1.0; python_version < \"3.11\"",
+        "tqdm>=4.42.1",
+        "typing-extensions>=4.1.0",
+        "authlib>=1.3.2; extra == \"oauth\"",
+        "fastapi; extra == \"oauth\"",
+        "httpx; extra == \"oauth\"",
+        "itsdangerous; extra == \"oauth\"",
+        "torch; extra == \"torch\"",
+        "safetensors[torch]; extra == \"torch\"",
+        "toml; extra == \"fastai\"",
+        "fastai>=2.4; extra == \"fastai\"",
+        "fastcore>=1.3.27; extra == \"fastai\"",
+        "hf-xet<2.0.0,>=1.6.0; extra == \"hf-xet\"",
+        "mcp<2.0.0,>=1.9.4; extra == \"mcp\"",
+        "authlib>=1.3.2; extra == \"testing\"",
+        "fastapi; extra == \"testing\"",
+        "httpx; extra == \"testing\"",
+        "itsdangerous; extra == \"testing\"",
+        "jedi; extra == \"testing\"",
+        "Jinja2; extra == \"testing\"",
+        "pytest>=8.4.2; extra == \"testing\"",
+        "pytest-cov; extra == \"testing\"",
+        "pytest-env; extra == \"testing\"",
+        "pytest-xdist; extra == \"testing\"",
+        "pytest-vcr; extra == \"testing\"",
+        "pytest-asyncio; extra == \"testing\"",
+        "pytest-rerunfailures>=16.2; extra == \"testing\"",
+        "pytest-mock; extra == \"testing\"",
+        "urllib3<2.0; extra == \"testing\"",
+        "soundfile; extra == \"testing\"",
+        "Pillow; extra == \"testing\"",
+        "numpy; extra == \"testing\"",
+        "duckdb; extra == \"testing\"",
+        "fastapi; extra == \"testing\"",
+        "gradio>=5.0.0; extra == \"gradio\"",
+        "requests; extra == \"gradio\"",
+        "typing-extensions>=4.8.0; extra == \"typing\"",
+        "types-PyYAML; extra == \"typing\"",
+        "types-simplejson; extra == \"typing\"",
+        "types-toml; extra == \"typing\"",
+        "types-tqdm; extra == \"typing\"",
+        "types-urllib3; extra == \"typing\"",
+        "ruff>=0.9.0; extra == \"quality\"",
+        "mypy==1.15.0; extra == \"quality\"",
+        "libcst>=1.4.0; extra == \"quality\"",
+        "ty; extra == \"quality\"",
+        "authlib>=1.3.2; extra == \"all\"",
+        "fastapi; extra == \"all\"",
+        "httpx; extra == \"all\"",
+        "itsdangerous; extra == \"all\"",
+        "jedi; extra == \"all\"",
+        "Jinja2; extra == \"all\"",
+        "pytest>=8.4.2; extra == \"all\"",
+        "pytest-cov; extra == \"all\"",
+        "pytest-env; extra == \"all\"",
+        "pytest-xdist; extra == \"all\"",
+        "pytest-vcr; extra == \"all\"",
+        "pytest-asyncio; extra == \"all\"",
+        "pytest-rerunfailures>=16.2; extra == \"all\"",
+        "pytest-mock; extra == \"all\"",
+        "urllib3<2.0; extra == \"all\"",
+        "soundfile; extra == \"all\"",
+        "Pillow; extra == \"all\"",
+        "numpy; extra == \"all\"",
+        "duckdb; extra == \"all\"",
+        "fastapi; extra == \"all\"",
+        "ruff>=0.9.0; extra == \"all\"",
+        "mypy==1.15.0; extra == \"all\"",
+        "libcst>=1.4.0; extra == \"all\"",
+        "ty; extra == \"all\"",
+        "typing-extensions>=4.8.0; extra == \"all\"",
+        "types-PyYAML; extra == \"all\"",
+        "types-simplejson; extra == \"all\"",
+        "types-toml; extra == \"all\"",
+        "types-tqdm; extra == \"all\"",
+        "types-urllib3; extra == \"all\"",
+        "authlib>=1.3.2; extra == \"dev\"",
+        "fastapi; extra == \"dev\"",
+        "httpx; extra == \"dev\"",
+        "itsdangerous; extra == \"dev\"",
+        "jedi; extra == \"dev\"",
+        "Jinja2; extra == \"dev\"",
+        "pytest>=8.4.2; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "pytest-env; extra == \"dev\"",
+        "pytest-xdist; extra == \"dev\"",
+        "pytest-vcr; extra == \"dev\"",
+        "pytest-asyncio; extra == \"dev\"",
+        "pytest-rerunfailures>=16.2; extra == \"dev\"",
+        "pytest-mock; extra == \"dev\"",
+        "urllib3<2.0; extra == \"dev\"",
+        "soundfile; extra == \"dev\"",
+        "Pillow; extra == \"dev\"",
+        "numpy; extra == \"dev\"",
+        "duckdb; extra == \"dev\"",
+        "fastapi; extra == \"dev\"",
+        "ruff>=0.9.0; extra == \"dev\"",
+        "mypy==1.15.0; extra == \"dev\"",
+        "libcst>=1.4.0; extra == \"dev\"",
+        "ty; extra == \"dev\"",
+        "typing-extensions>=4.8.0; extra == \"dev\"",
+        "types-PyYAML; extra == \"dev\"",
+        "types-simplejson; extra == \"dev\"",
+        "types-toml; extra == \"dev\"",
+        "types-tqdm; extra == \"dev\"",
+        "types-urllib3; extra == \"dev\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "huggingface_hub-1.33.0-py3-none-any.whl"
+      ]
+    },
+    "humanfriendly": {
+      "source": "https://pypi.org/pypi/humanfriendly/10.0/json",
+      "metadata_sha256": "665722712a34f81db0dabb0936cbb6e9754f925aa45b48f06aa4f3c12adec738",
+      "kind": "pypi",
+      "version": "10.0",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+      "requires_dist": [
+        "monotonic ; python_version == \"2.7\"",
+        "pyreadline ; sys_platform == \"win32\" and python_version<\"3.8\"",
+        "pyreadline3 ; sys_platform == \"win32\" and python_version>=\"3.8\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "humanfriendly-10.0-py2.py3-none-any.whl"
+      ]
+    },
+    "idna": {
+      "source": "https://pypi.org/pypi/idna/3.20/json",
+      "metadata_sha256": "e7cbd26e23ce60f6cb3a151d2adf3b1b087bb8f10ac2d9d6db70fdccbf3bb041",
+      "kind": "pypi",
+      "version": "3.20",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "ruff>=0.16.0; extra == \"all\"",
+        "mypy>=1.11.2; extra == \"all\"",
+        "ty>=0.0.37; extra == \"all\"",
+        "pytest>=8.3.2; extra == \"all\"",
+        "hypothesis>=6.141.1; extra == \"all\"",
+        "coverage>=7.10.0; extra == \"all\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "idna-3.20-py3-none-any.whl"
+      ]
+    },
+    "jinja2": {
+      "source": "https://pypi.org/pypi/jinja2/3.1.6/json",
+      "metadata_sha256": "1bc757d7065f3e67d3a49e72ebc731d0774055575732592eede9820c136329cc",
+      "kind": "pypi",
+      "version": "3.1.6",
+      "requires_python": ">=3.7",
+      "requires_dist": [
+        "MarkupSafe>=2.0",
+        "Babel>=2.7; extra == \"i18n\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "jinja2-3.1.6-py3-none-any.whl"
+      ]
+    },
+    "jsonref": {
+      "source": "https://pypi.org/pypi/jsonref/1.1.0/json",
+      "metadata_sha256": "359440e713faba3bfafb813ef8cc4fa3a0851817aa2565abf10893c63271522d",
+      "kind": "pypi",
+      "version": "1.1.0",
+      "requires_python": ">=3.7",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "jsonref-1.1.0-py3-none-any.whl"
+      ]
+    },
+    "jsonschema": {
+      "source": "https://pypi.org/pypi/jsonschema/4.26.0/json",
+      "metadata_sha256": "d0c9ccdfa30c3cdc57b048c2be21123dfb0c2f4d6bef2e8324dcb4eac985cfcf",
+      "kind": "pypi",
+      "version": "4.26.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rpds-py>=0.25.0",
+        "fqdn; extra == \"format\"",
+        "idna; extra == \"format\"",
+        "isoduration; extra == \"format\"",
+        "jsonpointer>1.13; extra == \"format\"",
+        "rfc3339-validator; extra == \"format\"",
+        "rfc3987; extra == \"format\"",
+        "uri-template; extra == \"format\"",
+        "webcolors>=1.11; extra == \"format\"",
+        "fqdn; extra == \"format-nongpl\"",
+        "idna; extra == \"format-nongpl\"",
+        "isoduration; extra == \"format-nongpl\"",
+        "jsonpointer>1.13; extra == \"format-nongpl\"",
+        "rfc3339-validator; extra == \"format-nongpl\"",
+        "rfc3986-validator>0.1.0; extra == \"format-nongpl\"",
+        "rfc3987-syntax>=1.1.0; extra == \"format-nongpl\"",
+        "uri-template; extra == \"format-nongpl\"",
+        "webcolors>=24.6.0; extra == \"format-nongpl\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "jsonschema-4.26.0-py3-none-any.whl"
+      ]
+    },
+    "jsonschema-specifications": {
+      "source": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+      "metadata_sha256": "91810d8f79384375ad0c0cf631e06903e2790b030d3fad2f1ad657b20ddd839e",
+      "kind": "pypi",
+      "version": "2025.9.1",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "referencing>=0.31.0"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "jsonschema_specifications-2025.9.1-py3-none-any.whl"
+      ]
+    },
+    "latex2mathml": {
+      "source": "https://pypi.org/pypi/latex2mathml/3.81.1/json",
+      "metadata_sha256": "32928aa301db7844ffce7dfeb62a1c4da7b142cd3996511df343380625250f34",
+      "kind": "pypi",
+      "version": "3.81.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "latex2mathml-3.81.1-py3-none-any.whl"
+      ]
+    },
+    "lxml": {
+      "source": "https://pypi.org/pypi/lxml/6.1.3/json",
+      "metadata_sha256": "1f03dafdc0bd6c308a1e69aff7caef27f6d7c586eadd34e02229703a8541fe61",
+      "kind": "pypi",
+      "version": "6.1.3",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "cssselect>=0.7; extra == \"cssselect\"",
+        "html5lib; extra == \"html5\"",
+        "BeautifulSoup4; extra == \"htmlsoup\"",
+        "lxml_html_clean; extra == \"html-clean\""
+      ],
+      "hash_count": 176,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "lxml-6.1.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "lxml-6.1.3-cp311-cp311-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "mail-parser": {
+      "source": "https://pypi.org/pypi/mail-parser/4.10.0/json",
+      "metadata_sha256": "5d792bb037f26e47f4f1d53fb3967f7c56a1978ea14e33ba24dfc479fbdbb258",
+      "kind": "pypi",
+      "version": "4.10.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "extract-msg>=0.54; extra == \"outlook\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "mail_parser-4.10.0-py3-none-any.whl"
+      ]
+    },
+    "markdown-it-py": {
+      "source": "https://pypi.org/pypi/markdown-it-py/4.2.0/json",
+      "metadata_sha256": "62affba459c80b1279b5759735f7da3e9c7d24966086ff81ec0303c94512b966",
+      "kind": "pypi",
+      "version": "4.2.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "mdurl~=0.1",
+        "psutil; extra == \"benchmarking\"",
+        "pytest; extra == \"benchmarking\"",
+        "pytest-benchmark; extra == \"benchmarking\"",
+        "commonmark~=0.9; extra == \"compare\"",
+        "markdown~=3.4; extra == \"compare\"",
+        "mistletoe~=1.0; extra == \"compare\"",
+        "mistune~=3.0; extra == \"compare\"",
+        "panflute~=2.3; extra == \"compare\"",
+        "markdown-it-pyrs; extra == \"compare\"",
+        "linkify-it-py<3,>=1; extra == \"linkify\"",
+        "mdit-py-plugins>=0.5.0; extra == \"plugins\"",
+        "gprof2dot; extra == \"profiling\"",
+        "mdit-py-plugins>=0.5.0; extra == \"rtd\"",
+        "myst-parser; extra == \"rtd\"",
+        "pyyaml; extra == \"rtd\"",
+        "sphinx; extra == \"rtd\"",
+        "sphinx-copybutton; extra == \"rtd\"",
+        "sphinx-design; extra == \"rtd\"",
+        "sphinx-book-theme~=1.0; extra == \"rtd\"",
+        "jupyter_sphinx; extra == \"rtd\"",
+        "ipykernel; extra == \"rtd\"",
+        "coverage; extra == \"testing\"",
+        "pytest; extra == \"testing\"",
+        "pytest-cov; extra == \"testing\"",
+        "pytest-regressions; extra == \"testing\"",
+        "pytest-timeout; extra == \"testing\"",
+        "requests; extra == \"testing\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "markdown_it_py-4.2.0-py3-none-any.whl"
+      ]
+    },
+    "marko": {
+      "source": "https://pypi.org/pypi/marko/2.2.5/json",
+      "metadata_sha256": "8763d479ce7a2a3f392bb0fc7a880c8017ad72c9c0e38c5c7c1b627f99cd482c",
+      "kind": "pypi",
+      "version": "2.2.5",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "python-slugify; extra == \"toc\"",
+        "pygments; extra == \"codehilite\"",
+        "objprint; extra == \"repr\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "marko-2.2.5-py3-none-any.whl"
+      ]
+    },
+    "markupsafe": {
+      "source": "https://pypi.org/pypi/markupsafe/3.0.4/json",
+      "metadata_sha256": "85cd5bce3f85e67ab0b921be9c9ba144a7cc01a2d02b85ad65b1f8dabeac4c57",
+      "kind": "pypi",
+      "version": "3.0.4",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 151,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "markupsafe-3.0.4-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "mdurl": {
+      "source": "https://pypi.org/pypi/mdurl/0.1.2/json",
+      "metadata_sha256": "c7baac0b363d92cf55f1f3a313f4bb0564bff27343e6a0a4e9d7ff03afc8a6c7",
+      "kind": "pypi",
+      "version": "0.1.2",
+      "requires_python": ">=3.7",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "mdurl-0.1.2-py3-none-any.whl"
+      ]
+    },
+    "mpire": {
+      "source": "https://pypi.org/pypi/mpire/2.10.2/json",
+      "metadata_sha256": "2d4fac44df4fb8a35638b2797daa0d2025a6fc797b07340e7418f76cff3d3702",
+      "kind": "pypi",
+      "version": "2.10.2",
+      "requires_python": null,
+      "requires_dist": [
+        "pygments>=2.0",
+        "tqdm>=4.27",
+        "pywin32>=301; platform_system == \"Windows\"",
+        "importlib-resources; python_version < \"3.9\"",
+        "flask; extra == \"dashboard\"",
+        "multiprocess; python_version < \"3.11\" and extra == \"dill\"",
+        "multiprocess>=0.70.15; python_version >= \"3.11\" and extra == \"dill\"",
+        "docutils==0.17.1; extra == \"docs\"",
+        "sphinx==3.2.1; extra == \"docs\"",
+        "sphinx-rtd-theme==0.5.0; extra == \"docs\"",
+        "sphinx-autodoc-typehints==1.11.0; extra == \"docs\"",
+        "sphinxcontrib-images==0.9.2; extra == \"docs\"",
+        "sphinx-versions==1.0.1; extra == \"docs\"",
+        "ipywidgets; extra == \"testing\"",
+        "numpy; extra == \"testing\"",
+        "rich; extra == \"testing\"",
+        "pywin32>=301; platform_system == \"Windows\" and extra == \"testing\"",
+        "multiprocess; python_version < \"3.11\" and extra == \"testing\"",
+        "multiprocess>=0.70.15; python_version >= \"3.11\" and extra == \"testing\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "mpire-2.10.2-py3-none-any.whl"
+      ]
+    },
+    "mpmath": {
+      "source": "https://pypi.org/pypi/mpmath/1.3.0/json",
+      "metadata_sha256": "cc8d63714e311b9a2f9419d8dcb63d52190b5f69a63bc85e570987a434dc7a57",
+      "kind": "pypi",
+      "version": "1.3.0",
+      "requires_python": "",
+      "requires_dist": [
+        "pytest (>=4.6) ; extra == 'develop'",
+        "pycodestyle ; extra == 'develop'",
+        "pytest-cov ; extra == 'develop'",
+        "codecov ; extra == 'develop'",
+        "wheel ; extra == 'develop'",
+        "sphinx ; extra == 'docs'",
+        "gmpy2 (>=2.1.0a4) ; (platform_python_implementation != \"PyPy\") and extra == 'gmpy'",
+        "pytest (>=4.6) ; extra == 'tests'"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "mpmath-1.3.0-py3-none-any.whl"
+      ]
+    },
+    "multiprocess": {
+      "source": "https://pypi.org/pypi/multiprocess/0.70.19/json",
+      "metadata_sha256": "0543301c4a1c4760dc2d488d6f668e5d7de468545329103df853049a67c25e30",
+      "kind": "pypi",
+      "version": "0.70.19",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "dill>=0.4.1"
+      ],
+      "hash_count": 16,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "multiprocess-0.70.19-py310-none-any.whl",
+        "multiprocess-0.70.19-py311-none-any.whl",
+        "multiprocess-0.70.19-py39-none-any.whl"
+      ]
+    },
+    "networkx": {
+      "source": "https://pypi.org/pypi/networkx/3.6.1/json",
+      "metadata_sha256": "086ea20eae0bce8c0100f4ad27141818546f904be441a713ce4c3a7f2d650d19",
+      "kind": "pypi",
+      "version": "3.6.1",
+      "requires_python": "!=3.14.1,>=3.11",
+      "requires_dist": [
+        "asv; extra == \"benchmarking\"",
+        "virtualenv; extra == \"benchmarking\"",
+        "numpy>=1.25; extra == \"default\"",
+        "scipy>=1.11.2; extra == \"default\"",
+        "matplotlib>=3.8; extra == \"default\"",
+        "pandas>=2.0; extra == \"default\"",
+        "pre-commit>=4.1; extra == \"developer\"",
+        "mypy>=1.15; extra == \"developer\"",
+        "sphinx>=8.0; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.16; extra == \"doc\"",
+        "sphinx-gallery>=0.18; extra == \"doc\"",
+        "numpydoc>=1.8.0; extra == \"doc\"",
+        "pillow>=10; extra == \"doc\"",
+        "texext>=0.6.7; extra == \"doc\"",
+        "myst-nb>=1.1; extra == \"doc\"",
+        "intersphinx-registry; extra == \"doc\"",
+        "osmnx>=2.0.0; extra == \"example\"",
+        "momepy>=0.7.2; extra == \"example\"",
+        "contextily>=1.6; extra == \"example\"",
+        "seaborn>=0.13; extra == \"example\"",
+        "cairocffi>=1.7; extra == \"example\"",
+        "igraph>=0.11; extra == \"example\"",
+        "scikit-learn>=1.5; extra == \"example\"",
+        "iplotx>=0.9.0; extra == \"example\"",
+        "lxml>=4.6; extra == \"extra\"",
+        "pygraphviz>=1.14; extra == \"extra\"",
+        "pydot>=3.0.1; extra == \"extra\"",
+        "sympy>=1.10; extra == \"extra\"",
+        "build>=0.10; extra == \"release\"",
+        "twine>=4.0; extra == \"release\"",
+        "wheel>=0.40; extra == \"release\"",
+        "changelist==0.5; extra == \"release\"",
+        "pytest>=7.2; extra == \"test\"",
+        "pytest-cov>=4.0; extra == \"test\"",
+        "pytest-xdist>=3.0; extra == \"test\"",
+        "pytest-mpl; extra == \"test-extras\"",
+        "pytest-randomly; extra == \"test-extras\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "networkx-3.6.1-py3-none-any.whl"
+      ]
+    },
+    "numpy": {
+      "source": "https://pypi.org/pypi/numpy/2.2.6/json",
+      "metadata_sha256": "dbed1d6e66316f9a403aa115085c85678f22b8dc6e60faf65b43e2aa166b17fe",
+      "kind": "pypi",
+      "version": "2.2.6",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 55,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "numpy-2.2.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cublas-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cublas-cu12/12.6.4.1/json",
+      "metadata_sha256": "967745ad04261be2f36fbd7db25955a4ce206880980d511ec4050a809b875d71",
+      "kind": "pypi",
+      "version": "12.6.4.1",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 3,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cublas_cu12-12.6.4.1-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "nvidia-cuda-cupti-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cuda-cupti-cu12/12.6.80/json",
+      "metadata_sha256": "3a7f239ec2b9ae196e886a7a539290d6ec6f8edda9372fa7981869837355703a",
+      "kind": "pypi",
+      "version": "12.6.80",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cuda_cupti_cu12-12.6.80-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_cuda_cupti_cu12-12.6.80-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cuda-nvrtc-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cuda-nvrtc-cu12/12.6.77/json",
+      "metadata_sha256": "89b2a01dc634491b9df20ecec7c11e778bac141bc040b35fe7f990b6258ed194",
+      "kind": "pypi",
+      "version": "12.6.77",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 3,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cuda_nvrtc_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cuda-runtime-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cuda-runtime-cu12/12.6.77/json",
+      "metadata_sha256": "854585ebfe13d57359352802f579d0a985aa27a35254d552d51b836d2ca356a0",
+      "kind": "pypi",
+      "version": "12.6.77",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cuda_runtime_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_cuda_runtime_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cudnn-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cudnn-cu12/9.5.1.17/json",
+      "metadata_sha256": "3ec38008ee558b1b61848181abc1c79f7e5b9ecd1690170d7ddb57886fa653d9",
+      "kind": "pypi",
+      "version": "9.5.1.17",
+      "requires_python": ">=3",
+      "requires_dist": [
+        "nvidia-cublas-cu12"
+      ],
+      "hash_count": 3,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cudnn_cu12-9.5.1.17-py3-none-manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "nvidia-cufft-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cufft-cu12/11.3.0.4/json",
+      "metadata_sha256": "b6f763e251fa90b10d268fd1d799684b0c9bf2c83a35c8d5ebd97c699f42f6bc",
+      "kind": "pypi",
+      "version": "11.3.0.4",
+      "requires_python": ">=3",
+      "requires_dist": [
+        "nvidia-nvjitlink-cu12"
+      ],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cufile-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cufile-cu12/1.11.1.6/json",
+      "metadata_sha256": "45b50797e56064b5a2fde1359bef68b0890449bf6c3a66b4ccb6da709c306771",
+      "kind": "pypi",
+      "version": "1.11.1.6",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cufile_cu12-1.11.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "nvidia-curand-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-curand-cu12/10.3.7.77/json",
+      "metadata_sha256": "4e9688260eb3a113e8099febbd25c654e28ac9b6d6bbe46ba4a916d018d1bc95",
+      "kind": "pypi",
+      "version": "10.3.7.77",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_curand_cu12-10.3.7.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_curand_cu12-10.3.7.77-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cusolver-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cusolver-cu12/11.7.1.2/json",
+      "metadata_sha256": "68fbd8c6bddb005de324cba56c01e8154f40eb490d01b610df158d9d45489b25",
+      "kind": "pypi",
+      "version": "11.7.1.2",
+      "requires_python": ">=3",
+      "requires_dist": [
+        "nvidia-cublas-cu12",
+        "nvidia-nvjitlink-cu12",
+        "nvidia-cusparse-cu12"
+      ],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cusparse-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cusparse-cu12/12.5.4.2/json",
+      "metadata_sha256": "baf340d8679d47b86901e217ee1e1d6387b931ecfabebe94a9a3021fb17bc730",
+      "kind": "pypi",
+      "version": "12.5.4.2",
+      "requires_python": ">=3",
+      "requires_dist": [
+        "nvidia-nvjitlink-cu12"
+      ],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-cusparselt-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-cusparselt-cu12/0.6.3/json",
+      "metadata_sha256": "6ebf60c705ef6de05efea17d2ed3eb5dc2a8c8d89f5219cc4c4ecd10c783abcd",
+      "kind": "pypi",
+      "version": "0.6.3",
+      "requires_python": null,
+      "requires_dist": [],
+      "hash_count": 3,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_cusparselt_cu12-0.6.3-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "nvidia-nccl-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-nccl-cu12/2.26.2/json",
+      "metadata_sha256": "fcd56a2500f7ea742f91025f2c37e0820168eaaa975ed825870f9fe0548eddbc",
+      "kind": "pypi",
+      "version": "2.26.2",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_nccl_cu12-2.26.2-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "nvidia-nvjitlink-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-nvjitlink-cu12/12.6.85/json",
+      "metadata_sha256": "e498b66bdaca15e95451ab324ff2229a32c20ef09d592ae4b3c5e7d3fb41a409",
+      "kind": "pypi",
+      "version": "12.6.85",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 3,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_nvjitlink_cu12-12.6.85-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl"
+      ]
+    },
+    "nvidia-nvtx-cu12": {
+      "source": "https://pypi.org/pypi/nvidia-nvtx-cu12/12.6.77/json",
+      "metadata_sha256": "653fbec3e52a561a15f505d9fc66fbbc59c9a72523c80ebe1121495501d853a9",
+      "kind": "pypi",
+      "version": "12.6.77",
+      "requires_python": ">=3",
+      "requires_dist": [],
+      "hash_count": 5,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "nvidia_nvtx_cu12-12.6.77-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+        "nvidia_nvtx_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl"
+      ]
+    },
+    "omegaconf": {
+      "source": "https://pypi.org/pypi/omegaconf/2.4.0/json",
+      "metadata_sha256": "0cc9fa7c6a5360e3365555fc627b26196b8ee6b57b4c6a9e5fb44c4d1f752373",
+      "kind": "pypi",
+      "version": "2.4.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "PyYAML>=5.1.0",
+        "PyYAML>=5.1.0; extra == \"dev\"",
+        "sphinx; extra == \"dev\"",
+        "sphinx-tabs; extra == \"dev\"",
+        "attrs; extra == \"dev\"",
+        "build; extra == \"dev\"",
+        "bump-my-version; extra == \"dev\"",
+        "coveralls; extra == \"dev\"",
+        "nox[pbs]; extra == \"dev\"",
+        "pre-commit; extra == \"dev\"",
+        "pyrefly==1.2.0; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-benchmark; extra == \"dev\"",
+        "pytest-mock; extra == \"dev\"",
+        "ruff==0.15.22; extra == \"dev\"",
+        "towncrier; extra == \"dev\"",
+        "twine; extra == \"dev\"",
+        "pydevd; extra == \"dev\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "omegaconf-2.4.0-py3-none-any.whl"
+      ]
+    },
+    "onnxruntime": {
+      "source": "https://pypi.org/pypi/onnxruntime/1.23.2/json",
+      "metadata_sha256": "08b99b4d50b9638e04bb662cac2636b1db1459cb170a3f263698a1a72310df30",
+      "kind": "pypi",
+      "version": "1.23.2",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "coloredlogs",
+        "flatbuffers",
+        "numpy>=1.21.6",
+        "packaging",
+        "protobuf",
+        "sympy"
+      ],
+      "hash_count": 22,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "onnxruntime-1.23.2-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "opencv-python-headless": {
+      "source": "https://pypi.org/pypi/opencv-python-headless/4.12.0.88/json",
+      "metadata_sha256": "502eda79aa8ff3caf50e155da9a932d96c300ba8e48c830fbe2a7903c3137b09",
+      "kind": "pypi",
+      "version": "4.12.0.88",
+      "requires_python": ">=3.6",
+      "requires_dist": [
+        "numpy<2.0; python_version < \"3.9\"",
+        "numpy<2.3.0,>=2; python_version >= \"3.9\""
+      ],
+      "hash_count": 7,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "opencv_python_headless-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "openpyxl": {
+      "source": "https://pypi.org/pypi/openpyxl/3.1.5/json",
+      "metadata_sha256": "6a922b57aebf0a54ec276b48bab917fa6684a5822e2d40a465972098d46be12e",
+      "kind": "pypi",
+      "version": "3.1.5",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "et-xmlfile"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "openpyxl-3.1.5-py2.py3-none-any.whl"
+      ]
+    },
+    "packaging": {
+      "source": "https://pypi.org/pypi/packaging/26.3/json",
+      "metadata_sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+      "kind": "pypi",
+      "version": "26.3",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "packaging-26.3-py3-none-any.whl"
+      ]
+    },
+    "pandas": {
+      "source": "https://pypi.org/pypi/pandas/3.1.0/json",
+      "metadata_sha256": "22fdd3bd46dfe287d02a70c640837ce39d81f95c453fb613f374c698b5d48129",
+      "kind": "pypi",
+      "version": "3.1.0",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "numpy>=2.0.2; python_version < \"3.14\"",
+        "numpy>=2.3.3; python_version >= \"3.14\"",
+        "python-dateutil>=2.9.0",
+        "tzdata; sys_platform == \"win32\"",
+        "tzdata; sys_platform == \"emscripten\"",
+        "pytest>=8.3.4; extra == \"test\"",
+        "pytest-xdist>=3.6.1; extra == \"test\"",
+        "pyarrow>=16.0.0; extra == \"pyarrow\"",
+        "bottleneck>=1.5.0; extra == \"performance\"",
+        "numba>=0.61.2; extra == \"performance\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"performance\"",
+        "scipy>=1.16.1; extra == \"computation\"",
+        "xarray>=2025.7.1; extra == \"computation\"",
+        "fsspec>=2025.7.0; extra == \"fss\"",
+        "s3fs>=2025.7.0; extra == \"aws\"",
+        "gcsfs>=2025.7.0; extra == \"gcp\"",
+        "odfpy>=1.4.1; extra == \"excel\"",
+        "openpyxl>=3.1.5; extra == \"excel\"",
+        "python-calamine>=0.4.0; extra == \"excel\"",
+        "pyxlsb>=1.0.10; extra == \"excel\"",
+        "xlrd>=2.0.2; extra == \"excel\"",
+        "xlsxwriter>=3.2.5; extra == \"excel\"",
+        "pyarrow>=13.0.0; extra == \"parquet\"",
+        "pyarrow>=13.0.0; extra == \"feather\"",
+        "pyiceberg>=0.9.1; extra == \"iceberg\"",
+        "tables>=3.10.2; extra == \"hdf5\"",
+        "pyreadstat>=1.3.0; extra == \"spss\"",
+        "SQLAlchemy>=2.0.42; extra == \"postgresql\"",
+        "psycopg2>=2.9.10; extra == \"postgresql\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"postgresql\"",
+        "SQLAlchemy>=2.0.42; extra == \"mysql\"",
+        "pymysql>=1.1.1; extra == \"mysql\"",
+        "SQLAlchemy>=2.0.42; extra == \"sql-other\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"sql-other\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"sql-other\"",
+        "beautifulsoup4>=4.13.4; extra == \"html\"",
+        "html5lib>=1.1; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"xml\"",
+        "matplotlib>=3.10.5; extra == \"plot\"",
+        "jinja2>=3.1.6; extra == \"output-formatting\"",
+        "tabulate>=0.9.0; extra == \"output-formatting\"",
+        "PyQt5>=5.15.11; extra == \"clipboard\"",
+        "qtpy>=2.4.3; extra == \"clipboard\"",
+        "zstandard>=0.23.0; extra == \"compression\"",
+        "pytz>=2020.1; extra == \"timezone\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"all\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"all\"",
+        "beautifulsoup4>=4.13.4; extra == \"all\"",
+        "bottleneck>=1.5.0; extra == \"all\"",
+        "fastparquet>=2024.11.0; extra == \"all\"",
+        "fsspec>=2025.7.0; extra == \"all\"",
+        "gcsfs>=2025.7.0; extra == \"all\"",
+        "html5lib>=1.1; extra == \"all\"",
+        "jinja2>=3.1.6; extra == \"all\"",
+        "lxml>=6.0.0; extra == \"all\"",
+        "matplotlib>=3.10.5; extra == \"all\"",
+        "numba>=0.61.2; extra == \"all\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"all\"",
+        "odfpy>=1.4.1; extra == \"all\"",
+        "openpyxl>=3.1.5; extra == \"all\"",
+        "psycopg2>=2.9.10; extra == \"all\"",
+        "pyarrow>=16.0.0; extra == \"all\"",
+        "pyiceberg>=0.9.1; extra == \"all\"",
+        "pymysql>=1.1.1; extra == \"all\"",
+        "PyQt5>=5.15.11; extra == \"all\"",
+        "pyreadstat>=1.3.0; extra == \"all\"",
+        "pytest>=8.3.4; extra == \"all\"",
+        "pytest-xdist>=3.6.1; extra == \"all\"",
+        "python-calamine>=0.4.0; extra == \"all\"",
+        "pytz>=2020.1; extra == \"all\"",
+        "pyxlsb>=1.0.10; extra == \"all\"",
+        "qtpy>=2.4.3; extra == \"all\"",
+        "scipy>=1.16.1; extra == \"all\"",
+        "s3fs>=2025.7.0; extra == \"all\"",
+        "SQLAlchemy>=2.0.42; extra == \"all\"",
+        "tables>=3.10.2; extra == \"all\"",
+        "tabulate>=0.9.0; extra == \"all\"",
+        "xarray>=2025.7.1; extra == \"all\"",
+        "xlrd>=2.0.2; extra == \"all\"",
+        "xlsxwriter>=3.2.5; extra == \"all\"",
+        "zstandard>=0.23.0; extra == \"all\""
+      ],
+      "hash_count": 58,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pandas-3.1.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "pillow": {
+      "source": "https://pypi.org/pypi/pillow/12.3.0/json",
+      "metadata_sha256": "5182199d7ea7bc53cf195aed977f24405f13becd6902f6efbddd3f18336e0b57",
+      "kind": "pypi",
+      "version": "12.3.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "furo; extra == \"docs\"",
+        "olefile; extra == \"docs\"",
+        "sphinx>=8.2; extra == \"docs\"",
+        "sphinx-autobuild; extra == \"docs\"",
+        "sphinx-copybutton; extra == \"docs\"",
+        "sphinx-inline-tabs; extra == \"docs\"",
+        "sphinxext-opengraph; extra == \"docs\"",
+        "olefile; extra == \"fpx\"",
+        "olefile; extra == \"mic\"",
+        "arro3-compute; extra == \"test-arrow\"",
+        "arro3-core; extra == \"test-arrow\"",
+        "nanoarrow; extra == \"test-arrow\"",
+        "pyarrow; extra == \"test-arrow\"",
+        "coverage>=7.4.2; extra == \"tests\"",
+        "defusedxml; extra == \"tests\"",
+        "markdown2; extra == \"tests\"",
+        "olefile; extra == \"tests\"",
+        "packaging; extra == \"tests\"",
+        "pytest; extra == \"tests\"",
+        "pytest-cov; extra == \"tests\"",
+        "pytest-timeout; extra == \"tests\"",
+        "pytest-xdist; extra == \"tests\"",
+        "setuptools; extra == \"tests\"",
+        "trove-classifiers>=2024.10.12; extra == \"tests\"",
+        "defusedxml; extra == \"xmp\""
+      ],
+      "hash_count": 87,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pillow-12.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "pluggy": {
+      "source": "https://pypi.org/pypi/pluggy/1.7.0/json",
+      "metadata_sha256": "9e8f441bba8382eabf6febf386a5b9610cfe0c16b60b96e7b4b1831bd6d96361",
+      "kind": "pypi",
+      "version": "1.7.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pluggy-1.7.0-py3-none-any.whl"
+      ]
+    },
+    "polyfactory": {
+      "source": "https://pypi.org/pypi/polyfactory/3.5.0/json",
+      "metadata_sha256": "fdc07686e8629dfee1f07ec652e7b1048c61d7e9f436265c919c006796a1ef54",
+      "kind": "pypi",
+      "version": "3.5.0",
+      "requires_python": "<4.0,>=3.9",
+      "requires_dist": [
+        "faker>=5.0.0",
+        "typing-extensions>=4.6.0",
+        "attrs>=22.2.0; extra == \"attrs\"",
+        "beanie; extra == \"beanie\"",
+        "pydantic[email]; extra == \"beanie\"",
+        "pymongo<4.9; extra == \"beanie\"",
+        "attrs; extra == \"full\"",
+        "beanie; extra == \"full\"",
+        "msgspec; extra == \"full\"",
+        "odmantic; extra == \"full\"",
+        "pydantic; extra == \"full\"",
+        "sqlalchemy; extra == \"full\"",
+        "msgspec>=0.20.0; extra == \"msgspec\"",
+        "odmantic<1.0.0; extra == \"odmantic\"",
+        "pydantic[email]; extra == \"odmantic\"",
+        "eval-type-backport>=0.2.2; extra == \"pydantic\"",
+        "pydantic[email]>=1.10; extra == \"pydantic\"",
+        "sqlalchemy>=1.4.29; extra == \"sqlalchemy\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "polyfactory-3.5.0-py3-none-any.whl"
+      ]
+    },
+    "protobuf": {
+      "source": "https://pypi.org/pypi/protobuf/7.36.2/json",
+      "metadata_sha256": "090d6bb0e21b26299221770a798ec48c5d45dc4d71a374b44b5e0e7c3a7c47f1",
+      "kind": "pypi",
+      "version": "7.36.2",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 8,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl",
+        "protobuf-7.36.2-py3-none-any.whl"
+      ]
+    },
+    "psutil": {
+      "source": "https://pypi.org/pypi/psutil/7.2.2/json",
+      "metadata_sha256": "84f9d2597c3c15fe19d1ce069bfdbf25951dc423dc51d67c3979468c029b6415",
+      "kind": "pypi",
+      "version": "7.2.2",
+      "requires_python": ">=3.6",
+      "requires_dist": [
+        "psleak; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-instafail; extra == \"dev\"",
+        "pytest-xdist; extra == \"dev\"",
+        "setuptools; extra == \"dev\"",
+        "pywin32; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"dev\"",
+        "wheel; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"dev\"",
+        "wmi; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"dev\"",
+        "abi3audit; extra == \"dev\"",
+        "black; extra == \"dev\"",
+        "check-manifest; extra == \"dev\"",
+        "coverage; extra == \"dev\"",
+        "packaging; extra == \"dev\"",
+        "pylint; extra == \"dev\"",
+        "pyperf; extra == \"dev\"",
+        "pypinfo; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "requests; extra == \"dev\"",
+        "rstcheck; extra == \"dev\"",
+        "ruff; extra == \"dev\"",
+        "sphinx; extra == \"dev\"",
+        "sphinx_rtd_theme; extra == \"dev\"",
+        "toml-sort; extra == \"dev\"",
+        "twine; extra == \"dev\"",
+        "validate-pyproject[all]; extra == \"dev\"",
+        "virtualenv; extra == \"dev\"",
+        "vulture; extra == \"dev\"",
+        "wheel; extra == \"dev\"",
+        "colorama; os_name == \"nt\" and extra == \"dev\"",
+        "pyreadline3; os_name == \"nt\" and extra == \"dev\"",
+        "psleak; extra == \"test\"",
+        "pytest; extra == \"test\"",
+        "pytest-instafail; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "setuptools; extra == \"test\"",
+        "pywin32; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"test\"",
+        "wheel; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"test\"",
+        "wmi; (os_name == \"nt\" and implementation_name != \"pypy\") and extra == \"test\""
+      ],
+      "hash_count": 21,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "pyclipper": {
+      "source": "https://pypi.org/pypi/pyclipper/1.4.0/json",
+      "metadata_sha256": "3bf9679140c7a5c56c926b3d36661b4c960c82be5ef622f2464e5f470e522144",
+      "kind": "pypi",
+      "version": "1.4.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 36,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pyclipper-1.4.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+      ]
+    },
+    "pydantic": {
+      "source": "https://pypi.org/pypi/pydantic/2.14.1/json",
+      "metadata_sha256": "2143a4d2f068e47738a36687ffe2aed5eeee42fdfa1e614691dd345001d6108f",
+      "kind": "pypi",
+      "version": "2.14.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "annotated-types>=0.6.0",
+        "pydantic-core==2.50.1",
+        "typing-extensions>=4.16.0",
+        "typing-inspection>=0.4.4",
+        "email-validator>=2.0.0; extra == \"email\"",
+        "tzdata; platform_system == \"Windows\" and extra == \"timezone\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pydantic-2.14.1-py3-none-any.whl"
+      ]
+    },
+    "pydantic-core": {
+      "source": "https://pypi.org/pypi/pydantic-core/2.50.1/json",
+      "metadata_sha256": "54b32a94c43371126f133ecba6ee663dbda20394d1ffad4c4bc47fe2db6317d0",
+      "kind": "pypi",
+      "version": "2.50.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "hash_count": 137,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "pydantic-settings": {
+      "source": "https://pypi.org/pypi/pydantic-settings/2.16.2/json",
+      "metadata_sha256": "63cfe4ecd3df91f19aaee6bc02e58061e5b7547b397fc4d480542dc0e48ddc93",
+      "kind": "pypi",
+      "version": "2.16.2",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "pydantic>=2.7.0",
+        "python-dotenv>=1.2.2",
+        "typing-extensions>=4.0.0",
+        "typing-inspection>=0.4.0",
+        "boto3>=1.35.0; extra == \"aws-secrets-manager\"",
+        "boto3>=1.35.0; extra == \"aws-systems-manager\"",
+        "azure-identity>=1.16.0; extra == \"azure-key-vault\"",
+        "azure-keyvault-secrets>=4.8.0; extra == \"azure-key-vault\"",
+        "google-cloud-secret-manager>=2.23.1; extra == \"gcp-secret-manager\"",
+        "pyyaml>=6.0.1; extra == \"yaml\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pydantic_settings-2.16.2-py3-none-any.whl"
+      ]
+    },
+    "pygments": {
+      "source": "https://pypi.org/pypi/pygments/2.21.0/json",
+      "metadata_sha256": "330104a10adc8a587e3f98f4e207557125ca0c1d489e129334da5acb2b813a03",
+      "kind": "pypi",
+      "version": "2.21.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "colorama>=0.4.6; extra == \"windows-terminal\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pygments-2.21.0-py3-none-any.whl"
+      ]
+    },
+    "pylatexenc": {
+      "source": "https://pypi.org/pypi/pylatexenc/2.11/json",
+      "metadata_sha256": "e2f7464e021a59594305bb8226df920841342f04a3ed823d67bf44dcc4a9bff5",
+      "kind": "pypi",
+      "version": "2.11",
+      "requires_python": null,
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pylatexenc-2.11-py2.py3-none-any.whl"
+      ]
+    },
+    "pypdfium2": {
+      "source": "https://pypi.org/pypi/pypdfium2/5.14.0/json",
+      "metadata_sha256": "d115b3bd9d7fb73a678414e27440f1b855d26b5e430199f74ab7ccef85cde548",
+      "kind": "pypi",
+      "version": "5.14.0",
+      "requires_python": ">=3.6",
+      "requires_dist": [],
+      "hash_count": 23,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pypdfium2-5.14.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "python-dateutil": {
+      "source": "https://pypi.org/pypi/python-dateutil/3.0.0/json",
+      "metadata_sha256": "6e33ca795417ca662f2820675158d64500733c354a7f7b81184a5471886240a7",
+      "kind": "pypi",
+      "version": "3.0.0",
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "requires_dist": [
+        "six>=1.6",
+        "tzdata"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "python_dateutil-3.0.0-py2.py3-none-any.whl"
+      ]
+    },
+    "python-docx": {
+      "source": "https://pypi.org/pypi/python-docx/1.2.0/json",
+      "metadata_sha256": "7dc6149fa5a8f34d922a1bfe6730be72bbb889bd879cba60776dccd597fac775",
+      "kind": "pypi",
+      "version": "1.2.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "lxml>=3.1.0",
+        "typing_extensions>=4.9.0"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "python_docx-1.2.0-py3-none-any.whl"
+      ]
+    },
+    "python-dotenv": {
+      "source": "https://pypi.org/pypi/python-dotenv/1.2.4/json",
+      "metadata_sha256": "89701376846132aefd76202d07dad6e84febe4a426a12973004e13018af15c41",
+      "kind": "pypi",
+      "version": "1.2.4",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "click>=5.0; extra == \"cli\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "python_dotenv-1.2.4-py3-none-any.whl"
+      ]
+    },
+    "python-pptx": {
+      "source": "https://pypi.org/pypi/python-pptx/1.0.2/json",
+      "metadata_sha256": "73ac91e7145ed2ed2e4b41a4acb972f1a6b410debcf116f9f4c46848bea9623c",
+      "kind": "pypi",
+      "version": "1.0.2",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "Pillow>=3.3.2",
+        "XlsxWriter>=0.5.7",
+        "lxml>=3.1.0",
+        "typing-extensions>=4.9.0"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "python_pptx-1.0.2-py3-none-any.whl"
+      ]
+    },
+    "pyyaml": {
+      "source": "https://pypi.org/pypi/pyyaml/6.0.3/json",
+      "metadata_sha256": "c3f35597bc2f08cc990c2a5fe57bef6687b3a3d7c61d8b0ba4cc067777eb1def",
+      "kind": "pypi",
+      "version": "6.0.3",
+      "requires_python": ">=3.8",
+      "requires_dist": [],
+      "hash_count": 73,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "rapidocr": {
+      "source": "https://pypi.org/pypi/rapidocr/3.10.0/json",
+      "metadata_sha256": "0adb90bf70b163712e23b75ea58454f7780f60900234e13ca77a2a3bb705ba99",
+      "kind": "pypi",
+      "version": "3.10.0",
+      "requires_python": "<4,>=3.8",
+      "requires_dist": [
+        "pyclipper>=1.2.0",
+        "opencv-python-headless>=4.5.1.48",
+        "numpy<3.0.0,>=1.19.5",
+        "six>=1.15.0",
+        "Shapely!=2.0.4,>=1.7.1",
+        "PyYAML",
+        "Pillow",
+        "tqdm",
+        "omegaconf!=2.2.1",
+        "requests",
+        "colorlog",
+        "python-bidi<1.0,>=0.4.2; extra == \"rtl\""
+      ],
+      "hash_count": 1,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "rapidocr-3.10.0-py3-none-any.whl"
+      ]
+    },
+    "referencing": {
+      "source": "https://pypi.org/pypi/referencing/0.37.0/json",
+      "metadata_sha256": "a67968d8e03aa45e650fc2ff0d07796676db1a7841ce8e810bf2dba5af689464",
+      "kind": "pypi",
+      "version": "0.37.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "attrs>=22.2.0",
+        "rpds-py>=0.7.0",
+        "typing-extensions>=4.4.0; python_version < \"3.13\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "referencing-0.37.0-py3-none-any.whl"
+      ]
+    },
+    "regex": {
+      "source": "https://pypi.org/pypi/regex/2026.9.29/json",
+      "metadata_sha256": "08fc1fa7daa8db0404cbbaea4eed71acc7798421386d3de50f92302068fe58c5",
+      "kind": "pypi",
+      "version": "2026.9.29",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 130,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "regex-2026.9.29-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "requests": {
+      "source": "https://pypi.org/pypi/requests/2.34.2/json",
+      "metadata_sha256": "8622e50ffd295ed759ec793f2a009172a4ed0204bbc5e948de23111bc3d2aeae",
+      "kind": "pypi",
+      "version": "2.34.2",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "charset_normalizer<4,>=2",
+        "idna<4,>=2.5",
+        "urllib3<3,>=1.26",
+        "certifi>=2023.5.7",
+        "PySocks!=1.5.7,>=1.5.6; extra == \"socks\"",
+        "chardet<8,>=3.0.2; extra == \"use-chardet-on-py3\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "requests-2.34.2-py3-none-any.whl"
+      ]
+    },
+    "rich": {
+      "source": "https://pypi.org/pypi/rich/15.0.0/json",
+      "metadata_sha256": "455015cb0b237a24819d91236152ad0e71b2be39a83cbe6afa0e29ea8aafa550",
+      "kind": "pypi",
+      "version": "15.0.0",
+      "requires_python": ">=3.9.0",
+      "requires_dist": [
+        "ipywidgets<9,>=7.5.1; extra == \"jupyter\"",
+        "markdown-it-py>=2.2.0",
+        "pygments<3.0.0,>=2.13.0"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "rich-15.0.0-py3-none-any.whl"
+      ]
+    },
+    "rpds-py": {
+      "source": "https://pypi.org/pypi/rpds-py/2026.9.1/json",
+      "metadata_sha256": "93808b9ff27aabe26d9a4f03b28422d1d05c3fb8716d88f3826e7ddf4b0b258b",
+      "kind": "pypi",
+      "version": "2026.9.1",
+      "requires_python": ">=3.11",
+      "requires_dist": [],
+      "hash_count": 128,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "rtree": {
+      "source": "https://pypi.org/pypi/rtree/1.4.1/json",
+      "metadata_sha256": "90c337d5211cbc8dd114061af9aa82b13a85fc65cb29e85b495a5af763d0fad5",
+      "kind": "pypi",
+      "version": "1.4.1",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 9,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "rtree-1.4.1-py3-none-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "safetensors": {
+      "source": "https://pypi.org/pypi/safetensors/0.8.0/json",
+      "metadata_sha256": "b8d395b433d0319498c9192ed323b86a84d82b5f40b4adf1b97b3bf8963fafad",
+      "kind": "pypi",
+      "version": "0.8.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "safetensors[torch]; extra == \"all\"",
+        "safetensors[numpy]; extra == \"all\"",
+        "safetensors[jax]; extra == \"all\"",
+        "safetensors[paddlepaddle]; extra == \"all\"",
+        "safetensors[convert]; extra == \"all\"",
+        "safetensors[quality]; extra == \"all\"",
+        "safetensors[testing]; extra == \"all\"",
+        "safetensors[torch]; extra == \"convert\"",
+        "huggingface-hub>=1.4; extra == \"convert\"",
+        "safetensors[all]; extra == \"dev\"",
+        "safetensors[pinned-tf]; extra == \"dev\"",
+        "safetensors[numpy]; extra == \"jax\"",
+        "flax>=0.6.3; extra == \"jax\"",
+        "jax>=0.3.25; extra == \"jax\"",
+        "jaxlib>=0.3.25; extra == \"jax\"",
+        "mlx>=0.0.9; extra == \"mlx\"",
+        "numpy>=1.24.6; extra == \"numpy\"",
+        "safetensors[numpy]; extra == \"paddlepaddle\"",
+        "paddlepaddle>=2.4.1; extra == \"paddlepaddle\"",
+        "safetensors[numpy]; extra == \"pinned-tf\"",
+        "tensorflow==2.18.0; extra == \"pinned-tf\"",
+        "ruff; extra == \"quality\"",
+        "safetensors[numpy]; extra == \"tensorflow\"",
+        "tensorflow>=2.11.0; extra == \"tensorflow\"",
+        "safetensors[numpy]; extra == \"testing\"",
+        "h5py>=3.7.0; extra == \"testing\"",
+        "setuptools-rust>=1.12.0; extra == \"testing\"",
+        "pytest>=9.0; extra == \"testing\"",
+        "pytest-benchmark>=5.2; extra == \"testing\"",
+        "hypothesis>=6.70.2; extra == \"testing\"",
+        "fsspec>=2024.6.0; extra == \"testing\"",
+        "s3fs>=2024.6.0; extra == \"testing\"",
+        "safetensors[numpy]; extra == \"tf-nightly\"",
+        "tf-nightly; extra == \"tf-nightly\"",
+        "safetensors[numpy]; extra == \"torch\"",
+        "torch>=2.4; extra == \"torch\""
+      ],
+      "hash_count": 17,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "scipy": {
+      "source": "https://pypi.org/pypi/scipy/1.17.1/json",
+      "metadata_sha256": "5a0dc75a7c2399082d11c0af1ec97d39212a971cc5e73efac6d935a5359ff648",
+      "kind": "pypi",
+      "version": "1.17.1",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "numpy<2.7,>=1.26.4",
+        "pytest>=8.0.0; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "asv; extra == \"test\"",
+        "mpmath; extra == \"test\"",
+        "gmpy2; extra == \"test\"",
+        "threadpoolctl; extra == \"test\"",
+        "scikit-umfpack; extra == \"test\"",
+        "pooch; extra == \"test\"",
+        "hypothesis>=6.30; extra == \"test\"",
+        "array-api-strict>=2.3.1; extra == \"test\"",
+        "Cython; extra == \"test\"",
+        "meson; extra == \"test\"",
+        "ninja; sys_platform != \"emscripten\" and extra == \"test\"",
+        "sphinx<8.2.0,>=5.0.0; extra == \"doc\"",
+        "intersphinx_registry; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.15.2; extra == \"doc\"",
+        "sphinx-copybutton; extra == \"doc\"",
+        "sphinx-design>=0.4.0; extra == \"doc\"",
+        "matplotlib>=3.5; extra == \"doc\"",
+        "numpydoc; extra == \"doc\"",
+        "jupytext; extra == \"doc\"",
+        "myst-nb>=1.2.0; extra == \"doc\"",
+        "pooch; extra == \"doc\"",
+        "jupyterlite-sphinx>=0.19.1; extra == \"doc\"",
+        "jupyterlite-pyodide-kernel; extra == \"doc\"",
+        "linkify-it-py; extra == \"doc\"",
+        "tabulate; extra == \"doc\"",
+        "click<8.3.0; extra == \"dev\"",
+        "spin; extra == \"dev\"",
+        "mypy==1.10.0; extra == \"dev\"",
+        "typing_extensions; extra == \"dev\"",
+        "types-psutil; extra == \"dev\"",
+        "pycodestyle; extra == \"dev\"",
+        "ruff>=0.12.0; extra == \"dev\"",
+        "cython-lint>=0.12.2; extra == \"dev\""
+      ],
+      "hash_count": 61,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "semchunk": {
+      "source": "https://pypi.org/pypi/semchunk/3.2.5/json",
+      "metadata_sha256": "e0f1bf25605e67bd6ab781fbe6776df045b5b221a76858b65c978c45b6989615",
+      "kind": "pypi",
+      "version": "3.2.5",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "mpire[dill]",
+        "tqdm"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "semchunk-3.2.5-py3-none-any.whl"
+      ]
+    },
+    "setuptools": {
+      "source": "https://pypi.org/pypi/setuptools/84.2.1/json",
+      "metadata_sha256": "d75de8ba0d3304a3d74484fb9f340edb87ef02712da4fa02a2ed92e71b0572dd",
+      "kind": "pypi",
+      "version": "84.2.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "pytest!=8.1.*,>=6; extra == \"test\"",
+        "virtualenv>=13.0.0; extra == \"test\"",
+        "wheel>=0.44.0; extra == \"test\"",
+        "pip>=19.1; extra == \"test\"",
+        "packaging>=26.3; extra == \"test\"",
+        "jaraco.envs>=2.2; extra == \"test\"",
+        "pytest-xdist>=3; extra == \"test\"",
+        "jaraco.path>=3.7.2; extra == \"test\"",
+        "build[virtualenv]>=1.0.3; extra == \"test\"",
+        "filelock>=3.4.0; extra == \"test\"",
+        "ini2toml[lite]>=0.14; extra == \"test\"",
+        "tomli-w>=1.0.0; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+        "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+        "pytest-home>=0.5; extra == \"test\"",
+        "pytest-subprocess; extra == \"test\"",
+        "pyproject-hooks!=1.1; extra == \"test\"",
+        "jaraco.test>=5.5; extra == \"test\"",
+        "sphinx>=3.5; extra == \"doc\"",
+        "jaraco.packaging>=9.3; extra == \"doc\"",
+        "rst.linker>=1.9; extra == \"doc\"",
+        "furo; extra == \"doc\"",
+        "sphinx-lint; extra == \"doc\"",
+        "jaraco.tidelift>=1.4; extra == \"doc\"",
+        "pygments-github-lexers==0.0.5; extra == \"doc\"",
+        "sphinx-favicon; extra == \"doc\"",
+        "sphinx-inline-tabs; extra == \"doc\"",
+        "sphinx-reredirects; extra == \"doc\"",
+        "sphinxcontrib-towncrier; extra == \"doc\"",
+        "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+        "pyproject-hooks!=1.1; extra == \"doc\"",
+        "towncrier<24.7; extra == \"doc\"",
+        "packaging>=26.3; extra == \"core\"",
+        "more_itertools>=8.8; extra == \"core\"",
+        "jaraco.text>=3.7; extra == \"core\"",
+        "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+        "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+        "wheel>=0.43.0; extra == \"core\"",
+        "jaraco.functools>=4; extra == \"core\"",
+        "more_itertools; extra == \"core\"",
+        "pytest-checkdocs>=2.14; extra == \"check\"",
+        "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+        "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+        "pytest-cov; extra == \"cover\"",
+        "pytest-enabler>=3.4; extra == \"enabler\"",
+        "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+        "mypy==1.18.*; extra == \"type\"",
+        "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+        "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "setuptools-84.2.1-py3-none-any.whl"
+      ]
+    },
+    "shapely": {
+      "source": "https://pypi.org/pypi/shapely/2.2.0/json",
+      "metadata_sha256": "048a60d8cc4faeb79c700a3197d71a5d307e92a7748787f281f19667161bee99",
+      "kind": "pypi",
+      "version": "2.2.0",
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "numpy>=1.26"
+      ],
+      "hash_count": 64,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "shapely-2.2.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "shellingham": {
+      "source": "https://pypi.org/pypi/shellingham/1.5.4/json",
+      "metadata_sha256": "9381443cd6295d50fc7f7bd34a457243b0f3a54732cde45b0fc2d0994b61f3af",
+      "kind": "pypi",
+      "version": "1.5.4",
+      "requires_python": ">=3.7",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "shellingham-1.5.4-py2.py3-none-any.whl"
+      ]
+    },
+    "six": {
+      "source": "https://pypi.org/pypi/six/1.17.0/json",
+      "metadata_sha256": "d8de39dd52b73048d81a8fd78022ee2bc72f8b568bcf0d88e5d5069c302b1208",
+      "kind": "pypi",
+      "version": "1.17.0",
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "six-1.17.0-py2.py3-none-any.whl"
+      ]
+    },
+    "soupsieve": {
+      "source": "https://pypi.org/pypi/soupsieve/3.0.4/json",
+      "metadata_sha256": "e3b2bae7a8dc84d3a105f185938dd135a59445c5cf29805b68bfc97ab2345467",
+      "kind": "pypi",
+      "version": "3.0.4",
+      "requires_python": ">=3.11.5",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "soupsieve-3.0.4-py3-none-any.whl"
+      ]
+    },
+    "sympy": {
+      "source": "https://pypi.org/pypi/sympy/1.14.0/json",
+      "metadata_sha256": "7f17c97b2d9ccec17969f30bd7e43c58db3de1145cd1cf00773e48991048d176",
+      "kind": "pypi",
+      "version": "1.14.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "mpmath<1.4,>=1.1.0",
+        "pytest>=7.1.0; extra == \"dev\"",
+        "hypothesis>=6.70.0; extra == \"dev\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "sympy-1.14.0-py3-none-any.whl"
+      ]
+    },
+    "tabulate": {
+      "source": "https://pypi.org/pypi/tabulate/0.10.0/json",
+      "metadata_sha256": "322b7e93eb2cc071467a6576f4a7f282b1b3957418d238030f898de253057821",
+      "kind": "pypi",
+      "version": "0.10.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "wcwidth; extra == \"widechars\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tabulate-0.10.0-py3-none-any.whl"
+      ]
+    },
+    "tokenizers": {
+      "source": "https://pypi.org/pypi/tokenizers/0.22.2/json",
+      "metadata_sha256": "8ae49a98d1383e64acce0c8ee5e856bcfffda54d77b5e44e4f2313db9a4c2f9d",
+      "kind": "pypi",
+      "version": "0.22.2",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "huggingface-hub<2.0,>=0.16.4",
+        "pytest; extra == \"testing\"",
+        "pytest-asyncio; extra == \"testing\"",
+        "requests; extra == \"testing\"",
+        "numpy; extra == \"testing\"",
+        "datasets; extra == \"testing\"",
+        "ruff; extra == \"testing\"",
+        "ty; extra == \"testing\"",
+        "sphinx; extra == \"docs\"",
+        "sphinx-rtd-theme; extra == \"docs\"",
+        "setuptools-rust; extra == \"docs\"",
+        "tokenizers[testing]; extra == \"dev\""
+      ],
+      "hash_count": 24,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "torch": {
+      "source": "https://download-r2.pytorch.org/whl/cu126/torch-2.7.1%2Bcu126-cp311-cp311-manylinux_2_28_x86_64.whl#sha256=e1a8465165708c2e2e90786ade8a3e1b1d01eca1f022792cd397caad9d8c21bc",
+      "kind": "direct-wheel",
+      "hashes": [
+        "e1a8465165708c2e2e90786ade8a3e1b1d01eca1f022792cd397caad9d8c21bc"
+      ],
+      "compatible_wheels": [
+        "torch-2.7.1+cu126-cp311-cp311-manylinux_2_28_x86_64.whl"
+      ],
+      "metadata_check": "Exact wheel metadata resolved by uv; not substituted with PyPI torch metadata."
+    },
+    "torchvision": {
+      "source": "https://download-r2.pytorch.org/whl/cu126/torchvision-0.22.1%2Bcu126-cp311-cp311-manylinux_2_28_x86_64.whl#sha256=b49a0e0c10680e8ee8cb703227640a4b6376d5a285fe73b3254f304707cd8d2f",
+      "kind": "direct-wheel",
+      "hashes": [
+        "b49a0e0c10680e8ee8cb703227640a4b6376d5a285fe73b3254f304707cd8d2f"
+      ],
+      "compatible_wheels": [
+        "torchvision-0.22.1+cu126-cp311-cp311-manylinux_2_28_x86_64.whl"
+      ],
+      "metadata_check": "Exact wheel metadata resolved by uv; not substituted with PyPI torch metadata."
+    },
+    "tqdm": {
+      "source": "https://pypi.org/pypi/tqdm/4.70.1/json",
+      "metadata_sha256": "0589819a1bc3437c8f215d95f3f64ff24d602dc6a62598eb8d2e420c8e6a0b25",
+      "kind": "pypi",
+      "version": "4.70.1",
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "colorama; platform_system == \"Windows\"",
+        "requests; extra == \"discord\"",
+        "envwrap; extra == \"discord\"",
+        "slack-sdk; extra == \"slack\"",
+        "envwrap; extra == \"slack\"",
+        "requests; extra == \"telegram\"",
+        "envwrap; extra == \"telegram\"",
+        "ipywidgets>=6; extra == \"notebook\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tqdm-4.70.1-py3-none-any.whl"
+      ]
+    },
+    "transformers": {
+      "source": "https://pypi.org/pypi/transformers/5.10.1/json",
+      "metadata_sha256": "4ffd3c40ee8d69ce1bf8097c0139ccf1d8f70a47b262e84d78d101f5e793058f",
+      "kind": "pypi",
+      "version": "5.10.1",
+      "requires_python": ">=3.10.0",
+      "requires_dist": [
+        "pytest-timeout; extra == \"dev\"",
+        "pytest-env; extra == \"dev\"",
+        "timeout-decorator; extra == \"dev\"",
+        "parameterized>=0.9; extra == \"dev\"",
+        "psutil; extra == \"dev\"",
+        "dill<0.3.5; extra == \"dev\"",
+        "evaluate>=0.4.6; extra == \"dev\"",
+        "rouge-score!=0.0.7,!=0.0.8,!=0.1,!=0.1.1; extra == \"dev\"",
+        "nltk<=3.8.1; extra == \"dev\"",
+        "sacremoses; extra == \"dev\"",
+        "rjieba; extra == \"dev\"",
+        "beautifulsoup4; extra == \"dev\"",
+        "tensorboard; extra == \"dev\"",
+        "sacrebleu<2.0.0,>=1.4.12; extra == \"dev\"",
+        "filelock; extra == \"dev\"",
+        "hf-doc-builder; extra == \"dev\"",
+        "datasets>=2.15.0; extra == \"dev\"",
+        "ruff==0.14.10; extra == \"dev\"",
+        "GitPython<3.1.19; extra == \"dev\"",
+        "urllib3<2.0.0; extra == \"dev\"",
+        "libcst; extra == \"dev\"",
+        "rich; extra == \"dev\"",
+        "ty==0.0.20; extra == \"dev\"",
+        "tomli; extra == \"dev\"",
+        "transformers-mlinter==0.1.1; extra == \"dev\"",
+        "faiss-cpu; extra == \"dev\"",
+        "datasets>=2.15.0; extra == \"dev\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"dev\"",
+        "protobuf; extra == \"dev\"",
+        "openai>=1.98.0; extra == \"dev\"",
+        "pydantic>=2; extra == \"dev\"",
+        "uvicorn; extra == \"dev\"",
+        "fastapi; extra == \"dev\"",
+        "starlette; extra == \"dev\"",
+        "rich; extra == \"dev\"",
+        "torch>=2.4; extra == \"dev\"",
+        "accelerate>=1.1.0; extra == \"dev\"",
+        "mistral-common[image]>=1.10.0; extra == \"dev\"",
+        "fugashi>=1.0; extra == \"dev\"",
+        "ipadic<2.0,>=1.0.0; extra == \"dev\"",
+        "unidic_lite>=1.0.7; extra == \"dev\"",
+        "unidic>=1.0.2; extra == \"dev\"",
+        "rhoknp<1.3.1,>=1.1.0; extra == \"dev\"",
+        "sudachipy>=0.6.6; extra == \"dev\"",
+        "sudachidict_core>=20220729; extra == \"dev\"",
+        "scikit-learn; extra == \"dev\"",
+        "huggingface-hub<2.0,>=1.5.0",
+        "numpy>=1.17",
+        "packaging>=20.0",
+        "pyyaml>=5.1",
+        "regex>=2025.10.22",
+        "tokenizers<=0.23.0,>=0.22.0",
+        "typer",
+        "safetensors>=0.4.3",
+        "tqdm>=4.27",
+        "torch>=2.4; extra == \"torch\"",
+        "accelerate>=1.1.0; extra == \"torch\"",
+        "torchvision; extra == \"vision\"",
+        "Pillow<=15.0,>=10.0.1; extra == \"vision\"",
+        "torchaudio; extra == \"audio\"",
+        "librosa; extra == \"audio\"",
+        "pyctcdecode>=0.4.0; extra == \"audio\"",
+        "phonemizer; extra == \"audio\"",
+        "av; extra == \"video\"",
+        "timm>=1.0.23; extra == \"timm\"",
+        "datasets>=2.15.0; extra == \"quality\"",
+        "ruff==0.14.10; extra == \"quality\"",
+        "GitPython<3.1.19; extra == \"quality\"",
+        "urllib3<2.0.0; extra == \"quality\"",
+        "libcst; extra == \"quality\"",
+        "rich; extra == \"quality\"",
+        "ty==0.0.20; extra == \"quality\"",
+        "tomli; extra == \"quality\"",
+        "transformers-mlinter==0.1.1; extra == \"quality\"",
+        "hf-doc-builder; extra == \"docs\"",
+        "kernels<0.13,>=0.12.0; extra == \"kernels\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"sentencepiece\"",
+        "protobuf; extra == \"sentencepiece\"",
+        "tiktoken; extra == \"tiktoken\"",
+        "blobfile; extra == \"tiktoken\"",
+        "mistral-common[image]>=1.10.0; extra == \"mistral-common\"",
+        "jinja2>=3.1.0; extra == \"chat-template\"",
+        "jmespath>=1.0.1; extra == \"chat-template\"",
+        "scikit-learn; extra == \"sklearn\"",
+        "accelerate>=1.1.0; extra == \"accelerate\"",
+        "faiss-cpu; extra == \"retrieval\"",
+        "datasets>=2.15.0; extra == \"retrieval\"",
+        "sagemaker>=2.31.0; extra == \"sagemaker\"",
+        "deepspeed>=0.9.3; extra == \"deepspeed\"",
+        "accelerate>=1.1.0; extra == \"deepspeed\"",
+        "optuna; extra == \"optuna\"",
+        "kernels<0.13,>=0.12.0; extra == \"integrations\"",
+        "optuna; extra == \"integrations\"",
+        "codecarbon>=2.8.1; extra == \"integrations\"",
+        "ray[tune]>=2.7.0; extra == \"integrations\"",
+        "ray[tune]>=2.7.0; extra == \"ray\"",
+        "codecarbon>=2.8.1; extra == \"codecarbon\"",
+        "openai>=1.98.0; extra == \"serving\"",
+        "pydantic>=2; extra == \"serving\"",
+        "uvicorn; extra == \"serving\"",
+        "fastapi; extra == \"serving\"",
+        "starlette; extra == \"serving\"",
+        "rich; extra == \"serving\"",
+        "torch>=2.4; extra == \"serving\"",
+        "accelerate>=1.1.0; extra == \"serving\"",
+        "num2words; extra == \"num2words\"",
+        "optimum-benchmark>=0.3.0; extra == \"benchmark\"",
+        "fugashi>=1.0; extra == \"ja\"",
+        "ipadic<2.0,>=1.0.0; extra == \"ja\"",
+        "unidic_lite>=1.0.7; extra == \"ja\"",
+        "unidic>=1.0.2; extra == \"ja\"",
+        "rhoknp<1.3.1,>=1.1.0; extra == \"ja\"",
+        "sudachipy>=0.6.6; extra == \"ja\"",
+        "sudachidict_core>=20220729; extra == \"ja\"",
+        "pytest<9.0.0,>=7.2.0; extra == \"testing\"",
+        "pytest-asyncio>=1.2.0; extra == \"testing\"",
+        "pytest-random-order; extra == \"testing\"",
+        "pytest-rich; extra == \"testing\"",
+        "pytest-xdist; extra == \"testing\"",
+        "pytest-order; extra == \"testing\"",
+        "pytest-rerunfailures<16.0; extra == \"testing\"",
+        "pytest-timeout; extra == \"testing\"",
+        "pytest-env; extra == \"testing\"",
+        "timeout-decorator; extra == \"testing\"",
+        "parameterized>=0.9; extra == \"testing\"",
+        "psutil; extra == \"testing\"",
+        "dill<0.3.5; extra == \"testing\"",
+        "evaluate>=0.4.6; extra == \"testing\"",
+        "rouge-score!=0.0.7,!=0.0.8,!=0.1,!=0.1.1; extra == \"testing\"",
+        "nltk<=3.8.1; extra == \"testing\"",
+        "sacremoses; extra == \"testing\"",
+        "rjieba; extra == \"testing\"",
+        "beautifulsoup4; extra == \"testing\"",
+        "tensorboard; extra == \"testing\"",
+        "sacrebleu<2.0.0,>=1.4.12; extra == \"testing\"",
+        "filelock; extra == \"testing\"",
+        "hf-doc-builder; extra == \"testing\"",
+        "datasets>=2.15.0; extra == \"testing\"",
+        "ruff==0.14.10; extra == \"testing\"",
+        "GitPython<3.1.19; extra == \"testing\"",
+        "urllib3<2.0.0; extra == \"testing\"",
+        "libcst; extra == \"testing\"",
+        "rich; extra == \"testing\"",
+        "ty==0.0.20; extra == \"testing\"",
+        "tomli; extra == \"testing\"",
+        "transformers-mlinter==0.1.1; extra == \"testing\"",
+        "faiss-cpu; extra == \"testing\"",
+        "datasets>=2.15.0; extra == \"testing\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"testing\"",
+        "protobuf; extra == \"testing\"",
+        "openai>=1.98.0; extra == \"testing\"",
+        "pydantic>=2; extra == \"testing\"",
+        "uvicorn; extra == \"testing\"",
+        "fastapi; extra == \"testing\"",
+        "starlette; extra == \"testing\"",
+        "rich; extra == \"testing\"",
+        "torch>=2.4; extra == \"testing\"",
+        "accelerate>=1.1.0; extra == \"testing\"",
+        "mistral-common[image]>=1.10.0; extra == \"testing\"",
+        "deepspeed>=0.9.3; extra == \"deepspeed-testing\"",
+        "accelerate>=1.1.0; extra == \"deepspeed-testing\"",
+        "pytest<9.0.0,>=7.2.0; extra == \"deepspeed-testing\"",
+        "pytest-asyncio>=1.2.0; extra == \"deepspeed-testing\"",
+        "pytest-random-order; extra == \"deepspeed-testing\"",
+        "pytest-rich; extra == \"deepspeed-testing\"",
+        "pytest-xdist; extra == \"deepspeed-testing\"",
+        "pytest-order; extra == \"deepspeed-testing\"",
+        "pytest-rerunfailures<16.0; extra == \"deepspeed-testing\"",
+        "pytest-timeout; extra == \"deepspeed-testing\"",
+        "pytest-env; extra == \"deepspeed-testing\"",
+        "timeout-decorator; extra == \"deepspeed-testing\"",
+        "parameterized>=0.9; extra == \"deepspeed-testing\"",
+        "psutil; extra == \"deepspeed-testing\"",
+        "dill<0.3.5; extra == \"deepspeed-testing\"",
+        "evaluate>=0.4.6; extra == \"deepspeed-testing\"",
+        "rouge-score!=0.0.7,!=0.0.8,!=0.1,!=0.1.1; extra == \"deepspeed-testing\"",
+        "nltk<=3.8.1; extra == \"deepspeed-testing\"",
+        "sacremoses; extra == \"deepspeed-testing\"",
+        "rjieba; extra == \"deepspeed-testing\"",
+        "beautifulsoup4; extra == \"deepspeed-testing\"",
+        "tensorboard; extra == \"deepspeed-testing\"",
+        "sacrebleu<2.0.0,>=1.4.12; extra == \"deepspeed-testing\"",
+        "filelock; extra == \"deepspeed-testing\"",
+        "hf-doc-builder; extra == \"deepspeed-testing\"",
+        "datasets>=2.15.0; extra == \"deepspeed-testing\"",
+        "ruff==0.14.10; extra == \"deepspeed-testing\"",
+        "GitPython<3.1.19; extra == \"deepspeed-testing\"",
+        "urllib3<2.0.0; extra == \"deepspeed-testing\"",
+        "libcst; extra == \"deepspeed-testing\"",
+        "rich; extra == \"deepspeed-testing\"",
+        "ty==0.0.20; extra == \"deepspeed-testing\"",
+        "tomli; extra == \"deepspeed-testing\"",
+        "transformers-mlinter==0.1.1; extra == \"deepspeed-testing\"",
+        "faiss-cpu; extra == \"deepspeed-testing\"",
+        "datasets>=2.15.0; extra == \"deepspeed-testing\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"deepspeed-testing\"",
+        "protobuf; extra == \"deepspeed-testing\"",
+        "openai>=1.98.0; extra == \"deepspeed-testing\"",
+        "pydantic>=2; extra == \"deepspeed-testing\"",
+        "uvicorn; extra == \"deepspeed-testing\"",
+        "fastapi; extra == \"deepspeed-testing\"",
+        "starlette; extra == \"deepspeed-testing\"",
+        "rich; extra == \"deepspeed-testing\"",
+        "torch>=2.4; extra == \"deepspeed-testing\"",
+        "accelerate>=1.1.0; extra == \"deepspeed-testing\"",
+        "mistral-common[image]>=1.10.0; extra == \"deepspeed-testing\"",
+        "optuna; extra == \"deepspeed-testing\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"deepspeed-testing\"",
+        "protobuf; extra == \"deepspeed-testing\"",
+        "torch>=2.4; extra == \"all\"",
+        "accelerate>=1.1.0; extra == \"all\"",
+        "torchvision; extra == \"all\"",
+        "Pillow<=15.0,>=10.0.1; extra == \"all\"",
+        "torchaudio; extra == \"all\"",
+        "librosa; extra == \"all\"",
+        "pyctcdecode>=0.4.0; extra == \"all\"",
+        "phonemizer; extra == \"all\"",
+        "av; extra == \"all\"",
+        "kernels<0.13,>=0.12.0; extra == \"all\"",
+        "timm>=1.0.23; extra == \"all\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"all\"",
+        "protobuf; extra == \"all\"",
+        "tiktoken; extra == \"all\"",
+        "blobfile; extra == \"all\"",
+        "jinja2>=3.1.0; extra == \"all\"",
+        "jmespath>=1.0.1; extra == \"all\"",
+        "num2words; extra == \"all\"",
+        "mistral-common[image]>=1.10.0; extra == \"all\"",
+        "torch>=2.4; extra == \"dev\"",
+        "accelerate>=1.1.0; extra == \"dev\"",
+        "torchvision; extra == \"dev\"",
+        "Pillow<=15.0,>=10.0.1; extra == \"dev\"",
+        "torchaudio; extra == \"dev\"",
+        "librosa; extra == \"dev\"",
+        "pyctcdecode>=0.4.0; extra == \"dev\"",
+        "phonemizer; extra == \"dev\"",
+        "av; extra == \"dev\"",
+        "kernels<0.13,>=0.12.0; extra == \"dev\"",
+        "timm>=1.0.23; extra == \"dev\"",
+        "sentencepiece!=0.1.92,>=0.1.91; extra == \"dev\"",
+        "protobuf; extra == \"dev\"",
+        "tiktoken; extra == \"dev\"",
+        "blobfile; extra == \"dev\"",
+        "jinja2>=3.1.0; extra == \"dev\"",
+        "jmespath>=1.0.1; extra == \"dev\"",
+        "num2words; extra == \"dev\"",
+        "mistral-common[image]>=1.10.0; extra == \"dev\"",
+        "pytest<9.0.0,>=7.2.0; extra == \"dev\"",
+        "pytest-asyncio>=1.2.0; extra == \"dev\"",
+        "pytest-random-order; extra == \"dev\"",
+        "pytest-rich; extra == \"dev\"",
+        "pytest-xdist; extra == \"dev\"",
+        "pytest-order; extra == \"dev\"",
+        "pytest-rerunfailures<16.0; extra == \"dev\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "transformers-5.10.1-py3-none-any.whl"
+      ]
+    },
+    "tree-sitter": {
+      "source": "https://pypi.org/pypi/tree-sitter/0.26.0/json",
+      "metadata_sha256": "9092685a2f892a458da47b612f842f80aff303f6fadb82261414dc644af2e699",
+      "kind": "pypi",
+      "version": "0.26.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "sphinx~=8.2; extra == \"docs\"",
+        "sphinx-book-theme; extra == \"docs\"",
+        "tree-sitter-html==0.23.2; extra == \"tests\"",
+        "tree-sitter-javascript==0.25.0; extra == \"tests\"",
+        "tree-sitter-json==0.24.8; extra == \"tests\"",
+        "tree-sitter-python==0.25.0; extra == \"tests\"",
+        "tree-sitter-rust==0.24.2; extra == \"tests\""
+      ],
+      "hash_count": 41,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tree_sitter-0.26.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "tree-sitter-c": {
+      "source": "https://pypi.org/pypi/tree-sitter-c/0.24.2/json",
+      "metadata_sha256": "d9a1b357c1c9ddebb337192c6da0357cba455c951589ef858673da3525d2f5e1",
+      "kind": "pypi",
+      "version": "0.24.2",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "hash_count": 9,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tree_sitter_c-0.24.2-cp310-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl"
+      ]
+    },
+    "tree-sitter-javascript": {
+      "source": "https://pypi.org/pypi/tree-sitter-javascript/0.25.0/json",
+      "metadata_sha256": "2063de8d348380c7e3b8ebe03014af22f90224e945cdfebac0786ca7379047de",
+      "kind": "pypi",
+      "version": "0.25.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "hash_count": 9,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tree_sitter_javascript-0.25.0-cp310-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl"
+      ]
+    },
+    "tree-sitter-python": {
+      "source": "https://pypi.org/pypi/tree-sitter-python/0.25.0/json",
+      "metadata_sha256": "06e87483c3cd9c63fd6d9de77936fbb9ab237229849faed87384347c70ef1153",
+      "kind": "pypi",
+      "version": "0.25.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "hash_count": 9,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tree_sitter_python-0.25.0-cp310-abi3-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl"
+      ]
+    },
+    "tree-sitter-typescript": {
+      "source": "https://pypi.org/pypi/tree-sitter-typescript/0.23.2/json",
+      "metadata_sha256": "31eafe3f2a9456eab14d25dac855b286b07495235047b1c35bdca9a47803ead1",
+      "kind": "pypi",
+      "version": "0.23.2",
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "tree-sitter~=0.23; extra == \"core\""
+      ],
+      "hash_count": 8,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tree_sitter_typescript-0.23.2-cp39-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    "triton": {
+      "source": "https://pypi.org/pypi/triton/3.3.1/json",
+      "metadata_sha256": "89e090dad38e1e39a8b1590f18624fdf9296cff44bb2d1682a30f9b963343e5a",
+      "kind": "pypi",
+      "version": "3.3.1",
+      "requires_python": null,
+      "requires_dist": [
+        "setuptools>=40.8.0",
+        "cmake>=3.20; extra == \"build\"",
+        "lit; extra == \"build\"",
+        "autopep8; extra == \"tests\"",
+        "isort; extra == \"tests\"",
+        "numpy; extra == \"tests\"",
+        "pytest; extra == \"tests\"",
+        "pytest-forked; extra == \"tests\"",
+        "pytest-xdist; extra == \"tests\"",
+        "scipy>=1.7.1; extra == \"tests\"",
+        "llnl-hatchet; extra == \"tests\"",
+        "matplotlib; extra == \"tutorials\"",
+        "pandas; extra == \"tutorials\"",
+        "tabulate; extra == \"tutorials\""
+      ],
+      "hash_count": 6,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "triton-3.3.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      ]
+    },
+    "typer": {
+      "source": "https://pypi.org/pypi/typer/0.26.8/json",
+      "metadata_sha256": "fe165dec21a02b08b9ac120fd215f6cd7378eef835ce3cc74fdf1c219061bf54",
+      "kind": "pypi",
+      "version": "0.26.8",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "shellingham>=1.3.0",
+        "rich>=13.8.0",
+        "annotated-doc>=0.0.2",
+        "colorama; platform_system == \"Windows\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "typer-0.26.8-py3-none-any.whl"
+      ]
+    },
+    "typing-extensions": {
+      "source": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+      "metadata_sha256": "2140da00d62dde967f52d0be0ae28444f1d6a3fe603f52c83c23988c32122d5a",
+      "kind": "pypi",
+      "version": "4.16.0",
+      "requires_python": ">=3.9",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "typing_extensions-4.16.0-py3-none-any.whl"
+      ]
+    },
+    "typing-inspection": {
+      "source": "https://pypi.org/pypi/typing-inspection/0.4.4/json",
+      "metadata_sha256": "0605416f2f37f2df04e45360cf5ce4ca5eeca6d414bb6ddb1ec5a9893c62ac30",
+      "kind": "pypi",
+      "version": "0.4.4",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "typing_inspection-0.4.4-py3-none-any.whl"
+      ]
+    },
+    "tzdata": {
+      "source": "https://pypi.org/pypi/tzdata/2026.6/json",
+      "metadata_sha256": "82888ae1ccdc2ed984ce983353520631122c4504e5af2dc40b8eddf8398206a0",
+      "kind": "pypi",
+      "version": "2026.6",
+      "requires_python": ">=2",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "tzdata-2026.6-py2.py3-none-any.whl"
+      ]
+    },
+    "urllib3": {
+      "source": "https://pypi.org/pypi/urllib3/2.8.0/json",
+      "metadata_sha256": "5315e7401db3cacccd0c2ce5daf81f752a9cc3614b18c37f2b79930b7159ce2f",
+      "kind": "pypi",
+      "version": "2.8.0",
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "brotli>=1.2.0; platform_python_implementation == \"CPython\" and extra == \"brotli\"",
+        "brotlicffi>=1.2.0.0; platform_python_implementation != \"CPython\" and extra == \"brotli\"",
+        "h2<5,>=4; extra == \"h2\"",
+        "pysocks!=1.5.7,<2.0,>=1.5.6; extra == \"socks\"",
+        "backports-zstd>=1.0.0; python_version < \"3.14\" and extra == \"zstd\""
+      ],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "urllib3-2.8.0-py3-none-any.whl"
+      ]
+    },
+    "websockets": {
+      "source": "https://pypi.org/pypi/websockets/16.1.1/json",
+      "metadata_sha256": "4fe5ed6baf299524b650fc34da13a008b75d8fc5c23d12b46339a9cfcbee526f",
+      "kind": "pypi",
+      "version": "16.1.1",
+      "requires_python": ">=3.10",
+      "requires_dist": [],
+      "hash_count": 109,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "websockets-16.1.1-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "websockets-16.1.1-py3-none-any.whl"
+      ]
+    },
+    "xlsxwriter": {
+      "source": "https://pypi.org/pypi/xlsxwriter/3.3.1/json",
+      "metadata_sha256": "2362c8697839ee5a0c07e21e880e732a036bec0ca91cc4440b5d381778154763",
+      "kind": "pypi",
+      "version": "3.3.1",
+      "requires_python": ">=3.8",
+      "requires_dist": [],
+      "hash_count": 2,
+      "all_lock_hashes_published": true,
+      "compatible_wheels": [
+        "xlsxwriter-3.3.1-py3-none-any.whl"
+      ]
+    },
+    "docling": {
+      "version": "2.117.0",
+      "source": "https://pypi.org/pypi/docling/2.117.0/json",
+      "metadata_sha256": "c97547112bebb5daeb7d37f6c00d3b94d320964a8da88e8d4d8ae10bb43b413d",
+      "requires_dist": [
+        "docling-slim[standard]==2.117.0",
+        "docling-slim[format-audio]==2.117.0; extra == \"asr\"",
+        "docling-slim[feat-ocr-easyocr]==2.117.0; extra == \"easyocr\"",
+        "docling-slim[format-html-render]==2.117.0; extra == \"htmlrender\"",
+        "docling-slim[feat-ocr-mac]==2.117.0; extra == \"ocrmac\"",
+        "docling-slim[models-onnxruntime]==2.117.0; extra == \"onnxruntime\"",
+        "docling-slim[feat-ocr-rapidocr-onnx]==2.117.0; extra == \"rapidocr\"",
+        "docling-slim[models-remote]==2.117.0; extra == \"remote-serving\"",
+        "docling-slim[feat-ocr-tesserocr]==2.117.0; extra == \"tesserocr\"",
+        "docling-slim[models-vlm-inline]==2.117.0; extra == \"vlm\"",
+        "docling-slim[format-xml-xbrl]==2.117.0; extra == \"xbrl\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "docling-ibm-models": {
+      "version": "3.15.0",
+      "source": "https://pypi.org/pypi/docling-ibm-models/3.15.0/json",
+      "metadata_sha256": "9e3aadff090ada2e7ed7ddeaef2195c3cc0dface22587bc096f570e0e8a5adb1",
+      "requires_dist": [
+        "torch<3.0.0,>=2.2.2",
+        "torchvision<1,>=0",
+        "jsonlines<5.0.0,>=3.1.0",
+        "Pillow<13.0.0,>=10.0.0",
+        "tqdm<5.0.0,>=4.64.0",
+        "huggingface_hub<2,>=0.23",
+        "safetensors[torch]<1,>=0.4.3",
+        "pydantic<3.0.0,>=2.0.0",
+        "docling-core<3.0.0,>=2.33.0",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.13.0,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\"",
+        "numpy<3.0.0,>=1.24.4",
+        "rtree>=1.0.0",
+        "accelerate<2.0.0,>=1.2.1",
+        "opencv-python-headless<5.0.0.0,>=4.6.0.66; extra == \"opencv-python-headless\"",
+        "opencv-python<5.0.0.0,>=4.6.0.66; extra == \"opencv-python\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "docling-slim": {
+      "version": "2.117.0",
+      "source": "https://pypi.org/pypi/docling-slim/2.117.0/json",
+      "metadata_sha256": "e6d67554a95acbe06d13222b0ccea8caded9cfa8b131590a3b788f2a7460008d",
+      "requires_dist": [
+        "certifi>=2024.7.4",
+        "docling-core<3.0.0,>=2.86.0",
+        "filetype<2.0.0,>=1.2.0",
+        "pluggy<2.0.0,>=1.0.0",
+        "pydantic-settings<3.0.0,>=2.3.0",
+        "pydantic<3.0.0,>=2.0.0",
+        "requests<3.0.0,>=2.32.2",
+        "tqdm<5.0.0,>=4.65.0",
+        "accelerate<2,>=1.0.0; extra == \"all\"",
+        "accelerate<2.0.0,>=1.2.1; extra == \"all\"",
+        "arelle-release<3.0.0,>=2.38.17; extra == \"all\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"all\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"all\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"all\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"all\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"all\"",
+        "easyocr<2.0,>=1.7; extra == \"all\"",
+        "httpx<1.0.0,>=0.28; extra == \"all\"",
+        "huggingface-hub<2,>=0.23; extra == \"all\"",
+        "lxml<7.0.0,>=4.0.0; extra == \"all\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"all\"",
+        "marko<3.0.0,>=2.1.2; extra == \"all\"",
+        "mlx-vlm<1.0.0,>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"all\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"all\"",
+        "numba>=0.63.0; extra == \"all\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"all\"",
+        "ocrmac<2.0.0,>=1.0.0; sys_platform == \"darwin\" and extra == \"all\"",
+        "onnxruntime-gpu<1.24; (python_version < \"3.14\" and (sys_platform == \"linux\" or sys_platform == \"win32\")) and extra == \"all\"",
+        "onnxruntime<1.24; (python_version < \"3.14\" and sys_platform == \"darwin\") and extra == \"all\"",
+        "openai-whisper>=20250625; extra == \"all\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"all\"",
+        "pandas<4.0.0,>=2.1.4; extra == \"all\"",
+        "peft>=0.18.1; extra == \"all\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"all\"",
+        "playwright>=1.58.0; extra == \"all\"",
+        "polyfactory>=2.22.2; extra == \"all\"",
+        "pylatexenc<3.0,>=2.10; extra == \"all\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"all\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"all\"",
+        "python-dotenv~=1.0; extra == \"all\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"all\"",
+        "qwen-vl-utils>=0.0.11; extra == \"all\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"all\"",
+        "rich>=13.0.0; extra == \"all\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"all\"",
+        "scikit-image>=0.19; extra == \"all\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"all\"",
+        "tesserocr<3.0.0,>=2.7.1; extra == \"all\"",
+        "torch<3.0.0,>=2.2.2; extra == \"all\"",
+        "torchvision<1,>=0; extra == \"all\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\" and extra == \"all\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\" and extra == \"all\"",
+        "tritonclient[grpc]<3.0.0,>=2.65.0; extra == \"all\"",
+        "typer<0.27.0,>=0.12.5; extra == \"all\"",
+        "websockets<17.0,>=14.0; extra == \"all\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"all\"",
+        "python-dotenv~=1.0; extra == \"cli\"",
+        "rich>=13.0.0; extra == \"cli\"",
+        "typer<0.27.0,>=0.12.5; extra == \"cli\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"convert-core\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"convert-core\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"convert-core\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"convert-core\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"extract-core\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"extract-core\"",
+        "polyfactory>=2.22.2; extra == \"extract-core\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"extract-core\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"extract-core\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"feat-chunking\"",
+        "easyocr<2.0,>=1.7; extra == \"feat-ocr-easyocr\"",
+        "scikit-image>=0.19; extra == \"feat-ocr-easyocr\"",
+        "ocrmac<2.0.0,>=1.0.0; sys_platform == \"darwin\" and extra == \"feat-ocr-mac\"",
+        "nemotron-ocr>=2.0.0; (python_version == \"3.12\" and sys_platform == \"linux\" and platform_machine == \"x86_64\") and extra == \"feat-ocr-nemotron\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"feat-ocr-rapidocr\"",
+        "onnxruntime<2.0.0,>=1.7.0; python_version < \"3.14\" and extra == \"feat-ocr-rapidocr-onnx\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"feat-ocr-rapidocr-onnx\"",
+        "pandas<4.0.0,>=2.1.4; extra == \"feat-ocr-tesserocr\"",
+        "tesserocr<3.0.0,>=2.7.1; extra == \"feat-ocr-tesserocr\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"format-audio\"",
+        "numba>=0.63.0; extra == \"format-audio\"",
+        "openai-whisper>=20250625; extra == \"format-audio\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"format-audio\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"format-docx\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-email\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"format-email\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-html\"",
+        "playwright>=1.58.0; extra == \"format-html-render\"",
+        "pylatexenc<3.0,>=2.10; extra == \"format-latex\"",
+        "marko<3.0.0,>=2.1.2; extra == \"format-markdown\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"format-office\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"format-office\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"format-office\"",
+        "odfdo<4.0.0,>=3.22.0; extra == \"format-opendocument\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"format-pdf\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"format-pdf-docling\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf-docling\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf-pypdfium2\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"format-pptx\"",
+        "librosa<1.0.0,>=0.10.0; extra == \"format-video\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"format-video\"",
+        "numba>=0.63.0; extra == \"format-video\"",
+        "openai-whisper>=20250625; extra == \"format-video\"",
+        "resemblyzer<0.2.0,>=0.1.4; extra == \"format-video\"",
+        "scikit-learn<2.0.0,>=1.3.0; extra == \"format-video\"",
+        "soundfile<1.0.0,>=0.12.1; extra == \"format-video\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"format-video\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-web\"",
+        "marko<3.0.0,>=2.1.2; extra == \"format-web\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"format-xlsx\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-xml-jats\"",
+        "lxml<7.0.0,>=4.0.0; extra == \"format-xml-jats\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-xml-uspto\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"format-xml-uspto\"",
+        "arelle-release<3.0.0,>=2.38.17; extra == \"format-xml-xbrl\"",
+        "accelerate<2,>=1.0.0; extra == \"models-local\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"models-local\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"models-local\"",
+        "huggingface-hub<2,>=0.23; extra == \"models-local\"",
+        "torch<3.0.0,>=2.2.2; extra == \"models-local\"",
+        "torchvision<1,>=0; extra == \"models-local\"",
+        "onnxruntime-gpu<1.24; (python_version < \"3.14\" and (sys_platform == \"linux\" or sys_platform == \"win32\")) and extra == \"models-onnxruntime\"",
+        "onnxruntime<1.24; (python_version < \"3.14\" and sys_platform == \"darwin\") and extra == \"models-onnxruntime\"",
+        "tritonclient[grpc]<3.0.0,>=2.65.0; extra == \"models-remote\"",
+        "accelerate<2.0.0,>=1.2.1; extra == \"models-vlm-inline\"",
+        "mlx-vlm<1.0.0,>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"models-vlm-inline\"",
+        "peft>=0.18.1; extra == \"models-vlm-inline\"",
+        "qwen-vl-utils>=0.0.11; extra == \"models-vlm-inline\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\" and extra == \"models-vlm-inline\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\" and extra == \"models-vlm-inline\"",
+        "httpx<1.0.0,>=0.28; extra == \"service-client\"",
+        "python-dotenv~=1.0; extra == \"service-client\"",
+        "rich>=13.0.0; extra == \"service-client\"",
+        "typer<0.27.0,>=0.12.5; extra == \"service-client\"",
+        "websockets<17.0,>=14.0; extra == \"service-client\"",
+        "accelerate<2,>=1.0.0; extra == \"standard\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"standard\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"standard\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"standard\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"standard\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"standard\"",
+        "httpx<1.0.0,>=0.28; extra == \"standard\"",
+        "huggingface-hub<2,>=0.23; extra == \"standard\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"standard\"",
+        "marko<3.0.0,>=2.1.2; extra == \"standard\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"standard\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"standard\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"standard\"",
+        "polyfactory>=2.22.2; extra == \"standard\"",
+        "pylatexenc<3.0,>=2.10; extra == \"standard\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"standard\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"standard\"",
+        "python-dotenv~=1.0; extra == \"standard\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"standard\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"standard\"",
+        "rich>=13.0.0; extra == \"standard\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"standard\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"standard\"",
+        "torch<3.0.0,>=2.2.2; extra == \"standard\"",
+        "torchvision<1,>=0; extra == \"standard\"",
+        "typer<0.27.0,>=0.12.5; extra == \"standard\"",
+        "websockets<17.0,>=14.0; extra == \"standard\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "jsonlines": {
+      "version": "4.0.0",
+      "source": "https://pypi.org/pypi/jsonlines/4.0.0/json",
+      "metadata_sha256": "53eda812593721c23ef4d6e3a40142f923ccdba72dc85495b6617bc222ebcb41",
+      "requires_dist": [
+        "attrs >=19.2.0"
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    }
+  },
+  "fixed_from_lock_sha256": "a5f0ad8bb846270a6477226d8d6ec51578f062432c9ed8ecb48fce9a8e24ca17",
+  "changes": {
+    "docling": {
+      "old": "docling[rapidocr]==2.123.1",
+      "new": "docling[rapidocr]==2.117.0"
+    },
+    "docling-ibm-models": {
+      "old": "docling-ibm-models[opencv-python-headless]==4.0.4",
+      "new": "docling-ibm-models[opencv-python-headless]==3.15.0"
+    },
+    "docling-slim": {
+      "old": "docling-slim[feat-ocr-rapidocr-onnx,standard]==2.123.1",
+      "new": "docling-slim[feat-ocr-rapidocr-onnx,standard]==2.117.0"
+    },
+    "jsonlines": {
+      "old": null,
+      "new": "jsonlines==4.0.0"
+    }
+  },
+  "compatibility_status": "Real A100 conversion passed for 9.pdf; semantic accuracy and other papers not evaluated.",
+  "audit_note": "Current dependency edges independently checked against unchanged historical metadata plus four freshly audited changed/new distributions. Direct Torch/torchvision dependencies additionally checked by uv resolver.",
+  "removed_packages": {
+    "olefile": "olefile==0.47",
+    "python-oxmsg": "python-oxmsg==0.0.2"
+  },
+  "changed_packages_audit": {
+    "docling": {
+      "version": "2.117.0",
+      "source": "https://pypi.org/pypi/docling/2.117.0/json",
+      "metadata_sha256": "c97547112bebb5daeb7d37f6c00d3b94d320964a8da88e8d4d8ae10bb43b413d",
+      "requires_dist": [
+        "docling-slim[standard]==2.117.0",
+        "docling-slim[format-audio]==2.117.0; extra == \"asr\"",
+        "docling-slim[feat-ocr-easyocr]==2.117.0; extra == \"easyocr\"",
+        "docling-slim[format-html-render]==2.117.0; extra == \"htmlrender\"",
+        "docling-slim[feat-ocr-mac]==2.117.0; extra == \"ocrmac\"",
+        "docling-slim[models-onnxruntime]==2.117.0; extra == \"onnxruntime\"",
+        "docling-slim[feat-ocr-rapidocr-onnx]==2.117.0; extra == \"rapidocr\"",
+        "docling-slim[models-remote]==2.117.0; extra == \"remote-serving\"",
+        "docling-slim[feat-ocr-tesserocr]==2.117.0; extra == \"tesserocr\"",
+        "docling-slim[models-vlm-inline]==2.117.0; extra == \"vlm\"",
+        "docling-slim[format-xml-xbrl]==2.117.0; extra == \"xbrl\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "docling-ibm-models": {
+      "version": "3.15.0",
+      "source": "https://pypi.org/pypi/docling-ibm-models/3.15.0/json",
+      "metadata_sha256": "9e3aadff090ada2e7ed7ddeaef2195c3cc0dface22587bc096f570e0e8a5adb1",
+      "requires_dist": [
+        "torch<3.0.0,>=2.2.2",
+        "torchvision<1,>=0",
+        "jsonlines<5.0.0,>=3.1.0",
+        "Pillow<13.0.0,>=10.0.0",
+        "tqdm<5.0.0,>=4.64.0",
+        "huggingface_hub<2,>=0.23",
+        "safetensors[torch]<1,>=0.4.3",
+        "pydantic<3.0.0,>=2.0.0",
+        "docling-core<3.0.0,>=2.33.0",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.13.0,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\"",
+        "numpy<3.0.0,>=1.24.4",
+        "rtree>=1.0.0",
+        "accelerate<2.0.0,>=1.2.1",
+        "opencv-python-headless<5.0.0.0,>=4.6.0.66; extra == \"opencv-python-headless\"",
+        "opencv-python<5.0.0.0,>=4.6.0.66; extra == \"opencv-python\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "docling-slim": {
+      "version": "2.117.0",
+      "source": "https://pypi.org/pypi/docling-slim/2.117.0/json",
+      "metadata_sha256": "e6d67554a95acbe06d13222b0ccea8caded9cfa8b131590a3b788f2a7460008d",
+      "requires_dist": [
+        "certifi>=2024.7.4",
+        "docling-core<3.0.0,>=2.86.0",
+        "filetype<2.0.0,>=1.2.0",
+        "pluggy<2.0.0,>=1.0.0",
+        "pydantic-settings<3.0.0,>=2.3.0",
+        "pydantic<3.0.0,>=2.0.0",
+        "requests<3.0.0,>=2.32.2",
+        "tqdm<5.0.0,>=4.65.0",
+        "accelerate<2,>=1.0.0; extra == \"all\"",
+        "accelerate<2.0.0,>=1.2.1; extra == \"all\"",
+        "arelle-release<3.0.0,>=2.38.17; extra == \"all\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"all\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"all\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"all\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"all\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"all\"",
+        "easyocr<2.0,>=1.7; extra == \"all\"",
+        "httpx<1.0.0,>=0.28; extra == \"all\"",
+        "huggingface-hub<2,>=0.23; extra == \"all\"",
+        "lxml<7.0.0,>=4.0.0; extra == \"all\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"all\"",
+        "marko<3.0.0,>=2.1.2; extra == \"all\"",
+        "mlx-vlm<1.0.0,>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"all\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"all\"",
+        "numba>=0.63.0; extra == \"all\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"all\"",
+        "ocrmac<2.0.0,>=1.0.0; sys_platform == \"darwin\" and extra == \"all\"",
+        "onnxruntime-gpu<1.24; (python_version < \"3.14\" and (sys_platform == \"linux\" or sys_platform == \"win32\")) and extra == \"all\"",
+        "onnxruntime<1.24; (python_version < \"3.14\" and sys_platform == \"darwin\") and extra == \"all\"",
+        "openai-whisper>=20250625; extra == \"all\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"all\"",
+        "pandas<4.0.0,>=2.1.4; extra == \"all\"",
+        "peft>=0.18.1; extra == \"all\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"all\"",
+        "playwright>=1.58.0; extra == \"all\"",
+        "polyfactory>=2.22.2; extra == \"all\"",
+        "pylatexenc<3.0,>=2.10; extra == \"all\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"all\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"all\"",
+        "python-dotenv~=1.0; extra == \"all\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"all\"",
+        "qwen-vl-utils>=0.0.11; extra == \"all\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"all\"",
+        "rich>=13.0.0; extra == \"all\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"all\"",
+        "scikit-image>=0.19; extra == \"all\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"all\"",
+        "tesserocr<3.0.0,>=2.7.1; extra == \"all\"",
+        "torch<3.0.0,>=2.2.2; extra == \"all\"",
+        "torchvision<1,>=0; extra == \"all\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\" and extra == \"all\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\" and extra == \"all\"",
+        "tritonclient[grpc]<3.0.0,>=2.65.0; extra == \"all\"",
+        "typer<0.27.0,>=0.12.5; extra == \"all\"",
+        "websockets<17.0,>=14.0; extra == \"all\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"all\"",
+        "python-dotenv~=1.0; extra == \"cli\"",
+        "rich>=13.0.0; extra == \"cli\"",
+        "typer<0.27.0,>=0.12.5; extra == \"cli\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"convert-core\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"convert-core\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"convert-core\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"convert-core\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"extract-core\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"extract-core\"",
+        "polyfactory>=2.22.2; extra == \"extract-core\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"extract-core\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"extract-core\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"feat-chunking\"",
+        "easyocr<2.0,>=1.7; extra == \"feat-ocr-easyocr\"",
+        "scikit-image>=0.19; extra == \"feat-ocr-easyocr\"",
+        "ocrmac<2.0.0,>=1.0.0; sys_platform == \"darwin\" and extra == \"feat-ocr-mac\"",
+        "nemotron-ocr>=2.0.0; (python_version == \"3.12\" and sys_platform == \"linux\" and platform_machine == \"x86_64\") and extra == \"feat-ocr-nemotron\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"feat-ocr-rapidocr\"",
+        "onnxruntime<2.0.0,>=1.7.0; python_version < \"3.14\" and extra == \"feat-ocr-rapidocr-onnx\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"feat-ocr-rapidocr-onnx\"",
+        "pandas<4.0.0,>=2.1.4; extra == \"feat-ocr-tesserocr\"",
+        "tesserocr<3.0.0,>=2.7.1; extra == \"feat-ocr-tesserocr\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"format-audio\"",
+        "numba>=0.63.0; extra == \"format-audio\"",
+        "openai-whisper>=20250625; extra == \"format-audio\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"format-audio\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"format-docx\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-email\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"format-email\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-html\"",
+        "playwright>=1.58.0; extra == \"format-html-render\"",
+        "pylatexenc<3.0,>=2.10; extra == \"format-latex\"",
+        "marko<3.0.0,>=2.1.2; extra == \"format-markdown\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"format-office\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"format-office\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"format-office\"",
+        "odfdo<4.0.0,>=3.22.0; extra == \"format-opendocument\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"format-pdf\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"format-pdf-docling\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf-docling\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"format-pdf-pypdfium2\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"format-pptx\"",
+        "librosa<1.0.0,>=0.10.0; extra == \"format-video\"",
+        "mlx-whisper>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"format-video\"",
+        "numba>=0.63.0; extra == \"format-video\"",
+        "openai-whisper>=20250625; extra == \"format-video\"",
+        "resemblyzer<0.2.0,>=0.1.4; extra == \"format-video\"",
+        "scikit-learn<2.0.0,>=1.3.0; extra == \"format-video\"",
+        "soundfile<1.0.0,>=0.12.1; extra == \"format-video\"",
+        "whisper-s2t-reborn<2,>=1.6.3; (sys_platform != \"darwin\" or platform_machine != \"arm64\") and extra == \"format-video\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-web\"",
+        "marko<3.0.0,>=2.1.2; extra == \"format-web\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"format-xlsx\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-xml-jats\"",
+        "lxml<7.0.0,>=4.0.0; extra == \"format-xml-jats\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"format-xml-uspto\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"format-xml-uspto\"",
+        "arelle-release<3.0.0,>=2.38.17; extra == \"format-xml-xbrl\"",
+        "accelerate<2,>=1.0.0; extra == \"models-local\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"models-local\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"models-local\"",
+        "huggingface-hub<2,>=0.23; extra == \"models-local\"",
+        "torch<3.0.0,>=2.2.2; extra == \"models-local\"",
+        "torchvision<1,>=0; extra == \"models-local\"",
+        "onnxruntime-gpu<1.24; (python_version < \"3.14\" and (sys_platform == \"linux\" or sys_platform == \"win32\")) and extra == \"models-onnxruntime\"",
+        "onnxruntime<1.24; (python_version < \"3.14\" and sys_platform == \"darwin\") and extra == \"models-onnxruntime\"",
+        "tritonclient[grpc]<3.0.0,>=2.65.0; extra == \"models-remote\"",
+        "accelerate<2.0.0,>=1.2.1; extra == \"models-vlm-inline\"",
+        "mlx-vlm<1.0.0,>=0.4.3; (python_version >= \"3.10\" and sys_platform == \"darwin\" and platform_machine == \"arm64\") and extra == \"models-vlm-inline\"",
+        "peft>=0.18.1; extra == \"models-vlm-inline\"",
+        "qwen-vl-utils>=0.0.11; extra == \"models-vlm-inline\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<5.9.0,>=4.42.0; sys_platform == \"darwin\" and extra == \"models-vlm-inline\"",
+        "transformers!=5.0.*,!=5.1.*,!=5.2.*,!=5.3.*,<6.0.0,>=4.42.0; sys_platform != \"darwin\" and extra == \"models-vlm-inline\"",
+        "httpx<1.0.0,>=0.28; extra == \"service-client\"",
+        "python-dotenv~=1.0; extra == \"service-client\"",
+        "rich>=13.0.0; extra == \"service-client\"",
+        "typer<0.27.0,>=0.12.5; extra == \"service-client\"",
+        "websockets<17.0,>=14.0; extra == \"service-client\"",
+        "accelerate<2,>=1.0.0; extra == \"standard\"",
+        "beautifulsoup4<5.0.0,>=4.12.3; extra == \"standard\"",
+        "defusedxml<0.8.0,>=0.7.1; extra == \"standard\"",
+        "docling-core[chunking]<3.0.0,>=2.73.0; extra == \"standard\"",
+        "docling-ibm-models<4,>=3.13.0; extra == \"standard\"",
+        "docling-parse<8.0.0,>=7.0.0; extra == \"standard\"",
+        "httpx<1.0.0,>=0.28; extra == \"standard\"",
+        "huggingface-hub<2,>=0.23; extra == \"standard\"",
+        "mail-parser<5.0.0,>=4.1.4; extra == \"standard\"",
+        "marko<3.0.0,>=2.1.2; extra == \"standard\"",
+        "numpy<3.0.0,>=1.24.0; extra == \"standard\"",
+        "openpyxl<4.0.0,>=3.1.5; extra == \"standard\"",
+        "pillow<13.0.0,>=10.0.0; extra == \"standard\"",
+        "polyfactory>=2.22.2; extra == \"standard\"",
+        "pylatexenc<3.0,>=2.10; extra == \"standard\"",
+        "pypdfium2!=4.30.1,<6.0.0,>=4.30.0; extra == \"standard\"",
+        "python-docx<2.0.0,>=1.2.0; extra == \"standard\"",
+        "python-dotenv~=1.0; extra == \"standard\"",
+        "python-pptx<2.0.0,>=1.0.2; extra == \"standard\"",
+        "rapidocr<4.0.0,>=3.9.1; extra == \"standard\"",
+        "rich>=13.0.0; extra == \"standard\"",
+        "rtree<2.0.0,>=1.3.0; extra == \"standard\"",
+        "scipy<2.0.0,>=1.6.0; extra == \"standard\"",
+        "torch<3.0.0,>=2.2.2; extra == \"standard\"",
+        "torchvision<1,>=0; extra == \"standard\"",
+        "typer<0.27.0,>=0.12.5; extra == \"standard\"",
+        "websockets<17.0,>=14.0; extra == \"standard\""
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    },
+    "jsonlines": {
+      "version": "4.0.0",
+      "source": "https://pypi.org/pypi/jsonlines/4.0.0/json",
+      "metadata_sha256": "53eda812593721c23ef4d6e3a40142f923ccdba72dc85495b6617bc222ebcb41",
+      "requires_dist": [
+        "attrs >=19.2.0"
+      ],
+      "hashes_published": true,
+      "hash_count": 2
+    }
+  },
+  "previous_audit_at_utc": "2026-11-01T01:55:20.298310+00:00",
+  "execution_evidence": "runtime/validation-9-corrected.json",
+  "scope_note": "Package installation/build booleans describe the metadata lock audit operation; the separate execution receipt documents real Colab installation and conversion."
+}

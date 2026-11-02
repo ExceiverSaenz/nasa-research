@@ -1,0 +1,7 @@
+{
+  "schema": "baseline-storage-migration/1",
+  "source_directory": "../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T023303Z-c8235a43-portable-v1",
+  "source_files_manifest_sha256": "2fb52875261d64d13fb1e8630d65c153d21052aa0c32dbc073c0277f07dbc289",
+  "verification_report": "../../../history/baseline-reorganization-20261102T000522Z/verification.json",
+  "inference_repeated": false
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "baseline-asset-deduplication/1",
+  "inference_repeated": false,
+  "source_directory": "../../../../../history/baseline-reorganization-20261102T000522Z/before/baseline/results/20261101T041027Z-a3424b13-local-verified/papers/e8757a86514f31c0bd22457ffe9a846e29b9ba141d418ef66839a2f1e7a5db8a",
+  "source_files_manifest_sha256": "64afe49496415e692f87f8e0fed778b4fd3a892df83e3de923a792ff5ba864a2",
+  "aliases": [
+    {
+      "path": "assets/figure-0001.png",
+      "reference": "assets/image_000000_0381719c43b51b51d6426509f6d1bbe982e505c5443c7c9fe35309ce0c187d96.png",
+      "sha256": "17e99dd06c2ae68094d4caa153f160b42604c9c69f120a52ab2f50c4e7508328",
+      "bytes": 96973
+    },
+    {
+      "path": "assets/figure-0002.png",
+      "reference": "assets/image_000001_b164cc942cc3c80b34dcdfbc571cf15752b042c2ad1d38115f6363a4cc2f4ad5.png",
+      "sha256": "5574eb2e974d8bb39d91fbe52f3552793b82b99de8ff01d88befaae9e16a7d10",
+      "bytes": 3222
+    },
+    {
+      "path": "assets/figure-0003.png",
+      "reference": "assets/image_000002_0b38dc43c03014c1a68eeb0f106d56609063a75c6413c58e645aa3ec3275ccbe.png",
+      "sha256": "8c620f7ec9e57856271d1dfcaa095ad465f7c11d524ebf57ca7adc367e923930",
+      "bytes": 155304
+    },
+    {
+      "path": "assets/figure-0004.png",
+      "reference": "assets/image_000003_3a0cb2ee37cbda6e18b50ca3de9150e4292267cfa79188838d0eae7d57a1ecfa.png",
+      "sha256": "bb91ca9f670f00cd948c392e8f52b3857a79f53e9815b4a1d6a0b002db3ac0d7",
+      "bytes": 123645
+    },
+    {
+      "path": "assets/figure-0005.png",
+      "reference": "assets/image_000004_52882368680a91847880d860444b2355bcda964b70014b462e6589f9756a48af.png",
+      "sha256": "3407bdf768ca4d6e9226346d7e32f9e74fdf74fb0a932716804aeeeb52f81d16",
+      "bytes": 80159
+    },
+    {
+      "path": "assets/figure-0006.png",
+      "reference": "assets/image_000005_dabf79f0941c979418100c448ce4bcb6ce46ed6c621766fc39b6f15a5ff76609.png",
+      "sha256": "b4c4ce0084ef2e3410884bd9c47a29b34f9e32747bb5c43f82a898b1e8c62cc9",
+      "bytes": 45446
+    }
+  ],
+  "preserved": "Text, order, geometry, associations, model outputs and all distinct image bytes; only image paths and integrity metadata changed."
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "baseline-plan/1",
+  "gpu": "A100",
+  "python": "3.11.16",
+  "r2_prefix": "tensile_papers/",
+  "papers": [
+    {
+      "name": "9.pdf",
+      "key": "tensile_papers/9.pdf",
+      "bytes": 2430060,
+      "sha256": "d303ac3b3a920fc58975a41dbe291886e9844fa8396ae6bd5f32c3be98aaed91"
+    }
+  ],
+  "lock_sha256": "b2068f7e5fb87b498b9a76f10150d314cdfbf1eafe33b993c696685f4c26dd2a",
+  "input_sha256": "530051f3fdfe94d899e739a8def8a9b24a5829ca0ecb85563660414bfba43c66",
+  "install_command_flags": [
+    "--require-hashes",
+    "--only-binary=:all:"
+  ],
+  "a100_validation": "pending",
+  "automatic_retries": false,
+  "id": "20261101T023303Z-c8235a43",
+  "session": "baseline-20261101t023303z-c8235a43",
+  "status": "completed",
+  "session_closed": true,
+  "session_creation_attempted": true,
+  "session_created": true,
+  "result_directory": "/mnt/c/Users/HP Victus/Desktop/nasa_research/baseline/results/20261101T023303Z-c8235a43",
+  "batch_status": "completed",
+  "closure_output": "\n[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)\n[colab] Run 'colab update' to update.\n[colab] To silence this check, set \"enable_update_check\": false in ~/.config/colab-cli/settings.json\n\n[colab] Stopping session 'baseline-20261101t023303z-c8235a43'...\n[colab] Session terminated.\n"
+}
