@@ -1,0 +1,57 @@
+{
+  "schema": "bounding-box-experiment/1",
+  "device": "cuda",
+  "gpu": "A100",
+  "python": "3.11",
+  "environments": {
+    "a": {
+      "requirements": "requirements/a.in"
+    },
+    "b": {
+      "requirements": "requirements/b.in"
+    }
+  },
+  "tools": [
+    {
+      "id": "heron",
+      "environment": "a",
+      "model": "docling-project/docling-layout-heron",
+      "revision": "8f39ad3c0b4c58e9c2d2c84a38465abf757272d8",
+      "threshold": 0.6
+    },
+    {
+      "id": "heron101",
+      "environment": "a",
+      "model": "docling-project/docling-layout-heron-101",
+      "revision": "2e4993cf6bb211112084a2f80938f26138008917",
+      "threshold": 0.6
+    },
+    {
+      "id": "basic",
+      "environment": "a",
+      "tier": "basic",
+      "backend": "torch"
+    },
+    {
+      "id": "standard",
+      "environment": "b",
+      "tier": "standard",
+      "backend": "torch",
+      "engine": "vllm"
+    }
+  ],
+  "iou_threshold": 0.5,
+  "resource_interval_s": 1,
+  "measured_passes": 1,
+  "ready": false,
+  "locks": {
+    "a": "requirements/a.lock",
+    "b": "requirements/b.lock"
+  },
+  "model_manifests": [
+    "model_manifests/heron.json",
+    "model_manifests/heron101.json",
+    "model_manifests/mineru-small-preserved.json",
+    "model_manifests/standard-vlm.json"
+  ]
+}

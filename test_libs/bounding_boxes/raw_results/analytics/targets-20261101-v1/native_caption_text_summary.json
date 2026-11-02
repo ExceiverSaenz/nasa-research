@@ -1,0 +1,42 @@
+[
+  {
+    "tool": "basic",
+    "pattern": "bare_panel_marker",
+    "count": 53
+  },
+  {
+    "tool": "basic",
+    "pattern": "figure_prefix",
+    "count": 207
+  },
+  {
+    "tool": "basic",
+    "pattern": "other_caption_string",
+    "count": 32
+  },
+  {
+    "tool": "basic",
+    "pattern": "table_prefix",
+    "count": 46
+  },
+  {
+    "tool": "standard",
+    "pattern": "bare_panel_marker",
+    "count": 52
+  },
+  {
+    "tool": "standard",
+    "pattern": "figure_prefix",
+    "count": 207
+  },
+  {
+    "tool": "standard",
+    "pattern": "other_caption_string",
+    "count": 32
+  },
+  {
+    "tool": "standard",
+    "pattern": "table_prefix",
+    "count": 46
+  }
+]

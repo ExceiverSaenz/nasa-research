@@ -1,0 +1,5 @@
+tool,sampled_cases,own_correspondence_cases,contradictory,wrong,adequate,coarse_usable,no_own_correspondence,errors
+heron,59,56,14,1,31,10,3,"{""conflicting_targets"": 14, ""text_to_heading"": 1}"
+heron101,59,56,11,8,30,7,3,"{""conflicting_targets"": 11, ""heading_to_text"": 2, ""text_to_heading"": 2, ""wrong_target"": 3, ""caption_to_text"": 1}"
+basic,59,58,,11,28,19,1,"{""heading_to_text"": 10, ""caption_to_text"": 1}"
+standard,59,58,,11,28,19,1,"{""heading_to_text"": 10, ""caption_to_text"": 1}"

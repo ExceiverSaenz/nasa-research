@@ -1,0 +1,137 @@
+{
+  "counts": [
+    {
+      "tool": "basic",
+      "label": "chart_caption",
+      "position": "above",
+      "count": 7
+    },
+    {
+      "tool": "basic",
+      "label": "chart_caption",
+      "position": "below",
+      "count": 157
+    },
+    {
+      "tool": "basic",
+      "label": "chart_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 6
+    },
+    {
+      "tool": "basic",
+      "label": "image_caption",
+      "position": "above",
+      "count": 12
+    },
+    {
+      "tool": "basic",
+      "label": "image_caption",
+      "position": "below",
+      "count": 86
+    },
+    {
+      "tool": "basic",
+      "label": "image_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 8
+    },
+    {
+      "tool": "basic",
+      "label": "table_caption",
+      "position": "above",
+      "count": 47
+    },
+    {
+      "tool": "basic",
+      "label": "table_caption",
+      "position": "below",
+      "count": 2
+    },
+    {
+      "tool": "basic",
+      "label": "table_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 13
+    },
+    {
+      "tool": "standard",
+      "label": "chart_caption",
+      "position": "above",
+      "count": 7
+    },
+    {
+      "tool": "standard",
+      "label": "chart_caption",
+      "position": "below",
+      "count": 157
+    },
+    {
+      "tool": "standard",
+      "label": "chart_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 6
+    },
+    {
+      "tool": "standard",
+      "label": "image_caption",
+      "position": "above",
+      "count": 12
+    },
+    {
+      "tool": "standard",
+      "label": "image_caption",
+      "position": "below",
+      "count": 85
+    },
+    {
+      "tool": "standard",
+      "label": "image_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 8
+    },
+    {
+      "tool": "standard",
+      "label": "table_caption",
+      "position": "above",
+      "count": 47
+    },
+    {
+      "tool": "standard",
+      "label": "table_caption",
+      "position": "below",
+      "count": 2
+    },
+    {
+      "tool": "standard",
+      "label": "table_caption",
+      "position": "overlapping_vertical_extent",
+      "count": 13
+    }
+  ],
+  "localized_relations": 675,
+  "concrete_agent_observation": {
+    "paper": "6.pdf",
+    "page_idx": 14,
+    "tool": "basic",
+    "native_file": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\assembled\\basic\\6\\middle.json",
+    "native_sha256": "69a7720c7f3656a4989357565f2d4c90ea5a682c89607d4a4a46c3b87e111faa",
+    "parent_pointer": "/pages/14/blocks/4",
+    "parent_type": "chart",
+    "parent_bbox": [
+      0.231,
+      0.512,
+      0.502,
+      0.688
+    ],
+    "caption_pointer": "/pages/14/blocks/4/content/0",
+    "caption_bbox": [
+      0.112,
+      0.455,
+      0.885,
+      0.505
+    ],
+    "caption_text": "Figure 8. Predictions at the axial midplane of the fuel rod for hoop stress and strain. Hoop strain at the (a) inner and (b) outer cladding surfaces. Hoop stress at the (c) inner and (d) outer cladding surface for the steady-state power case.",
+    "observation": "Existing raster shows Figure8 is upper four-panel hoop stress/strain group; declared parent is first lower chart (Figure9 fuel temperature). Agent visual observation, not human review; no replacement relation created."
+  }
+}

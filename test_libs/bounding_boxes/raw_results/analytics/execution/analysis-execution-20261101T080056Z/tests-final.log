@@ -1,0 +1,32 @@
+test_cost_null_inference_and_device_memory_not_imputed_per_paper (test_analysis.AnalysisControls.test_cost_null_inference_and_device_memory_not_imputed_per_paper) ... ok
+test_dangling_parent_and_isolated_list_item_not_fabricated (test_analysis.AnalysisControls.test_dangling_parent_and_isolated_list_item_not_fabricated) ... ok
+test_detector_timings_publish_observations_not_fabricated_sdk_pages (test_analysis.AnalysisControls.test_detector_timings_publish_observations_not_fabricated_sdk_pages) ... ok
+test_directional_containment_preserves_small_inside_large (test_analysis.AnalysisControls.test_directional_containment_preserves_small_inside_large) ... ok
+test_failures_keep_attempt_denominators_and_versions_separate (test_analysis.AnalysisControls.test_failures_keep_attempt_denominators_and_versions_separate) ... ok
+test_invalid_geometry_is_distinct_from_missing (test_analysis.AnalysisControls.test_invalid_geometry_is_distinct_from_missing) ... ok
+test_joint_caption_geometry_does_not_create_relationship (test_analysis.AnalysisControls.test_joint_caption_geometry_does_not_create_relationship) ... ok
+test_json_pointer_does_not_silently_accept_absent_native_node (test_analysis.AnalysisControls.test_json_pointer_does_not_silently_accept_absent_native_node) ... ok
+test_many_to_one_edges_survive_below_iou_threshold (test_analysis.AnalysisControls.test_many_to_one_edges_survive_below_iou_threshold) ... ok
+test_native_image_body_is_not_a_panel_and_child_bbox_stays_null (test_analysis.AnalysisControls.test_native_image_body_is_not_a_panel_and_child_bbox_stays_null) ... ok
+test_quantiles_and_mad_are_hand_checked (test_analysis.AnalysisControls.test_quantiles_and_mad_are_hand_checked) ... ok
+test_resolve_remote_path_checks_hash_and_containment (test_analysis.AnalysisControls.test_resolve_remote_path_checks_hash_and_containment) ... ok
+test_two_missing_labels_are_not_label_agreement (test_analysis.AnalysisControls.test_two_missing_labels_are_not_label_agreement) ... ok
+test_union_is_not_enclosing_rectangle_or_sum (test_analysis.AnalysisControls.test_union_is_not_enclosing_rectangle_or_sum) ... ok
+test_zero_spread_or_small_group_does_not_impute_outlier_score (test_analysis.AnalysisControls.test_zero_spread_or_small_group_does_not_impute_outlier_score) ... ok
+F0 frozen; F1 verifying receipts, native files, PDFs and existing backgrounds.
+  verified heron
+  verified heron101
+  verified basic
+  verified standard
+F1 complete; F2 computing per-page agreements and descriptors.
+  analyzed 1.pdf (1 pages)
+F2 and review preparation complete; verifying protected inputs again.
+test_offline_execution_verifies_sources_and_prepares_unreviewed_pages (test_analysis.RunnerControls.test_offline_execution_verifies_sources_and_prepares_unreviewed_pages) ... C:\Users\HP Victus\Desktop\nasa_research\test_libs\bounding_boxes\analysis_tools\tests\test_analysis.py:217: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\runtime\\analysis-test-artifacts\\6765405f7c854a8e9401b5eb9cdd0237\\project\\analysis\\fixture-run\\attempt_failure_summary.csv' mode='r' encoding='utf-8'>
+  rates = list(csv.DictReader((out/'attempt_failure_summary.csv').open(encoding='utf-8')))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.337s
+
+OK

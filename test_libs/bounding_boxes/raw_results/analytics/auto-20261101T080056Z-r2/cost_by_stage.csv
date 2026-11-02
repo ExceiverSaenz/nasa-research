@@ -1,0 +1,5 @@
+tool,source_run_id,sample_count,ram_peak_bytes,ram_median_bytes,ram_p95_bytes,ram_missing_samples,gpu_peak_mib,gpu_median_mib,gpu_p95_mib,gpu_missing_samples,monitor_error_samples,gpu_device_count_max,sampled_elapsed_span_s,stage_wall_s,nominal_interval_s,scope
+heron,collection-20261101T015723Z,52,1750814720,1688469504.0,1735489945.6,0,920.0,920.0,920.0,0,0,1,52.21367512699999,,1,stage_process_tree_rss_and_device_gpu_sampled_not_exclusive_not_per_paper
+heron101,collection-20261101T015723Z,55,1762885632,1726205952.0,1746860441.6,0,1054.0,1054.0,1054.0,0,0,1,55.36297095500004,,1,stage_process_tree_rss_and_device_gpu_sampled_not_exclusive_not_per_paper
+basic,mineru-nativefix-20261101T034122Z,294,6137352192,6031810560.0,6064283648.0,0,2862.0,2560.0,2862.0,0,0,1,307.8646341169997,,1,stage_process_tree_rss_and_device_gpu_sampled_not_exclusive_not_per_paper
+standard,mineru-nativefix-20261101T034122Z,306,10178027520,9525985280.0,9999218688.0,0,12473.0,10041.0,12473.0,0,0,1,329.4097797559998,,1,stage_process_tree_rss_and_device_gpu_sampled_not_exclusive_not_per_paper

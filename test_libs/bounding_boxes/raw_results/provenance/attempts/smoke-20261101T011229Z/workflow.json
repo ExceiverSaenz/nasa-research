@@ -1,0 +1,287 @@
+{
+  "status": "smoke_passed_closed",
+  "session": "bbx-8456b0df1ca4487f9df41dc433ab3544",
+  "remote_root": "/content/bbx-8456b0df1ca4487f9df41dc433ab3544",
+  "inventory": [
+    {
+      "name": "1.pdf",
+      "bytes": 50705515,
+      "sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "pages": 26
+    },
+    {
+      "name": "10.pdf",
+      "bytes": 144075,
+      "sha256": "87261b3f60e1f0aa62e37d357d419febf17c43f1beb0e3cccbfb0450c0d6b81b",
+      "pages": 9
+    },
+    {
+      "name": "11.pdf",
+      "bytes": 16382256,
+      "sha256": "b807cb5cace5892e88fa4d42556add46e403a9f1a632b36296342e8250826fde",
+      "pages": 21
+    },
+    {
+      "name": "12.pdf",
+      "bytes": 4874584,
+      "sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660",
+      "pages": 13
+    },
+    {
+      "name": "14.pdf",
+      "bytes": 2998149,
+      "sha256": "c456d6a6e32e397b65418be76ba53ec58d7ecfe880af0f0afdddbb505e464d52",
+      "pages": 68
+    },
+    {
+      "name": "15.pdf",
+      "bytes": 2209132,
+      "sha256": "7316a0858c49a13194fd9337995ea1c249661fa58acf569891c1294d6610c461",
+      "pages": 59
+    },
+    {
+      "name": "17.pdf",
+      "bytes": 2050847,
+      "sha256": "e77b377fb151c9c5d5b19b269f0c248148d1475a82af1f8dd1e73498c77bbef5",
+      "pages": 71
+    },
+    {
+      "name": "2.pdf",
+      "bytes": 3459054,
+      "sha256": "f4621f172d9857687da7b8ba88f691846fad5821900d9c5f39a951a0c0307727",
+      "pages": 12
+    },
+    {
+      "name": "3.pdf",
+      "bytes": 391487,
+      "sha256": "e38ad810e4d9deaf5902ccdda688da4ed586e2531bc0153efbedc89d3c77a727",
+      "pages": 4
+    },
+    {
+      "name": "4.pdf",
+      "bytes": 501270,
+      "sha256": "ec268ee6720e067d4d146335e834f85bd354346ef2fe0764e50444b73997608e",
+      "pages": 4
+    },
+    {
+      "name": "5.pdf",
+      "bytes": 2830388,
+      "sha256": "09ae42cc0fd9c939df8f416cdb5750e8f356a1fe315431ab6ef6211810f92af6",
+      "pages": 9
+    },
+    {
+      "name": "6.pdf",
+      "bytes": 3894699,
+      "sha256": "81dc7433ff7ab1e75cb148f184c3969f82ed9b014782fa36416a3188c7bfc539",
+      "pages": 26
+    },
+    {
+      "name": "7.pdf",
+      "bytes": 11637340,
+      "sha256": "390ddeed7b5d6b1c8c3e3892036b87e5600481ca3b560c80bf58ccbe7f9a82f5",
+      "pages": 14
+    },
+    {
+      "name": "8.pdf",
+      "bytes": 956328,
+      "sha256": "150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5",
+      "pages": 49
+    },
+    {
+      "name": "9.pdf",
+      "bytes": 6366963,
+      "sha256": "3e8ac0d09b0628f5c4467dc15e9eac47e01166f5c049834a243ea6fb8156b217",
+      "pages": 12
+    }
+  ],
+  "papers_dir": "/mnt/c/Users/HP Victus/Desktop/nasa_research/papers/SiC_papers",
+  "config_sha256": "5edffc35ac7856b80f90437c987a826492c2294e5008e7dbb7823c8fea4d66a6",
+  "code_sha256": "9e947d9caaf0d651a741c472c5f3738b242e4d373b0336f0d87dbeeb5cffb48d",
+  "local_r2_checks": [
+    {
+      "id": "r2_head:1.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:05.153058+00:00"
+    },
+    {
+      "id": "r2_head:10.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:05.573983+00:00"
+    },
+    {
+      "id": "r2_head:11.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:06.013602+00:00"
+    },
+    {
+      "id": "r2_head:12.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:06.433155+00:00"
+    },
+    {
+      "id": "r2_head:14.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:06.816914+00:00"
+    },
+    {
+      "id": "r2_head:15.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:07.214441+00:00"
+    },
+    {
+      "id": "r2_head:17.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:07.610125+00:00"
+    },
+    {
+      "id": "r2_head:2.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:08.023357+00:00"
+    },
+    {
+      "id": "r2_head:3.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:08.436458+00:00"
+    },
+    {
+      "id": "r2_head:4.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:08.832313+00:00"
+    },
+    {
+      "id": "r2_head:5.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:09.249718+00:00"
+    },
+    {
+      "id": "r2_head:6.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:09.657752+00:00"
+    },
+    {
+      "id": "r2_head:7.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:10.059336+00:00"
+    },
+    {
+      "id": "r2_head:8.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:10.452667+00:00"
+    },
+    {
+      "id": "r2_head:9.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:13:10.810314+00:00"
+    },
+    {
+      "id": "r2_get:12.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {},
+      "timestamp_utc": "2026-11-01T01:13:12.695233+00:00"
+    }
+  ],
+  "preparation": {
+    "status": "prepared"
+  },
+  "smoke": {
+    "status": "complete",
+    "tools": [
+      {
+        "tool": "heron",
+        "status": "complete"
+      },
+      {
+        "tool": "heron101",
+        "status": "complete"
+      },
+      {
+        "tool": "basic",
+        "status": "complete"
+      },
+      {
+        "tool": "standard",
+        "status": "complete"
+      }
+    ]
+  },
+  "artifact_dir": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/bounding_boxes/results/smoke-20261101T011229Z",
+  "session_closed": true,
+  "collection_executed": false
+}

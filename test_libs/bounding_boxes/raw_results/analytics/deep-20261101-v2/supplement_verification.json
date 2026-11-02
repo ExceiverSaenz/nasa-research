@@ -1,0 +1,22 @@
+{
+  "input_hashes": {
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\detections.jsonl": "98bafe4516c94891b0badcb14f82d5c57650abb6039b2e3ea5fe682ffc3edf53",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\label_map.csv": "84aa9af66c219b4cd34076c4710ad28800b14f61158cbc30750328caea0e9bd0",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\page_inventory.csv": "779113e967e7352c80d6f9602dbe4238d9b795c48a1817aca3440890ae45b361",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\deep-20261101-v2\\spatial_clusters.jsonl": "c4664aaf7c9b399de0abdb2748b39a279e16bbf560833ebf063fb440f01eaf31",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\supplement.py": "8daca6c8da1165020ba494b5a28d40b47883dff021ef0fe48d45270eaa186f28",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\metrics.py": "cafde66b049ad28c2b7cf9cdbc5e263fcb174fb589cc67c17c95ad99916c4f49",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis_tools\\core.py": "fcc8ff45fa6b12180b7a70eb231064c2d27c07c825f9ec99c86b2de66ef98252"
+  },
+  "unchanged": true,
+  "pages": 397,
+  "tool_page_outputs": 1588,
+  "block_group_partition_checks": {
+    "heron|heron101": true,
+    "heron|basic": true,
+    "heron|standard": true,
+    "heron101|basic": true,
+    "heron101|standard": true,
+    "basic|standard": true
+  }
+}

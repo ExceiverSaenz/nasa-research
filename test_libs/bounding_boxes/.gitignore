@@ -1,0 +1,37 @@
+# Reader MVP publication selection.
+/*
+!/.gitignore
+!/.gitattributes
+!/.layout.json
+!/README.md
+!/run.py
+!/reports/
+!/analytics/
+!/code/
+!/tests/
+!/raw_results/
+/raw_results/*
+!/raw_results/README.md
+!/raw_results/analytics/
+!/raw_results/feedback/
+!/raw_results/provenance/
+
+# Execution support, generated test artifacts and private local configuration.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+node_modules/
+.env
+.env.*
+!.env.example
+.aws/
+credentials
+credentials.*
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store
+Thumbs.db
