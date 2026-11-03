@@ -1,0 +1,352 @@
+{
+  "schema": "reading-order-run/1",
+  "run_id": "run",
+  "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+  "input_reference": {
+    "schema": "reading-order-input/1",
+    "source_root": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\offline-file-viewer-20261102\\fixture\\source\\assembled\\basic",
+    "documents": [
+      {
+        "paper_id": "12",
+        "normalized_sha256": "e91c4197e5fef837285d8457184d955f2e785355a0622a1bf36181698a53409c",
+        "middle_sha256": "c82cf800e4cf19c8e4e87cd4db6c5070f46ccbb8aafbbb552f4a13a584837844",
+        "paper_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "pages": [
+          {
+            "page_idx": 0,
+            "width": 600,
+            "height": 800,
+            "rotation": 0,
+            "pdf_width": 600,
+            "pdf_height": 800
+          },
+          {
+            "page_idx": 1,
+            "width": 600,
+            "height": 800,
+            "rotation": 0,
+            "pdf_width": 600,
+            "pdf_height": 800
+          }
+        ],
+        "exclusions": []
+      }
+    ],
+    "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec"
+  },
+  "created_utc": "2026-11-02T19:30:18.052729+00:00",
+  "predictions": [
+    {
+      "candidate_id": "hantian",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 8.35999999253545e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "hantian",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 7.919999916339293e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "docling",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.199999916134402e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "docling",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.329999996523838e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 7.929999992484227e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.450000000768341e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "xycut",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.360000043059699e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "xycut",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.440000106522348e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 0.0001143000008596573
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 6.129999928816687e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "doctr",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "380a28f4a7cf0591436c0489c7b54be911b3931514e66f01954203a8cbd7b11a",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-0"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 7.999999979801942e-05
+      },
+      "transformations": {}
+    },
+    {
+      "candidate_id": "doctr",
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+        "eligible_ids_hash": "2a0bf6f8f5fd57e25c300d12bf97bec44c75ef631a39d70c22e7598b725f2c4d",
+        "permutation_seed": 1729,
+        "route": null
+      },
+      "status": "PASS",
+      "ordered_ids": [
+        "block-1"
+      ],
+      "native": {
+        "fake_engine": true
+      },
+      "reason": null,
+      "costs": {
+        "controller_elapsed_s": 5.360000068321824e-05
+      },
+      "transformations": {}
+    }
+  ],
+  "candidate_ids": [
+    "hantian",
+    "docling",
+    "xycut_plus_plus",
+    "xycut",
+    "pp_doclayout_v2",
+    "doctr"
+  ],
+  "documents": [
+    {
+      "paper_id": "12",
+      "pages": [
+        {
+          "page_idx": 0,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        },
+        {
+          "page_idx": 1,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        }
+      ],
+      "paper_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "exclusions": []
+    }
+  ],
+  "native_cross_page_support": false,
+  "cross_page_links": [],
+  "selection": "selection_pending"
+}

@@ -1,0 +1,18 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+[0;31m---------------------------------------------------------------------------[0m[0;31mCalledProcessError[0m                        Traceback (most recent call last)[0;32m/tmp/ipykernel_1363/2738940172.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m      2[0m [0mroot[0m[0;34m=[0m[0;34m'/content/order-config-20261102'[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0mp[0m[0;34m=[0m[0mroot[0m[0;34m+[0m[0;34m'/venv/bin/python'[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 4[0;31m [0msubprocess[0m[0;34m.[0m[0mrun[0m[0;34m([0m[0;34m[[0m[0mp[0m[0;34m,[0m[0;34m'-B'[0m[0;34m,[0m[0;34m'-m'[0m[0;34m,[0m[0;34m'pytest'[0m[0;34m,[0m[0mroot[0m[0;34m+[0m[0;34m'/test_validation.py'[0m[0;34m,[0m[0;34m'-q'[0m[0;34m,[0m[0;34m'-p'[0m[0;34m,[0m[0;34m'no:cacheprovider'[0m[0;34m][0m[0;34m,[0m[0mcheck[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      5[0m [0mresult[0m[0;34m=[0m[0msubprocess[0m[0;34m.[0m[0mrun[0m[0;34m([0m[0;34m[[0m[0mp[0m[0;34m,[0m[0;34m'-B'[0m[0;34m,[0m[0mroot[0m[0;34m+[0m[0;34m'/probe_environment.py'[0m[0;34m,[0m[0;34m'--root'[0m[0;34m,[0m[0mroot[0m[0;34m,[0m[0;34m'--run-id'[0m[0;34m,[0m[0;34m'20261102T051648Z-config-9d55aa'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0mprint[0m[0;34m([0m[0;34m'ORDER_CONFIG_DRIVER_COMPLETED'[0m[0;34m,[0m[0mflush[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/usr/lib/python3.13/subprocess.py[0m in [0;36mrun[0;34m(input, capture_output, timeout, check, *popenargs, **kwargs)[0m
+[1;32m    576[0m         [0mretcode[0m [0;34m=[0m [0mprocess[0m[0;34m.[0m[0mpoll[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    577[0m         [0;32mif[0m [0mcheck[0m [0;32mand[0m [0mretcode[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 578[0;31m             raise CalledProcessError(retcode, process.args,
+[0m[1;32m    579[0m                                      output=stdout, stderr=stderr)
+[1;32m    580[0m     [0;32mreturn[0m [0mCompletedProcess[0m[0;34m([0m[0mprocess[0m[0;34m.[0m[0margs[0m[0;34m,[0m [0mretcode[0m[0;34m,[0m [0mstdout[0m[0;34m,[0m [0mstderr[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mCalledProcessError[0m: Command '['/content/order-config-20261102/venv/bin/python', '-B', '-m', 'pytest', '/content/order-config-20261102/test_validation.py', '-q', '-p', 'no:cacheprovider']' returned non-zero exit status 1.

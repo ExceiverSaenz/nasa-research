@@ -1,0 +1,2 @@
+# Single source of truth: the configuration candidate validated on A100.
+-r ../../test/test_config/requirements.in

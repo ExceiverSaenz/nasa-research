@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="6" time="2.283" timestamp="2026-11-02T22:52:59.589909-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[test_libs/reading_order/raw_results/example.json]" time="0.832"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_saved_references_follow_t0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354F08770&gt;
+reference = 'test_libs/reading_order/raw_results/example.json'
+
+    @pytest.mark.parametrize('reference', [
+        'test_libs/reading_order/raw_results/example.json',
+        r'C:\old checkout\test_libs\reading_order\raw_results\example.json',
+        '/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json',
+    ])
+    def test_saved_references_follow_the_clone_not_the_original_machine(tmp_path,monkeypatch,reference):
+        from reading_order import ingest
+        clone=tmp_path/'different clone'
+        target=clone/'test_libs/reading_order/raw_results/example.json'
+        target.parent.mkdir(parents=True);target.write_text('{"verified":true}')
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',clone)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_domain.py:25: AttributeError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[C:\\old checkout\\test_libs\\reading_order\\raw_results\\example.json]" time="0.022"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_saved_references_follow_t1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354B990F0&gt;
+reference = 'C:\\old checkout\\test_libs\\reading_order\\raw_results\\example.json'
+
+    @pytest.mark.parametrize('reference', [
+        'test_libs/reading_order/raw_results/example.json',
+        r'C:\old checkout\test_libs\reading_order\raw_results\example.json',
+        '/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json',
+    ])
+    def test_saved_references_follow_the_clone_not_the_original_machine(tmp_path,monkeypatch,reference):
+        from reading_order import ingest
+        clone=tmp_path/'different clone'
+        target=clone/'test_libs/reading_order/raw_results/example.json'
+        target.parent.mkdir(parents=True);target.write_text('{"verified":true}')
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',clone)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_domain.py:25: AttributeError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json]" time="0.010"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_saved_references_follow_t2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354F42450&gt;
+reference = '/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json'
+
+    @pytest.mark.parametrize('reference', [
+        'test_libs/reading_order/raw_results/example.json',
+        r'C:\old checkout\test_libs\reading_order\raw_results\example.json',
+        '/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json',
+    ])
+    def test_saved_references_follow_the_clone_not_the_original_machine(tmp_path,monkeypatch,reference):
+        from reading_order import ingest
+        clone=tmp_path/'different clone'
+        target=clone/'test_libs/reading_order/raw_results/example.json'
+        target.parent.mkdir(parents=True);target.write_text('{"verified":true}')
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',clone)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_domain.py:25: AttributeError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_rebased_reference_cannot_escape_the_project" time="0.004"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_rebased_reference_cannot_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354F9AF10&gt;
+
+    def test_rebased_reference_cannot_escape_the_project(tmp_path,monkeypatch):
+        from reading_order import ingest
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',tmp_path)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_domain.py:33: AttributeError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_offline_viewer" name="test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity[False]" time="0.008"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_viewer_reopens_after_chec0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354F9B460&gt;
+legacy = False
+
+    @pytest.mark.parametrize('legacy', [False,True])
+    def test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity(tmp_path,monkeypatch,legacy):
+        import shutil
+        from reading_order import ingest
+        from reading_order.contracts import identity
+        from reading_order.viewer import build_viewer,ViewerData
+        old=tmp_path/'original';new=tmp_path/'relocated'
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',old)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_offline_viewer.py:32: AttributeError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_offline_viewer" name="test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity[True]" time="0.005"><failure message="AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/red-tmp/test_viewer_reopens_after_chec1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x0000014354F15C50&gt;
+legacy = True
+
+    @pytest.mark.parametrize('legacy', [False,True])
+    def test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity(tmp_path,monkeypatch,legacy):
+        import shutil
+        from reading_order import ingest
+        from reading_order.contracts import identity
+        from reading_order.viewer import build_viewer,ViewerData
+        old=tmp_path/'original';new=tmp_path/'relocated'
+&gt;       monkeypatch.setattr(ingest,'PROJECT_ROOT',old)
+E       AttributeError: &lt;module 'reading_order.ingest' from 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\code\\reading_order\\ingest.py'&gt; has no attribute 'PROJECT_ROOT'
+
+test_libs\reading_order\test\test_code\test_offline_viewer.py:32: AttributeError</failure></testcase></testsuite></testsuites>

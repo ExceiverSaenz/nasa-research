@@ -1,0 +1,96 @@
+[
+  {
+    "candidate_id": "hantian",
+    "status": "PASS",
+    "transformations": {
+      "coordinates": "0..1000 rounded",
+      "decoder": "published hantian parse_logits"
+    }
+  },
+  {
+    "candidate_id": "docling",
+    "status": "PASS",
+    "transformations": {
+      "coordinates": "page points top-left",
+      "category_map": {
+        "text": "TEXT",
+        "title": "TITLE",
+        "heading": "SECTION_HEADER",
+        "header": "PAGE_HEADER",
+        "footer": "PAGE_FOOTER",
+        "number": "PAGE_FOOTER",
+        "footnote": "FOOTNOTE",
+        "reference": "TEXT",
+        "image": "PICTURE",
+        "chart": "PICTURE",
+        "table": "TABLE",
+        "formula": "FORMULA",
+        "caption": "CAPTION",
+        "index": "DOCUMENT_INDEX"
+      },
+      "cid_contract": "mineru_top_level_block_ordinal/v1",
+      "cid_prior": "MinerU source adjacency; not semantic ground truth",
+      "caption_association_or_merge": false
+    }
+  },
+  {
+    "candidate_id": "xycut_plus_plus",
+    "status": "PASS",
+    "transformations": {
+      "coordinates": "page points",
+      "semantic_labels": {
+        "title": 1,
+        "heading": 1,
+        "image": 2,
+        "chart": 2,
+        "table": 2,
+        "index": 0
+      },
+      "implementation": "home-still/xycut-plus-plus",
+      "paper_fidelity": "diverges_from_paper_v1"
+    }
+  },
+  {
+    "candidate_id": "xycut",
+    "status": "PASS",
+    "transformations": {
+      "coordinates": "normalized*1000 rounded to integer",
+      "rounding": "numpy.rint"
+    }
+  },
+  {
+    "candidate_id": "pp_doclayout_v2",
+    "status": "PASS",
+    "transformations": {
+      "coordinates": "0..1000 rounded",
+      "mapped_class_ids": [
+        8,
+        2,
+        1,
+        5
+      ],
+      "decoder": "Transformers PPDocLayoutV2ImageProcessor._get_order_seqs"
+    }
+  },
+  {
+    "candidate_id": "doctr",
+    "status": "PASS",
+    "transformations": {
+      "direction": "ltr",
+      "category_map": {
+        "heading": "text",
+        "title": "text",
+        "number": "footer",
+        "formula": "text",
+        "reference": "text",
+        "chart": "image",
+        "index": "text"
+      },
+      "transport_reply_recovery": {
+        "kind": "authenticated_result_api",
+        "request_id": "084e589131234d7cb62246faffa46067",
+        "sha256": "79e44fda8ce15426ecfa281edab5235256cd2805dd0b85957eb814ab744c7f96"
+      }
+    }
+  }
+]

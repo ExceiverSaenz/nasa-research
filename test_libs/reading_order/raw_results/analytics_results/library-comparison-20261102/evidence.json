@@ -1,0 +1,3346 @@
+{
+  "schema": "reading-order-library-comparison/1",
+  "candidates": [
+    "hantian",
+    "docling",
+    "xycut_plus_plus",
+    "xycut",
+    "pp_doclayout_v2",
+    "doctr"
+  ],
+  "observed_costs": [
+    {
+      "candidate_id": "hantian",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.11632714368273744,
+        "median": 0.025730031500017958,
+        "q1": 0.025166669249756524,
+        "q3": 0.026376873500112197,
+        "min": 0.024285456000029626,
+        "max": 11.88355227899956
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 397,
+        "mean": 1582040897.1284635,
+        "median": 1590157312,
+        "q1": 1573601280.0,
+        "q3": 1592344576.0,
+        "min": 1300631552,
+        "max": 1592442880
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 397,
+        "mean": 1275036721.0075567,
+        "median": 1275068416,
+        "q1": 1275068416.0,
+        "q3": 1275068416.0,
+        "min": 1268776960,
+        "max": 1275068416
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "candidate_id": "docling",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.030007273736041926,
+        "median": 0.003951993500095341,
+        "q1": 0.00276202075011156,
+        "q3": 0.0063438267499407175,
+        "min": 0.0014261380001698853,
+        "max": 2.0569412370000464
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 397,
+        "mean": 138464206.99244332,
+        "median": 138850304,
+        "q1": 138534912.0,
+        "q3": 138969088.0,
+        "min": 132288512,
+        "max": 139194368
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.0016640972182663087,
+        "median": 0.0016566720000810164,
+        "q1": 0.0015827330000774964,
+        "q3": 0.0017375207501117984,
+        "min": 0.0014162939996822388,
+        "max": 0.002072314000542974
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 391,
+        "mean": 49537883.00767264,
+        "median": 50012160,
+        "q1": 49297408.0,
+        "q3": 50161664.0,
+        "min": 37703680,
+        "max": 50417664
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.001933887560908676,
+        "median": 0.001751169000272057,
+        "q1": 0.001192768500004604,
+        "q3": 0.002309046750269772,
+        "min": 0.00036945499959983863,
+        "max": 0.036252034999961325
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 397,
+        "mean": 72522754.57934509,
+        "median": 72630272,
+        "q1": 72605696.0,
+        "q3": 72634368.0,
+        "min": 35872768,
+        "max": 72642560
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.04077989018530162,
+        "median": 0.010181082500366756,
+        "q1": 0.009880597749770459,
+        "q3": 0.010976873250228891,
+        "min": 0.009525434000352107,
+        "max": 11.755089909999697
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 397,
+        "mean": 1589254499.9496222,
+        "median": 1591476224,
+        "q1": 1591296000.0,
+        "q3": 1591533568.0,
+        "min": 1456664576,
+        "max": 1591545856
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 397,
+        "mean": 647391350.6498741,
+        "median": 648019968,
+        "q1": 648019968.0,
+        "q3": 648019968.0,
+        "min": 641728512,
+        "max": 648019968
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "recorded_predictions": 397,
+      "adapter_total_s": {
+        "n": 394,
+        "mean": 0.024402041624375325,
+        "median": 0.0013079605000712036,
+        "q1": 0.0011249709998537583,
+        "q3": 0.0016079792499112955,
+        "min": 9.326100007456262e-05,
+        "max": 9.05981238699951
+      },
+      "peak_sampled_rss_bytes": {
+        "n": 397,
+        "mean": 787604064.7254409,
+        "median": 787664896,
+        "q1": 787664896.0,
+        "q3": 787664896.0,
+        "min": 764735488,
+        "max": 787664896
+      },
+      "peak_sampled_gpu_bytes": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "load_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "inference_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      },
+      "decode_s": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "q1": null,
+        "q3": null,
+        "min": null,
+        "max": null
+      }
+    }
+  ],
+  "stability_changed": {
+    "docling": 0,
+    "doctr": 0,
+    "hantian": 26,
+    "pp_doclayout_v2": 1,
+    "xycut": 0,
+    "xycut_plus_plus": 0
+  },
+  "stability_denominator": 26,
+  "family_positions": [
+    {
+      "candidate": "hantian",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.5
+    },
+    {
+      "candidate": "hantian",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "hantian",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.5
+    },
+    {
+      "candidate": "hantian",
+      "family": "References",
+      "n": 688,
+      "median": 0.5
+    },
+    {
+      "candidate": "hantian",
+      "family": "Header",
+      "n": 225,
+      "median": 0.45
+    },
+    {
+      "candidate": "hantian",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 0.5192307692307692
+    },
+    {
+      "candidate": "docling",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.34782608695652173
+    },
+    {
+      "candidate": "docling",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "docling",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.375
+    },
+    {
+      "candidate": "docling",
+      "family": "References",
+      "n": 688,
+      "median": 0.5517241379310345
+    },
+    {
+      "candidate": "docling",
+      "family": "Header",
+      "n": 225,
+      "median": 0.0
+    },
+    {
+      "candidate": "docling",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 1.0
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.375
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.5
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "References",
+      "n": 688,
+      "median": 0.5847701149425287
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "Header",
+      "n": 225,
+      "median": 0.038461538461538464
+    },
+    {
+      "candidate": "xycut_plus_plus",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 1.0
+    },
+    {
+      "candidate": "xycut",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.4
+    },
+    {
+      "candidate": "xycut",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "xycut",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.4444444444444444
+    },
+    {
+      "candidate": "xycut",
+      "family": "References",
+      "n": 688,
+      "median": 0.5714285714285714
+    },
+    {
+      "candidate": "xycut",
+      "family": "Header",
+      "n": 225,
+      "median": 0.037037037037037035
+    },
+    {
+      "candidate": "xycut",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 0.9821428571428572
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.38461538461538464
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.5
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "References",
+      "n": 688,
+      "median": 0.5872210953346856
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "Header",
+      "n": 225,
+      "median": 0.037037037037037035
+    },
+    {
+      "candidate": "pp_doclayout_v2",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 0.9821428571428572
+    },
+    {
+      "candidate": "doctr",
+      "family": "Title/section",
+      "n": 505,
+      "median": 0.3333333333333333
+    },
+    {
+      "candidate": "doctr",
+      "family": "Text",
+      "n": 1729,
+      "median": 0.5
+    },
+    {
+      "candidate": "doctr",
+      "family": "Visual/table",
+      "n": 437,
+      "median": 0.375
+    },
+    {
+      "candidate": "doctr",
+      "family": "References",
+      "n": 688,
+      "median": 0.5625
+    },
+    {
+      "candidate": "doctr",
+      "family": "Header",
+      "n": 225,
+      "median": 0.0
+    },
+    {
+      "candidate": "doctr",
+      "family": "Footer/number",
+      "n": 494,
+      "median": 1.0
+    }
+  ],
+  "eligible_labels": {
+    "footer": 81,
+    "text": 1729,
+    "paragraph_title": 480,
+    "page_number": 336,
+    "doc_title": 25,
+    "header": 225,
+    "index": 18,
+    "table": 62,
+    "image": 162,
+    "chart": 213,
+    "ref_text": 688,
+    "page_footnote": 77,
+    "equation": 70
+  },
+  "cases": [
+    {
+      "case_id": "C01",
+      "paper_id": "1",
+      "page_number": 1,
+      "purpose": "First page, title and metadata",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80/0.png",
+        "sha256": "d3641cfceea3a97fa6f5ee7014930901dbe7def1880ec7b31e15da0e1a1615f8"
+      },
+      "orders": {
+        "hantian": [
+          "e660c7e488ff05e9db5e2799",
+          "f6a4e48a23385c0214ef2d87",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "8e1943d4fff771ef7eab011f",
+          "5c1009fb7fe3c7613afa0920",
+          "ed6d350dccccdf7fc6a8043d",
+          "9995a988f934518cd5cc2274",
+          "47690eeafe9a63cb794e5658",
+          "0906a140fe12ac291f96e727"
+        ],
+        "docling": [
+          "9995a988f934518cd5cc2274",
+          "ed6d350dccccdf7fc6a8043d",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "0906a140fe12ac291f96e727",
+          "47690eeafe9a63cb794e5658",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "f6a4e48a23385c0214ef2d87",
+          "e660c7e488ff05e9db5e2799",
+          "8e1943d4fff771ef7eab011f",
+          "5c1009fb7fe3c7613afa0920"
+        ],
+        "xycut_plus_plus": [
+          "9995a988f934518cd5cc2274",
+          "8e1943d4fff771ef7eab011f",
+          "ed6d350dccccdf7fc6a8043d",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "0906a140fe12ac291f96e727",
+          "47690eeafe9a63cb794e5658",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "f6a4e48a23385c0214ef2d87",
+          "e660c7e488ff05e9db5e2799",
+          "5c1009fb7fe3c7613afa0920"
+        ],
+        "xycut": [
+          "9995a988f934518cd5cc2274",
+          "ed6d350dccccdf7fc6a8043d",
+          "8e1943d4fff771ef7eab011f",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "0906a140fe12ac291f96e727",
+          "47690eeafe9a63cb794e5658",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "f6a4e48a23385c0214ef2d87",
+          "e660c7e488ff05e9db5e2799",
+          "5c1009fb7fe3c7613afa0920"
+        ],
+        "pp_doclayout_v2": [
+          "9995a988f934518cd5cc2274",
+          "ed6d350dccccdf7fc6a8043d",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "0906a140fe12ac291f96e727",
+          "47690eeafe9a63cb794e5658",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "8e1943d4fff771ef7eab011f",
+          "f6a4e48a23385c0214ef2d87",
+          "e660c7e488ff05e9db5e2799",
+          "5c1009fb7fe3c7613afa0920"
+        ],
+        "doctr": [
+          "9995a988f934518cd5cc2274",
+          "ed6d350dccccdf7fc6a8043d",
+          "4560764c6592109500e64537",
+          "9be0bcc22fa1949cc17903dc",
+          "0906a140fe12ac291f96e727",
+          "47690eeafe9a63cb794e5658",
+          "ad12fc8bd2f7fcb7962e6dc2",
+          "8e1943d4fff771ef7eab011f",
+          "f6a4e48a23385c0214ef2d87",
+          "e660c7e488ff05e9db5e2799",
+          "5c1009fb7fe3c7613afa0920"
+        ]
+      },
+      "units": [
+        {
+          "id": "e660c7e488ff05e9db5e2799",
+          "raw_label": "footer",
+          "bbox": [
+            0.224,
+            0.835,
+            0.706,
+            0.875
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/9"
+        },
+        {
+          "id": "f6a4e48a23385c0214ef2d87",
+          "raw_label": "footer",
+          "bbox": [
+            0.224,
+            0.78,
+            0.542,
+            0.821
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/8"
+        },
+        {
+          "id": "4560764c6592109500e64537",
+          "raw_label": "text",
+          "bbox": [
+            0.225,
+            0.243,
+            0.334,
+            0.262
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/2"
+        },
+        {
+          "id": "9be0bcc22fa1949cc17903dc",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.225,
+            0.364,
+            0.308,
+            0.381
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/3"
+        },
+        {
+          "id": "ad12fc8bd2f7fcb7962e6dc2",
+          "raw_label": "text",
+          "bbox": [
+            0.242,
+            0.692,
+            0.775,
+            0.772
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/6"
+        },
+        {
+          "id": "8e1943d4fff771ef7eab011f",
+          "raw_label": "page_number",
+          "bbox": [
+            0.751,
+            0.171,
+            0.816,
+            0.209
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/7"
+        },
+        {
+          "id": "5c1009fb7fe3c7613afa0920",
+          "raw_label": "page_number",
+          "bbox": [
+            0.747,
+            0.835,
+            0.772,
+            0.85
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/10"
+        },
+        {
+          "id": "ed6d350dccccdf7fc6a8043d",
+          "raw_label": "doc_title",
+          "bbox": [
+            0.225,
+            0.17,
+            0.715,
+            0.218
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/1"
+        },
+        {
+          "id": "9995a988f934518cd5cc2274",
+          "raw_label": "header",
+          "bbox": [
+            0.719,
+            0.104,
+            0.771,
+            0.145
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/0"
+        },
+        {
+          "id": "47690eeafe9a63cb794e5658",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.245,
+            0.671,
+            0.305,
+            0.686
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/5"
+        },
+        {
+          "id": "0906a140fe12ac291f96e727",
+          "raw_label": "index",
+          "bbox": [
+            0.224,
+            0.385,
+            0.775,
+            0.642
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/4"
+        }
+      ]
+    },
+    {
+      "case_id": "C02",
+      "paper_id": "2",
+      "page_number": 3,
+      "purpose": "Columns and interleaved figures",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/f4621f172d9857687da7b8ba88f691846fad5821900d9c5f39a951a0c0307727/2.png",
+        "sha256": "c40c4341f9c311967f083c9a2315922384558de3749560394b8135fc3c20ef36"
+      },
+      "orders": {
+        "hantian": [
+          "145d105d97a8cd0ae8181cd1",
+          "4887fb02cfeaef87ddfa7904",
+          "ba8a1f16b9b16ed480db4193",
+          "7408eb0752b0af8df12dd6df",
+          "a5bc0c36d7a63f19ba81129e",
+          "40a7866d75a0ed992d52b5ec",
+          "b954ab4c5ac465f6e7dc4985",
+          "01c8b0798ce21cb6ac7ed57b",
+          "ed2dcc796e3b6af293177c75"
+        ],
+        "docling": [
+          "145d105d97a8cd0ae8181cd1",
+          "01c8b0798ce21cb6ac7ed57b",
+          "a5bc0c36d7a63f19ba81129e",
+          "ba8a1f16b9b16ed480db4193",
+          "40a7866d75a0ed992d52b5ec",
+          "ed2dcc796e3b6af293177c75",
+          "7408eb0752b0af8df12dd6df",
+          "4887fb02cfeaef87ddfa7904",
+          "b954ab4c5ac465f6e7dc4985"
+        ],
+        "xycut_plus_plus": [
+          "b954ab4c5ac465f6e7dc4985",
+          "145d105d97a8cd0ae8181cd1",
+          "40a7866d75a0ed992d52b5ec",
+          "ed2dcc796e3b6af293177c75",
+          "01c8b0798ce21cb6ac7ed57b",
+          "7408eb0752b0af8df12dd6df",
+          "4887fb02cfeaef87ddfa7904",
+          "ba8a1f16b9b16ed480db4193",
+          "a5bc0c36d7a63f19ba81129e"
+        ],
+        "xycut": [
+          "b954ab4c5ac465f6e7dc4985",
+          "145d105d97a8cd0ae8181cd1",
+          "01c8b0798ce21cb6ac7ed57b",
+          "40a7866d75a0ed992d52b5ec",
+          "ed2dcc796e3b6af293177c75",
+          "a5bc0c36d7a63f19ba81129e",
+          "7408eb0752b0af8df12dd6df",
+          "ba8a1f16b9b16ed480db4193",
+          "4887fb02cfeaef87ddfa7904"
+        ],
+        "pp_doclayout_v2": [
+          "b954ab4c5ac465f6e7dc4985",
+          "145d105d97a8cd0ae8181cd1",
+          "01c8b0798ce21cb6ac7ed57b",
+          "a5bc0c36d7a63f19ba81129e",
+          "40a7866d75a0ed992d52b5ec",
+          "ed2dcc796e3b6af293177c75",
+          "7408eb0752b0af8df12dd6df",
+          "ba8a1f16b9b16ed480db4193",
+          "4887fb02cfeaef87ddfa7904"
+        ],
+        "doctr": [
+          "145d105d97a8cd0ae8181cd1",
+          "01c8b0798ce21cb6ac7ed57b",
+          "a5bc0c36d7a63f19ba81129e",
+          "ba8a1f16b9b16ed480db4193",
+          "40a7866d75a0ed992d52b5ec",
+          "ed2dcc796e3b6af293177c75",
+          "7408eb0752b0af8df12dd6df",
+          "4887fb02cfeaef87ddfa7904",
+          "b954ab4c5ac465f6e7dc4985"
+        ]
+      },
+      "units": [
+        {
+          "id": "145d105d97a8cd0ae8181cd1",
+          "raw_label": "header",
+          "bbox": [
+            0.325,
+            0.057,
+            0.658,
+            0.07
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/1"
+        },
+        {
+          "id": "4887fb02cfeaef87ddfa7904",
+          "raw_label": "chart",
+          "bbox": [
+            0.496,
+            0.737,
+            0.782,
+            0.907
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/8"
+        },
+        {
+          "id": "ba8a1f16b9b16ed480db4193",
+          "raw_label": "chart",
+          "bbox": [
+            0.202,
+            0.737,
+            0.486,
+            0.907
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/4"
+        },
+        {
+          "id": "7408eb0752b0af8df12dd6df",
+          "raw_label": "image",
+          "bbox": [
+            0.511,
+            0.444,
+            0.921,
+            0.649
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/7"
+        },
+        {
+          "id": "a5bc0c36d7a63f19ba81129e",
+          "raw_label": "text",
+          "bbox": [
+            0.049,
+            0.488,
+            0.481,
+            0.716
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/3"
+        },
+        {
+          "id": "40a7866d75a0ed992d52b5ec",
+          "raw_label": "text",
+          "bbox": [
+            0.5,
+            0.08,
+            0.933,
+            0.372
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/5"
+        },
+        {
+          "id": "b954ab4c5ac465f6e7dc4985",
+          "raw_label": "page_number",
+          "bbox": [
+            0.052,
+            0.058,
+            0.077,
+            0.068
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/0"
+        },
+        {
+          "id": "01c8b0798ce21cb6ac7ed57b",
+          "raw_label": "chart",
+          "bbox": [
+            0.057,
+            0.099,
+            0.464,
+            0.417
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/2"
+        },
+        {
+          "id": "ed2dcc796e3b6af293177c75",
+          "raw_label": "text",
+          "bbox": [
+            0.501,
+            0.371,
+            0.933,
+            0.412
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/2/blocks/6"
+        }
+      ]
+    },
+    {
+      "case_id": "C03",
+      "paper_id": "5",
+      "page_number": 3,
+      "purpose": "Tables, text and charts",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/09ae42cc0fd9c939df8f416cdb5750e8f356a1fe315431ab6ef6211810f92af6/2.png",
+        "sha256": "a455f9a310ba74491d3f79ccaff5a00cd21dceccd165580d744df00298b5ca81"
+      },
+      "orders": {
+        "hantian": [
+          "456b09339bc3b9438d13cfcb",
+          "0e471819638f6320052c51c8",
+          "cf521c9440a24928072e532b",
+          "e6b4b0842168a66bda858f61",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "4bbf55bd43581655f5e6c8bf",
+          "12ef554b626e7fcdc1aa4506",
+          "6a950fc01c2f11c14d81fd02",
+          "2995faf2b8fbeb287d3d3c33",
+          "0826e2e46c557c84869ec9e8",
+          "4becdbd9540cba7cf5fee1b4",
+          "37caa6fdef6bac1b7bfdec09",
+          "6db5253c1a50b7c57edfe523",
+          "ff546c19a1b079abb3022be6"
+        ],
+        "docling": [
+          "cf521c9440a24928072e532b",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "12ef554b626e7fcdc1aa4506",
+          "4bbf55bd43581655f5e6c8bf",
+          "456b09339bc3b9438d13cfcb",
+          "2995faf2b8fbeb287d3d3c33",
+          "0e471819638f6320052c51c8",
+          "ff546c19a1b079abb3022be6",
+          "e6b4b0842168a66bda858f61",
+          "0826e2e46c557c84869ec9e8",
+          "6a950fc01c2f11c14d81fd02",
+          "37caa6fdef6bac1b7bfdec09",
+          "6db5253c1a50b7c57edfe523",
+          "4becdbd9540cba7cf5fee1b4"
+        ],
+        "xycut_plus_plus": [
+          "cf521c9440a24928072e532b",
+          "4becdbd9540cba7cf5fee1b4",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "12ef554b626e7fcdc1aa4506",
+          "4bbf55bd43581655f5e6c8bf",
+          "456b09339bc3b9438d13cfcb",
+          "2995faf2b8fbeb287d3d3c33",
+          "6db5253c1a50b7c57edfe523",
+          "37caa6fdef6bac1b7bfdec09",
+          "ff546c19a1b079abb3022be6",
+          "0e471819638f6320052c51c8",
+          "e6b4b0842168a66bda858f61",
+          "0826e2e46c557c84869ec9e8",
+          "6a950fc01c2f11c14d81fd02"
+        ],
+        "xycut": [
+          "cf521c9440a24928072e532b",
+          "4becdbd9540cba7cf5fee1b4",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "12ef554b626e7fcdc1aa4506",
+          "4bbf55bd43581655f5e6c8bf",
+          "456b09339bc3b9438d13cfcb",
+          "2995faf2b8fbeb287d3d3c33",
+          "0e471819638f6320052c51c8",
+          "e6b4b0842168a66bda858f61",
+          "0826e2e46c557c84869ec9e8",
+          "6a950fc01c2f11c14d81fd02",
+          "ff546c19a1b079abb3022be6",
+          "37caa6fdef6bac1b7bfdec09",
+          "6db5253c1a50b7c57edfe523"
+        ],
+        "pp_doclayout_v2": [
+          "cf521c9440a24928072e532b",
+          "4becdbd9540cba7cf5fee1b4",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "12ef554b626e7fcdc1aa4506",
+          "4bbf55bd43581655f5e6c8bf",
+          "456b09339bc3b9438d13cfcb",
+          "2995faf2b8fbeb287d3d3c33",
+          "0e471819638f6320052c51c8",
+          "e6b4b0842168a66bda858f61",
+          "0826e2e46c557c84869ec9e8",
+          "6a950fc01c2f11c14d81fd02",
+          "ff546c19a1b079abb3022be6",
+          "37caa6fdef6bac1b7bfdec09",
+          "6db5253c1a50b7c57edfe523"
+        ],
+        "doctr": [
+          "cf521c9440a24928072e532b",
+          "b6148d1ace36941068189013",
+          "79eae7bf902648a900f8e76a",
+          "12ef554b626e7fcdc1aa4506",
+          "4bbf55bd43581655f5e6c8bf",
+          "e6b4b0842168a66bda858f61",
+          "456b09339bc3b9438d13cfcb",
+          "0826e2e46c557c84869ec9e8",
+          "2995faf2b8fbeb287d3d3c33",
+          "0e471819638f6320052c51c8",
+          "6a950fc01c2f11c14d81fd02",
+          "ff546c19a1b079abb3022be6",
+          "37caa6fdef6bac1b7bfdec09",
+          "6db5253c1a50b7c57edfe523",
+          "4becdbd9540cba7cf5fee1b4"
+        ]
+      },
+      "units": [
+        {
+          "id": "456b09339bc3b9438d13cfcb",
+          "raw_label": "text",
+          "bbox": [
+            0.065,
+            0.422,
+            0.498,
+            0.609
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/5"
+        },
+        {
+          "id": "0e471819638f6320052c51c8",
+          "raw_label": "text",
+          "bbox": [
+            0.086,
+            0.648,
+            0.496,
+            0.663
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/8"
+        },
+        {
+          "id": "cf521c9440a24928072e532b",
+          "raw_label": "header",
+          "bbox": [
+            0.349,
+            0.057,
+            0.667,
+            0.07
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/0"
+        },
+        {
+          "id": "e6b4b0842168a66bda858f61",
+          "raw_label": "text",
+          "bbox": [
+            0.516,
+            0.327,
+            0.949,
+            0.473
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/9"
+        },
+        {
+          "id": "b6148d1ace36941068189013",
+          "raw_label": "table",
+          "bbox": [
+            0.069,
+            0.105,
+            0.946,
+            0.173
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/2"
+        },
+        {
+          "id": "79eae7bf902648a900f8e76a",
+          "raw_label": "table",
+          "bbox": [
+            0.069,
+            0.223,
+            0.946,
+            0.302
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/3"
+        },
+        {
+          "id": "4bbf55bd43581655f5e6c8bf",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.067,
+            0.396,
+            0.187,
+            0.41
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/6"
+        },
+        {
+          "id": "12ef554b626e7fcdc1aa4506",
+          "raw_label": "text",
+          "bbox": [
+            0.065,
+            0.327,
+            0.497,
+            0.382
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/4"
+        },
+        {
+          "id": "6a950fc01c2f11c14d81fd02",
+          "raw_label": "text",
+          "bbox": [
+            0.517,
+            0.591,
+            0.95,
+            0.659
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/11"
+        },
+        {
+          "id": "2995faf2b8fbeb287d3d3c33",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.067,
+            0.622,
+            0.143,
+            0.636
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/7"
+        },
+        {
+          "id": "0826e2e46c557c84869ec9e8",
+          "raw_label": "text",
+          "bbox": [
+            0.516,
+            0.472,
+            0.95,
+            0.591
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/10"
+        },
+        {
+          "id": "4becdbd9540cba7cf5fee1b4",
+          "raw_label": "page_number",
+          "bbox": [
+            0.924,
+            0.058,
+            0.948,
+            0.069
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/1"
+        },
+        {
+          "id": "37caa6fdef6bac1b7bfdec09",
+          "raw_label": "chart",
+          "bbox": [
+            0.362,
+            0.685,
+            0.648,
+            0.885
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/13"
+        },
+        {
+          "id": "6db5253c1a50b7c57edfe523",
+          "raw_label": "chart",
+          "bbox": [
+            0.646,
+            0.684,
+            0.935,
+            0.886
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/14"
+        },
+        {
+          "id": "ff546c19a1b079abb3022be6",
+          "raw_label": "chart",
+          "bbox": [
+            0.079,
+            0.684,
+            0.363,
+            0.885
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/5/middle.json#/pages/2/blocks/12"
+        }
+      ]
+    },
+    {
+      "case_id": "C04",
+      "paper_id": "9",
+      "page_number": 11,
+      "purpose": "Closing text and references",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/3e8ac0d09b0628f5c4467dc15e9eac47e01166f5c049834a243ea6fb8156b217/10.png",
+        "sha256": "4c33feb27a23e16e78bf4f75185e28c8571de94abd1c0e928d908f1aea7cde32"
+      },
+      "orders": {
+        "hantian": [
+          "65f44a0a813a6b4b112e7982",
+          "9f1bdf4122a4a200b89bdcfc",
+          "80f5b9c3b9b5cf07702ae51f",
+          "c9ffa6e9762244e43feb4837",
+          "62526f0879634c0c9ad9ddee",
+          "37f1392dfd4ab8ed3d119d25",
+          "1fa784441144b0a0b89357f1",
+          "31060fe21f7a4360d4217e94",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "9f5d466f65c1f757105a4966",
+          "de24c08813650b7b10821f14",
+          "b016ae8584616a5670b51486",
+          "a0154238d8f991cea6284a55",
+          "88ad7761e2cdf1c54b9c5213",
+          "8ff23f7de00134f4657d1a65",
+          "9f9a679d7ffa0bdb620a5c78"
+        ],
+        "docling": [
+          "31060fe21f7a4360d4217e94",
+          "a0154238d8f991cea6284a55",
+          "65f44a0a813a6b4b112e7982",
+          "9f9a679d7ffa0bdb620a5c78",
+          "b016ae8584616a5670b51486",
+          "de24c08813650b7b10821f14",
+          "62526f0879634c0c9ad9ddee",
+          "8ff23f7de00134f4657d1a65",
+          "9f1bdf4122a4a200b89bdcfc",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "37f1392dfd4ab8ed3d119d25",
+          "c9ffa6e9762244e43feb4837",
+          "88ad7761e2cdf1c54b9c5213",
+          "1fa784441144b0a0b89357f1",
+          "80f5b9c3b9b5cf07702ae51f",
+          "9f5d466f65c1f757105a4966"
+        ],
+        "xycut_plus_plus": [
+          "31060fe21f7a4360d4217e94",
+          "a0154238d8f991cea6284a55",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "37f1392dfd4ab8ed3d119d25",
+          "c9ffa6e9762244e43feb4837",
+          "88ad7761e2cdf1c54b9c5213",
+          "1fa784441144b0a0b89357f1",
+          "80f5b9c3b9b5cf07702ae51f",
+          "9f5d466f65c1f757105a4966",
+          "65f44a0a813a6b4b112e7982",
+          "9f9a679d7ffa0bdb620a5c78",
+          "b016ae8584616a5670b51486",
+          "de24c08813650b7b10821f14",
+          "62526f0879634c0c9ad9ddee",
+          "8ff23f7de00134f4657d1a65",
+          "9f1bdf4122a4a200b89bdcfc"
+        ],
+        "xycut": [
+          "31060fe21f7a4360d4217e94",
+          "a0154238d8f991cea6284a55",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "37f1392dfd4ab8ed3d119d25",
+          "c9ffa6e9762244e43feb4837",
+          "88ad7761e2cdf1c54b9c5213",
+          "1fa784441144b0a0b89357f1",
+          "80f5b9c3b9b5cf07702ae51f",
+          "9f5d466f65c1f757105a4966",
+          "65f44a0a813a6b4b112e7982",
+          "9f9a679d7ffa0bdb620a5c78",
+          "b016ae8584616a5670b51486",
+          "de24c08813650b7b10821f14",
+          "62526f0879634c0c9ad9ddee",
+          "8ff23f7de00134f4657d1a65",
+          "9f1bdf4122a4a200b89bdcfc"
+        ],
+        "pp_doclayout_v2": [
+          "31060fe21f7a4360d4217e94",
+          "a0154238d8f991cea6284a55",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "37f1392dfd4ab8ed3d119d25",
+          "c9ffa6e9762244e43feb4837",
+          "88ad7761e2cdf1c54b9c5213",
+          "1fa784441144b0a0b89357f1",
+          "80f5b9c3b9b5cf07702ae51f",
+          "9f5d466f65c1f757105a4966",
+          "65f44a0a813a6b4b112e7982",
+          "9f9a679d7ffa0bdb620a5c78",
+          "b016ae8584616a5670b51486",
+          "de24c08813650b7b10821f14",
+          "62526f0879634c0c9ad9ddee",
+          "8ff23f7de00134f4657d1a65",
+          "9f1bdf4122a4a200b89bdcfc"
+        ],
+        "doctr": [
+          "31060fe21f7a4360d4217e94",
+          "a0154238d8f991cea6284a55",
+          "de6d8180cd3c5ad3bb47cbd1",
+          "37f1392dfd4ab8ed3d119d25",
+          "c9ffa6e9762244e43feb4837",
+          "88ad7761e2cdf1c54b9c5213",
+          "1fa784441144b0a0b89357f1",
+          "80f5b9c3b9b5cf07702ae51f",
+          "9f5d466f65c1f757105a4966",
+          "65f44a0a813a6b4b112e7982",
+          "9f9a679d7ffa0bdb620a5c78",
+          "b016ae8584616a5670b51486",
+          "de24c08813650b7b10821f14",
+          "62526f0879634c0c9ad9ddee",
+          "8ff23f7de00134f4657d1a65",
+          "9f1bdf4122a4a200b89bdcfc"
+        ]
+      },
+      "units": [
+        {
+          "id": "65f44a0a813a6b4b112e7982",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.056,
+            0.727,
+            0.147,
+            0.741
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/9"
+        },
+        {
+          "id": "9f1bdf4122a4a200b89bdcfc",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.882,
+            0.941,
+            0.91
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/15"
+        },
+        {
+          "id": "80f5b9c3b9b5cf07702ae51f",
+          "raw_label": "text",
+          "bbox": [
+            0.273,
+            0.5,
+            0.944,
+            0.571
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/7"
+        },
+        {
+          "id": "c9ffa6e9762244e43feb4837",
+          "raw_label": "text",
+          "bbox": [
+            0.273,
+            0.311,
+            0.944,
+            0.396
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/4"
+        },
+        {
+          "id": "62526f0879634c0c9ad9ddee",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.828,
+            0.941,
+            0.855
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/13"
+        },
+        {
+          "id": "37f1392dfd4ab8ed3d119d25",
+          "raw_label": "text",
+          "bbox": [
+            0.273,
+            0.134,
+            0.946,
+            0.299
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/3"
+        },
+        {
+          "id": "1fa784441144b0a0b89357f1",
+          "raw_label": "text",
+          "bbox": [
+            0.274,
+            0.465,
+            0.943,
+            0.495
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/6"
+        },
+        {
+          "id": "31060fe21f7a4360d4217e94",
+          "raw_label": "header",
+          "bbox": [
+            0.056,
+            0.058,
+            0.193,
+            0.071
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/0"
+        },
+        {
+          "id": "de6d8180cd3c5ad3bb47cbd1",
+          "raw_label": "text",
+          "bbox": [
+            0.273,
+            0.103,
+            0.943,
+            0.134
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/2"
+        },
+        {
+          "id": "9f5d466f65c1f757105a4966",
+          "raw_label": "text",
+          "bbox": [
+            0.273,
+            0.576,
+            0.944,
+            0.717
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/8"
+        },
+        {
+          "id": "de24c08813650b7b10821f14",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.801,
+            0.941,
+            0.827
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/12"
+        },
+        {
+          "id": "b016ae8584616a5670b51486",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.774,
+            0.941,
+            0.8
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/11"
+        },
+        {
+          "id": "a0154238d8f991cea6284a55",
+          "raw_label": "header",
+          "bbox": [
+            0.891,
+            0.06,
+            0.943,
+            0.073
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/1"
+        },
+        {
+          "id": "88ad7761e2cdf1c54b9c5213",
+          "raw_label": "text",
+          "bbox": [
+            0.274,
+            0.402,
+            0.944,
+            0.46
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/5"
+        },
+        {
+          "id": "8ff23f7de00134f4657d1a65",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.855,
+            0.941,
+            0.882
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/14"
+        },
+        {
+          "id": "9f9a679d7ffa0bdb620a5c78",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.057,
+            0.746,
+            0.94,
+            0.773
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/9/middle.json#/pages/10/blocks/10"
+        }
+      ]
+    },
+    {
+      "case_id": "C05",
+      "paper_id": "2",
+      "page_number": 11,
+      "purpose": "Two-column references",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/f4621f172d9857687da7b8ba88f691846fad5821900d9c5f39a951a0c0307727/10.png",
+        "sha256": "fb4b22d2c690574dd1f60245f64427ea19def7b54492255648a6a30cc4645aeb"
+      },
+      "orders": {
+        "hantian": [
+          "ca4261e945566c50cdbb4641",
+          "89fefe079036c8e998bc5150",
+          "d65477dca9d5563024a4a3c6",
+          "c87cd4d30daabe1152985b14",
+          "570a5f236828988c4fc6bf1c",
+          "18f8d7d9a2a82f1a181c3544",
+          "fe339cb91c5bc49acf47904a",
+          "ac806076804abf668b6bb27d",
+          "ed86e243a4fc42b5fa7f5a84",
+          "c32bff6b61d0e6526175ddc6",
+          "62482ee5d4d4fc5a868bc735",
+          "2fa47129e28e023c5f61ce8c",
+          "1d35ba5875e1af96df5aa8da",
+          "118a554626a0488d05c4cb4f",
+          "09b147c459fc39caf559e1aa",
+          "fc470ebe4accb2bdc841dff1",
+          "cf98f8833ebd31bb67dabedd",
+          "bc82c55a651d738b62b71467",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "8165bbdd271470b5e5167e3b",
+          "eefba9c0e8894fbc1982402a",
+          "89345be81ea7ff8af6bd1e60",
+          "717107b81ddd30845dab7999",
+          "6cd9361f9e8509adf0fa348c",
+          "b13ee082847a9357d69ae156",
+          "1801bda5576a00e70d426604",
+          "7023e57cf200dbff02f48bb6",
+          "dac36cee60af13f05603aacf",
+          "685c17e1aadeaab208733848",
+          "5d200acb29d19b2c3b1f253e",
+          "a3fb4293dffc41b11277e3d2",
+          "fda45c6aef21196ab3d174bd",
+          "11c597015c52665614539cad",
+          "0f69cfaf0f78531c8dec0307",
+          "7a19acee08bb4277ebc6a23b",
+          "d9bedb21bca3d83b958171bc",
+          "17eeceb607081cedef3cb98c",
+          "0c6629792e3ed1d3b0e896f8",
+          "70e50abd288fa0f0618d8baf",
+          "80cd2946eeb56a9dfe01bd0c",
+          "f3664bae58d4f2a958628de2",
+          "02be345821d211ae83f0058a",
+          "62bc56f5c5debb9b06420051",
+          "c26e2fddef1b558378b79b6e",
+          "62bd980372abaf6ed249c60c",
+          "09e8600de550b75fa8a4ae1b",
+          "ab1a4868727cbde1ff003121",
+          "1178b62c035fc9d0f8a941a1",
+          "85cabac9b2167ef97adc3d07",
+          "305f708f6ece3f108cdf851d",
+          "bf17daaed8bf9c79b4535dbc",
+          "180e7e6c74e27461a6c0a824",
+          "88d2f162566f080666ef40fd"
+        ],
+        "docling": [
+          "0c6629792e3ed1d3b0e896f8",
+          "d65477dca9d5563024a4a3c6",
+          "1d35ba5875e1af96df5aa8da",
+          "685c17e1aadeaab208733848",
+          "d9bedb21bca3d83b958171bc",
+          "09b147c459fc39caf559e1aa",
+          "5d200acb29d19b2c3b1f253e",
+          "89345be81ea7ff8af6bd1e60",
+          "bc82c55a651d738b62b71467",
+          "88d2f162566f080666ef40fd",
+          "6cd9361f9e8509adf0fa348c",
+          "1178b62c035fc9d0f8a941a1",
+          "11c597015c52665614539cad",
+          "8165bbdd271470b5e5167e3b",
+          "02be345821d211ae83f0058a",
+          "70e50abd288fa0f0618d8baf",
+          "ed86e243a4fc42b5fa7f5a84",
+          "180e7e6c74e27461a6c0a824",
+          "85cabac9b2167ef97adc3d07",
+          "dac36cee60af13f05603aacf",
+          "bf17daaed8bf9c79b4535dbc",
+          "fe339cb91c5bc49acf47904a",
+          "ac806076804abf668b6bb27d",
+          "717107b81ddd30845dab7999",
+          "62482ee5d4d4fc5a868bc735",
+          "b13ee082847a9357d69ae156",
+          "1801bda5576a00e70d426604",
+          "cf98f8833ebd31bb67dabedd",
+          "62bd980372abaf6ed249c60c",
+          "305f708f6ece3f108cdf851d",
+          "ca4261e945566c50cdbb4641",
+          "ab1a4868727cbde1ff003121",
+          "c87cd4d30daabe1152985b14",
+          "62bc56f5c5debb9b06420051",
+          "f3664bae58d4f2a958628de2",
+          "89fefe079036c8e998bc5150",
+          "18f8d7d9a2a82f1a181c3544",
+          "570a5f236828988c4fc6bf1c",
+          "fda45c6aef21196ab3d174bd",
+          "eefba9c0e8894fbc1982402a",
+          "c32bff6b61d0e6526175ddc6",
+          "a3fb4293dffc41b11277e3d2",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "17eeceb607081cedef3cb98c",
+          "fc470ebe4accb2bdc841dff1",
+          "09e8600de550b75fa8a4ae1b",
+          "2fa47129e28e023c5f61ce8c",
+          "7a19acee08bb4277ebc6a23b",
+          "7023e57cf200dbff02f48bb6",
+          "80cd2946eeb56a9dfe01bd0c",
+          "118a554626a0488d05c4cb4f",
+          "0f69cfaf0f78531c8dec0307",
+          "c26e2fddef1b558378b79b6e"
+        ],
+        "xycut_plus_plus": [
+          "c26e2fddef1b558378b79b6e",
+          "0c6629792e3ed1d3b0e896f8",
+          "b13ee082847a9357d69ae156",
+          "d65477dca9d5563024a4a3c6",
+          "1d35ba5875e1af96df5aa8da",
+          "685c17e1aadeaab208733848",
+          "d9bedb21bca3d83b958171bc",
+          "09b147c459fc39caf559e1aa",
+          "5d200acb29d19b2c3b1f253e",
+          "89345be81ea7ff8af6bd1e60",
+          "bc82c55a651d738b62b71467",
+          "88d2f162566f080666ef40fd",
+          "6cd9361f9e8509adf0fa348c",
+          "1178b62c035fc9d0f8a941a1",
+          "11c597015c52665614539cad",
+          "8165bbdd271470b5e5167e3b",
+          "02be345821d211ae83f0058a",
+          "70e50abd288fa0f0618d8baf",
+          "ed86e243a4fc42b5fa7f5a84",
+          "180e7e6c74e27461a6c0a824",
+          "85cabac9b2167ef97adc3d07",
+          "dac36cee60af13f05603aacf",
+          "bf17daaed8bf9c79b4535dbc",
+          "fe339cb91c5bc49acf47904a",
+          "ac806076804abf668b6bb27d",
+          "717107b81ddd30845dab7999",
+          "62482ee5d4d4fc5a868bc735",
+          "1801bda5576a00e70d426604",
+          "cf98f8833ebd31bb67dabedd",
+          "62bd980372abaf6ed249c60c",
+          "305f708f6ece3f108cdf851d",
+          "ca4261e945566c50cdbb4641",
+          "ab1a4868727cbde1ff003121",
+          "c87cd4d30daabe1152985b14",
+          "62bc56f5c5debb9b06420051",
+          "f3664bae58d4f2a958628de2",
+          "89fefe079036c8e998bc5150",
+          "18f8d7d9a2a82f1a181c3544",
+          "570a5f236828988c4fc6bf1c",
+          "fda45c6aef21196ab3d174bd",
+          "eefba9c0e8894fbc1982402a",
+          "c32bff6b61d0e6526175ddc6",
+          "a3fb4293dffc41b11277e3d2",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "17eeceb607081cedef3cb98c",
+          "fc470ebe4accb2bdc841dff1",
+          "09e8600de550b75fa8a4ae1b",
+          "2fa47129e28e023c5f61ce8c",
+          "7a19acee08bb4277ebc6a23b",
+          "7023e57cf200dbff02f48bb6",
+          "80cd2946eeb56a9dfe01bd0c",
+          "118a554626a0488d05c4cb4f",
+          "0f69cfaf0f78531c8dec0307"
+        ],
+        "xycut": [
+          "c26e2fddef1b558378b79b6e",
+          "0c6629792e3ed1d3b0e896f8",
+          "8165bbdd271470b5e5167e3b",
+          "70e50abd288fa0f0618d8baf",
+          "ed86e243a4fc42b5fa7f5a84",
+          "11c597015c52665614539cad",
+          "dac36cee60af13f05603aacf",
+          "1d35ba5875e1af96df5aa8da",
+          "d9bedb21bca3d83b958171bc",
+          "685c17e1aadeaab208733848",
+          "1178b62c035fc9d0f8a941a1",
+          "bc82c55a651d738b62b71467",
+          "5d200acb29d19b2c3b1f253e",
+          "89345be81ea7ff8af6bd1e60",
+          "88d2f162566f080666ef40fd",
+          "6cd9361f9e8509adf0fa348c",
+          "02be345821d211ae83f0058a",
+          "09b147c459fc39caf559e1aa",
+          "fe339cb91c5bc49acf47904a",
+          "180e7e6c74e27461a6c0a824",
+          "85cabac9b2167ef97adc3d07",
+          "bf17daaed8bf9c79b4535dbc",
+          "717107b81ddd30845dab7999",
+          "ac806076804abf668b6bb27d",
+          "d65477dca9d5563024a4a3c6",
+          "62482ee5d4d4fc5a868bc735",
+          "1801bda5576a00e70d426604",
+          "cf98f8833ebd31bb67dabedd",
+          "62bd980372abaf6ed249c60c",
+          "305f708f6ece3f108cdf851d",
+          "ca4261e945566c50cdbb4641",
+          "89fefe079036c8e998bc5150",
+          "f3664bae58d4f2a958628de2",
+          "62bc56f5c5debb9b06420051",
+          "ab1a4868727cbde1ff003121",
+          "c87cd4d30daabe1152985b14",
+          "b13ee082847a9357d69ae156",
+          "18f8d7d9a2a82f1a181c3544",
+          "570a5f236828988c4fc6bf1c",
+          "fda45c6aef21196ab3d174bd",
+          "eefba9c0e8894fbc1982402a",
+          "c32bff6b61d0e6526175ddc6",
+          "a3fb4293dffc41b11277e3d2",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "17eeceb607081cedef3cb98c",
+          "fc470ebe4accb2bdc841dff1",
+          "09e8600de550b75fa8a4ae1b",
+          "2fa47129e28e023c5f61ce8c",
+          "7a19acee08bb4277ebc6a23b",
+          "7023e57cf200dbff02f48bb6",
+          "80cd2946eeb56a9dfe01bd0c",
+          "118a554626a0488d05c4cb4f",
+          "0f69cfaf0f78531c8dec0307"
+        ],
+        "pp_doclayout_v2": [
+          "c26e2fddef1b558378b79b6e",
+          "0c6629792e3ed1d3b0e896f8",
+          "d65477dca9d5563024a4a3c6",
+          "1d35ba5875e1af96df5aa8da",
+          "685c17e1aadeaab208733848",
+          "d9bedb21bca3d83b958171bc",
+          "09b147c459fc39caf559e1aa",
+          "5d200acb29d19b2c3b1f253e",
+          "89345be81ea7ff8af6bd1e60",
+          "bc82c55a651d738b62b71467",
+          "88d2f162566f080666ef40fd",
+          "6cd9361f9e8509adf0fa348c",
+          "1178b62c035fc9d0f8a941a1",
+          "11c597015c52665614539cad",
+          "8165bbdd271470b5e5167e3b",
+          "02be345821d211ae83f0058a",
+          "70e50abd288fa0f0618d8baf",
+          "ed86e243a4fc42b5fa7f5a84",
+          "180e7e6c74e27461a6c0a824",
+          "85cabac9b2167ef97adc3d07",
+          "dac36cee60af13f05603aacf",
+          "bf17daaed8bf9c79b4535dbc",
+          "fe339cb91c5bc49acf47904a",
+          "ac806076804abf668b6bb27d",
+          "717107b81ddd30845dab7999",
+          "62482ee5d4d4fc5a868bc735",
+          "b13ee082847a9357d69ae156",
+          "1801bda5576a00e70d426604",
+          "cf98f8833ebd31bb67dabedd",
+          "62bd980372abaf6ed249c60c",
+          "305f708f6ece3f108cdf851d",
+          "ca4261e945566c50cdbb4641",
+          "ab1a4868727cbde1ff003121",
+          "c87cd4d30daabe1152985b14",
+          "62bc56f5c5debb9b06420051",
+          "f3664bae58d4f2a958628de2",
+          "89fefe079036c8e998bc5150",
+          "18f8d7d9a2a82f1a181c3544",
+          "570a5f236828988c4fc6bf1c",
+          "fda45c6aef21196ab3d174bd",
+          "eefba9c0e8894fbc1982402a",
+          "c32bff6b61d0e6526175ddc6",
+          "a3fb4293dffc41b11277e3d2",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "17eeceb607081cedef3cb98c",
+          "fc470ebe4accb2bdc841dff1",
+          "09e8600de550b75fa8a4ae1b",
+          "2fa47129e28e023c5f61ce8c",
+          "7a19acee08bb4277ebc6a23b",
+          "7023e57cf200dbff02f48bb6",
+          "80cd2946eeb56a9dfe01bd0c",
+          "118a554626a0488d05c4cb4f",
+          "0f69cfaf0f78531c8dec0307"
+        ],
+        "doctr": [
+          "0c6629792e3ed1d3b0e896f8",
+          "d65477dca9d5563024a4a3c6",
+          "1d35ba5875e1af96df5aa8da",
+          "685c17e1aadeaab208733848",
+          "d9bedb21bca3d83b958171bc",
+          "09b147c459fc39caf559e1aa",
+          "5d200acb29d19b2c3b1f253e",
+          "89345be81ea7ff8af6bd1e60",
+          "bc82c55a651d738b62b71467",
+          "88d2f162566f080666ef40fd",
+          "6cd9361f9e8509adf0fa348c",
+          "1178b62c035fc9d0f8a941a1",
+          "11c597015c52665614539cad",
+          "8165bbdd271470b5e5167e3b",
+          "02be345821d211ae83f0058a",
+          "70e50abd288fa0f0618d8baf",
+          "ed86e243a4fc42b5fa7f5a84",
+          "180e7e6c74e27461a6c0a824",
+          "85cabac9b2167ef97adc3d07",
+          "dac36cee60af13f05603aacf",
+          "bf17daaed8bf9c79b4535dbc",
+          "fe339cb91c5bc49acf47904a",
+          "ac806076804abf668b6bb27d",
+          "717107b81ddd30845dab7999",
+          "62482ee5d4d4fc5a868bc735",
+          "b13ee082847a9357d69ae156",
+          "1801bda5576a00e70d426604",
+          "cf98f8833ebd31bb67dabedd",
+          "62bd980372abaf6ed249c60c",
+          "305f708f6ece3f108cdf851d",
+          "ca4261e945566c50cdbb4641",
+          "ab1a4868727cbde1ff003121",
+          "c87cd4d30daabe1152985b14",
+          "62bc56f5c5debb9b06420051",
+          "f3664bae58d4f2a958628de2",
+          "89fefe079036c8e998bc5150",
+          "18f8d7d9a2a82f1a181c3544",
+          "570a5f236828988c4fc6bf1c",
+          "fda45c6aef21196ab3d174bd",
+          "eefba9c0e8894fbc1982402a",
+          "c32bff6b61d0e6526175ddc6",
+          "a3fb4293dffc41b11277e3d2",
+          "6ad9a82fb9e6442ebe56d2dc",
+          "17eeceb607081cedef3cb98c",
+          "fc470ebe4accb2bdc841dff1",
+          "09e8600de550b75fa8a4ae1b",
+          "2fa47129e28e023c5f61ce8c",
+          "7a19acee08bb4277ebc6a23b",
+          "7023e57cf200dbff02f48bb6",
+          "80cd2946eeb56a9dfe01bd0c",
+          "118a554626a0488d05c4cb4f",
+          "0f69cfaf0f78531c8dec0307",
+          "c26e2fddef1b558378b79b6e"
+        ]
+      },
+      "units": [
+        {
+          "id": "ca4261e945566c50cdbb4641",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.212,
+            0.93,
+            0.243
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/31"
+        },
+        {
+          "id": "89fefe079036c8e998bc5150",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.393,
+            0.931,
+            0.433
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/36"
+        },
+        {
+          "id": "d65477dca9d5563024a4a3c6",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.085,
+            0.082,
+            0.479,
+            0.112
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/2"
+        },
+        {
+          "id": "c87cd4d30daabe1152985b14",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.511,
+            0.273,
+            0.931,
+            0.323
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/33"
+        },
+        {
+          "id": "570a5f236828988c4fc6bf1c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.463,
+            0.931,
+            0.493
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/38"
+        },
+        {
+          "id": "18f8d7d9a2a82f1a181c3544",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.434,
+            0.931,
+            0.463
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/37"
+        },
+        {
+          "id": "fe339cb91c5bc49acf47904a",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.805,
+            0.479,
+            0.845
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/22"
+        },
+        {
+          "id": "ac806076804abf668b6bb27d",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.844,
+            0.478,
+            0.865
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/23"
+        },
+        {
+          "id": "ed86e243a4fc42b5fa7f5a84",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.058,
+            0.624,
+            0.479,
+            0.655
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/17"
+        },
+        {
+          "id": "c32bff6b61d0e6526175ddc6",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.554,
+            0.931,
+            0.594
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/41"
+        },
+        {
+          "id": "62482ee5d4d4fc5a868bc735",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.896,
+            0.479,
+            0.936
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/25"
+        },
+        {
+          "id": "2fa47129e28e023c5f61ce8c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.744,
+            0.93,
+            0.775
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/47"
+        },
+        {
+          "id": "1d35ba5875e1af96df5aa8da",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.112,
+            0.478,
+            0.152
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/3"
+        },
+        {
+          "id": "118a554626a0488d05c4cb4f",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.876,
+            0.931,
+            0.905
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/51"
+        },
+        {
+          "id": "09b147c459fc39caf559e1aa",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.222,
+            0.479,
+            0.263
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/6"
+        },
+        {
+          "id": "fc470ebe4accb2bdc841dff1",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.684,
+            0.931,
+            0.714
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/45"
+        },
+        {
+          "id": "cf98f8833ebd31bb67dabedd",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.122,
+            0.931,
+            0.152
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/28"
+        },
+        {
+          "id": "bc82c55a651d738b62b71467",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.333,
+            0.479,
+            0.373
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/9"
+        },
+        {
+          "id": "6ad9a82fb9e6442ebe56d2dc",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.624,
+            0.931,
+            0.654
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/43"
+        },
+        {
+          "id": "8165bbdd271470b5e5167e3b",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.058,
+            0.503,
+            0.479,
+            0.544
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/14"
+        },
+        {
+          "id": "eefba9c0e8894fbc1982402a",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.524,
+            0.931,
+            0.554
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/40"
+        },
+        {
+          "id": "89345be81ea7ff8af6bd1e60",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.303,
+            0.478,
+            0.333
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/8"
+        },
+        {
+          "id": "717107b81ddd30845dab7999",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.865,
+            0.479,
+            0.895
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/24"
+        },
+        {
+          "id": "6cd9361f9e8509adf0fa348c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.403,
+            0.479,
+            0.433
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/11"
+        },
+        {
+          "id": "b13ee082847a9357d69ae156",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.537,
+            0.082,
+            0.654,
+            0.092
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/26"
+        },
+        {
+          "id": "1801bda5576a00e70d426604",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.092,
+            0.93,
+            0.122
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/27"
+        },
+        {
+          "id": "7023e57cf200dbff02f48bb6",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.805,
+            0.931,
+            0.845
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/49"
+        },
+        {
+          "id": "dac36cee60af13f05603aacf",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.058,
+            0.724,
+            0.479,
+            0.765
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/20"
+        },
+        {
+          "id": "685c17e1aadeaab208733848",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.152,
+            0.478,
+            0.182
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/4"
+        },
+        {
+          "id": "5d200acb29d19b2c3b1f253e",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.263,
+            0.479,
+            0.303
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/7"
+        },
+        {
+          "id": "a3fb4293dffc41b11277e3d2",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.594,
+            0.932,
+            0.624
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/42"
+        },
+        {
+          "id": "fda45c6aef21196ab3d174bd",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.493,
+            0.931,
+            0.524
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/39"
+        },
+        {
+          "id": "11c597015c52665614539cad",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.058,
+            0.463,
+            0.479,
+            0.503
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/13"
+        },
+        {
+          "id": "0f69cfaf0f78531c8dec0307",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.905,
+            0.931,
+            0.936
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/52"
+        },
+        {
+          "id": "7a19acee08bb4277ebc6a23b",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.774,
+            0.931,
+            0.805
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/48"
+        },
+        {
+          "id": "d9bedb21bca3d83b958171bc",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.182,
+            0.479,
+            0.222
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/5"
+        },
+        {
+          "id": "17eeceb607081cedef3cb98c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.654,
+            0.931,
+            0.684
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/44"
+        },
+        {
+          "id": "0c6629792e3ed1d3b0e896f8",
+          "raw_label": "header",
+          "bbox": [
+            0.325,
+            0.058,
+            0.658,
+            0.07
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/1"
+        },
+        {
+          "id": "70e50abd288fa0f0618d8baf",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.058,
+            0.584,
+            0.479,
+            0.624
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/16"
+        },
+        {
+          "id": "80cd2946eeb56a9dfe01bd0c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.845,
+            0.931,
+            0.876
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/50"
+        },
+        {
+          "id": "f3664bae58d4f2a958628de2",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.363,
+            0.93,
+            0.393
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/35"
+        },
+        {
+          "id": "02be345821d211ae83f0058a",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.544,
+            0.479,
+            0.584
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/15"
+        },
+        {
+          "id": "62bc56f5c5debb9b06420051",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.323,
+            0.931,
+            0.363
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/34"
+        },
+        {
+          "id": "c26e2fddef1b558378b79b6e",
+          "raw_label": "page_number",
+          "bbox": [
+            0.053,
+            0.059,
+            0.076,
+            0.068
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/0"
+        },
+        {
+          "id": "62bd980372abaf6ed249c60c",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.152,
+            0.93,
+            0.182
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/29"
+        },
+        {
+          "id": "09e8600de550b75fa8a4ae1b",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.714,
+            0.931,
+            0.745
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/46"
+        },
+        {
+          "id": "ab1a4868727cbde1ff003121",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.511,
+            0.243,
+            0.93,
+            0.273
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/32"
+        },
+        {
+          "id": "1178b62c035fc9d0f8a941a1",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.433,
+            0.479,
+            0.463
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/12"
+        },
+        {
+          "id": "85cabac9b2167ef97adc3d07",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.684,
+            0.479,
+            0.724
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/19"
+        },
+        {
+          "id": "305f708f6ece3f108cdf851d",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.51,
+            0.182,
+            0.93,
+            0.212
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/30"
+        },
+        {
+          "id": "bf17daaed8bf9c79b4535dbc",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.764,
+            0.479,
+            0.805
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/21"
+        },
+        {
+          "id": "180e7e6c74e27461a6c0a824",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.654,
+            0.479,
+            0.684
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/18"
+        },
+        {
+          "id": "88d2f162566f080666ef40fd",
+          "raw_label": "ref_text",
+          "bbox": [
+            0.059,
+            0.373,
+            0.479,
+            0.403
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/2/middle.json#/pages/10/blocks/10"
+        }
+      ]
+    },
+    {
+      "case_id": "C06",
+      "paper_id": "8",
+      "page_number": 19,
+      "purpose": "Dense body text",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5/18.png",
+        "sha256": "134013ab4de3c1795a4b2c6b2ac32ec28eb06abe80e124cd2a99d9bb10153f82"
+      },
+      "orders": {
+        "hantian": [
+          "0d703b9e71d36b59c038bdf2",
+          "90cca474911dd4a33bfacd29",
+          "e241e4ffb9d0148b29f56204",
+          "60fcd865f87883ff38087717",
+          "dfb12534e562dbc2b98d3e9a",
+          "e34e2e2fc644a37b62ef2b25",
+          "73118393a7fc6bb8a69905da",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "8cc91fe17fbe7faf4820e1ec",
+          "c3e5feda4b4552bdf20e6d55",
+          "aa52aa76b7e95189a7157a26",
+          "db3dc0c621e8215f0aa194aa",
+          "0b588dbfe2bb06bc381d1ab1",
+          "ea7409c56ed5016271a3c090",
+          "e7fb54f2ce3cf26abeb53d56",
+          "86a2f1b3ab081bc9a92873da",
+          "fc9b18ff23249f534b6a4b8b",
+          "6117d67f2f7b043c475962da",
+          "943301be60e037bfe12206ee",
+          "4bfe19f0be63fa8f47e24891",
+          "5e224a6bd1f433be888cfe2e",
+          "c99d716e9fb97f001e68e1e0",
+          "8423d2d953c3a51f9b62d5a6",
+          "0a6814e900e83243bd653e33",
+          "4004c549c738dc8b61c279b4",
+          "fea6d04316e6df2e69917e3c"
+        ],
+        "docling": [
+          "aa52aa76b7e95189a7157a26",
+          "90cca474911dd4a33bfacd29",
+          "fea6d04316e6df2e69917e3c",
+          "ea7409c56ed5016271a3c090",
+          "60fcd865f87883ff38087717",
+          "4bfe19f0be63fa8f47e24891",
+          "c99d716e9fb97f001e68e1e0",
+          "0a6814e900e83243bd653e33",
+          "5e224a6bd1f433be888cfe2e",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "e34e2e2fc644a37b62ef2b25",
+          "db3dc0c621e8215f0aa194aa",
+          "fc9b18ff23249f534b6a4b8b",
+          "73118393a7fc6bb8a69905da",
+          "0d703b9e71d36b59c038bdf2",
+          "8cc91fe17fbe7faf4820e1ec",
+          "dfb12534e562dbc2b98d3e9a",
+          "c3e5feda4b4552bdf20e6d55",
+          "943301be60e037bfe12206ee",
+          "e241e4ffb9d0148b29f56204",
+          "8423d2d953c3a51f9b62d5a6",
+          "0b588dbfe2bb06bc381d1ab1",
+          "6117d67f2f7b043c475962da",
+          "86a2f1b3ab081bc9a92873da",
+          "e7fb54f2ce3cf26abeb53d56",
+          "4004c549c738dc8b61c279b4"
+        ],
+        "xycut_plus_plus": [
+          "aa52aa76b7e95189a7157a26",
+          "90cca474911dd4a33bfacd29",
+          "fea6d04316e6df2e69917e3c",
+          "ea7409c56ed5016271a3c090",
+          "60fcd865f87883ff38087717",
+          "4bfe19f0be63fa8f47e24891",
+          "c99d716e9fb97f001e68e1e0",
+          "0a6814e900e83243bd653e33",
+          "5e224a6bd1f433be888cfe2e",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "e34e2e2fc644a37b62ef2b25",
+          "db3dc0c621e8215f0aa194aa",
+          "fc9b18ff23249f534b6a4b8b",
+          "73118393a7fc6bb8a69905da",
+          "0d703b9e71d36b59c038bdf2",
+          "8cc91fe17fbe7faf4820e1ec",
+          "dfb12534e562dbc2b98d3e9a",
+          "c3e5feda4b4552bdf20e6d55",
+          "943301be60e037bfe12206ee",
+          "e241e4ffb9d0148b29f56204",
+          "8423d2d953c3a51f9b62d5a6",
+          "0b588dbfe2bb06bc381d1ab1",
+          "6117d67f2f7b043c475962da",
+          "86a2f1b3ab081bc9a92873da",
+          "e7fb54f2ce3cf26abeb53d56",
+          "4004c549c738dc8b61c279b4"
+        ],
+        "xycut": [
+          "aa52aa76b7e95189a7157a26",
+          "90cca474911dd4a33bfacd29",
+          "fea6d04316e6df2e69917e3c",
+          "ea7409c56ed5016271a3c090",
+          "60fcd865f87883ff38087717",
+          "4bfe19f0be63fa8f47e24891",
+          "c99d716e9fb97f001e68e1e0",
+          "0a6814e900e83243bd653e33",
+          "5e224a6bd1f433be888cfe2e",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "e34e2e2fc644a37b62ef2b25",
+          "db3dc0c621e8215f0aa194aa",
+          "fc9b18ff23249f534b6a4b8b",
+          "73118393a7fc6bb8a69905da",
+          "0d703b9e71d36b59c038bdf2",
+          "8cc91fe17fbe7faf4820e1ec",
+          "dfb12534e562dbc2b98d3e9a",
+          "c3e5feda4b4552bdf20e6d55",
+          "943301be60e037bfe12206ee",
+          "e241e4ffb9d0148b29f56204",
+          "8423d2d953c3a51f9b62d5a6",
+          "0b588dbfe2bb06bc381d1ab1",
+          "6117d67f2f7b043c475962da",
+          "86a2f1b3ab081bc9a92873da",
+          "e7fb54f2ce3cf26abeb53d56",
+          "4004c549c738dc8b61c279b4"
+        ],
+        "pp_doclayout_v2": [
+          "aa52aa76b7e95189a7157a26",
+          "90cca474911dd4a33bfacd29",
+          "fea6d04316e6df2e69917e3c",
+          "ea7409c56ed5016271a3c090",
+          "60fcd865f87883ff38087717",
+          "4bfe19f0be63fa8f47e24891",
+          "c99d716e9fb97f001e68e1e0",
+          "0a6814e900e83243bd653e33",
+          "5e224a6bd1f433be888cfe2e",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "e34e2e2fc644a37b62ef2b25",
+          "db3dc0c621e8215f0aa194aa",
+          "fc9b18ff23249f534b6a4b8b",
+          "73118393a7fc6bb8a69905da",
+          "0d703b9e71d36b59c038bdf2",
+          "8cc91fe17fbe7faf4820e1ec",
+          "dfb12534e562dbc2b98d3e9a",
+          "c3e5feda4b4552bdf20e6d55",
+          "943301be60e037bfe12206ee",
+          "e241e4ffb9d0148b29f56204",
+          "8423d2d953c3a51f9b62d5a6",
+          "0b588dbfe2bb06bc381d1ab1",
+          "6117d67f2f7b043c475962da",
+          "86a2f1b3ab081bc9a92873da",
+          "e7fb54f2ce3cf26abeb53d56",
+          "4004c549c738dc8b61c279b4"
+        ],
+        "doctr": [
+          "aa52aa76b7e95189a7157a26",
+          "90cca474911dd4a33bfacd29",
+          "fea6d04316e6df2e69917e3c",
+          "ea7409c56ed5016271a3c090",
+          "60fcd865f87883ff38087717",
+          "4bfe19f0be63fa8f47e24891",
+          "c99d716e9fb97f001e68e1e0",
+          "0a6814e900e83243bd653e33",
+          "5e224a6bd1f433be888cfe2e",
+          "fa6f9e18fffc2304fa1d2b9d",
+          "e34e2e2fc644a37b62ef2b25",
+          "db3dc0c621e8215f0aa194aa",
+          "fc9b18ff23249f534b6a4b8b",
+          "73118393a7fc6bb8a69905da",
+          "0d703b9e71d36b59c038bdf2",
+          "8cc91fe17fbe7faf4820e1ec",
+          "dfb12534e562dbc2b98d3e9a",
+          "c3e5feda4b4552bdf20e6d55",
+          "943301be60e037bfe12206ee",
+          "e241e4ffb9d0148b29f56204",
+          "8423d2d953c3a51f9b62d5a6",
+          "0b588dbfe2bb06bc381d1ab1",
+          "6117d67f2f7b043c475962da",
+          "86a2f1b3ab081bc9a92873da",
+          "e7fb54f2ce3cf26abeb53d56",
+          "4004c549c738dc8b61c279b4"
+        ]
+      },
+      "units": [
+        {
+          "id": "0d703b9e71d36b59c038bdf2",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.453,
+            0.389,
+            0.47
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/14"
+        },
+        {
+          "id": "90cca474911dd4a33bfacd29",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.147,
+            0.804,
+            0.165
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/1"
+        },
+        {
+          "id": "e241e4ffb9d0148b29f56204",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.571,
+            0.342,
+            0.588
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/19"
+        },
+        {
+          "id": "60fcd865f87883ff38087717",
+          "raw_label": "text",
+          "bbox": [
+            0.113,
+            0.218,
+            0.388,
+            0.234
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/4"
+        },
+        {
+          "id": "dfb12534e562dbc2b98d3e9a",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.5,
+            0.788,
+            0.518
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/16"
+        },
+        {
+          "id": "e34e2e2fc644a37b62ef2b25",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.359,
+            0.342,
+            0.375
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/10"
+        },
+        {
+          "id": "73118393a7fc6bb8a69905da",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.43,
+            0.302,
+            0.446
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/13"
+        },
+        {
+          "id": "fa6f9e18fffc2304fa1d2b9d",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.335,
+            0.338,
+            0.351
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/9"
+        },
+        {
+          "id": "8cc91fe17fbe7faf4820e1ec",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.476,
+            0.374,
+            0.494
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/15"
+        },
+        {
+          "id": "c3e5feda4b4552bdf20e6d55",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.524,
+            0.372,
+            0.541
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/17"
+        },
+        {
+          "id": "aa52aa76b7e95189a7157a26",
+          "raw_label": "text",
+          "bbox": [
+            0.111,
+            0.091,
+            0.864,
+            0.141
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/0"
+        },
+        {
+          "id": "db3dc0c621e8215f0aa194aa",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.382,
+            0.484,
+            0.4
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/11"
+        },
+        {
+          "id": "0b588dbfe2bb06bc381d1ab1",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.617,
+            0.885,
+            0.78
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/21"
+        },
+        {
+          "id": "ea7409c56ed5016271a3c090",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.194,
+            0.497,
+            0.211
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/3"
+        },
+        {
+          "id": "e7fb54f2ce3cf26abeb53d56",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.877,
+            0.882,
+            0.911
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/24"
+        },
+        {
+          "id": "86a2f1b3ab081bc9a92873da",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.838,
+            0.885,
+            0.872
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/23"
+        },
+        {
+          "id": "fc9b18ff23249f534b6a4b8b",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.405,
+            0.729,
+            0.423
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/12"
+        },
+        {
+          "id": "6117d67f2f7b043c475962da",
+          "raw_label": "text",
+          "bbox": [
+            0.111,
+            0.782,
+            0.865,
+            0.831
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/22"
+        },
+        {
+          "id": "943301be60e037bfe12206ee",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.547,
+            0.371,
+            0.564
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/18"
+        },
+        {
+          "id": "4bfe19f0be63fa8f47e24891",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.241,
+            0.342,
+            0.257
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/5"
+        },
+        {
+          "id": "5e224a6bd1f433be888cfe2e",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.311,
+            0.603,
+            0.328
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/8"
+        },
+        {
+          "id": "c99d716e9fb97f001e68e1e0",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.265,
+            0.578,
+            0.281
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/6"
+        },
+        {
+          "id": "8423d2d953c3a51f9b62d5a6",
+          "raw_label": "text",
+          "bbox": [
+            0.113,
+            0.595,
+            0.451,
+            0.611
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/20"
+        },
+        {
+          "id": "0a6814e900e83243bd653e33",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.288,
+            0.674,
+            0.305
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/7"
+        },
+        {
+          "id": "4004c549c738dc8b61c279b4",
+          "raw_label": "page_number",
+          "bbox": [
+            0.489,
+            0.939,
+            0.512,
+            0.954
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/25"
+        },
+        {
+          "id": "fea6d04316e6df2e69917e3c",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.17,
+            0.386,
+            0.188
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/8/middle.json#/pages/18/blocks/2"
+        }
+      ]
+    },
+    {
+      "case_id": "C07",
+      "paper_id": "17",
+      "page_number": 22,
+      "purpose": "Single column, image and heading",
+      "background": {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/viewer_source/pages/e77b377fb151c9c5d5b19b269f0c248148d1475a82af1f8dd1e73498c77bbef5/21.png",
+        "sha256": "e22c2476b22215f81c843afbced8e5c89760034746a945e4286fb9d0d7b11ab8"
+      },
+      "orders": {
+        "hantian": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "0b2462c7a6f1f9d62620902b",
+          "9cec84dc0b21ea4e651ceca2",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ],
+        "docling": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "0b2462c7a6f1f9d62620902b",
+          "9cec84dc0b21ea4e651ceca2",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ],
+        "xycut_plus_plus": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "9cec84dc0b21ea4e651ceca2",
+          "0b2462c7a6f1f9d62620902b",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ],
+        "xycut": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "0b2462c7a6f1f9d62620902b",
+          "9cec84dc0b21ea4e651ceca2",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ],
+        "pp_doclayout_v2": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "0b2462c7a6f1f9d62620902b",
+          "9cec84dc0b21ea4e651ceca2",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ],
+        "doctr": [
+          "263d3873364df650593972ab",
+          "bc4701b037f3e891e5611c3f",
+          "ed20b3c31a01faceae9a9cd0",
+          "0b2462c7a6f1f9d62620902b",
+          "9cec84dc0b21ea4e651ceca2",
+          "6356556c71aaa7f1eb0c2e15",
+          "4d1a59c09358bb0283838a3a",
+          "eba82a4b8020b7b83ada0b22"
+        ]
+      },
+      "units": [
+        {
+          "id": "263d3873364df650593972ab",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.315,
+            0.092,
+            0.684,
+            0.113
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/0"
+        },
+        {
+          "id": "bc4701b037f3e891e5611c3f",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.114,
+            0.132,
+            0.614,
+            0.151
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/1"
+        },
+        {
+          "id": "ed20b3c31a01faceae9a9cd0",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.165,
+            0.879,
+            0.43
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/2"
+        },
+        {
+          "id": "0b2462c7a6f1f9d62620902b",
+          "raw_label": "image",
+          "bbox": [
+            0.115,
+            0.442,
+            0.865,
+            0.552
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/3"
+        },
+        {
+          "id": "9cec84dc0b21ea4e651ceca2",
+          "raw_label": "paragraph_title",
+          "bbox": [
+            0.173,
+            0.607,
+            0.61,
+            0.625
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/4"
+        },
+        {
+          "id": "6356556c71aaa7f1eb0c2e15",
+          "raw_label": "text",
+          "bbox": [
+            0.112,
+            0.639,
+            0.888,
+            0.84
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/5"
+        },
+        {
+          "id": "4d1a59c09358bb0283838a3a",
+          "raw_label": "page_footnote",
+          "bbox": [
+            0.114,
+            0.892,
+            0.288,
+            0.91
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/6"
+        },
+        {
+          "id": "eba82a4b8020b7b83ada0b22",
+          "raw_label": "page_number",
+          "bbox": [
+            0.493,
+            0.921,
+            0.506,
+            0.935
+          ],
+          "source_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/17/middle.json#/pages/21/blocks/7"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "sources": [
+      {
+        "path": "test_libs/reading_order/raw_results/code_results/collection-20261102-delivery/canonical/manifest.json",
+        "sha256": "b768427ddbf8a162c15698e58b93f41319b92481e3dcc7cb8b9a328ea914a240"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/1/normalized.json",
+        "sha256": "2e1547ad14223ca8f34be6da8fd0109f5d3aa169ceb208b21b27521a0bc3f4e0"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/1/middle.json",
+        "sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/2/normalized.json",
+        "sha256": "cbc332856460e933c01f2bf7a1560d8475ffc85b76155bfc959fc75661b52d22"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/2/middle.json",
+        "sha256": "c05ba59ca1e95fdf0cd3914820ec9854f83cddc8c39f0c2b5ea676565f028728"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/3/normalized.json",
+        "sha256": "811607c04e6469f188a1286c44709a0030cf8d7aa20bc98b818a9c18f0eb9979"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/3/middle.json",
+        "sha256": "6d8fe077310b1dbcf1827e9b87a79461b092a367e14e4bd8163c6d740ba4f33f"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/4/normalized.json",
+        "sha256": "a4d24eb03939f8ec74783ee6dcf5243ad1da74dcf7cd1f07791fa82053e32e87"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/4/middle.json",
+        "sha256": "edc9b51b92a050101677bacbe36b45fb4301b3adf647546dff9e2a56c23cbafc"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/5/normalized.json",
+        "sha256": "27e077b3ba7fb0c8fe41d12db1efa51c3836cca85d3972256a4fcd9f1232c329"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/5/middle.json",
+        "sha256": "95a6c24eb35d78be81af89a97274898455fff8066558aeaa07d303ec026d2958"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/6/normalized.json",
+        "sha256": "58293cc27e060d5b0d9b989e18747a67ee8a89b090d528b60264325fc961c9bb"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/6/middle.json",
+        "sha256": "69a7720c7f3656a4989357565f2d4c90ea5a682c89607d4a4a46c3b87e111faa"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/7/normalized.json",
+        "sha256": "fe8b88572dde11606d4e8dae2252bddffa22fc749d1e0ed54c88185b554322f8"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/7/middle.json",
+        "sha256": "34b52bf90412b5f8f68e7ca38fc32a6b6e33acc6593fc4c70acb36d2deefd27b"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/8/normalized.json",
+        "sha256": "68663a0dc4ddf311d7fbeb4fe309a471f920e495c0a90842ca98309eee0d519c"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/8/middle.json",
+        "sha256": "de416c7869b8197d79525eb6d90324abca6f169a6a401f6846f08144af685347"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/9/normalized.json",
+        "sha256": "0c34181cf9df56b91f5d584959643974871041c0fc67765d68d92895fad1f664"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/9/middle.json",
+        "sha256": "e9dc2d0a6f568a5f51edc79a36588c67069a34b95309e74dffb885bf51923d33"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/10/normalized.json",
+        "sha256": "0618a8b533b6427f3795164b1c999d3a12dbfeb11ce1cb0df554e25afa25f679"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/10/middle.json",
+        "sha256": "e560d3f85dfcbfb9797ccd2540d0539c47960d4a48f9f6f628f64dabcc62e3db"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/11/normalized.json",
+        "sha256": "1e51ca8d75f96ff192fb1d888bb7554142a6d123b5744add7fbcb3945cc6747e"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/11/middle.json",
+        "sha256": "9286f5b25117265d217a58da5acd010f4de6b7e517448aee2cfae57f2aff5db0"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/12/normalized.json",
+        "sha256": "45283b50dca70419ccae1118e9cb79251d8a14001011037231fb975c5fb9ec50"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/12/middle.json",
+        "sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/14/normalized.json",
+        "sha256": "4aca4d4b308fdbd1bbca39bf0d97093e94e6ee215ca0dc3865f3f1c24154c477"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/14/middle.json",
+        "sha256": "b36deb545da3c8da4a3dc35f43209b15957b3f7cea4aae2c8dee5a3e120f8356"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/15/normalized.json",
+        "sha256": "b4cb56355a7b952b83ffb882778c9feb188f160cf30b3ea3a10d9cfdf483f2e9"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/15/middle.json",
+        "sha256": "15ef1e351836a3e20edc6a55069ec452394346d75c3444bd655ab2c993ee756e"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/17/normalized.json",
+        "sha256": "e87394205e4353ac48e38dfcc1b5b2112ae319a0ee92623d43eaf5327f81f4af"
+      },
+      {
+        "path": "test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic/17/middle.json",
+        "sha256": "eb2f5aa076ce6251b2b11a2c42632d0561a2fd2a665c8c607f19d01cc7fd06e0"
+      },
+      {
+        "path": "test_libs/reading_order/raw_results/analytics_results/collection-all-pairs-20261102/analysis.json",
+        "sha256": "1d795b2f0ba55ac3992133d18347b96618e3e63144c8aa640951c32dfe04dfcf"
+      },
+      {
+        "path": "test_libs/reading_order/raw_results/analytics_results/stability-12-completed-20261102/stability.json",
+        "sha256": "3e0b862fc0f89f5241bb9f54afa66ac0ce987c2b862c8b731f9b352997171dbf"
+      },
+      {
+        "path": "test_libs/reading_order/raw_results/analytics_results/docling-hantian-validation-20261102/analysis.json",
+        "sha256": "8e12e327e9294a695b9c2ec93f8799b79c022fe318d05bedce8909847c205bbe"
+      }
+    ],
+    "code_sha256": "d4fa5f807b7b6a7de9533aca8c46048ffcbfc5adaac291f6c62fddbdfa179eae",
+    "figures": [
+      {
+        "path": "test_libs/reading_order/docs/assets/library_costs.png",
+        "sha256": "20ac83fc692c847fb064c4e497e4d618d2985a5dfcc381273acebebd32828e34"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_costs.svg",
+        "sha256": "67f3b839285fa61e9fd0821f8e89ed0fa93813070ef4f07284f2e28c919234ea"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_stability.png",
+        "sha256": "95a366c841be2936435a852452b7e8adf4ad955331e2dc60131ce4cc09e974d4"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_stability.svg",
+        "sha256": "07cf7ffb5cb5c5addff8397ea6a0e29e67640e5cab07ed13b6fa3d1b8a86ab6a"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_category_positions.png",
+        "sha256": "4f044055001b8e8df70de7317a9e6adac98a449973364d990624e4d54b4b5860"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_category_positions.svg",
+        "sha256": "8cef2a501163a1ae023e0c7d8521abb47b4619524514fcfd65a43bb840e42e8d"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/matrices.png",
+        "sha256": "646b28ab9b1d242d8be309af3ccb85fef627c92602dbc4d2501a0b30f368e2dd"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/matrices.svg",
+        "sha256": "a7726b9f83ed520af0670d2c5098bb78efc1f534c54392b270a8394f7c28976b"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_document_comparison.png",
+        "sha256": "5b45a5f247ce91a4cb20e8a5e77c906c85e68b8541b0dd6520ccbd7b3b1e344f"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/library_document_comparison.svg",
+        "sha256": "69b09b0c292110fc634180202a6cafa2b2ee44f419e3d0852edc82b4efb5f699"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_01.png",
+        "sha256": "c61f57a4df8e5df1ac063beadd3896b9726985a2b5a8719114eb982ddfa1c354"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_02.png",
+        "sha256": "aa887a1626b9fecf25b800cdc9f8b2c24869015ef60e30b9f97ee8e03bf76d54"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_03.png",
+        "sha256": "9161dd23e3714c8833c3308a4841e14bb60273d68d338962e30855ceb9182b8b"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_04.png",
+        "sha256": "54b6b83fc60698f2f2146818276d5376df73a4f4ea8aeed52760fa82d16347c0"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_05.png",
+        "sha256": "14fa9f0986cfe94a4a22b20be40fe34d632f9a980b6239d252bbfa4b5ed355ca"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_06.png",
+        "sha256": "45241bc21d7cd858c09d4983ea6765b172b673682d5defd034e27b171b261713"
+      },
+      {
+        "path": "test_libs/reading_order/docs/assets/case_07.png",
+        "sha256": "f4bad09918b64dd9ccca0db67a342aed820b6bda9709037cb359b37799f64070"
+      }
+    ],
+    "models_executed": false,
+    "human_reviews_written": false
+  }
+}

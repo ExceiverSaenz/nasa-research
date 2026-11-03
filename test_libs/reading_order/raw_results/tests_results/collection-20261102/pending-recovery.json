@@ -1,0 +1,188 @@
+{
+  "completed": 130,
+  "candidate": "hantian",
+  "child_status": null,
+  "last_responses": [
+    {
+      "request_id": "f49b432b3140460c816dddc2f7bb18eb",
+      "response": {
+        "ordered_ids": [
+          "22cf9a44c8350652602cd27a",
+          "fdf9b45ef7ca3a0fe498cbc7",
+          "6f1a148626d217d4dc7e7964",
+          "df9c17ff6ac7b43bac23da3a",
+          "ec5b6389c3845a872f9f4569",
+          "c001d6e8fa5f3ad98587e194",
+          "64e0c66f7003da903646ad5b",
+          "28819eae93247893aee9dae2",
+          "42d40cd63627980eb307906a",
+          "043154192ad0a0271b882507",
+          "14df3e7246395f636f6aed88",
+          "b7d71c44154c0a8b21e6abf1",
+          "50e0d861f1c75affacc4be29",
+          "60089220e0b75120dd5b5686",
+          "717e833cdb517647853a6fa3"
+        ],
+        "native": {
+          "ranks": [
+            11,
+            5,
+            6,
+            1,
+            2,
+            7,
+            8,
+            9,
+            12,
+            13,
+            14,
+            0,
+            4,
+            3,
+            10
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.025567995000074006,
+          "peak_sampled_rss_bytes": 1590157312,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    },
+    {
+      "request_id": "d44a307a65154252884de83e5c2b61fb",
+      "response": {
+        "ordered_ids": [
+          "57a8b32a00546548881fec48",
+          "1142175c36b79b7c8e7fc9e2",
+          "da5ddaf193531138f5035769",
+          "e961b8cc399216eaa88d3b81",
+          "1e393e6eb545c4547baab9a7",
+          "123a4da43d7df70eccc0677f",
+          "43f1d425beaa29f9eedd5e45",
+          "f573147a71fd34e5e277bef7",
+          "12e7fc242ca775906cb3aeb9",
+          "ccacfd122d298b7bd74ea278",
+          "b8d96e0685a725985c23e750",
+          "a6eb961d7e89ac8882e40443",
+          "eee57ae471dcdb4f300eda73",
+          "046923a0c814fad23285ae4b",
+          "8599296b90e741064a5cb64f",
+          "c64aac2b9b83e4a572566ef3",
+          "f467591dc3f8bc593dfc5924",
+          "ca0e485dfc6457215cd952a0",
+          "49cb44e47a26702b3c2ff315",
+          "21d6905a903100b93d2d0735",
+          "6429815016a1eb760307acd8",
+          "881e59f5038e25b3b15ca9e1",
+          "94daf4dca5ec1a703e75d79f"
+        ],
+        "native": {
+          "ranks": [
+            13,
+            2,
+            14,
+            15,
+            12,
+            22,
+            0,
+            1,
+            21,
+            3,
+            10,
+            19,
+            8,
+            17,
+            16,
+            5,
+            6,
+            4,
+            9,
+            11,
+            20,
+            7,
+            18
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.025506834999987404,
+          "peak_sampled_rss_bytes": 1590157312,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    },
+    {
+      "request_id": "18a516fa1474410fa579328447158fb1",
+      "response": {
+        "ordered_ids": [
+          "8db0ced0804d2832ca5b59c9",
+          "62eb43ef9617fcd3923040e9",
+          "0120cc59a7c65eae0c8daa71",
+          "f5385fb81f6f7ea2a963c360",
+          "9570ceabcbad12566e2aae2c",
+          "b6d1bdde799bf09e4cceeaa7",
+          "8ea2221101d15fd8caf3e782",
+          "ca3e843f3f1751e60a05b41c",
+          "cff678df291699452c3a466a",
+          "7ff3db63e9d6e062552f5c13",
+          "7b5d7971d80bb8a149c13f2e",
+          "26aa1ba3b3b6fb48538a5ca9",
+          "4e6c9fe4de295ede0f8be927"
+        ],
+        "native": {
+          "ranks": [
+            11,
+            4,
+            10,
+            5,
+            8,
+            12,
+            3,
+            9,
+            7,
+            1,
+            0,
+            6,
+            2
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.024852501000054872,
+          "peak_sampled_rss_bytes": 1590157312,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    }
+  ],
+  "pending": []
+}

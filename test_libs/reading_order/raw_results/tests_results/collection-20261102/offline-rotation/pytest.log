@@ -1,0 +1,55 @@
+.....................F.................................................. [ 66%]
+....................................                                     [100%]
+================================== FAILURES ===================================
+_______ test_verified_pdf_metadata_reference_avoids_remote_pdf_requests _______
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/offline-rotation/tmp/test_verified_pdf_metadata_ref0')
+
+    def test_verified_pdf_metadata_reference_avoids_remote_pdf_requests(tmp_path):
+        from test_integration import synthetic_run
+        from reading_order.collection import Selection,execute_collection
+        from reading_order.ingest import Ingestor,LocalReferences
+        synthetic_run(tmp_path);source=tmp_path/'source/assembled/basic'
+        doc=Ingestor(LocalReferences(source)).read('12')
+        metadata={'12':dict(status='PASS',sha256='a'*64,pages=[dict(width=600,height=800,rotation=0)]*2,source=doc.references)}
+        class Transport:
+            def __call__(self,request):
+                assert request['action']=='predict', 'PDF requests must stay on the verification host'
+                return dict(status='PASS',ordered_ids=[b['id'] for b in request['blocks']],native={})
+        def forbidden(paper):pytest.fail('Verified metadata must not request a bearer URL')
+>       summary=execute_collection(Selection(source,['12']),Transport(),forbidden,tmp_path/'collection',{}, {},
+            pdf_metadata=metadata,pdf_metadata_reference={'path':'receipt.json','sha256':'receipt-sha'})
+
+test_libs\reading_order\test\test_code\test_collection.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_libs\reading_order\code\reading_order\collection.py:130: in execute_collection
+    run=Runner(ObservedBackend(),selection.timeout_s,None).execute(docs,frozen,output/'canonical',reuse=reuse)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+test_libs\reading_order\code\reading_order\runner.py:76: in execute
+    save()
+test_libs\reading_order\code\reading_order\runner.py:35: in save
+    temporary.replace(destination/'manifest.json')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/offline-rotation/tmp/test_verified_pdf_metadata_ref0/collection/canonical/manifest.tmp')
+target = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/offline-rotation/tmp/test_verified_pdf_metadata_ref0/collection/canonical/manifest.json')
+
+    def replace(self, target):
+        """
+        Rename this path to the target path, overwriting if that path exists.
+    
+        The target path may be absolute or relative. Relative paths are
+        interpreted relative to the current working directory, *not* the
+        directory of the Path object.
+    
+        Returns the new Path instance pointing to the target path.
+        """
+>       os.replace(self, target)
+E       PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\collection-20261102\\offline-rotation\\tmp\\test_verified_pdf_metadata_ref0\\collection\\canonical\\manifest.tmp' -> 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\collection-20261102\\offline-rotation\\tmp\\test_verified_pdf_metadata_ref0\\collection\\canonical\\manifest.json'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:780: PermissionError
+---------------------------- Captured stdout call -----------------------------
+Verified PDF metadata 12
+=========================== short test summary info ===========================
+FAILED test_libs/reading_order/test/test_code/test_collection.py::test_verified_pdf_metadata_reference_avoids_remote_pdf_requests
+1 failed, 107 passed in 6.58s

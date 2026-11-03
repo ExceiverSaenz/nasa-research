@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": {
+    "paper_id": "14",
+    "page_idx": 18,
+    "input_profile_id": "4d907009c785fda535d695a9c8b2a3cf847a5e0ea80f3657fc9fec10c13a4104",
+    "eligible_ids_hash": "9e96f207621382b5138181f6adbcb63dbecaa40b4c1eb7205243904084ae2bc7",
+    "permutation_seed": null,
+    "route": null
+  },
+  "source_hashes_verified": true,
+  "reference": {
+    "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/pending-recovery-200.json",
+    "sha256": "1a96ad1183c8eae06986ca7876d50fb641b39db3335597447efd60f74c51c899",
+    "json_pointer": "/last_responses/2/response",
+    "request_id": "351e61ab08da45a88ffe0a5c794279e3",
+    "prior_failure_reference": {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/code_results/collection-20261102-r4-continuation/canonical/manifest.json",
+      "sha256": "ac4f02e0d8a34397f0d8735dc4fa4742945c3fccb06d3b8934b51f4aedf2efdb",
+      "json_pointer": "/predictions/217"
+    }
+  },
+  "previous_pass": 217,
+  "recovered": 1
+}

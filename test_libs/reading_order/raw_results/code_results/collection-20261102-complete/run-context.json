@@ -1,0 +1,120 @@
+{
+  "code_files": {
+    "code/reading_order/cli.py": "33be86b5026e7373e8d7e0dc1b9074e76815dc539a263cbd7d92d421e70131af",
+    "code/reading_order/colab_backend.py": "9e1640075c7d79c3397919b51c4510201ca5fffa406f5283d1bf33389f29554c",
+    "code/reading_order/collection.py": "1679d0586b43737337119915a7b75bef4e452e43f792e851b16d2e7a47d13533",
+    "code/reading_order/context.py": "e4f5345fd11fdab50e38d125f9d706ce4c12cd1333637761f0b01ec5124e5910",
+    "code/reading_order/contracts.py": "9f2ebdaa08d8e52e11cb8b6944a3de735513c3880363a44e0c1ffcf32db7175b",
+    "code/reading_order/deployment.py": "60b87f8e1e1a44c81ac7a5615e3a2d92f9878c5b391d7d844057f0e969265f46",
+    "code/reading_order/geometry.py": "cf985593c14c835b14011716f8f634e5d0fd76dccaa4597745a562c5ce644644",
+    "code/reading_order/ingest.py": "67500ee38f444a2ea8c58d47628a53ddfaa629c09b4c8e2b0c5171cc2ccf37d0",
+    "code/reading_order/memory_bridge.py": "c1712df6154ab2d60b1dd9f1aa07d0ff642ed924cd2d6e9061165c56b6bcacb0",
+    "code/reading_order/preflight.py": "82630b6210c0e6cf7477f0707920dd024aaab672243ebddb7d374ad6cbd139ae",
+    "code/reading_order/resources.py": "33572a405a314fe367bfc231d3a49241730a2477b46b233399189543efbc639b",
+    "code/reading_order/reviews.py": "443a0aef5a2fc5ffb5269136a089b424853111224b987901d3e6abf8d18fad9d",
+    "code/reading_order/runner.py": "17ac4f73008f985b4df3403eb0afe79c3184a3cb98c600c9f33cf5ae79791787",
+    "code/reading_order/server.py": "c2db7b8b5991fef54ae64753d233132022fb790f164c64e72db38c4aca9a089e",
+    "code/reading_order/stability.py": "691c952de782dc3b03bb4f462c3e3e86897a471986d6327553dbc71a98a8c7ae",
+    "code/reading_order/viewer.py": "99eca2da9b7f4460fd679e101f1e83f92451f24e746835d16065a6ee254ea143",
+    "code/reading_order/worker.py": "8e07d1569274b0f84aba50ec6c2e41d3f6129a36b6b3c4f218f332b79260c3de",
+    "code/reading_order/__init__.py": "c2a9f0139e050e2f3f9fb7ebd9c0fcec47c9a3336d9bc1954b803f432cbd616d",
+    "code/reading_order/adapters/base.py": "26ca69976807792e36acdf1d256d31a6fbb3cfd43ca76b430c882ee44494b8fe",
+    "code/reading_order/adapters/docling_contract.py": "5ecf6bc0f80d0dd50d2351c7d15e24f137bff1d96cdf2eca0b9552ebbc140e42",
+    "code/reading_order/adapters/engines.py": "bb6be21a59d1c19811a8bdb3bbde86e3e0d66d609a724ffa7c5aa83599a31f6f",
+    "code/reading_order/adapters/xycut_worker.rs": "056eb68234ade603d080902010a12f80af0eb68fafb16fe80e1420d8b9a12a51",
+    "code/reading_order/adapters/__init__.py": "76ed45822b45dec158105398841d3afb192b87d1a8f10518368c6dacbdbfeba0",
+    "code/reading_order/viewer/app.js": "48839c3bc4a739fe8013598dd2deb9e0163ab5705c4e4636d7b493c0a2b9ad60",
+    "code/reading_order/viewer/index.html": "3035fff746b03201651394cdb99e7534e9be9f9efa6bbf64b6e8adb550eb9ff7",
+    "code/reading_order/viewer/style.css": "c4bae0de69a0e3db17faf0ba7a932e234650963f322f0c9624e50c12c339d0fb"
+  },
+  "input_profile_id": "4d907009c785fda535d695a9c8b2a3cf847a5e0ea80f3657fc9fec10c13a4104",
+  "environment": {
+    "code_files": {
+      "code/reading_order/cli.py": "33be86b5026e7373e8d7e0dc1b9074e76815dc539a263cbd7d92d421e70131af",
+      "code/reading_order/colab_backend.py": "9e1640075c7d79c3397919b51c4510201ca5fffa406f5283d1bf33389f29554c",
+      "code/reading_order/collection.py": "1679d0586b43737337119915a7b75bef4e452e43f792e851b16d2e7a47d13533",
+      "code/reading_order/context.py": "e4f5345fd11fdab50e38d125f9d706ce4c12cd1333637761f0b01ec5124e5910",
+      "code/reading_order/contracts.py": "9f2ebdaa08d8e52e11cb8b6944a3de735513c3880363a44e0c1ffcf32db7175b",
+      "code/reading_order/deployment.py": "60b87f8e1e1a44c81ac7a5615e3a2d92f9878c5b391d7d844057f0e969265f46",
+      "code/reading_order/geometry.py": "cf985593c14c835b14011716f8f634e5d0fd76dccaa4597745a562c5ce644644",
+      "code/reading_order/ingest.py": "67500ee38f444a2ea8c58d47628a53ddfaa629c09b4c8e2b0c5171cc2ccf37d0",
+      "code/reading_order/memory_bridge.py": "c1712df6154ab2d60b1dd9f1aa07d0ff642ed924cd2d6e9061165c56b6bcacb0",
+      "code/reading_order/preflight.py": "82630b6210c0e6cf7477f0707920dd024aaab672243ebddb7d374ad6cbd139ae",
+      "code/reading_order/resources.py": "33572a405a314fe367bfc231d3a49241730a2477b46b233399189543efbc639b",
+      "code/reading_order/reviews.py": "443a0aef5a2fc5ffb5269136a089b424853111224b987901d3e6abf8d18fad9d",
+      "code/reading_order/runner.py": "17ac4f73008f985b4df3403eb0afe79c3184a3cb98c600c9f33cf5ae79791787",
+      "code/reading_order/server.py": "c2db7b8b5991fef54ae64753d233132022fb790f164c64e72db38c4aca9a089e",
+      "code/reading_order/stability.py": "691c952de782dc3b03bb4f462c3e3e86897a471986d6327553dbc71a98a8c7ae",
+      "code/reading_order/viewer.py": "99eca2da9b7f4460fd679e101f1e83f92451f24e746835d16065a6ee254ea143",
+      "code/reading_order/worker.py": "8e07d1569274b0f84aba50ec6c2e41d3f6129a36b6b3c4f218f332b79260c3de",
+      "code/reading_order/__init__.py": "c2a9f0139e050e2f3f9fb7ebd9c0fcec47c9a3336d9bc1954b803f432cbd616d",
+      "code/reading_order/adapters/base.py": "26ca69976807792e36acdf1d256d31a6fbb3cfd43ca76b430c882ee44494b8fe",
+      "code/reading_order/adapters/docling_contract.py": "5ecf6bc0f80d0dd50d2351c7d15e24f137bff1d96cdf2eca0b9552ebbc140e42",
+      "code/reading_order/adapters/engines.py": "bb6be21a59d1c19811a8bdb3bbde86e3e0d66d609a724ffa7c5aa83599a31f6f",
+      "code/reading_order/adapters/xycut_worker.rs": "056eb68234ade603d080902010a12f80af0eb68fafb16fe80e1420d8b9a12a51",
+      "code/reading_order/adapters/__init__.py": "76ed45822b45dec158105398841d3afb192b87d1a8f10518368c6dacbdbfeba0",
+      "code/reading_order/viewer/app.js": "48839c3bc4a739fe8013598dd2deb9e0163ab5705c4e4636d7b493c0a2b9ad60",
+      "code/reading_order/viewer/index.html": "3035fff746b03201651394cdb99e7534e9be9f9efa6bbf64b6e8adb550eb9ff7",
+      "code/reading_order/viewer/style.css": "c4bae0de69a0e3db17faf0ba7a932e234650963f322f0c9624e50c12c339d0fb"
+    },
+    "lock_sha256": "7411237736adbdea97f7d3d6c0fb534bef4cb2db7972706119a3e080ebc90377",
+    "worker_sha256": "580a95c0e923e115b422c4b64b61061c593eb4418151e6cad83779aa3f29d428",
+    "prepared_identity_sha256": "801b59ee0c6502e781fd3be45bd172b46a000b079c75953ef9093c4c9e2eefca",
+    "session": "order-collection-20261102-r4",
+    "accelerator": "A100",
+    "status": "prepared",
+    "automatic_retries": false,
+    "source_data_uploaded": false,
+    "code_archive_sha256": "a93e738da4a75557ea1f767c1f41188594728d34501a707044d2ef31d574fd7d",
+    "preparation_recovery": "Verified completed artifacts and CUDA through a fresh client; no reinstall or rebuild",
+    "verification_method": "Contents API: all code hashes, sealed identity, lock, worker and installed package metadata",
+    "installed_packages_verified": 102,
+    "cuda_verification_reference": {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/environment-r4/recovered-environment.json",
+      "sha256": "2bcade41fefe4f297b3613b08993853dab1e5852407b3b16109aa730e1ca5674"
+    },
+    "code_update_files": [
+      "code/reading_order/colab_backend.py",
+      "code/reading_order/collection.py"
+    ]
+  },
+  "pdf_metadata_reference": {
+    "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/pdf-verified.json",
+    "sha256": "decca919a9bde6b501728af2058b8299f27e3508fa2f2fb2b11a73b9dc195045"
+  },
+  "allowed_recovery_code_changes": [
+    "code/reading_order/colab_backend.py",
+    "code/reading_order/collection.py"
+  ],
+  "selection": {
+    "source_root": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic",
+    "paper_ids": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "14",
+      "15",
+      "17"
+    ],
+    "timeout_s": 300
+  },
+  "candidates": [
+    "hantian",
+    "docling",
+    "xycut_plus_plus",
+    "xycut",
+    "pp_doclayout_v2",
+    "doctr"
+  ],
+  "condition": "canonical_sha256_id_order",
+  "xycut_plus_plus": "home-still variant; diverges from paper v1"
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="11" skipped="0" tests="11" time="2.548" timestamp="2026-11-02T13:14:21.182758-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_all_fifteen_pairs_and_macro_micro_denominators" time="0.761"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">def test_all_fifteen_pairs_and_macro_micro_denominators():
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:31: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[missing_id]" time="0.008"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'missing_id'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[same_wrong_ids]" time="0.012"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'same_wrong_ids'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[duplicate_id]" time="0.011"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'duplicate_id'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[wrong_scope_hash]" time="0.010"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'wrong_scope_hash'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[failed]" time="0.010"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'failed'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_invalid_or_missing_outputs_remain_in_coverage[missing_prediction]" time="0.010"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">damage = 'missing_prediction'
+
+    @pytest.mark.parametrize('damage', ['missing_id', 'same_wrong_ids', 'duplicate_id', 'wrong_scope_hash',
+                                        'failed', 'missing_prediction'])
+    def test_invalid_or_missing_outputs_remain_in_coverage(damage):
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:58: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_duplicate_or_foreign_predictions_are_rejected_instead_of_overwritten" time="0.008"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">def test_duplicate_or_foreign_predictions_are_rejected_instead_of_overwritten():
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:85: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_saved_run_identity_and_sources_are_verified_without_engine" time="0.040"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/all-pairs-20261102-red/test_saved_run_identity_and_so0')
+
+    def test_saved_run_identity_and_sources_are_verified_without_engine(tmp_path):
+        from reading_order.ingest import Ingestor, LocalReferences
+&gt;       from pairwise_analysis import load_saved_inventory
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:97: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_successor_differences_keep_original_ids" time="0.009"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">def test_successor_differences_keep_original_ids():
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:126: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_mixed_docling_contracts_cannot_be_aggregated" time="0.012"><failure message="ModuleNotFoundError: No module named 'pairwise_analysis'">def test_mixed_docling_contracts_cannot_be_aggregated():
+&gt;       from pairwise_analysis import analyze_predictions
+E       ModuleNotFoundError: No module named 'pairwise_analysis'
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:137: ModuleNotFoundError</failure></testcase></testsuite></testsuites>

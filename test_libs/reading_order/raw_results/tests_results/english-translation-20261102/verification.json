@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "language": "en",
+  "documents_translated": 2,
+  "figure_count": 12,
+  "figure_files": 17,
+  "visual_cases": 7,
+  "visual_orders": 42,
+  "python_tests": 146,
+  "javascript_tests": 8,
+  "primary_and_historical_files_hash_verified": 148,
+  "source_hashes_verified": 34,
+  "numeric_table_cells_unchanged": 121,
+  "derived_evidence_equal_except_display_text_and_export_hashes": true,
+  "csv_equal_except_family_labels": true,
+  "generator_ast_equal_except_string_constants": true,
+  "case_plot_bodies_pixel_identical": 7,
+  "local_links_and_fragments_checked": 74,
+  "legacy_heading_fragments_preserved": true,
+  "visual_qa": "All five statistical figures and seven case headings inspected; C07 also inspected in full. All seven case bodies pixel-identical below the translated heading area.",
+  "models_executed": false,
+  "human_review": "pending",
+  "browser_tests_rerun": false,
+  "report_sha256": "225023c2b0437f87678108ef70e2f24b46f750724fde6bb85e6c8f57308ddc9f",
+  "guide_sha256": "d86b06a2149e67b758bf178d2d6d9d68cf86fc5f3aa9e2bae67c47e0bcc32aae",
+  "evidence_sha256": "17fb8f064d9b10cd9bb90e2222ac335b6449c0e91e0102f8ece2d0a75c9551ba",
+  "generator_sha256": "6ec7a7d98786d47a24fce4a0def2247dba82ec9eda638647305c8605f88ca2ae",
+  "figures": [
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_costs.png",
+      "sha256": "20ac83fc692c847fb064c4e497e4d618d2985a5dfcc381273acebebd32828e34"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_costs.svg",
+      "sha256": "67f3b839285fa61e9fd0821f8e89ed0fa93813070ef4f07284f2e28c919234ea"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_stability.png",
+      "sha256": "95a366c841be2936435a852452b7e8adf4ad955331e2dc60131ce4cc09e974d4"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_stability.svg",
+      "sha256": "07cf7ffb5cb5c5addff8397ea6a0e29e67640e5cab07ed13b6fa3d1b8a86ab6a"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_category_positions.png",
+      "sha256": "4f044055001b8e8df70de7317a9e6adac98a449973364d990624e4d54b4b5860"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_category_positions.svg",
+      "sha256": "8cef2a501163a1ae023e0c7d8521abb47b4619524514fcfd65a43bb840e42e8d"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\matrices.png",
+      "sha256": "646b28ab9b1d242d8be309af3ccb85fef627c92602dbc4d2501a0b30f368e2dd"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\matrices.svg",
+      "sha256": "a7726b9f83ed520af0670d2c5098bb78efc1f534c54392b270a8394f7c28976b"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_document_comparison.png",
+      "sha256": "5b45a5f247ce91a4cb20e8a5e77c906c85e68b8541b0dd6520ccbd7b3b1e344f"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\library_document_comparison.svg",
+      "sha256": "69b09b0c292110fc634180202a6cafa2b2ee44f419e3d0852edc82b4efb5f699"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_01.png",
+      "sha256": "c61f57a4df8e5df1ac063beadd3896b9726985a2b5a8719114eb982ddfa1c354"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_02.png",
+      "sha256": "aa887a1626b9fecf25b800cdc9f8b2c24869015ef60e30b9f97ee8e03bf76d54"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_03.png",
+      "sha256": "9161dd23e3714c8833c3308a4841e14bb60273d68d338962e30855ceb9182b8b"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_04.png",
+      "sha256": "54b6b83fc60698f2f2146818276d5376df73a4f4ea8aeed52760fa82d16347c0"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_05.png",
+      "sha256": "14fa9f0986cfe94a4a22b20be40fe34d632f9a980b6239d252bbfa4b5ed355ca"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_06.png",
+      "sha256": "45241bc21d7cd858c09d4983ea6765b172b673682d5defd034e27b171b261713"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\docs\\assets\\case_07.png",
+      "sha256": "f4bad09918b64dd9ccca0db67a342aed820b6bda9709037cb359b37799f64070"
+    }
+  ]
+}

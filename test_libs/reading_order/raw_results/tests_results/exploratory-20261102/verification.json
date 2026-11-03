@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "rules_independently_recomputed": 180,
+  "average_linkage_heights_verified": 10,
+  "protected_artifacts_unchanged": 12,
+  "visual_background_hashes_verified": 3,
+  "charts_visually_inspected": 6,
+  "agent_visual_cases_inspected": 3,
+  "human_review": "pending",
+  "models_executed": false,
+  "exploratory_sha256": "636f38612841fc850e89ef7ec5596a4be6672e4ebd9596737e338d86fd093d78"
+}

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="13" skipped="0" tests="13" time="3.640" timestamp="2026-11-02T01:13:13.642130-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_source_cids_refs_and_decoding_survive_every_presentation_permutation" time="1.561"><failure message="AssertionError: assert {'a': 0, 'b': 1, 'c': 2} == {'a': 7, 'b': 2, 'c': 11}&#10;  &#10;  Differing items:&#10;  {'a': 0} != {'a': 7}&#10;  {'b': 1} != {'b': 2}&#10;  {'c': 2} != {'c': 11}&#10;  Use -v to get more diff">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FD7AE80&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='c', label='TEXT')]], {'mode': 'sorted'})
+
+    def test_source_cids_refs_and_decoding_survive_every_presentation_permutation(engine):
+        predict,captured,_=engine
+        blocks=[block('a',7),block('b',2),block('c',11)]
+        preserved=copy.deepcopy(blocks)
+        for incoming in itertools.permutations(blocks):
+            result=predict(list(incoming))
+&gt;           assert {e.text:e.cid for e in captured[-1]}=={'a':7,'b':2,'c':11}
+E           AssertionError: assert {'a': 0, 'b': 1, 'c': 2} == {'a': 7, 'b': 2, 'c': 11}
+E             
+E             Differing items:
+E             {'a': 0} != {'a': 7}
+E             {'b': 1} != {'b': 2}
+E             {'c': 2} != {'c': 11}
+E             Use -v to get more diff
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:42: AssertionError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_source_adjacency_is_preserved_and_gaps_are_not_compacted" time="0.010"><failure message="AssertionError: assert {('a', 'b'), ('b', 'c')} == {('a', 'b')}&#10;  &#10;  Extra items in the left set:&#10;  ('b', 'c')&#10;  Use -v to get more diff">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDED300&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='c', label='TEXT')]], {'mode': 'sorted'})
+
+    def test_source_adjacency_is_preserved_and_gaps_are_not_compacted(engine):
+        predict,captured,_=engine
+        blocks=[block('a',2),block('b',3),block('c',9)]
+        for incoming in itertools.permutations(blocks):
+            predict(list(incoming))
+            entities=captured[-1]
+&gt;           assert {(a.text,b.text) for a in entities for b in entities if a.cid+1==b.cid}=={('a','b')}
+E           AssertionError: assert {('a', 'b'), ('b', 'c')} == {('a', 'b')}
+E             
+E             Extra items in the left set:
+E             ('b', 'c')
+E             Use -v to get more diff
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:59: AssertionError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[unresolved]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDED8A0&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'unresolved'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[file#/pages/1/blocks/7]" time="0.008"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEE160&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'file#/pages/1/blocks/7'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[file#/pages/2/blocks/7/content/0]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FAE0860&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'file#/pages/2/blocks/7/content/0'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[file#/pages/2/blocks/-1]" time="0.010"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEE0C0&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'file#/pages/2/blocks/-1'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[file#/pages/2/blocks/07]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDED8A0&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'file#/pages/2/blocks/07'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_unresolved_or_non_root_reference_is_rejected_before_predictor[file#/pages/2/blocks/7/]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEE520&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='a', label='TEXT')]], {'mode': 'sorted'})
+reference = 'file#/pages/2/blocks/7/'
+
+    @pytest.mark.parametrize('reference',[
+        'unresolved','file#/pages/1/blocks/7','file#/pages/2/blocks/7/content/0',
+        'file#/pages/2/blocks/-1','file#/pages/2/blocks/07','file#/pages/2/blocks/7/'])
+    def test_unresolved_or_non_root_reference_is_rejected_before_predictor(engine,reference):
+        predict,captured,_=engine
+        value=block('a',7);value['source_ref']=reference
+&gt;       with pytest.raises(ValueError):predict([value])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:68: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_ambiguous_identity_is_rejected_before_predictor[duplicate_cid]" time="0.010"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEDE40&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='b', label='TEXT')]], {'mode': 'sorted'})
+change = 'duplicate_cid'
+
+    @pytest.mark.parametrize('change',['duplicate_cid','duplicate_id','different_page'])
+    def test_ambiguous_identity_is_rejected_before_predictor(engine,change):
+        predict,captured,_=engine
+        a,b=block('a',2),block('b',3)
+        if change=='duplicate_cid':b['source_ref']=a['source_ref']
+        if change=='duplicate_id':b['id']=a['id']
+        if change=='different_page':b['page_idx']=1
+&gt;       with pytest.raises(ValueError):predict([a,b])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:79: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_ambiguous_identity_is_rejected_before_predictor[duplicate_id]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEE660&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='b', label='TEXT')]], {'mode': 'sorted'})
+change = 'duplicate_id'
+
+    @pytest.mark.parametrize('change',['duplicate_cid','duplicate_id','different_page'])
+    def test_ambiguous_identity_is_rejected_before_predictor(engine,change):
+        predict,captured,_=engine
+        a,b=block('a',2),block('b',3)
+        if change=='duplicate_cid':b['source_ref']=a['source_ref']
+        if change=='duplicate_id':b['id']=a['id']
+        if change=='different_page':b['page_idx']=1
+&gt;       with pytest.raises(ValueError):predict([a,b])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:79: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_ambiguous_identity_is_rejected_before_predictor[different_page]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDED580&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....rd_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='b', label='TEXT')]], {'mode': 'sorted'})
+change = 'different_page'
+
+    @pytest.mark.parametrize('change',['duplicate_cid','duplicate_id','different_page'])
+    def test_ambiguous_identity_is_rejected_before_predictor(engine,change):
+        predict,captured,_=engine
+        a,b=block('a',2),block('b',3)
+        if change=='duplicate_cid':b['source_ref']=a['source_ref']
+        if change=='duplicate_id':b['id']=a['id']
+        if change=='different_page':b['page_idx']=1
+&gt;       with pytest.raises(ValueError):predict([a,b])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:79: Failed</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_invalid_native_cids_are_not_repaired[unknown]" time="0.012"><failure message="IndexError: list index out of range">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEEC00&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....d_origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='b', label='TEXT')]], {'mode': 'unknown'})
+mode = 'unknown'
+
+    @pytest.mark.parametrize('mode',['unknown','duplicate'])
+    def test_invalid_native_cids_are_not_repaired(engine,mode):
+        predict,_,behavior=engine
+        behavior['mode']=mode
+&gt;       with pytest.raises(ValueError):predict([block('a',2),block('b',7)])
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_libs\reading_order\test\test_code\test_docling_contract.py:32: in predict
+    return adapter._docling(blocks,dict(page_idx=2,width=600,height=800),[b['bbox'] for b in blocks])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;reading_order.adapters.engines.EngineAdapter object at 0x000002091FC76F30&gt;
+blocks = [{'bbox': [0.1, 0.1, 0.8, 0.2], 'id': 'a', 'page_idx': 2, 'raw_label': 'text', ...}, {'bbox': [0.1, 0.1, 0.8, 0.2], 'id': 'b', 'page_idx': 2, 'raw_label': 'text', ...}]
+page = {'height': 800, 'page_idx': 2, 'width': 600}
+boxes = [[0.1, 0.1, 0.8, 0.2], [0.1, 0.1, 0.8, 0.2]]
+
+    def _docling(self, blocks, page, boxes):
+        from docling.models.postprocessing.reading_order_rb import ReadingOrderPredictor, PageElement
+        from docling_core.types.doc import CoordOrigin, DocItemLabel, Size
+        labels = self._labels(blocks)
+        names = {'text':'TEXT','title':'TITLE','heading':'SECTION_HEADER','header':'PAGE_HEADER',
+                 'footer':'PAGE_FOOTER','number':'PAGE_FOOTER','footnote':'FOOTNOTE','reference':'TEXT',
+                 'image':'PICTURE','chart':'PICTURE','table':'TABLE','formula':'FORMULA','caption':'CAPTION'}
+        elements = [PageElement(cid=i,ref={'cref':'#/texts/'+str(i)},l=float(box[0]*page['width']),
+                    t=float(box[1]*page['height']),r=float(box[2]*page['width']),b=float(box[3]*page['height']),
+                    coord_origin=CoordOrigin.TOPLEFT,page_no=page['page_idx']+1,
+                    page_size=Size(width=page['width'],height=page['height']),text=b['text'] or '',
+                    label=getattr(DocItemLabel,names[labels[i]])) for i,(b,box) in enumerate(zip(blocks,boxes))]
+        ordered = ReadingOrderPredictor().predict_reading_order(elements)
+        indices = [e.cid for e in ordered]
+&gt;       return dict(ordered_ids=[blocks[i]['id'] for i in indices],native={'indices':indices,
+                                 ^^^^^^^^^
+                    'temporary_ref_to_id':{'#/texts/'+str(i):b['id'] for i,b in enumerate(blocks)}},
+                    transformations={'coordinates':'page points top-left','category_map':names,
+                                     'caption_association_or_merge':False})
+E       IndexError: list index out of range
+
+test_libs\reading_order\code\reading_order\adapters\engines.py:109: IndexError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_docling_contract" name="test_invalid_native_cids_are_not_repaired[duplicate]" time="0.010"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">engine = (&lt;function engine.&lt;locals&gt;.predict at 0x000002091FDEDE40&gt;, [[namespace(cid=0, ref={'cref': '#/texts/0'}, l=60.0, t=80....origin='TOPLEFT', page_no=3, page_size={'width': 600, 'height': 800}, text='b', label='TEXT')]], {'mode': 'duplicate'})
+mode = 'duplicate'
+
+    @pytest.mark.parametrize('mode',['unknown','duplicate'])
+    def test_invalid_native_cids_are_not_repaired(engine,mode):
+        predict,_,behavior=engine
+        behavior['mode']=mode
+&gt;       with pytest.raises(ValueError):predict([block('a',2),block('b',7)])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+test_libs\reading_order\test\test_code\test_docling_contract.py:87: Failed</failure></testcase></testsuite></testsuites>

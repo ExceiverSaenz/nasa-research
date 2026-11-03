@@ -1,0 +1,123 @@
+{
+  "status": "AUDIT_COMPLETE",
+  "paper_fidelity": "DIVERGES_FROM_PAPER",
+  "candidate_id": "xycut_plus_plus",
+  "implementation": "home-still/xycut-plus-plus third-party variant",
+  "commit": "81d93f825108d314f6588e5828e09b89bf45b67c",
+  "paper": "https://arxiv.org/html/2504.10258v1",
+  "archive_url": "https://codeload.github.com/home-still/xycut-plus-plus/tar.gz/81d93f825108d314f6588e5828e09b89bf45b67c",
+  "archive_sha256": "b9ed7159c155da9db5396062a2d5e65ebf2cea55b1576490cf37f0660fc08ad9",
+  "members": [
+    {
+      "path": "src/core.rs",
+      "sha256": "1f5069b7fc71f4b7cb0ae2cf87b8bfa976446ccface4789cad89a08d616a3254"
+    },
+    {
+      "path": "src/matching.rs",
+      "sha256": "24e57409d8c0bff5910abaaa54abe8243b3fe1744549ea70657d8db2870297dd"
+    },
+    {
+      "path": "src/utils.rs",
+      "sha256": "8f0e27dde930f0caeb6651d7562cd8b68a23af340306ac2f22d0dc37e55d790c"
+    },
+    {
+      "path": "src/traits.rs",
+      "sha256": "7435cfcf0baeda389153c825a781f3e1ae6f49f9c0ab6b388a1e5d34c84cd04d"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "7ac4141d19f18e0764de1ce6788aef41a0f24f30657cbe4a97572162328eff6f"
+    }
+  ],
+  "adapter_worker_sha256": "056eb68234ade603d080902010a12f80af0eb68fafb16fe80e1420d8b9a12a51",
+  "license_line": "license = \"GPL-3.0\"",
+  "findings": [
+    {
+      "id": "density",
+      "status": "divergent",
+      "paper": "Eq. 4: area ratio",
+      "implementation": "sum of width/height ratios",
+      "reference": {
+        "member": "src/core.rs",
+        "line": 99
+      },
+      "synthetic_counterexample": {
+        "cross_box": [
+          80,
+          5
+        ],
+        "single_boxes": [
+          [
+            20,
+            50
+          ],
+          [
+            20,
+            50
+          ],
+          [
+            20,
+            50
+          ]
+        ],
+        "paper_ratio": 0.13333333333333333,
+        "implementation_ratio": 13.333333333333334
+      }
+    },
+    {
+      "id": "cross_layout_propagation",
+      "status": "divergent",
+      "paper": "Cross/single layout classification participates in refinement and matching",
+      "implementation": "partition clones retain original semantic labels; wrapper emits only Regular/HorizontalTitle/Vision",
+      "reference": {
+        "member": "src/matching.rs",
+        "line": 73
+      },
+      "implication": "For nonempty regular partitions under this adapter, cross-layout density numerator is zero; the adaptive >0.9 branch is unreachable."
+    },
+    {
+      "id": "geometric_presegmentation",
+      "status": "redundant",
+      "paper": "Eq. 3: central isolated visual element test",
+      "implementation": "geometric mask requires should_mask and is ORed with should_mask, so it cannot change partition membership",
+      "reference": {
+        "member": "src/matching.rs",
+        "line": 72
+      }
+    },
+    {
+      "id": "matching_intersection",
+      "status": "divergent",
+      "paper": "Eq. 8 intersection/orientation/partial-overlap constraints",
+      "implementation": "any full 2D overlap gives 0; otherwise 100; no orientation/partial IoU threshold",
+      "reference": {
+        "member": "src/utils.rs",
+        "line": 84
+      }
+    },
+    {
+      "id": "weight_scale",
+      "status": "divergent",
+      "paper": "Eq. 9 uses page dimensions",
+      "implementation": "weights use masked element maximum dimension",
+      "reference": {
+        "member": "src/utils.rs",
+        "line": 39
+      }
+    },
+    {
+      "id": "reinsertion",
+      "status": "different_policy",
+      "paper": "Algorithm 1 final ordering keys include index, label priority, Y1 and X1",
+      "implementation": "row-quantized semantic groups inserted before a selected anchor",
+      "reference": {
+        "member": "src/core.rs",
+        "line": 400
+      }
+    }
+  ],
+  "new_inferences": 0,
+  "source_data_copies": false,
+  "scope": "Core ordering audit; using fixed MinerU detections is an intentional experimental condition, not itself a fidelity defect.",
+  "conclusion": "Preserve existing results as this named variant. Do not attribute paper benchmark claims or official implementation status to it. No automatic replacement or tuning."
+}

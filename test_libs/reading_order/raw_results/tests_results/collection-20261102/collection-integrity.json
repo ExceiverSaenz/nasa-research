@@ -1,0 +1,201 @@
+{
+  "status": "PASS",
+  "manifest_sha256": "b768427ddbf8a162c15698e58b93f41319b92481e3dcc7cb8b9a328ea914a240",
+  "papers": 15,
+  "pages": 397,
+  "predictions": 2382,
+  "valid_native_to_id_decodings": 2382,
+  "empty_pages": [
+    [
+      "14",
+      3
+    ],
+    [
+      "15",
+      1
+    ],
+    [
+      "15",
+      3
+    ]
+  ],
+  "nonempty_pages": 394,
+  "nonempty_orders": 2364,
+  "empty_outputs": 18,
+  "docling_source_cid_contract_verified": true,
+  "source_hashes_unchanged": true,
+  "pdf_metadata_identity_unchanged": true,
+  "code_matches_tested_deployment": true,
+  "source_copies": false,
+  "session_closed": true,
+  "semantic_accuracy_measured": false,
+  "reused_provenance_links_verified": 2504,
+  "reused_manifest_files_verified": 6,
+  "per_paper": [
+    {
+      "paper_id": "1",
+      "per_candidate": {
+        "hantian": 26,
+        "docling": 26,
+        "xycut_plus_plus": 26,
+        "xycut": 26,
+        "pp_doclayout_v2": 26,
+        "doctr": 26
+      }
+    },
+    {
+      "paper_id": "2",
+      "per_candidate": {
+        "hantian": 12,
+        "docling": 12,
+        "xycut_plus_plus": 12,
+        "xycut": 12,
+        "pp_doclayout_v2": 12,
+        "doctr": 12
+      }
+    },
+    {
+      "paper_id": "3",
+      "per_candidate": {
+        "hantian": 4,
+        "docling": 4,
+        "xycut_plus_plus": 4,
+        "xycut": 4,
+        "pp_doclayout_v2": 4,
+        "doctr": 4
+      }
+    },
+    {
+      "paper_id": "4",
+      "per_candidate": {
+        "hantian": 4,
+        "docling": 4,
+        "xycut_plus_plus": 4,
+        "xycut": 4,
+        "pp_doclayout_v2": 4,
+        "doctr": 4
+      }
+    },
+    {
+      "paper_id": "5",
+      "per_candidate": {
+        "hantian": 9,
+        "docling": 9,
+        "xycut_plus_plus": 9,
+        "xycut": 9,
+        "pp_doclayout_v2": 9,
+        "doctr": 9
+      }
+    },
+    {
+      "paper_id": "6",
+      "per_candidate": {
+        "hantian": 26,
+        "docling": 26,
+        "xycut_plus_plus": 26,
+        "xycut": 26,
+        "pp_doclayout_v2": 26,
+        "doctr": 26
+      }
+    },
+    {
+      "paper_id": "7",
+      "per_candidate": {
+        "hantian": 14,
+        "docling": 14,
+        "xycut_plus_plus": 14,
+        "xycut": 14,
+        "pp_doclayout_v2": 14,
+        "doctr": 14
+      }
+    },
+    {
+      "paper_id": "8",
+      "per_candidate": {
+        "hantian": 49,
+        "docling": 49,
+        "xycut_plus_plus": 49,
+        "xycut": 49,
+        "pp_doclayout_v2": 49,
+        "doctr": 49
+      }
+    },
+    {
+      "paper_id": "9",
+      "per_candidate": {
+        "hantian": 12,
+        "docling": 12,
+        "xycut_plus_plus": 12,
+        "xycut": 12,
+        "pp_doclayout_v2": 12,
+        "doctr": 12
+      }
+    },
+    {
+      "paper_id": "10",
+      "per_candidate": {
+        "hantian": 9,
+        "docling": 9,
+        "xycut_plus_plus": 9,
+        "xycut": 9,
+        "pp_doclayout_v2": 9,
+        "doctr": 9
+      }
+    },
+    {
+      "paper_id": "11",
+      "per_candidate": {
+        "hantian": 21,
+        "docling": 21,
+        "xycut_plus_plus": 21,
+        "xycut": 21,
+        "pp_doclayout_v2": 21,
+        "doctr": 21
+      }
+    },
+    {
+      "paper_id": "12",
+      "per_candidate": {
+        "hantian": 13,
+        "docling": 13,
+        "xycut_plus_plus": 13,
+        "xycut": 13,
+        "pp_doclayout_v2": 13,
+        "doctr": 13
+      }
+    },
+    {
+      "paper_id": "14",
+      "per_candidate": {
+        "hantian": 68,
+        "docling": 68,
+        "xycut_plus_plus": 68,
+        "xycut": 68,
+        "pp_doclayout_v2": 68,
+        "doctr": 68
+      }
+    },
+    {
+      "paper_id": "15",
+      "per_candidate": {
+        "hantian": 59,
+        "docling": 59,
+        "xycut_plus_plus": 59,
+        "xycut": 59,
+        "pp_doclayout_v2": 59,
+        "doctr": 59
+      }
+    },
+    {
+      "paper_id": "17",
+      "per_candidate": {
+        "hantian": 71,
+        "docling": 71,
+        "xycut_plus_plus": 71,
+        "xycut": 71,
+        "pp_doclayout_v2": 71,
+        "doctr": 71
+      }
+    }
+  ]
+}

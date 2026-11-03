@@ -1,0 +1,4 @@
+{"event": "start", "time": 1793611491.0152304}
+{"event": "error", "elapsed_s": 10.21, "error_type": "ConnectionError"}
+{"event": "start", "time": 1793611501.2692552}
+{"event": "error", "elapsed_s": 2.885, "error_type": "ConnectionError"}

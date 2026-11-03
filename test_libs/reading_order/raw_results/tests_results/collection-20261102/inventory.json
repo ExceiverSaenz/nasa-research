@@ -1,0 +1,113 @@
+{
+  "documents": [
+    {
+      "paper_id": "1",
+      "normalized_sha256": "2e1547ad14223ca8f34be6da8fd0109f5d3aa169ceb208b21b27521a0bc3f4e0",
+      "middle_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+      "pages": 26,
+      "eligible": 261
+    },
+    {
+      "paper_id": "2",
+      "normalized_sha256": "cbc332856460e933c01f2bf7a1560d8475ffc85b76155bfc959fc75661b52d22",
+      "middle_sha256": "c05ba59ca1e95fdf0cd3914820ec9854f83cddc8c39f0c2b5ea676565f028728",
+      "pages": 12,
+      "eligible": 245
+    },
+    {
+      "paper_id": "3",
+      "normalized_sha256": "811607c04e6469f188a1286c44709a0030cf8d7aa20bc98b818a9c18f0eb9979",
+      "middle_sha256": "6d8fe077310b1dbcf1827e9b87a79461b092a367e14e4bd8163c6d740ba4f33f",
+      "pages": 4,
+      "eligible": 70
+    },
+    {
+      "paper_id": "4",
+      "normalized_sha256": "a4d24eb03939f8ec74783ee6dcf5243ad1da74dcf7cd1f07791fa82053e32e87",
+      "middle_sha256": "edc9b51b92a050101677bacbe36b45fb4301b3adf647546dff9e2a56c23cbafc",
+      "pages": 4,
+      "eligible": 77
+    },
+    {
+      "paper_id": "5",
+      "normalized_sha256": "27e077b3ba7fb0c8fe41d12db1efa51c3836cca85d3972256a4fcd9f1232c329",
+      "middle_sha256": "95a6c24eb35d78be81af89a97274898455fff8066558aeaa07d303ec026d2958",
+      "pages": 9,
+      "eligible": 169
+    },
+    {
+      "paper_id": "6",
+      "normalized_sha256": "58293cc27e060d5b0d9b989e18747a67ee8a89b090d528b60264325fc961c9bb",
+      "middle_sha256": "69a7720c7f3656a4989357565f2d4c90ea5a682c89607d4a4a46c3b87e111faa",
+      "pages": 26,
+      "eligible": 261
+    },
+    {
+      "paper_id": "7",
+      "normalized_sha256": "fe8b88572dde11606d4e8dae2252bddffa22fc749d1e0ed54c88185b554322f8",
+      "middle_sha256": "34b52bf90412b5f8f68e7ca38fc32a6b6e33acc6593fc4c70acb36d2deefd27b",
+      "pages": 14,
+      "eligible": 245
+    },
+    {
+      "paper_id": "8",
+      "normalized_sha256": "68663a0dc4ddf311d7fbeb4fe309a471f920e495c0a90842ca98309eee0d519c",
+      "middle_sha256": "de416c7869b8197d79525eb6d90324abca6f169a6a401f6846f08144af685347",
+      "pages": 49,
+      "eligible": 562
+    },
+    {
+      "paper_id": "9",
+      "normalized_sha256": "0c34181cf9df56b91f5d584959643974871041c0fc67765d68d92895fad1f664",
+      "middle_sha256": "e9dc2d0a6f568a5f51edc79a36588c67069a34b95309e74dffb885bf51923d33",
+      "pages": 12,
+      "eligible": 136
+    },
+    {
+      "paper_id": "10",
+      "normalized_sha256": "0618a8b533b6427f3795164b1c999d3a12dbfeb11ce1cb0df554e25afa25f679",
+      "middle_sha256": "e560d3f85dfcbfb9797ccd2540d0539c47960d4a48f9f6f628f64dabcc62e3db",
+      "pages": 9,
+      "eligible": 60
+    },
+    {
+      "paper_id": "11",
+      "normalized_sha256": "1e51ca8d75f96ff192fb1d888bb7554142a6d123b5744add7fbcb3945cc6747e",
+      "middle_sha256": "9286f5b25117265d217a58da5acd010f4de6b7e517448aee2cfae57f2aff5db0",
+      "pages": 21,
+      "eligible": 313
+    },
+    {
+      "paper_id": "12",
+      "normalized_sha256": "45283b50dca70419ccae1118e9cb79251d8a14001011037231fb975c5fb9ec50",
+      "middle_sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f",
+      "pages": 13,
+      "eligible": 223
+    },
+    {
+      "paper_id": "14",
+      "normalized_sha256": "4aca4d4b308fdbd1bbca39bf0d97093e94e6ee215ca0dc3865f3f1c24154c477",
+      "middle_sha256": "b36deb545da3c8da4a3dc35f43209b15957b3f7cea4aae2c8dee5a3e120f8356",
+      "pages": 68,
+      "eligible": 535
+    },
+    {
+      "paper_id": "15",
+      "normalized_sha256": "b4cb56355a7b952b83ffb882778c9feb188f160cf30b3ea3a10d9cfdf483f2e9",
+      "middle_sha256": "15ef1e351836a3e20edc6a55069ec452394346d75c3444bd655ab2c993ee756e",
+      "pages": 59,
+      "eligible": 460
+    },
+    {
+      "paper_id": "17",
+      "normalized_sha256": "e87394205e4353ac48e38dfcc1b5b2112ae319a0ee92623d43eaf5327f81f4af",
+      "middle_sha256": "eb2f5aa076ce6251b2b11a2c42632d0561a2fd2a665c8c607f19d01cc7fd06e0",
+      "pages": 71,
+      "eligible": 551
+    }
+  ],
+  "papers": 15,
+  "pages": 397,
+  "source_cids_valid": true,
+  "quantization_degenerate": []
+}

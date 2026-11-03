@@ -1,0 +1,1347 @@
+{
+  "schema": "reading-order-agreement/1",
+  "run_id": "permutation-1730",
+  "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+  "coverage": {
+    "expected": 78,
+    "produced_valid": 78,
+    "failed": 0,
+    "unsupported": 0,
+    "not_run": 0
+  },
+  "comparisons": [
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.38461538461538464,
+      "successor_jaccard": 0.061224489795918366,
+      "pairs_inverted": 135,
+      "pairs_evaluated": 351,
+      "successor_intersection": 3,
+      "successor_union": 49,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a9f769629ccde51d86bcd7af231351bcd1477aafb62a2bac67035f1be765d775",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.6033333333333334,
+      "successor_jaccard": 0.0,
+      "pairs_inverted": 181,
+      "pairs_evaluated": 300,
+      "successor_intersection": 0,
+      "successor_union": 48,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "f3354d4e129ee7a7dc233eece343c337406c647e890cd510318c4204a8a3d72c",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5523809523809524,
+      "successor_jaccard": 0.037037037037037035,
+      "pairs_inverted": 58,
+      "pairs_evaluated": 105,
+      "successor_intersection": 1,
+      "successor_union": 27,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 2,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a6121bb206ec7ff466c40fbee5aff96d3fa10967a70cddd7f248efb7ff963c45",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5047619047619047,
+      "successor_jaccard": 0.0,
+      "pairs_inverted": 53,
+      "pairs_evaluated": 105,
+      "successor_intersection": 0,
+      "successor_union": 28,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 3,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2ac6822fa31cb0b7f88b1f57286bdf2d5738d5e4f43b9a1f2167e473c269ff62",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5128205128205128,
+      "successor_jaccard": 0.043478260869565216,
+      "pairs_inverted": 40,
+      "pairs_evaluated": 78,
+      "successor_intersection": 1,
+      "successor_union": 23,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 4,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "766da194140697a07487e9f0617b9b873b1500a16a6846a9a8ffba2cb27d3841",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5,
+      "successor_jaccard": 0.0,
+      "pairs_inverted": 33,
+      "pairs_evaluated": 66,
+      "successor_intersection": 0,
+      "successor_union": 22,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 5,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b633693be04497b6c25055966c19e9c363220ca9185c65c0189f298e5e5f6729",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5714285714285714,
+      "successor_jaccard": 0.037037037037037035,
+      "pairs_inverted": 60,
+      "pairs_evaluated": 105,
+      "successor_intersection": 1,
+      "successor_union": 27,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 6,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "77bb9c6c5cbe569e6d7c8221e3718a6cc0d1a6fcbb21b8da6cbf5e476651d83e",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.6363636363636364,
+      "successor_jaccard": 0.1111111111111111,
+      "pairs_inverted": 35,
+      "pairs_evaluated": 55,
+      "successor_intersection": 2,
+      "successor_union": 18,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 7,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "9d3bd6a6273ed9789213bac22f7d2a8706e25fde6637b7de6a5929d2befa0525",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.32967032967032966,
+      "successor_jaccard": 0.0,
+      "pairs_inverted": 30,
+      "pairs_evaluated": 91,
+      "successor_intersection": 0,
+      "successor_union": 26,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 8,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "8908d09435ca9537bdc1ea160a2c80bf53fbef8927d6d587d72200045c9d2276",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.6666666666666666,
+      "successor_jaccard": 0.23076923076923078,
+      "pairs_inverted": 24,
+      "pairs_evaluated": 36,
+      "successor_intersection": 3,
+      "successor_union": 13,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 9,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "6da4657ab22aca866a5a1542b7b79c1464822597ccb7d9baa8712754def0a652",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.5777777777777777,
+      "successor_jaccard": 0.058823529411764705,
+      "pairs_inverted": 26,
+      "pairs_evaluated": 45,
+      "successor_intersection": 1,
+      "successor_union": 17,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 10,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2c2a9f454c73d519ab156dc5347f0adbb11da837580e4665e821096dd6d9d786",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.509090909090909,
+      "successor_jaccard": 0.05263157894736842,
+      "pairs_inverted": 28,
+      "pairs_evaluated": 55,
+      "successor_intersection": 1,
+      "successor_union": 19,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 11,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "c255b74efb5edd1d2441328425474c05fd7bd605990a8c2e4e835b99a1e57cdb",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.6125603864734299,
+      "successor_jaccard": 0.022727272727272728,
+      "pairs_inverted": 634,
+      "pairs_evaluated": 1035,
+      "successor_intersection": 2,
+      "successor_union": 88,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 12,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b4fc834342dcf17e2a270e020f11582d784c36d5188c6fc8cdaf2e953a3049d3",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.08831908831908832,
+      "successor_jaccard": 0.3,
+      "pairs_inverted": 31,
+      "pairs_evaluated": 351,
+      "successor_intersection": 12,
+      "successor_union": 40,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a9f769629ccde51d86bcd7af231351bcd1477aafb62a2bac67035f1be765d775",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.22666666666666666,
+      "successor_jaccard": 0.5,
+      "pairs_inverted": 68,
+      "pairs_evaluated": 300,
+      "successor_intersection": 16,
+      "successor_union": 32,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "f3354d4e129ee7a7dc233eece343c337406c647e890cd510318c4204a8a3d72c",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.29523809523809524,
+      "successor_jaccard": 0.12,
+      "pairs_inverted": 31,
+      "pairs_evaluated": 105,
+      "successor_intersection": 3,
+      "successor_union": 25,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 2,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a6121bb206ec7ff466c40fbee5aff96d3fa10967a70cddd7f248efb7ff963c45",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.1523809523809524,
+      "successor_jaccard": 0.4,
+      "pairs_inverted": 16,
+      "pairs_evaluated": 105,
+      "successor_intersection": 8,
+      "successor_union": 20,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 3,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2ac6822fa31cb0b7f88b1f57286bdf2d5738d5e4f43b9a1f2167e473c269ff62",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2948717948717949,
+      "successor_jaccard": 0.2631578947368421,
+      "pairs_inverted": 23,
+      "pairs_evaluated": 78,
+      "successor_intersection": 5,
+      "successor_union": 19,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 4,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "766da194140697a07487e9f0617b9b873b1500a16a6846a9a8ffba2cb27d3841",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3333333333333333,
+      "successor_jaccard": 0.29411764705882354,
+      "pairs_inverted": 22,
+      "pairs_evaluated": 66,
+      "successor_intersection": 5,
+      "successor_union": 17,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 5,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b633693be04497b6c25055966c19e9c363220ca9185c65c0189f298e5e5f6729",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3142857142857143,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 33,
+      "pairs_evaluated": 105,
+      "successor_intersection": 7,
+      "successor_union": 21,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 6,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "77bb9c6c5cbe569e6d7c8221e3718a6cc0d1a6fcbb21b8da6cbf5e476651d83e",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2545454545454545,
+      "successor_jaccard": 0.42857142857142855,
+      "pairs_inverted": 14,
+      "pairs_evaluated": 55,
+      "successor_intersection": 6,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 7,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "9d3bd6a6273ed9789213bac22f7d2a8706e25fde6637b7de6a5929d2befa0525",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3076923076923077,
+      "successor_jaccard": 0.23809523809523808,
+      "pairs_inverted": 28,
+      "pairs_evaluated": 91,
+      "successor_intersection": 5,
+      "successor_union": 21,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 8,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "8908d09435ca9537bdc1ea160a2c80bf53fbef8927d6d587d72200045c9d2276",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3055555555555556,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 11,
+      "pairs_evaluated": 36,
+      "successor_intersection": 4,
+      "successor_union": 12,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 9,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "6da4657ab22aca866a5a1542b7b79c1464822597ccb7d9baa8712754def0a652",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.24444444444444444,
+      "successor_jaccard": 0.2857142857142857,
+      "pairs_inverted": 11,
+      "pairs_evaluated": 45,
+      "successor_intersection": 4,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 10,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2c2a9f454c73d519ab156dc5347f0adbb11da837580e4665e821096dd6d9d786",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2909090909090909,
+      "successor_jaccard": 0.42857142857142855,
+      "pairs_inverted": 16,
+      "pairs_evaluated": 55,
+      "successor_intersection": 6,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 11,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "c255b74efb5edd1d2441328425474c05fd7bd605990a8c2e4e835b99a1e57cdb",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.1603864734299517,
+      "successor_jaccard": 0.7647058823529411,
+      "pairs_inverted": 166,
+      "pairs_evaluated": 1035,
+      "successor_intersection": 39,
+      "successor_union": 51,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 12,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b4fc834342dcf17e2a270e020f11582d784c36d5188c6fc8cdaf2e953a3049d3",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.05698005698005698,
+      "successor_jaccard": 0.4857142857142857,
+      "pairs_inverted": 20,
+      "pairs_evaluated": 351,
+      "successor_intersection": 17,
+      "successor_union": 35,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a9f769629ccde51d86bcd7af231351bcd1477aafb62a2bac67035f1be765d775",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.24333333333333335,
+      "successor_jaccard": 0.2631578947368421,
+      "pairs_inverted": 73,
+      "pairs_evaluated": 300,
+      "successor_intersection": 10,
+      "successor_union": 38,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "f3354d4e129ee7a7dc233eece343c337406c647e890cd510318c4204a8a3d72c",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3047619047619048,
+      "successor_jaccard": 0.16666666666666666,
+      "pairs_inverted": 32,
+      "pairs_evaluated": 105,
+      "successor_intersection": 4,
+      "successor_union": 24,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 2,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a6121bb206ec7ff466c40fbee5aff96d3fa10967a70cddd7f248efb7ff963c45",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.18095238095238095,
+      "successor_jaccard": 0.47368421052631576,
+      "pairs_inverted": 19,
+      "pairs_evaluated": 105,
+      "successor_intersection": 9,
+      "successor_union": 19,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 3,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2ac6822fa31cb0b7f88b1f57286bdf2d5738d5e4f43b9a1f2167e473c269ff62",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2692307692307692,
+      "successor_jaccard": 0.09090909090909091,
+      "pairs_inverted": 21,
+      "pairs_evaluated": 78,
+      "successor_intersection": 2,
+      "successor_union": 22,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 4,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "766da194140697a07487e9f0617b9b873b1500a16a6846a9a8ffba2cb27d3841",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.22727272727272727,
+      "successor_jaccard": 0.15789473684210525,
+      "pairs_inverted": 15,
+      "pairs_evaluated": 66,
+      "successor_intersection": 3,
+      "successor_union": 19,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 5,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b633693be04497b6c25055966c19e9c363220ca9185c65c0189f298e5e5f6729",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.18095238095238095,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 19,
+      "pairs_evaluated": 105,
+      "successor_intersection": 7,
+      "successor_union": 21,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 6,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "77bb9c6c5cbe569e6d7c8221e3718a6cc0d1a6fcbb21b8da6cbf5e476651d83e",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2727272727272727,
+      "successor_jaccard": 0.17647058823529413,
+      "pairs_inverted": 15,
+      "pairs_evaluated": 55,
+      "successor_intersection": 3,
+      "successor_union": 17,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 7,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "9d3bd6a6273ed9789213bac22f7d2a8706e25fde6637b7de6a5929d2befa0525",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.18681318681318682,
+      "successor_jaccard": 0.3684210526315789,
+      "pairs_inverted": 17,
+      "pairs_evaluated": 91,
+      "successor_intersection": 7,
+      "successor_union": 19,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 8,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "8908d09435ca9537bdc1ea160a2c80bf53fbef8927d6d587d72200045c9d2276",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.25,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 9,
+      "pairs_evaluated": 36,
+      "successor_intersection": 4,
+      "successor_union": 12,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 9,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "6da4657ab22aca866a5a1542b7b79c1464822597ccb7d9baa8712754def0a652",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2222222222222222,
+      "successor_jaccard": 0.2857142857142857,
+      "pairs_inverted": 10,
+      "pairs_evaluated": 45,
+      "successor_intersection": 4,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 10,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2c2a9f454c73d519ab156dc5347f0adbb11da837580e4665e821096dd6d9d786",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.21818181818181817,
+      "successor_jaccard": 0.42857142857142855,
+      "pairs_inverted": 12,
+      "pairs_evaluated": 55,
+      "successor_intersection": 6,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 11,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "c255b74efb5edd1d2441328425474c05fd7bd605990a8c2e4e835b99a1e57cdb",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2028985507246377,
+      "successor_jaccard": 0.38461538461538464,
+      "pairs_inverted": 210,
+      "pairs_evaluated": 1035,
+      "successor_intersection": 25,
+      "successor_union": 65,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 12,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b4fc834342dcf17e2a270e020f11582d784c36d5188c6fc8cdaf2e953a3049d3",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.07122507122507123,
+      "successor_jaccard": 0.40540540540540543,
+      "pairs_inverted": 25,
+      "pairs_evaluated": 351,
+      "successor_intersection": 15,
+      "successor_union": 37,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a9f769629ccde51d86bcd7af231351bcd1477aafb62a2bac67035f1be765d775",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.08666666666666667,
+      "successor_jaccard": 0.5483870967741935,
+      "pairs_inverted": 26,
+      "pairs_evaluated": 300,
+      "successor_intersection": 17,
+      "successor_union": 31,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "f3354d4e129ee7a7dc233eece343c337406c647e890cd510318c4204a8a3d72c",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.12380952380952381,
+      "successor_jaccard": 0.75,
+      "pairs_inverted": 13,
+      "pairs_evaluated": 105,
+      "successor_intersection": 12,
+      "successor_union": 16,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 2,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a6121bb206ec7ff466c40fbee5aff96d3fa10967a70cddd7f248efb7ff963c45",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.14285714285714285,
+      "successor_jaccard": 0.5555555555555556,
+      "pairs_inverted": 15,
+      "pairs_evaluated": 105,
+      "successor_intersection": 10,
+      "successor_union": 18,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 3,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2ac6822fa31cb0b7f88b1f57286bdf2d5738d5e4f43b9a1f2167e473c269ff62",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.16666666666666666,
+      "successor_jaccard": 0.5,
+      "pairs_inverted": 13,
+      "pairs_evaluated": 78,
+      "successor_intersection": 8,
+      "successor_union": 16,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 4,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "766da194140697a07487e9f0617b9b873b1500a16a6846a9a8ffba2cb27d3841",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.16666666666666666,
+      "successor_jaccard": 0.8333333333333334,
+      "pairs_inverted": 11,
+      "pairs_evaluated": 66,
+      "successor_intersection": 10,
+      "successor_union": 12,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 5,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b633693be04497b6c25055966c19e9c363220ca9185c65c0189f298e5e5f6729",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.12380952380952381,
+      "successor_jaccard": 0.75,
+      "pairs_inverted": 13,
+      "pairs_evaluated": 105,
+      "successor_intersection": 12,
+      "successor_union": 16,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 6,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "77bb9c6c5cbe569e6d7c8221e3718a6cc0d1a6fcbb21b8da6cbf5e476651d83e",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.2545454545454545,
+      "successor_jaccard": 0.42857142857142855,
+      "pairs_inverted": 14,
+      "pairs_evaluated": 55,
+      "successor_intersection": 6,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 7,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "9d3bd6a6273ed9789213bac22f7d2a8706e25fde6637b7de6a5929d2befa0525",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.13186813186813187,
+      "successor_jaccard": 0.7333333333333333,
+      "pairs_inverted": 12,
+      "pairs_evaluated": 91,
+      "successor_intersection": 11,
+      "successor_union": 15,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 8,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "8908d09435ca9537bdc1ea160a2c80bf53fbef8927d6d587d72200045c9d2276",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.3055555555555556,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 11,
+      "pairs_evaluated": 36,
+      "successor_intersection": 4,
+      "successor_union": 12,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 9,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "6da4657ab22aca866a5a1542b7b79c1464822597ccb7d9baa8712754def0a652",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.24444444444444444,
+      "successor_jaccard": 0.2857142857142857,
+      "pairs_inverted": 11,
+      "pairs_evaluated": 45,
+      "successor_intersection": 4,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 10,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2c2a9f454c73d519ab156dc5347f0adbb11da837580e4665e821096dd6d9d786",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.18181818181818182,
+      "successor_jaccard": 0.8181818181818182,
+      "pairs_inverted": 10,
+      "pairs_evaluated": 55,
+      "successor_intersection": 9,
+      "successor_union": 11,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 11,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "c255b74efb5edd1d2441328425474c05fd7bd605990a8c2e4e835b99a1e57cdb",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.04251207729468599,
+      "successor_jaccard": 0.9148936170212766,
+      "pairs_inverted": 44,
+      "pairs_evaluated": 1035,
+      "successor_intersection": 43,
+      "successor_union": 47,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 12,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b4fc834342dcf17e2a270e020f11582d784c36d5188c6fc8cdaf2e953a3049d3",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.07977207977207977,
+      "successor_jaccard": 0.3333333333333333,
+      "pairs_inverted": 28,
+      "pairs_evaluated": 351,
+      "successor_intersection": 13,
+      "successor_union": 39,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 0,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a9f769629ccde51d86bcd7af231351bcd1477aafb62a2bac67035f1be765d775",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.006666666666666667,
+      "successor_jaccard": 0.6,
+      "pairs_inverted": 2,
+      "pairs_evaluated": 300,
+      "successor_intersection": 18,
+      "successor_union": 30,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 1,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "f3354d4e129ee7a7dc233eece343c337406c647e890cd510318c4204a8a3d72c",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 105,
+      "successor_intersection": 14,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 2,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "a6121bb206ec7ff466c40fbee5aff96d3fa10967a70cddd7f248efb7ff963c45",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.009523809523809525,
+      "successor_jaccard": 0.6470588235294118,
+      "pairs_inverted": 1,
+      "pairs_evaluated": 105,
+      "successor_intersection": 11,
+      "successor_union": 17,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 3,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2ac6822fa31cb0b7f88b1f57286bdf2d5738d5e4f43b9a1f2167e473c269ff62",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.08974358974358974,
+      "successor_jaccard": 0.6,
+      "pairs_inverted": 7,
+      "pairs_evaluated": 78,
+      "successor_intersection": 9,
+      "successor_union": 15,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 4,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "766da194140697a07487e9f0617b9b873b1500a16a6846a9a8ffba2cb27d3841",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 66,
+      "successor_intersection": 11,
+      "successor_union": 11,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 5,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b633693be04497b6c25055966c19e9c363220ca9185c65c0189f298e5e5f6729",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 105,
+      "successor_intersection": 14,
+      "successor_union": 14,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 6,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "77bb9c6c5cbe569e6d7c8221e3718a6cc0d1a6fcbb21b8da6cbf5e476651d83e",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.07272727272727272,
+      "successor_jaccard": 0.5384615384615384,
+      "pairs_inverted": 4,
+      "pairs_evaluated": 55,
+      "successor_intersection": 7,
+      "successor_union": 13,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 7,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "9d3bd6a6273ed9789213bac22f7d2a8706e25fde6637b7de6a5929d2befa0525",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 91,
+      "successor_intersection": 13,
+      "successor_union": 13,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 8,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "8908d09435ca9537bdc1ea160a2c80bf53fbef8927d6d587d72200045c9d2276",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.08333333333333333,
+      "successor_jaccard": 0.45454545454545453,
+      "pairs_inverted": 3,
+      "pairs_evaluated": 36,
+      "successor_intersection": 5,
+      "successor_union": 11,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 9,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "6da4657ab22aca866a5a1542b7b79c1464822597ccb7d9baa8712754def0a652",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.06666666666666667,
+      "successor_jaccard": 0.5,
+      "pairs_inverted": 3,
+      "pairs_evaluated": 45,
+      "successor_intersection": 6,
+      "successor_union": 12,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 10,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "2c2a9f454c73d519ab156dc5347f0adbb11da837580e4665e821096dd6d9d786",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 55,
+      "successor_intersection": 10,
+      "successor_union": 10,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 11,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "c255b74efb5edd1d2441328425474c05fd7bd605990a8c2e4e835b99a1e57cdb",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "metric_kind": "agreement",
+      "status": "comparable",
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0,
+      "pairs_inverted": 0,
+      "pairs_evaluated": 1035,
+      "successor_intersection": 45,
+      "successor_union": 45,
+      "scope": {
+        "paper_id": "12",
+        "page_idx": 12,
+        "input_profile_id": "fa6abc62fdc74fe663a130587251717a4dbc8b6a5872d8b4decbf0c1d0197150",
+        "eligible_ids_hash": "b4fc834342dcf17e2a270e020f11582d784c36d5188c6fc8cdaf2e953a3049d3",
+        "permutation_seed": 1730,
+        "route": null
+      }
+    }
+  ],
+  "document_means": [
+    {
+      "candidate_id": "hantian",
+      "paper_id": "12",
+      "mean_disagreement": 0.5354977204141084,
+      "measured_scopes": 13
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "paper_id": "12",
+      "mean_disagreement": 0.2514329978209577,
+      "measured_scopes": 13
+    },
+    {
+      "candidate_id": "xycut",
+      "paper_id": "12",
+      "mean_disagreement": 0.21664050801174548,
+      "measured_scopes": 13
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "paper_id": "12",
+      "mean_disagreement": 0.15711116209443968,
+      "measured_scopes": 13
+    },
+    {
+      "candidate_id": "doctr",
+      "paper_id": "12",
+      "mean_disagreement": 0.03141795526410911,
+      "measured_scopes": 13
+    }
+  ],
+  "selection": "selection_pending"
+}

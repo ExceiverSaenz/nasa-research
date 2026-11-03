@@ -1,0 +1,17 @@
+{
+  "status": "PRIMARY_COMPLETE_STABILITY_INCOMPLETE",
+  "run_id": "pilot-12-20261102",
+  "primary": {"PASS": 78, "FAIL": 0, "pages": 13, "candidates": 6},
+  "stability": {"1729": {"PASS": 20, "FAIL": 58}, "1730": {"PASS": 0, "FAIL": 78}},
+  "failure": "Transport timed out waiting for a Docling call, then WebSocket connection closed; root cause not determined. Remaining failures are communication failures, not demonstrated model inference failures.",
+  "automatic_retry": false,
+  "confirmation_executed": false,
+  "session": "order-pilot-20261102",
+  "session_closed": true,
+  "closure": {"command": "colab stop -s order-pilot-20261102", "exit_code": 0, "explicit_marker": "Session terminated.", "absence_confirmed_by_sessions": true},
+  "environment_installations_during_inference": false,
+  "original_hashes_unchanged": true,
+  "source_dataset_or_pdf_copies": false,
+  "browser_qa": "browser-pilot-qa.json",
+  "human_selection": "selection_pending"
+}

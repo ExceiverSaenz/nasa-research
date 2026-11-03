@@ -1,0 +1,68 @@
+Timeout (0:00:10)!
+Thread 0x000075a2d3fff640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/socket.py", line 978 in getaddrinfo
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_http.py", line 194 in _get_addrinfo_list
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_http.py", line 150 in connect
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_core.py", line 279 in connect
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 422 in initialize_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 601 in run_forever
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1279 in _run_websocket
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x000075a2db4bb740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 596 in start_channels
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/client.py", line 416 in start
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 136 in kernel_client
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 237 in execute_code
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/probe_lifecycle.py", line 17 in <module>
+Timeout (0:00:10)!
+Thread 0x000075a2d3fff640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_http.py", line 227 in _open_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_http.py", line 158 in connect
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_core.py", line 279 in connect
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 422 in initialize_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 601 in run_forever
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1279 in _run_websocket
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x000075a2db4bb740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 596 in start_channels
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/client.py", line 416 in start
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 136 in kernel_client
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 237 in execute_code
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/probe_lifecycle.py", line 17 in <module>
+Timeout (0:00:10)!
+Thread 0x000075a2d37fe640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 249 in _send_ping
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x000075a2d3fff640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 122 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 106 in read
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 451 in initialize_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 601 in run_forever
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1279 in _run_websocket
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x000075a2db4bb740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1078 in execute_interactive
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/client.py", line 364 in execute_interactive
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 237 in execute_code
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/probe_lifecycle.py", line 17 in <module>

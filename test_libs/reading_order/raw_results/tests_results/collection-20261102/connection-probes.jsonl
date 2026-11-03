@@ -1,0 +1,5 @@
+{"mode": "saved", "saved_kernel_present": true, "saved_session_present": true, "status": "PASS", "elapsed_s": 2.6479891800008772}
+{"mode": "fresh", "saved_kernel_present": true, "saved_session_present": true, "status": "PASS", "elapsed_s": 2.396962706001432}
+{"mode": "saved", "saved_kernel_present": true, "saved_session_present": true, "status": "FAIL", "error_type": "RuntimeError", "frames": [{"function": "<module>", "line": 13, "file": "probe_connection.py"}, {"function": "execute_code", "line": 237, "file": "runtime.py"}, {"function": "execute_interactive", "line": 364, "file": "client.py"}, {"function": "execute_interactive", "line": 1073, "file": "wsclient.py"}], "elapsed_s": 11.136533627000972}
+{"mode": "fresh", "saved_kernel_present": true, "saved_session_present": true, "status": "PASS", "elapsed_s": 2.4417965250013367}
+{"mode": "fresh", "saved_kernel_present": true, "saved_session_present": true, "status": "PASS", "elapsed_s": 2.4637679740008025}

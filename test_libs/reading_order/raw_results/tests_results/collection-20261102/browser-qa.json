@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "papers": 15,
+  "predictions": 2382,
+  "captures": [
+    {
+      "paper": "1",
+      "page_idx": 0,
+      "boxes": 11,
+      "background_status": 200
+    },
+    {
+      "paper": "2",
+      "page_idx": 0,
+      "boxes": 28,
+      "background_status": 200
+    },
+    {
+      "paper": "3",
+      "page_idx": 0,
+      "boxes": 19,
+      "background_status": 200
+    },
+    {
+      "paper": "4",
+      "page_idx": 0,
+      "boxes": 21,
+      "background_status": 200
+    },
+    {
+      "paper": "5",
+      "page_idx": 0,
+      "boxes": 28,
+      "background_status": 200
+    },
+    {
+      "paper": "6",
+      "page_idx": 0,
+      "boxes": 11,
+      "background_status": 200
+    },
+    {
+      "paper": "7",
+      "page_idx": 0,
+      "boxes": 28,
+      "background_status": 200
+    },
+    {
+      "paper": "8",
+      "page_idx": 0,
+      "boxes": 8,
+      "background_status": 200
+    },
+    {
+      "paper": "9",
+      "page_idx": 0,
+      "boxes": 20,
+      "background_status": 200
+    },
+    {
+      "paper": "10",
+      "page_idx": 0,
+      "boxes": 5,
+      "background_status": 200
+    },
+    {
+      "paper": "11",
+      "page_idx": 0,
+      "boxes": 11,
+      "background_status": 200
+    },
+    {
+      "paper": "12",
+      "page_idx": 0,
+      "boxes": 27,
+      "background_status": 200
+    },
+    {
+      "paper": "14",
+      "page_idx": 0,
+      "boxes": 7,
+      "background_status": 200
+    },
+    {
+      "paper": "15",
+      "page_idx": 0,
+      "boxes": 6,
+      "background_status": 200
+    },
+    {
+      "paper": "17",
+      "page_idx": 0,
+      "boxes": 10,
+      "background_status": 200
+    }
+  ],
+  "all_candidates_displayed": true,
+  "cross_page": "physical navigation only",
+  "reviews_unchanged": true,
+  "semantic_acceptance": false
+}

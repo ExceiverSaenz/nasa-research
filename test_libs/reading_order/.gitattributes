@@ -1,0 +1,3 @@
+# Keep artifact hashes and test fingerprints identical across Git checkouts.
+# This directory intentionally overrides the repository's text normalization.
+* -text

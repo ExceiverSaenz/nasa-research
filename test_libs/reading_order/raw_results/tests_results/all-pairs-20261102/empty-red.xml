@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="1.188" timestamp="2026-11-02T13:16:42.520033-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_analytics.test_pairwise" name="test_empty_scope_has_no_decoder_contract_but_nonempty_scope_requires_one" time="0.565"><failure message="ValueError: Missing or mixed Docling CID contracts">def test_empty_scope_has_no_decoder_contract_but_nonempty_scope_requires_one():
+        from pairwise_analysis import analyze_predictions
+        run, inventory = collection()
+        run['predictions'][19]['transformations'] = {}
+        run['predictions'][19]['native'] = {'empty_scope': True}
+&gt;       assert pair(analyze_predictions(run, inventory))['coverage']['degenerate'] == 1
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_analytics\test_pairwise.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+run = {'candidate_ids': ['hantian', 'docling', 'xycut_plus_plus', 'xycut', 'pp_doclayout_v2', 'doctr'], 'input_profile_id': ...9fb9a43ff85f5bb477', 'input_profile_id': 'profile', 'page_idx': 0, 'paper_id': 'A', ...}, 'status': 'PASS', ...}, ...]}
+inventory = {('A', 0): {'ids': ['a', 'b', 'c'], 'layout': 'unknown', 'raw_labels': ['text', 'text', 'text'], 'route': 'unknown'}, ...'text', 'text'], 'route': 'unknown'}, ('B', 1): {'ids': [], 'layout': 'unknown', 'raw_labels': [], 'route': 'unknown'}}
+
+    def analyze_predictions(run, inventory):
+        """Pure analysis: every expected page remains in each pair's denominator."""
+        candidates = run['candidate_ids']
+        if len(candidates) != 6 or set(candidates) != set(CANDIDATES):
+            raise ValueError('Expected the six registered candidates')
+        index = {}
+        for pred in run['predictions']:
+            key = (pred['scope']['paper_id'], pred['scope']['page_idx'])
+            if key not in inventory or pred['candidate_id'] not in candidates:
+                raise ValueError('Unknown candidate or page scope')
+            item = (pred['candidate_id'], *key)
+            if item in index:
+                raise ValueError('Duplicate candidate/page prediction')
+            index[item] = pred
+        contracts = {p.get('transformations', {}).get('cid_contract') for p in run['predictions']
+                     if p['candidate_id'] == 'docling' and p['status'] == 'PASS'}
+        if len(contracts) &gt; 1 or (contracts and None in contracts):
+&gt;           raise ValueError('Missing or mixed Docling CID contracts')
+E           ValueError: Missing or mixed Docling CID contracts
+
+test_libs\reading_order\analytics\pairwise_analysis.py:134: ValueError</failure></testcase></testsuite></testsuites>

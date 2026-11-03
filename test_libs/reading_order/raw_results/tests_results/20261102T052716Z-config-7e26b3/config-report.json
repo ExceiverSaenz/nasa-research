@@ -1,0 +1,166 @@
+{
+  "schema": "reading-order-config/1",
+  "run_id": "20261102T052716Z-config-7e26b3",
+  "checks": [
+    {
+      "name": "prepared_identity",
+      "status": "PASS",
+      "details": {
+        "prepared_identity_sha256": "801b59ee0c6502e781fd3be45bd172b46a000b079c75953ef9093c4c9e2eefca",
+        "verified_artifacts": 9,
+        "installed_packages": 102
+      }
+    },
+    {
+      "name": "environment",
+      "status": "PASS",
+      "details": {
+        "python": "3.11.16",
+        "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+        "interpreter": "/content/order-config-20261102/venv/bin/python",
+        "versions": {
+          "torch": "2.9.1+cu128",
+          "torchvision": "0.24.1+cu128",
+          "transformers": "5.22.1",
+          "docling-slim": "2.145.0",
+          "docling-core": "2.105.0",
+          "python-doctr": "1.1.0",
+          "numpy": "2.2.6",
+          "scipy": "1.16.3",
+          "opencv-python": "4.12.0.88",
+          "pypdf": "6.1.1",
+          "psutil": "7.1.2",
+          "huggingface-hub": "1.33.0",
+          "safetensors": "0.8.0",
+          "rtree": "1.4.1",
+          "pytest": "8.4.2"
+        },
+        "gpu_driver": "580.82.07"
+      }
+    },
+    {
+      "name": "cuda",
+      "status": "PASS",
+      "details": {
+        "device": "NVIDIA A100-SXM4-40GB",
+        "cuda_runtime": "12.8",
+        "vram_bytes": 42405855232,
+        "capability": [
+          8,
+          0
+        ]
+      }
+    },
+    {
+      "name": "docling",
+      "status": "PASS",
+      "details": {
+        "synthetic_ids": [
+          1,
+          0
+        ],
+        "pdf_or_detector_called": false
+      }
+    },
+    {
+      "name": "doctr",
+      "status": "PASS",
+      "details": {
+        "synthetic_indices": [
+          1,
+          0
+        ],
+        "ocr_called": false
+      }
+    },
+    {
+      "name": "xycut",
+      "status": "PASS",
+      "details": {
+        "synthetic_indices": [
+          1,
+          0
+        ],
+        "source_sha256": "638416ee0f600eb0fe3e1a1b7331ec16c332a52260c2640a49f1bb70786de36b"
+      }
+    },
+    {
+      "name": "xycut_plus_plus",
+      "status": "PASS",
+      "details": {
+        "synthetic_indices": [
+          1,
+          0
+        ],
+        "implementation": "home-still/xycut-plus-plus",
+        "license": "GPL-3.0",
+        "paper_fidelity": "unverified"
+      }
+    },
+    {
+      "name": "hantian",
+      "status": "PASS",
+      "details": {
+        "revision": "629be376d86fbab624ddc4020804a4e93b5515bc",
+        "rank_count": 2,
+        "checkpoint_sha256": "9df7c046b212c1892a649cbf98f2a521bbb32741e8cbc06f10ffd4247b53c451",
+        "scope": "synthetic_two_boxes_only"
+      }
+    },
+    {
+      "name": "pp_doclayout_v2",
+      "status": "PASS",
+      "details": {
+        "revision": "880e8971b88938518611c54fc0f59ad57849c9d4",
+        "checkpoint_sha256": "e60f3725aeedc88fd319416ef166bda79171a41516a301c27cab9132dc2739d2",
+        "weight_prefix": "reading_order.",
+        "loaded_tensors": 114,
+        "documented_unused_missing_keys": [
+          "encoder.rel_pos_x_bias.weight",
+          "encoder.rel_pos_y_bias.weight"
+        ],
+        "unused_parameter_invariance": true,
+        "output_shape": [
+          1,
+          2,
+          2
+        ],
+        "detector_called": false,
+        "decoder_and_mineru_class_mapping": "NOT_RUN"
+      }
+    },
+    {
+      "name": "r2_pdf",
+      "status": "PASS",
+      "details": {
+        "files": [
+          {
+            "sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660",
+            "bytes": 4874584,
+            "paper": "12.pdf",
+            "pages": 13,
+            "first_page_points": [
+              595.276,
+              793.701
+            ],
+            "rotation": 0
+          }
+        ],
+        "storage": "R2",
+        "persistence": "memory_only"
+      }
+    }
+  ],
+  "configuration_checks_passed": true,
+  "pipeline_ready": false,
+  "probe_sha256": "734d709ee7083e2776cd33f25c39d103a357fab4b003226085758c6968f50e74",
+  "sources_sha256": "d38ff53c2ddaf739789e259be62d3d0c4c12c7b50467f63dbb3e974b5cd910db",
+  "lock_sha256": "7411237736adbdea97f7d3d6c0fb534bef4cb2db7972706119a3e080ebc90377",
+  "environment_fingerprint": "4fa349c6c6a987193d58fa10e15d20dfeaf0c56a46e8f6e88f7fda6aed8524cc",
+  "pending": [
+    "MinerU remote reference transport without persistent copies",
+    "full candidate length/category/decoder contracts",
+    "XY-Cut++ paper fidelity",
+    "pipeline implementation and semantic/visual validation"
+  ]
+}

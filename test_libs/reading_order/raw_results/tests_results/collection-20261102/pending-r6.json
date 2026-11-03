@@ -1,0 +1,247 @@
+{
+  "result": {
+    "bridge_exists": true,
+    "candidate": "docling",
+    "child_status": null,
+    "completed": 127,
+    "last_responses": [
+      {
+        "request_id": "e8f6863f5f8f458c86594145c7c039ab",
+        "response": {
+          "ordered_ids": [
+            "2591ed7a0c78546f280ee1c1",
+            "eecdccd6e1645fafaffc862d",
+            "d5ad96c838498a9c7ab005a4",
+            "0472bf73712a17a11a8a41f3",
+            "58beae69e25f3eb63ed0ba73"
+          ],
+          "native": {
+            "indices": [
+              1,
+              2,
+              0,
+              4,
+              3
+            ],
+            "cids": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "cid_to_id": {
+              "2": "d5ad96c838498a9c7ab005a4",
+              "0": "2591ed7a0c78546f280ee1c1",
+              "1": "eecdccd6e1645fafaffc862d",
+              "4": "58beae69e25f3eb63ed0ba73",
+              "3": "0472bf73712a17a11a8a41f3"
+            },
+            "temporary_ref_to_id": {
+              "#/texts/2": "d5ad96c838498a9c7ab005a4",
+              "#/texts/0": "2591ed7a0c78546f280ee1c1",
+              "#/texts/1": "eecdccd6e1645fafaffc862d",
+              "#/texts/4": "58beae69e25f3eb63ed0ba73",
+              "#/texts/3": "0472bf73712a17a11a8a41f3"
+            }
+          },
+          "transformations": {
+            "coordinates": "page points top-left",
+            "category_map": {
+              "text": "TEXT",
+              "title": "TITLE",
+              "heading": "SECTION_HEADER",
+              "header": "PAGE_HEADER",
+              "footer": "PAGE_FOOTER",
+              "number": "PAGE_FOOTER",
+              "footnote": "FOOTNOTE",
+              "reference": "TEXT",
+              "image": "PICTURE",
+              "chart": "PICTURE",
+              "table": "TABLE",
+              "formula": "FORMULA",
+              "caption": "CAPTION",
+              "index": "DOCUMENT_INDEX"
+            },
+            "cid_contract": "mineru_top_level_block_ordinal/v1",
+            "cid_prior": "MinerU source adjacency; not semantic ground truth",
+            "caption_association_or_merge": false
+          },
+          "costs": {
+            "adapter_total_s": 0.0023855690001255425,
+            "peak_sampled_rss_bytes": 137207808,
+            "peak_sampled_gpu_bytes": null,
+            "samples": 1,
+            "interval_s": 1,
+            "load_s": null,
+            "inference_s": null,
+            "decode_s": null,
+            "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+          }
+        }
+      },
+      {
+        "request_id": "5bab989bce61461bb1c95c3a75081182",
+        "response": {
+          "ordered_ids": [
+            "9b3dc9a23273b9a68aafff68",
+            "c724cce34a22616e195b285f",
+            "b2a4017eb48d456876c1042e",
+            "e209b0a80522c9de599b083d",
+            "f49ee562675248f2186f3985",
+            "1ae192b45f57af320568ee5e"
+          ],
+          "native": {
+            "indices": [
+              4,
+              2,
+              3,
+              1,
+              5,
+              0
+            ],
+            "cids": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "cid_to_id": {
+              "5": "1ae192b45f57af320568ee5e",
+              "3": "e209b0a80522c9de599b083d",
+              "1": "c724cce34a22616e195b285f",
+              "2": "b2a4017eb48d456876c1042e",
+              "0": "9b3dc9a23273b9a68aafff68",
+              "4": "f49ee562675248f2186f3985"
+            },
+            "temporary_ref_to_id": {
+              "#/texts/5": "1ae192b45f57af320568ee5e",
+              "#/texts/3": "e209b0a80522c9de599b083d",
+              "#/texts/1": "c724cce34a22616e195b285f",
+              "#/texts/2": "b2a4017eb48d456876c1042e",
+              "#/texts/0": "9b3dc9a23273b9a68aafff68",
+              "#/texts/4": "f49ee562675248f2186f3985"
+            }
+          },
+          "transformations": {
+            "coordinates": "page points top-left",
+            "category_map": {
+              "text": "TEXT",
+              "title": "TITLE",
+              "heading": "SECTION_HEADER",
+              "header": "PAGE_HEADER",
+              "footer": "PAGE_FOOTER",
+              "number": "PAGE_FOOTER",
+              "footnote": "FOOTNOTE",
+              "reference": "TEXT",
+              "image": "PICTURE",
+              "chart": "PICTURE",
+              "table": "TABLE",
+              "formula": "FORMULA",
+              "caption": "CAPTION",
+              "index": "DOCUMENT_INDEX"
+            },
+            "cid_contract": "mineru_top_level_block_ordinal/v1",
+            "cid_prior": "MinerU source adjacency; not semantic ground truth",
+            "caption_association_or_merge": false
+          },
+          "costs": {
+            "adapter_total_s": 0.002908387999923434,
+            "peak_sampled_rss_bytes": 137207808,
+            "peak_sampled_gpu_bytes": null,
+            "samples": 1,
+            "interval_s": 1,
+            "load_s": null,
+            "inference_s": null,
+            "decode_s": null,
+            "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+          }
+        }
+      },
+      {
+        "request_id": "3b826472963b48c18442037f004df04c",
+        "response": {
+          "ordered_ids": [
+            "110aea76f4ead978be83d6cd",
+            "ce4f9bd60dfc50d55942e1a4",
+            "e3b756a5d5d52137d9f9a418",
+            "f0aa330925a619cd63f4569f",
+            "6e703f2e533c69222ecc0cc4",
+            "3e77322f5d0747bffc6c1428"
+          ],
+          "native": {
+            "indices": [
+              3,
+              1,
+              5,
+              2,
+              4,
+              0
+            ],
+            "cids": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "cid_to_id": {
+              "5": "3e77322f5d0747bffc6c1428",
+              "1": "ce4f9bd60dfc50d55942e1a4",
+              "3": "f0aa330925a619cd63f4569f",
+              "0": "110aea76f4ead978be83d6cd",
+              "4": "6e703f2e533c69222ecc0cc4",
+              "2": "e3b756a5d5d52137d9f9a418"
+            },
+            "temporary_ref_to_id": {
+              "#/texts/5": "3e77322f5d0747bffc6c1428",
+              "#/texts/1": "ce4f9bd60dfc50d55942e1a4",
+              "#/texts/3": "f0aa330925a619cd63f4569f",
+              "#/texts/0": "110aea76f4ead978be83d6cd",
+              "#/texts/4": "6e703f2e533c69222ecc0cc4",
+              "#/texts/2": "e3b756a5d5d52137d9f9a418"
+            }
+          },
+          "transformations": {
+            "coordinates": "page points top-left",
+            "category_map": {
+              "text": "TEXT",
+              "title": "TITLE",
+              "heading": "SECTION_HEADER",
+              "header": "PAGE_HEADER",
+              "footer": "PAGE_FOOTER",
+              "number": "PAGE_FOOTER",
+              "footnote": "FOOTNOTE",
+              "reference": "TEXT",
+              "image": "PICTURE",
+              "chart": "PICTURE",
+              "table": "TABLE",
+              "formula": "FORMULA",
+              "caption": "CAPTION",
+              "index": "DOCUMENT_INDEX"
+            },
+            "cid_contract": "mineru_top_level_block_ordinal/v1",
+            "cid_prior": "MinerU source adjacency; not semantic ground truth",
+            "caption_association_or_merge": false
+          },
+          "costs": {
+            "adapter_total_s": 0.0025073659999179654,
+            "peak_sampled_rss_bytes": 137207808,
+            "peak_sampled_gpu_bytes": null,
+            "samples": 1,
+            "interval_s": 1,
+            "load_s": null,
+            "inference_s": null,
+            "decode_s": null,
+            "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+          }
+        }
+      }
+    ],
+    "pending": []
+  },
+  "artifact_sha256": "4a96f3c1a432a39a1f319bf40260ba990d781ee6a77dccff73c41bd6bb7d219b"
+}

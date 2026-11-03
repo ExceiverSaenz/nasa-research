@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "requested": 120,
+  "paper_inputs": 0,
+  "model_weights_loaded": false,
+  "completed": 120,
+  "elapsed_s": 204.69,
+  "client_rotations": 8,
+  "delivery_recoveries": 1
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "independent_oriented_pair_set_checks": 5880,
+  "degenerate_comparisons": 75,
+  "legacy_docling_comparisons_equal": 1985,
+  "protected_files_unchanged": 5,
+  "source_and_code_hashes_verified": 33,
+  "macro_aggregates_verified": 45,
+  "human_review": "pending",
+  "models_executed": false,
+  "analysis_sha256": "1d795b2f0ba55ac3992133d18347b96618e3e63144c8aa640951c32dfe04dfcf"
+}

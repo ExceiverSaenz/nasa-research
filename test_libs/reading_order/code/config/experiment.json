@@ -1,0 +1,9 @@
+{
+  "source_root": "../../../bounding_boxes/raw_results/code/mineru-nativefix-20261101T034122Z/assembled/basic",
+  "pilot_document_ids": ["12"],
+  "confirmation_document_ids": [],
+  "seed": 1729,
+  "language": "en",
+  "timeout_s": 300,
+  "context_mode": "full_page"
+}

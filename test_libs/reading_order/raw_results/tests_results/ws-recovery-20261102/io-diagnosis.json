@@ -1,0 +1,9 @@
+{
+  "synthetic_only": true,
+  "old_readline_elapsed_s": 1.0262681579997661,
+  "new_exchange_elapsed_s": 0.2023583539998981,
+  "deadline_s": 0.2,
+  "old_timeout_hole_reproduced": true,
+  "new_timeout_enforced": true,
+  "original_network_close_reason": "not captured by original transport; external cause not proven"
+}

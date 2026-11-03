@@ -1,0 +1,8 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+ORDER_CODE_REPAIR_VERIFIED
+/tmp/ipykernel_3938/2595529240.py:3: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+  with tarfile.open('/content/order-repair.tar.gz') as t:t.extractall('/content/order-code')

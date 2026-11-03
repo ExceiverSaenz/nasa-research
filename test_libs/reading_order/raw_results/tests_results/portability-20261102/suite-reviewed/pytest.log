@@ -1,0 +1,97 @@
+........................................................................ [ 46%]
+.........................F...............F.............................. [ 93%]
+..........                                                               [100%]
+================================== FAILURES ===================================
+________ test_remote_comm_deduplicates_uuid_and_persists_only_receipt _________
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/suite-reviewed/tmp/test_remote_comm_deduplicates_0')
+
+    def test_remote_comm_deduplicates_uuid_and_persists_only_receipt(tmp_path):
+        from types import SimpleNamespace
+        from reading_order.colab_backend import comm_setup
+        callbacks={}
+        kernel=SimpleNamespace(comm_manager=SimpleNamespace(register_target=lambda name,fn:callbacks.update({name:fn})))
+        namespace={'get_ipython':lambda:SimpleNamespace(kernel=kernel)}
+        exec(comm_setup(str(tmp_path)),namespace)
+        receive=callbacks['reading_order_memory'];key='a'*32
+        comm=SimpleNamespace(comm_id=key,close=lambda:None)
+        payload=dict(request_id=key,persist_input=False,secret='private-source')
+        receive(comm,dict(content=dict(data=payload)))
+        namespace['_order_pending'].pop(key)
+>       receive(comm,dict(content=dict(data=payload)))
+
+test_libs\reading_order\test\test_code\test_integration.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<string>:23: in _order_receive
+    ???
+<string>:13: in _order_receipt
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/suite-reviewed/tmp/test_remote_comm_deduplicates_0/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.tmp')
+target = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/suite-reviewed/tmp/test_remote_comm_deduplicates_0/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json')
+
+    def replace(self, target):
+        """
+        Rename this path to the target path, overwriting if that path exists.
+    
+        The target path may be absolute or relative. Relative paths are
+        interpreted relative to the current working directory, *not* the
+        directory of the Path object.
+    
+        Returns the new Path instance pointing to the target path.
+        """
+>       os.replace(self, target)
+E       PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\suite-reviewed\\tmp\\test_remote_comm_deduplicates_0\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.tmp' -> 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\suite-reviewed\\tmp\\test_remote_comm_deduplicates_0\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:780: PermissionError
+---------------------------- Captured stdout call -----------------------------
+ORDER_COMM_READY
+______ test_build_viewer_creates_direct_file_with_referenced_backgrounds ______
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...uild_viewer_creates_dire0/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = True, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 206] The filename or extension is too long: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\suite-reviewed\\tmp\\test_build_viewer_creates_dire0\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/suite-reviewed/tmp/test_build_viewer_creates_dire0')
+
+    def test_build_viewer_creates_direct_file_with_referenced_backgrounds(tmp_path):
+        from reading_order.viewer import build_viewer
+        run=synthetic_run(tmp_path)
+        background=tmp_path/'source/viewer_source/pages'/('a'*64)/'0.png'
+>       background.parent.mkdir(parents=True);background.write_bytes(b'synthetic-background')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_code\test_offline_viewer.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:727: in mkdir
+    self.mkdir(mode, parents=False, exist_ok=exist_ok)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...uild_viewer_creates_dire0/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 206] The filename or extension is too long: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\suite-reviewed\\tmp\\test_build_viewer_creates_dire0\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError
+=========================== short test summary info ===========================
+FAILED test_libs/reading_order/test/test_code/test_integration.py::test_remote_comm_deduplicates_uuid_and_persists_only_receipt
+FAILED test_libs/reading_order/test/test_code/test_offline_viewer.py::test_build_viewer_creates_direct_file_with_referenced_backgrounds
+2 failed, 152 passed in 21.15s

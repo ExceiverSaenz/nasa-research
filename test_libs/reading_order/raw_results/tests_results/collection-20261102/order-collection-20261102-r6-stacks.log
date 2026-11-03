@@ -1,0 +1,34 @@
+Thread 0x0000768b02e3e640 (most recent call first):
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/memory_bridge.py", line 17 in transfer
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Current thread 0x0000768b060a9740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/queue.py", line 180 in get
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/memory_bridge.py", line 32 in exchange
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 355 in __call__
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 24 in predict
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 126 in predict
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/runner.py", line 62 in execute
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 130 in execute_collection
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 184 in main
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/run_observed.py", line 61 in <module>
+Thread 0x0000766d6c09c640 (most recent call first):
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/memory_bridge.py", line 17 in transfer
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Current thread 0x0000766d6f360740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/queue.py", line 180 in get
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/memory_bridge.py", line 32 in exchange
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 417 in __call__
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 55 in predict
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 126 in predict
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/runner.py", line 62 in execute
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 130 in execute_collection
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 185 in main
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/run_observed.py", line 61 in <module>

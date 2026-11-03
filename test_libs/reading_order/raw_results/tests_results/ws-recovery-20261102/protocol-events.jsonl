@@ -1,0 +1,324 @@
+{"elapsed_s": 40.904571442999895, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"elapsed_s": 4.65856131999999, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"elapsed_s": 3.0793248059999314, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"elapsed_s": 3.51324686199996, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"elapsed_s": 11.07948444099975, "error_type": "RuntimeError"}
+{"event": "progress", "elapsed_s": 7.219817374000286, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.220274945000256, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 14.305264556000111, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 14.318122463000236, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 3.0181523109999944, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 3.032992295999975, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.9260408929999357, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.9426450159999149, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.9997252819998721, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 1.0311083850001523, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.532010684999932, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.54230143399991, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.477303125999697, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.51766206000002, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 5.8075884590002715, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.06572375900032, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 10.095126965999953, "output_types": ["stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 3.0134624029997212, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 3.027469390999613, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6323456559998704, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6442805389997375, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5754954949998137, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6048515879997467, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5760839659997146, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5905544110000847, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6548931519996586, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6877663400000529, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6864888569998584, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6987674219999462, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 1.0711003139999775, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 1.091641736999918, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"elapsed_s": 330.00060551499973, "error_type": "RuntimeError"}
+{"elapsed_s": 11.112099720000515, "error_type": "RuntimeError"}
+{"event": "progress", "elapsed_s": 2.082279570000537, "result_marker": false, "progress_messages": 0}
+{"elapsed_s": 2.1026638690000254, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": false, "result_marker_in_joined": false, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.33778090099986, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.339464921999934, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.612899964000462, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.634859189000053, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 2.81138991699936, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 2.8631737359992258, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6983768509999209, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.7667235890003212, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6929810290002933, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.7212757959996452, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.363776170000165, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.285124615999848, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.264050105000024, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.298257145000207, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 5.493693959000666, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 9.794552809000379, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 9.808055604000401, "output_types": ["stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 0.810198491999472, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.8251908369993544, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.333042973999909, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.34813724200012075, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33288121500027046, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3459010890001082, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3771468670001923, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.39031958600025973, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32384195200029353, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3376493109999501, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.378161898000144, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.39541158199972415, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3212247980000029, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3332313950004391, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3812240429997473, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.38985030599997117, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.31900937000045815, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.32884525999998004, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32190977899972495, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3364611580000201, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.341527194000264, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.35933090500020626, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.41268494599989936, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4258109129996228, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 1.340079756000705, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 1.3547677430005933, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4166057299999011, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4283738459998858, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6551498420003554, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6640437969999766, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5180531120004161, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5275864040004308, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.37170663999950193, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.386435664999226, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32533291399977315, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3402920409998842, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3753537539996614, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3923970069999996, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32380473600005644, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.355220542999632, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.44332800999927713, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.46692918299959274, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3626134420001108, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3875328809999701, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.36438634899968747, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4084799729998849, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.38427040799979295, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4152427050003098, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5068139889999657, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5690058410000347, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.381718186999933, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.381586902999516, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.347259698999551, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.365324775999397, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 0.42164618899914785, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.43454213199947844, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3351090500000282, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3450509519998377, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3679270650000035, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.387665637000282, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.38965410699984204, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4043348959994546, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32090483400043013, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3340346779996253, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3711453670002811, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3809112549997735, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3218340140001601, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3388889380003093, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5336014710001109, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5475453919998472, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3236434679993181, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3350665289999597, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32695731700005126, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.336271766000209, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3394098070002656, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3830081510004675, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6014383510000698, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.631155967000268, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.7139703829998325, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 9.95482352900035, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 9.969592821999868, "output_types": ["stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 0.3976475039999059, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.41260533500008023, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3366282240003784, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.346063726000466, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3345309240003189, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.34802664000017103, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.37676589700004115, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3978085979997559, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3205675040007918, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.33190075300080935, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.36935082499985583, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3976028580000275, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.328066683000543, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4103563260005103, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3865622249995795, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.43065834600020025, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32255183400047827, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.362261541999942, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3189557189998595, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.39075921999938146, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3626639529993554, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.38841667999986385, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4339915890004704, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4882936869998957, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.453573196999969, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.398169832999884, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.525377468000443, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.55385992599986, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 0.4459908920007365, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4716919020002024, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.36545494300025894, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3980620700003783, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3421436509997875, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3756681260001642, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.435690737999721, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4550642770000195, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32413911200001166, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.42717729700052587, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.38041648699982034, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.39931742400040093, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.324154293999527, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3396082319995912, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3896118859993294, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4118599739995261, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3278482719997555, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3625948979997702, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32130917599988607, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.35719151299963414, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.34091983899998013, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.37792752600034873, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4169222259997696, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.46865416199943866, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 2.8759776500000953, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 2.9166821009994237, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4195282330001646, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.48507674200027395, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3395637230005377, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.38923039000019344, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3508039039998039, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3770077620001757, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.43227941599980113, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.46916562499973224, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.335094370000661, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3746822470002371, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3722459139999046, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3872722480000448, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32308438800009753, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3455992460003472, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.39118143699943175, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.41766576200006966, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3225763039999947, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3605350660000113, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32657589899918094, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.37869065899940324, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33947119599997677, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.386542241000825, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.44159156099976826, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4843415899995307, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.7862278879993028, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.835539095999593, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3964985679995152, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.42880014200000005, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3326955940001426, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3677410290001717, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3334082510000371, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3860147630002757, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3686189559994091, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.41199090299960517, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3537532740001552, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3857860560001427, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5908661569992546, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6059101349992488, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32188755300012417, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3542553750003208, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4605122659995686, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4871027529998173, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3179727450005885, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.33077005300037854, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3244452069993713, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3473662369997328, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.5847663610002201, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6159611250004673, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.47785789900081, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5173683660004826, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.7968361020002703, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.8090311699997983, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.41368838400012464, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.43716404200040415, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33562912099932873, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3804625989996566, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3341926829998556, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.36208421499941323, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3726282409998021, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4259059569994861, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3292029430003822, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.35856095899998763, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.37797089900050196, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3957648710002104, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33199297600003774, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3640943029995469, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.40151151200007007, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4258379069997318, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3279454920002536, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.35169404199950804, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32934663600008207, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3459307470002386, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.34873161100040306, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3733523549999518, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.447011336000287, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4734670269999697, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.382702492000135, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 10.667314979999901, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 12.520789875000446, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 12.569712547000563, "output_types": ["stream", "stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 2}
+{"event": "progress", "elapsed_s": 0.5709861519999322, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5844309189997148, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33665338500031794, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3694469179999942, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33506609199957893, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3675184530002298, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.368343823000032, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.38735536799958936, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.45334947999981523, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4929884020002646, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.36927875600031257, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4000290160001896, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.32251194099990244, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3586726120001913, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3757008910006334, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4019357470006071, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3186329119998845, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.359233342999687, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3199520609996398, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3602942349998557, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.333232632000545, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3725981610004965, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.6650977550007156, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.6869438620005894, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 5.652339186000063, "result_marker": false, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 25.536335343000246, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 25.564390655999887, "output_types": ["stream", "stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 1}
+{"event": "progress", "elapsed_s": 0.4146227760002148, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.44123172000035993, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3321684170005028, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3528478130001531, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3877698590004002, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3971599460001016, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.374559545000011, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.39419262499995966, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3246006800000032, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.36450469800001883, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3723506810001709, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.40510304700001143, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3421821279998767, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.3861354290002055, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3967930599992542, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.4160659659992234, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.39990414600015356, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.429670790000273, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.3277300820000164, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.37466529800076387, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.33346186299968394, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.365287122999689, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"event": "progress", "elapsed_s": 0.4670780389997162, "result_marker": true, "progress_messages": 0}
+{"elapsed_s": 0.5198731009995754, "output_types": ["stream"], "error_types": [], "result_marker_in_chunk": true, "result_marker_in_joined": true, "progress_messages": 0}
+{"elapsed_s": 0.3366911749999417, "output_types": [], "error_types": [], "result_marker_in_chunk": false, "result_marker_in_joined": false, "progress_messages": 0}
