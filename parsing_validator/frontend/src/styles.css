@@ -193,3 +193,25 @@ textarea { resize: vertical; }
 .correction-tag { color: var(--teal); }
 .dialog.wide { width: min(560px, 100%); }
 .check { display: flex; align-items: center; gap: 8px; }
+
+.text-editor { display: flex; flex-direction: column; gap: 8px; }
+.editor-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.editor-tools button { min-height: 34px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; }
+.preview { padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fbfaf6; line-height: 1.9; overflow-wrap: anywhere; }
+.preview .plain { white-space: pre-wrap; }
+.preview .math { display: inline-flex; align-items: center; gap: 6px; padding: 0 4px; }
+.preview .eq-tag { color: var(--ink-soft); }
+.preview .bad-math { color: var(--red); background: #fbf1ee; white-space: pre-wrap; }
+.preview.error { color: var(--red); }
+.preview-note { margin: 0; }
+.dialog.expand { width: min(1100px, 100%); max-height: calc(100vh - 32px); overflow: auto; }
+.expand-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.expand-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+.expand-grid section { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.crop { position: relative; overflow: hidden; border: 1px solid var(--line); background: #fff; width: 100%; }
+.crop img { position: absolute; max-width: none; display: block; }
+.crop-box { position: absolute; border: 2px solid var(--amber); background: rgba(227, 154, 75, 0.15); pointer-events: none; }
+@media (max-width: 800px) { .expand-grid { grid-template-columns: 1fr; } }
+
+.dialog.expand { max-width: none; }
+.preview math { display: inline-block; margin: 0; }

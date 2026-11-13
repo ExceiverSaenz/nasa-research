@@ -1,5 +1,7 @@
 // Pure updates of the decision state (shape: contract, "Decision state"). Nothing here mutates its input.
 // The service enforces the decision rules on save (OP-07); these updates keep the state close to valid while editing.
+import { deriveLatex } from './latex.js';
+
 export const OTHER = 'Other';
 
 export const blankContent = () => ({ status: null, error_types: [], error_other: null, text: null, latex: [], table: null });
@@ -52,6 +54,7 @@ export function setTag(state, page, id, value, otherLabel, kinds) {
       content.latex = [];
     }
     if (kind !== 'table') content.table = null;
+    if (content.text != null) content.latex = deriveLatex(content.text, value === 'equation');
     return { ...block, tag: { ...block.tag, value, other_label: value === OTHER ? otherLabel || '' : null }, content };
   });
 }
@@ -84,8 +87,12 @@ export function toggleErrorType(state, page, id, type) {
 export const setErrorOther = (state, page, id, text) =>
   setBlock(state, page, id, (block) => ({ ...block, content: { ...block.content, error_other: text } }));
 
+// The stored LaTeX fragments always follow the text: the fenced parts, or all of it for an equation block.
 export const setText = (state, page, id, text) =>
-  setBlock(state, page, id, (block) => ({ ...block, content: { ...block.content, text } }));
+  setBlock(state, page, id, (block) => ({
+    ...block,
+    content: { ...block.content, text, latex: deriveLatex(text, block.tag.value === 'equation') },
+  }));
 
 export function toggleDeleteReason(state, page, id, reason) {
   return setBlock(state, page, id, (block) => {
@@ -114,10 +121,18 @@ export function totals(state) {
 }
 
 // Text of an original block for display: equation blocks hold a string, text blocks a list of spans.
-export function originalText(block) {
+// `fenceInline`: MinerU labels inline equations as LaTeX, so for the editor they are wrapped in fences.
+export function originalText(block, { fenceInline = false } = {}) {
   const content = block.content;
   if (typeof content === 'string') return content;
-  if (Array.isArray(content)) return content.map((span) => span.content ?? span.text ?? '').join('');
+  if (Array.isArray(content)) {
+    return content
+      .map((span) => {
+        const value = span.content ?? span.text ?? '';
+        return fenceInline && span.type === 'equation_inline' && value.trim() ? `\`\`\`${value.trim()}\`\`\`` : value;
+      })
+      .join('');
+  }
   return '';
 }
 

@@ -302,6 +302,7 @@ export default function Review({ paper, page, settings }) {
         <BlockPanel id={selected} original={originals[selected]} block={selectedBlock} settings={settings} actions={actions || {}}
                     position={ordered.find((b) => b.id === selected)?.number ?? null} total={total_listed(ordered)}
                     onShift={(delta) => shift(selected, delta)} replaced={ordered.find((b) => b.id === selected)?.replaced}
+                    page={{ paper, index: page, render: pageData?.render }}
                     missingEvidence={selectedBlock?.tag.value === 'table' && pageData && !pageData.layers.cells.available && !selectedBlock.layer_issues.some((i) => i.layer === 'missing')} />
       </div>
 

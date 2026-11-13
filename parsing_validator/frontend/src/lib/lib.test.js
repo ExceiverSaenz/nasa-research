@@ -222,3 +222,53 @@ test('flagged elements are found by their sealed identity', () => {
   state.pages[7].blocks.k1.layer_issues = [l.blankIssue('missing')];
   assert.deepEqual([...l.flaggedKeys(state, '7')], [l.refKey(ref(3))]);
 });
+
+import * as tex from './latex.js';
+
+const BS = '\\'; // one backslash
+const F = '```'; // a LaTeX fence
+
+test('text is split into plain and LaTeX segments by triple backticks', () => {
+  assert.deepEqual(tex.parseSegments(`stress ${F}${BS}sigma = F/A${F} is`), [
+    { type: 'text', value: 'stress ' }, { type: 'latex', value: `${BS}sigma = F/A` }, { type: 'text', value: ' is' }]);
+  assert.deepEqual(tex.parseSegments('no math'), [{ type: 'text', value: 'no math' }]);
+  assert.deepEqual(tex.parseSegments('open ```x^2'), [{ type: 'text', value: 'open ' }, { type: 'text', value: '```x^2' }]);
+  assert.equal(tex.hasUnclosedFence('open ```x^2'), true);
+  assert.equal(tex.hasUnclosedFence('a ```b``` c'), false);
+});
+
+test('the stored fragments are exactly the fenced parts, with their equation number', () => {
+  const latex = tex.deriveLatex(`a ${F}x = 1 ${BS}tag{2}${F} b ${F}y${F} ${F} ${F}`, false);
+  assert.deepEqual(latex, [
+    { source: `x = 1 ${BS}tag{2}`, tag: '2', mathml: null, error: null },
+    { source: 'y', tag: null, mathml: null, error: null }]);
+  assert.deepEqual(tex.deriveLatex('plain text', false), []);
+  assert.deepEqual(tex.deriveLatex(null, false), []);
+});
+
+test('an equation block is entirely LaTeX', () => {
+  const source = `${BS}sigma_0 ${BS}tag{1}`;
+  assert.deepEqual(tex.deriveLatex(source, true), [{ source, tag: '1', mathml: null, error: null }]);
+  assert.deepEqual(tex.deriveLatex('   ', true), []);
+});
+
+test('tags are split like the service does', () => {
+  assert.deepEqual(tex.splitTag(`a = b ${BS}tag{12}`), { source: 'a = b', tag: '12' });
+  assert.deepEqual(tex.splitTag(`a = b${BS}tag*{(A)}`), { source: 'a = b', tag: '(A)' });
+  assert.deepEqual(tex.splitTag('a = b'), { source: 'a = b', tag: null });
+});
+
+test('marking a selection wraps only that part and refuses nonsense', () => {
+  const text = 'the stress s = F/A is';
+  const start = text.indexOf('s = F/A');
+  const marked = tex.markSelection(text, start, start + 7);
+  assert.equal(marked.text, 'the stress ```s = F/A``` is');
+  assert.equal(marked.text.slice(...marked.selection), 's = F/A');
+  assert.equal(tex.markSelection(text, 3, 3), null); // empty selection
+  assert.equal(tex.markSelection(marked.text, 0, marked.text.length), null); // would swallow a fence
+  const inside = marked.text.indexOf('F/A');
+  assert.equal(tex.markSelection(marked.text, inside, inside + 3), null); // already inside an equation
+  const spaced = tex.markSelection('a  x  b', 1, 6); // surrounding spaces stay outside the fences
+  assert.equal(spaced.text, 'a  ```x```  b');
+  assert.equal(tex.markSelection('a   b', 1, 4), null); // only spaces
+});

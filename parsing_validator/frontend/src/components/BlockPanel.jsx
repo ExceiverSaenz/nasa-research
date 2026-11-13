@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { OTHER, originalText } from '../lib/decisions.js';
+import ExpandDialog from './ExpandDialog.jsx';
+import TextEditor from './TextEditor.jsx';
 
 const STATUS_BUTTONS = [
   ['accepted', 'Accept', 'A'],
@@ -19,12 +22,14 @@ function Chips({ options, chosen, onToggle, name }) {
   );
 }
 
-export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced, missingEvidence }) {
+export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced, missingEvidence, page }) {
+  const [expanded, setExpanded] = useState(false);
   if (!block) return <aside className="panel"><p className="muted">Pick a box on the page or in the list.</p></aside>;
   const kinds = Object.fromEntries(settings.tags.map((t) => [t.name, t.kind]));
   const kind = block.tag.value === OTHER ? 'text' : kinds[block.tag.value];
   const dead = block.status === 'deleted' || block.status === 'rejected';
   const preview = original ? originalText(original) : '';
+  const seed = original ? originalText(original, { fenceInline: true }) : ''; // what the editor starts from
   const tagChanged = block.tag.value !== block.tag.predicted && !block.origin;
 
   return (
@@ -114,11 +119,16 @@ export default function BlockPanel({ id, original, block, settings, actions, pos
                 )}
               </fieldset>
               {kind === 'text' && (
-                <label className="field">
-                  <span>Corrected text <em>(optional)</em></span>
-                  <textarea rows={5} value={block.content.text ?? preview}
-                            onChange={(e) => actions.text(e.target.value)} />
-                </label>
+                <div className="field">
+                  <span>Corrected text <em>(optional; mark the equations as LaTeX)</em></span>
+                  <TextEditor value={block.content.text ?? seed} original={seed} wholeIsLatex={block.tag.value === 'equation'}
+                              onChange={actions.text} onExpand={() => setExpanded(true)} />
+                  {expanded && (
+                    <ExpandDialog paper={page.paper} page={page.index} render={page.render} box={original?.bbox_pct || block.origin?.bbox_pct || null}
+                                  mineruText={preview} value={block.content.text ?? seed} original={seed}
+                                  wholeIsLatex={block.tag.value === 'equation'} onChange={actions.text} onClose={() => setExpanded(false)} />
+                  )}
+                </div>
               )}
               {kind === 'table' && <p className="muted small">Table editing is not available in this version.</p>}
             </>
