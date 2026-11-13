@@ -139,3 +139,45 @@ test('consecutive reorders on a page group into one temporary version', () => {
   assert.equal(pending.length, 1);
   assert.equal(pending[0].state, a);
 });
+
+test('normalizeBox orders the corners, clamps to the page and drops clicks', () => {
+  assert.deepEqual(d.normalizeBox({ x: 50, y: 40 }, { x: 10, y: 20 }), { x: 10, y: 20, w: 40, h: 20 });
+  assert.deepEqual(d.normalizeBox({ x: -5, y: 90 }, { x: 120, y: 110 }), { x: 0, y: 90, w: 100, h: 10 });
+  assert.equal(d.normalizeBox({ x: 10, y: 10 }, { x: 10.2, y: 50 }), null);
+});
+
+test('a drawn box goes last and uses the counter, which only grows', () => {
+  const box = { x: 10, y: 10, w: 20, h: 5 };
+  const state = d.addDrawnBlock(fresh(), '7', box);
+  assert.equal(state.next_new_id, 2);
+  assert.deepEqual(state.pages[7].reading_order, ['k0', 'k1', 'k2', 'n1']);
+  const block = state.pages[7].blocks.n1;
+  assert.deepEqual(block.origin, { kind: 'drawn', replaces: null, from_block: null, part_key: null, bbox_pct: box });
+  assert.equal(block.tag.predicted, null);
+  const again = d.addDrawnBlock(d.removeDrawnBlock(state, '7', 'n1'), '7', box);
+  assert.ok(again.pages[7].blocks.n2, 'a removed id is never reused');
+  assert.equal(d.removeDrawnBlock(fresh(), '7', 'k0').pages[7].blocks.k0.status, 'pending'); // parser boxes are not removable
+});
+
+test('a replacement takes the position of the rejected box, which leaves the numbering', () => {
+  const box = { x: 1, y: 1, w: 5, h: 5 };
+  let state = d.setStatus(fresh(), '7', 'k1', 'rejected', ids);
+  state = d.addDrawnBlock(state, '7', box, { replaces: 'k1', tag: 'text' });
+  assert.deepEqual(state.pages[7].reading_order, ['k0', 'n1', 'k1', 'k2']); // the service still lists k1
+  assert.deepEqual(d.numberedOrder(state, '7'), ['k0', 'n1', 'k2']);
+  assert.deepEqual([...d.replacedIds(state, '7')], ['k1']);
+  // un-rejecting the original brings it back into the numbering
+  const back = d.setStatus(state, '7', 'k1', 'accepted', ids);
+  assert.deepEqual(d.numberedOrder(back, '7'), ['k0', 'n1', 'k1', 'k2']);
+});
+
+test('moving skips the hidden rejected box and indexes count numbered boxes only', () => {
+  let state = d.setStatus(fresh(), '7', 'k1', 'rejected', ids);
+  state = d.addDrawnBlock(state, '7', { x: 1, y: 1, w: 5, h: 5 }, { replaces: 'k1' }); // k0 n1 k1 k2
+  const down = d.shiftBlock(state, '7', 'n1', 1);
+  assert.deepEqual(d.numberedOrder(down, '7'), ['k0', 'k2', 'n1']);
+  assert.ok(down.pages[7].reading_order.includes('k1'));
+  const up = d.moveBlock(state, '7', 'k2', 0);
+  assert.deepEqual(d.numberedOrder(up, '7'), ['k2', 'k0', 'n1']);
+  assert.equal(d.shiftBlock(state, '7', 'k1', 1), state); // a replaced box cannot move
+});

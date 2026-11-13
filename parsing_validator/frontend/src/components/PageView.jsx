@@ -1,20 +1,42 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { normalizeBox } from '../lib/decisions.js';
 import { pageImageUrl } from '../lib/api.js';
 
 // The rendered page with every box on top, positioned in percent of the page (one projection, no approximation).
-export default function PageView({ paper, page, pageData, boxes, selected, onSelect }) {
+export default function PageView({ paper, page, pageData, boxes, selected, onSelect, drawing, onDraw }) {
   const [loaded, setLoaded] = useState(false);
+  const frame = useRef(null);
+  const [start, setStart] = useState(null);
+  const [rubber, setRubber] = useState(null);
+  // pointer position as percent of the page, so a drawn box uses the same coordinates as every other box
+  const point = (event) => {
+    const rect = frame.current.getBoundingClientRect();
+    return { x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 };
+  };
   const render = pageData?.render;
   return (
-    <div className="page-frame" style={render ? { aspectRatio: `${render.width_px} / ${render.height_px}` } : undefined}>
+    <div className="page-frame" ref={frame} style={render ? { aspectRatio: `${render.width_px} / ${render.height_px}` } : undefined}>
       {!loaded && <div className="page-wait" role="status">Rendering the page…</div>}
       <img key={`${paper}-${page}`} src={pageImageUrl(paper, page)} alt={`Page ${page + 1} of paper ${paper}`}
            onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} />
+      {drawing && (
+        <div className="draw-layer" role="presentation"
+             onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setStart(point(e)); setRubber(null); }}
+             onPointerMove={(e) => {
+               if (!start) return;
+               const here = point(e);
+               setRubber(normalizeBox(start, here) || { x: Math.min(start.x, here.x), y: Math.min(start.y, here.y), w: 0.2, h: 0.2 });
+             }}
+             onPointerUp={(e) => { if (!start) return; const box = normalizeBox(start, point(e)); setStart(null); setRubber(null); if (box) onDraw(box); }}
+             onPointerCancel={() => { setStart(null); setRubber(null); }}>
+          {rubber && <div className="rubber" style={{ left: `${rubber.x}%`, top: `${rubber.y}%`, width: `${rubber.w}%`, height: `${rubber.h}%` }} />}
+        </div>
+      )}
       {boxes.map((box) => (
         <button
           key={box.id}
           type="button"
-          className={`box ${box.status} ${selected === box.id ? 'selected' : ''} ${box.weak ? 'weak' : ''}`}
+          className={`box ${box.status} ${selected === box.id ? 'selected' : ''} ${box.weak ? 'weak' : ''} ${box.drawn ? 'drawn' : ''} ${box.replaced ? 'replaced' : ''}`}
           style={{ left: `${box.bbox.x}%`, top: `${box.bbox.y}%`, width: `${box.bbox.w}%`, height: `${box.bbox.h}%` }}
           onClick={() => onSelect(box.id)}
           aria-label={`Box ${box.id}, ${box.tag}, ${box.status}`}

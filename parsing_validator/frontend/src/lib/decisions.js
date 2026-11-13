@@ -121,19 +121,87 @@ export function originalText(block) {
   return '';
 }
 
-// Reading order (spec: "Orden de lectura"): move one block inside the page's list. Deleted blocks are not in it.
+// Boxes drawn to replace a rejected one: the rejected box keeps its place in the saved order (the service lists every
+// non-deleted box) but leaves the numbering and cannot be moved, because its replacement took its position.
+export function replacedIds(state, page) {
+  const blocks = state.pages[page].blocks;
+  const ids = new Set();
+  for (const block of Object.values(blocks)) {
+    const target = block.origin?.replaces;
+    if (target && blocks[target]?.status === 'rejected') ids.add(target);
+  }
+  return ids;
+}
+
+export const numberedOrder = (state, page) => {
+  const hidden = replacedIds(state, page);
+  return state.pages[page].reading_order.filter((id) => !hidden.has(id));
+};
+
+// Reading order (spec: "Orden de lectura"): move one block. `toIndex` counts only the numbered boxes.
 export function moveBlock(state, page, id, toIndex) {
   const order = state.pages[page].reading_order;
-  const from = order.indexOf(id);
+  const visible = numberedOrder(state, page);
+  const from = visible.indexOf(id);
   if (from < 0) return state;
-  const to = Math.max(0, Math.min(order.length - 1, toIndex));
+  const to = Math.max(0, Math.min(visible.length - 1, toIndex));
   if (to === from) return state;
-  const next = order.filter((x) => x !== id);
-  next.splice(to, 0, id);
+  const target = visible[to];
+  const rest = order.filter((x) => x !== id);
+  const at = rest.indexOf(target);
+  const next = [...rest.slice(0, to > from ? at + 1 : at), id, ...rest.slice(to > from ? at + 1 : at)];
   return setOrder(state, page, next);
 }
 
 export const shiftBlock = (state, page, id, delta) => {
-  const at = state.pages[page].reading_order.indexOf(id);
+  const at = numberedOrder(state, page).indexOf(id);
   return at < 0 ? state : moveBlock(state, page, id, at + delta);
 };
+
+const MIN_SIDE = 0.8; // percent of the page: anything smaller was a click, not a box
+
+// Clamp a dragged rectangle (percent of the page) inside the page; null when it is too small to be a box.
+export function normalizeBox(a, b) {
+  const clamp = (v) => Math.max(0, Math.min(100, v));
+  const x1 = clamp(Math.min(a.x, b.x));
+  const y1 = clamp(Math.min(a.y, b.y));
+  const x2 = clamp(Math.max(a.x, b.x));
+  const y2 = clamp(Math.max(a.y, b.y));
+  if (x2 - x1 < MIN_SIDE || y2 - y1 < MIN_SIDE) return null;
+  const round = (v) => Math.round(v * 100) / 100;
+  return { x: round(x1), y: round(y1), w: round(x2 - x1), h: round(y2 - y1) };
+}
+
+// A box the parser did not see (replaces = null: it goes last) or the correct one for a rejected box (it takes
+// that box's position). Ids are n<counter>; the counter only grows (OQ-07).
+export function addDrawnBlock(state, page, bbox, { replaces = null, tag = 'text', otherLabel = null } = {}) {
+  const id = `n${state.next_new_id}`;
+  const block = {
+    status: 'pending',
+    tag: { value: tag, predicted: null, other_label: tag === OTHER ? otherLabel || '' : null },
+    content: blankContent(),
+    parts: { order: [], state: {}, detached: [] },
+    delete_reasons: [], delete_other: null,
+    origin: { kind: 'drawn', replaces, from_block: null, part_key: null, bbox_pct: bbox },
+    adjusted: false, note: '', layer_issues: [],
+  };
+  const order = state.pages[page].reading_order;
+  const at = replaces ? order.indexOf(replaces) : -1;
+  const next = at >= 0 ? [...order.slice(0, at), id, ...order.slice(at)] : [...order, id];
+  return {
+    ...state,
+    next_new_id: state.next_new_id + 1,
+    pages: { ...state.pages, [page]: { reading_order: next, blocks: { ...state.pages[page].blocks, [id]: block } } },
+  };
+}
+
+// The user's own drawn box can simply be taken back (nothing from the parser is lost).
+export function removeDrawnBlock(state, page, id) {
+  const block = state.pages[page].blocks[id];
+  if (!block || block.origin?.kind !== 'drawn') return state;
+  const { [id]: _gone, ...blocks } = state.pages[page].blocks;
+  return {
+    ...state,
+    pages: { ...state.pages, [page]: { reading_order: state.pages[page].reading_order.filter((x) => x !== id), blocks } },
+  };
+}

@@ -19,7 +19,7 @@ function Chips({ options, chosen, onToggle, name }) {
   );
 }
 
-export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift }) {
+export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced }) {
   if (!block) return <aside className="panel"><p className="muted">Pick a box on the page or in the list.</p></aside>;
   const kinds = Object.fromEntries(settings.tags.map((t) => [t.name, t.kind]));
   const kind = block.tag.value === OTHER ? 'text' : kinds[block.tag.value];
@@ -39,6 +39,14 @@ export default function BlockPanel({ id, original, block, settings, actions, pos
         {original && !original.bbox_pct && ` · no box (${original.bbox_unavailable})`}
       </p>
 
+      {block.origin?.kind === 'drawn' && (
+        <p className="drawn-note">
+          Drawn by you{block.origin.replaces ? `, replacing ${block.origin.replaces}` : ', a box the parser missed'}.{' '}
+          <button type="button" className="link" onClick={actions.removeDrawn}>Remove this box</button>
+        </p>
+      )}
+      {replaced && <p className="drawn-note">A box you drew replaces this one, so it has no place in the reading order.</p>}
+
       <div className="segmented" role="group" aria-label="Decision">
         {STATUS_BUTTONS.map(([value, label, key]) => (
           <button key={value} type="button" className={block.status === value ? `on ${value}` : ''}
@@ -48,6 +56,12 @@ export default function BlockPanel({ id, original, block, settings, actions, pos
         ))}
         <button type="button" disabled={block.status === 'pending'} onClick={() => actions.status('pending')}>Undo</button>
       </div>
+
+      {block.status === 'rejected' && !block.origin && !replaced && (
+        <p className="muted small">
+          Rejected boxes carry no content. <button type="button" className="link" onClick={actions.drawReplacement}>Draw the correct box</button> or delete it.
+        </p>
+      )}
 
       {block.status === 'deleted' && (
         <fieldset>

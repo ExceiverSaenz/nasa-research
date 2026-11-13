@@ -32,14 +32,16 @@ export default function Review({ paper, page, settings }) {
     if (!pageState) return [];
     const inOrder = pageState.reading_order.filter((id) => pageState.blocks[id]);
     const rest = Object.keys(pageState.blocks).filter((id) => !inOrder.includes(id));
+    const numbered = d.numberedOrder(work.state, key);
+    const replaced = d.replacedIds(work.state, key);
     return [...inOrder, ...rest].map((id) => {
       const block = pageState.blocks[id];
       const box = originals[id]?.bbox_pct || block.origin?.bbox_pct || null;
-      const position = inOrder.indexOf(id);
+      const position = numbered.indexOf(id);
       return { id, status: block.status, tag: block.tag.value, bbox: box, weak: originals[id]?.layout_match?.weak,
-               number: position >= 0 ? position + 1 : null };
+               drawn: block.origin?.kind === 'drawn', replaced: replaced.has(id), number: position >= 0 ? position + 1 : null };
     });
-  }, [pageState, originals]);
+  }, [pageState, originals, work, key]);
 
   useEffect(() => {
     if (ordered.length && !ordered.some((b) => b.id === selected)) setSelected(ordered[0].id);
@@ -60,6 +62,17 @@ export default function Review({ paper, page, settings }) {
   const orderMeta = { label: 'Reading order changed', key: `order:${key}` };
   const reorder = useCallback((id, toIndex) => p.edit((s) => d.moveBlock(s, key, id, toIndex), orderMeta), [p.edit, key]); // eslint-disable-line react-hooks/exhaustive-deps
   const shift = useCallback((id, delta) => p.edit((s) => d.shiftBlock(s, key, id, delta), orderMeta), [p.edit, key]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Draw box (spec: "Cajas nuevas, reemplazo y eliminación"): null, or { replaces } while the user drags on the page.
+  const [drawing, setDrawing] = useState(null);
+  const finishDraw = useCallback((bbox) => {
+    const replaces = drawing?.replaces || null;
+    const base = replaces ? pageState.blocks[replaces] : null;
+    const id = `n${work.state.next_new_id}`;
+    p.edit((s) => d.addDrawnBlock(s, key, bbox, { replaces, tag: base ? base.tag.value : 'text', otherLabel: base?.tag.other_label }),
+           { label: `Box drawn ${id}` });
+    setSelected(id);
+    setDrawing(null);
+  }, [drawing, pageState, work, key, p.edit]); // eslint-disable-line react-hooks/exhaustive-deps
   const [dragging, setDragging] = useState(null);
   const [dropAt, setDropAt] = useState(null);
   const actions = selected && pageState?.blocks[selected] ? {
@@ -72,13 +85,19 @@ export default function Review({ paper, page, settings }) {
     deleteReason: (value) => p.edit((s) => d.toggleDeleteReason(s, key, selected, value), label('Delete reason', selected)),
     deleteOther: (value) => p.edit((s) => d.setDeleteOther(s, key, selected, value), label('Delete text', selected)),
     note: (value) => p.edit((s) => d.setNote(s, key, selected, value), label('Note', selected)),
+    removeDrawn: () => p.edit((s) => d.removeDrawnBlock(s, key, selected), { label: `Drawn box ${selected} removed` }),
+    drawReplacement: () => setDrawing({ replaces: selected }),
   } : null;
 
   useEffect(() => {
     const onKey = (event) => {
       if (typing(event.target) || event.ctrlKey || event.metaKey || event.altKey || confirming) return;
       const k = event.key.toLowerCase();
-      if (k === 'j') move(1);
+      if (drawing) {
+        if (event.key !== 'Escape') return;
+        setDrawing(null);
+      } else if (k === 'd') setDrawing({ replaces: null });
+      else if (k === 'j') move(1);
       else if (k === 'k') move(-1);
       else if (k === 'a' && actions) actions.status('accepted');
       else if (k === 'r' && actions) actions.status('rejected');
@@ -176,7 +195,7 @@ export default function Review({ paper, page, settings }) {
               return (
                 <li key={b.id} className={`${dropAt === i && dragging && dragging !== b.id ? 'drop-here' : ''}`}
                     onDragOver={(e) => { if (dragging && listed) { e.preventDefault(); setDropAt(i); } }}
-                    onDrop={(e) => { e.preventDefault(); if (dragging && listed) reorder(dragging, i); setDragging(null); setDropAt(null); }}>
+                    onDrop={(e) => { e.preventDefault(); if (dragging && listed) reorder(dragging, b.number - 1); setDragging(null); setDropAt(null); }}>
                   <div className={`row ${b.status} ${selected === b.id ? 'selected' : ''} ${dragging === b.id ? 'dragging' : ''}`}>
                     <span className="handle" draggable={listed} title={listed ? 'Drag to change the reading order' : undefined}
                           aria-hidden="true"
@@ -185,7 +204,7 @@ export default function Review({ paper, page, settings }) {
                     <button type="button" className="pick" onClick={() => setSelected(b.id)} aria-current={selected === b.id}>
                       <span className="num">{listed ? b.number : '–'}</span>
                       <span className="name">{b.tag}</span>
-                      <span className="id">{b.id}{!b.bbox && ' · no box'}</span>
+                      <span className="id">{b.id}{b.drawn && ' · drawn'}{b.replaced && ' · replaced'}{!b.bbox && ' · no box'}</span>
                     </button>
                     {listed && (
                       <span className="arrows">
@@ -198,17 +217,29 @@ export default function Review({ paper, page, settings }) {
               );
             })}
           </ol>
-          <p className="muted small">J / K move through the boxes, A accepts, R rejects, [ and ] change the reading order.</p>
+          <p className="muted small">J / K move through the boxes, A accepts, R rejects, [ and ] change the reading order, D draws a box.</p>
         </section>
 
         <section className="stage" aria-label="Page">
+          <div className="stage-bar">
+            {drawing ? (
+              <>
+                <span role="status">
+                  {drawing.replaces ? `Drag on the page to draw the box that replaces ${drawing.replaces}.` : 'Drag on the page to draw a box the parser missed.'}
+                </span>
+                <button type="button" onClick={() => setDrawing(null)}>Cancel<kbd>Esc</kbd></button>
+              </>
+            ) : (
+              <button type="button" onClick={() => setDrawing({ replaces: null })}>Draw box<kbd>D</kbd></button>
+            )}
+          </div>
           <PageView paper={paper} page={page} pageData={pageData} selected={selected} onSelect={setSelected}
-                    boxes={ordered.filter((b) => b.bbox)} />
+                    boxes={ordered.filter((b) => b.bbox)} drawing={Boolean(drawing)} onDraw={finishDraw} />
         </section>
 
         <BlockPanel id={selected} original={originals[selected]} block={selectedBlock} settings={settings} actions={actions || {}}
                     position={ordered.find((b) => b.id === selected)?.number ?? null} total={total_listed(ordered)}
-                    onShift={(delta) => shift(selected, delta)} />
+                    onShift={(delta) => shift(selected, delta)} replaced={ordered.find((b) => b.id === selected)?.replaced} />
       </div>
 
       {confirming && (
