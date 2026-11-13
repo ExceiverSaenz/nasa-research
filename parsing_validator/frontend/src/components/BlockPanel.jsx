@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { OTHER, originalText } from '../lib/decisions.js';
 import ExpandDialog from './ExpandDialog.jsx';
 import TextEditor from './TextEditor.jsx';
+import TableEditor from './TableEditor.jsx';
+import { size } from '../lib/table.js';
 
 const STATUS_BUTTONS = [
   ['accepted', 'Accept', 'A'],
@@ -24,6 +26,7 @@ function Chips({ options, chosen, onToggle, name }) {
 
 export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced, missingEvidence, page }) {
   const [expanded, setExpanded] = useState(false);
+  const [tableOpen, setTableOpen] = useState(false);
   if (!block) return <aside className="panel"><p className="muted">Pick a box on the page or in the list.</p></aside>;
   const kinds = Object.fromEntries(settings.tags.map((t) => [t.name, t.kind]));
   const kind = block.tag.value === OTHER ? 'text' : kinds[block.tag.value];
@@ -130,7 +133,25 @@ export default function BlockPanel({ id, original, block, settings, actions, pos
                   )}
                 </div>
               )}
-              {kind === 'table' && <p className="muted small">Table editing is not available in this version.</p>}
+              {kind === 'table' && (
+                <div className="field">
+                  <span>Table</span>
+                  <p className="muted small">
+                    {block.content.table
+                      ? `Edited table: ${size(block.content.table.cells).rows} rows × ${size(block.content.table.cells).cols} columns.`
+                      : 'The table is not edited yet.'}
+                  </p>
+                  <div className="editor-tools">
+                    <button type="button" onClick={() => setTableOpen(true)}>Edit table…</button>
+                    {block.content.table && <button type="button" onClick={actions.clearTable}>Discard edited table</button>}
+                  </div>
+                  {tableOpen && (
+                    <TableEditor paper={page.paper} page={page.index} render={page.render} box={original?.bbox_pct || block.origin?.bbox_pct || null}
+                                 originalHtml={original?.html || ''} initial={block.content.table?.cells || null}
+                                 onSave={(cells) => { actions.table(cells); setTableOpen(false); }} onClose={() => setTableOpen(false)} />
+                  )}
+                </div>
+              )}
             </>
           )}
         </section>

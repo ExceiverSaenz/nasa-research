@@ -1,6 +1,7 @@
 // Pure updates of the decision state (shape: contract, "Decision state"). Nothing here mutates its input.
 // The service enforces the decision rules on save (OP-07); these updates keep the state close to valid while editing.
 import { deriveLatex } from './latex.js';
+import { gridToHtml } from './table.js';
 
 export const OTHER = 'Other';
 
@@ -233,3 +234,10 @@ export const updateLayerIssue = (state, page, id, index, change) =>
 
 export const removeLayerIssue = (state, page, id, index) =>
   setBlock(state, page, id, (block) => ({ ...block, layer_issues: block.layer_issues.filter((_, i) => i !== index) }));
+
+// The edited table: the matrix plus the HTML generated from it (the original MinerU HTML stays in the original file).
+export const setTable = (state, page, id, cells) =>
+  setBlock(state, page, id, (block) => ({ ...block, content: { ...block.content, table: { cells, html: gridToHtml(cells) } } }));
+
+export const clearTable = (state, page, id) =>
+  setBlock(state, page, id, (block) => ({ ...block, content: { ...block.content, table: null } }));

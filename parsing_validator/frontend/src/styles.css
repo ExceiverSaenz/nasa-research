@@ -215,3 +215,32 @@ textarea { resize: vertical; }
 
 .dialog.expand { max-width: none; }
 .preview math { display: inline-block; margin: 0; }
+
+.dialog.table-editor { width: min(1500px, 100%); max-width: none; height: calc(100vh - 32px); overflow: hidden; display: flex; flex-direction: column; }
+.expand-actions { display: flex; gap: 8px; }
+.table-layout { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.6fr); gap: 20px; }
+.table-layout.wide { grid-template-columns: minmax(0, 1fr); }
+.table-layout > section { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+.table-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.table-tools button { min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; }
+.table-tools button.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+.grid-scroll { overflow: auto; max-height: 100%; border: 1px solid var(--line); border-radius: 8px; }
+table.grid { border-collapse: separate; border-spacing: 0; font-size: 13px; width: max-content; min-width: 100%; }
+table.grid td, table.grid th { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 0; background: #fff; }
+table.grid td.head { background: #f1efe9; font-weight: 600; }
+table.grid td.merged { background: #fff4e5; }
+table.grid td.picked { outline: 3px solid var(--teal); outline-offset: -3px; background: #e3f1f4; }
+table.grid thead th { position: sticky; top: 0; z-index: 2; background: #f7f5f0; }
+table.grid th.row-axis { position: sticky; left: 0; z-index: 1; background: #f7f5f0; display: table-cell; white-space: nowrap; padding: 0 4px; }
+table.grid th.corner { position: sticky; left: 0; z-index: 3; }
+table.grid .axis button { width: 24px; min-height: 24px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: #fff; cursor: pointer; margin: 2px; }
+table.grid .row-axis span { display: inline-block; min-width: 20px; color: var(--ink-soft); }
+table.grid input { width: 100%; min-width: 90px; border: 0; border-radius: 0; padding: 6px 8px; background: transparent; }
+table.grid .cell-text { display: block; min-width: 90px; padding: 6px 8px; cursor: pointer; min-height: 30px; }
+table.original-grid td, table.original-grid th { padding: 4px 8px; border: 1px solid var(--line); }
+table.original-grid th { background: #f1efe9; }
+.html-preview { margin: 0; padding: 8px 10px; max-height: 140px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: #f1efe9; border-radius: 8px; font-size: 12px; }
+@media (max-width: 900px) { .table-layout { grid-template-columns: 1fr; } }
+
+/* the panel is a stacking context: raise it so its dialogs cover the page boxes (z-index 2) and the layer overlay (3) */
+.panel { z-index: 6; }

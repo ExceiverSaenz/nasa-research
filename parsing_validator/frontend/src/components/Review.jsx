@@ -101,6 +101,8 @@ export default function Review({ paper, page, settings }) {
     deleteReason: (value) => p.edit((s) => d.toggleDeleteReason(s, key, selected, value), label('Delete reason', selected)),
     deleteOther: (value) => p.edit((s) => d.setDeleteOther(s, key, selected, value), label('Delete text', selected)),
     note: (value) => p.edit((s) => d.setNote(s, key, selected, value), label('Note', selected)),
+    table: (cells) => p.edit((s) => d.setTable(s, key, selected, cells), { label: `Table edited on ${selected}` }),
+    clearTable: () => p.edit((s) => d.clearTable(s, key, selected), { label: `Edited table discarded on ${selected}` }),
     removeDrawn: () => p.edit((s) => d.removeDrawnBlock(s, key, selected), { label: `Drawn box ${selected} removed` }),
     drawReplacement: () => setDrawing({ replaces: selected }),
     flag: (layer) => setFlagging({ layer, ref: null, blockId: selected, element: null }),
