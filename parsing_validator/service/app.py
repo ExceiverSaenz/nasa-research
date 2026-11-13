@@ -26,6 +26,7 @@ from ..storage.files import AnnotationStore, RevisionConflict
 from ..storage.schemas import problems
 from ..storage.versions import VersionError
 from ..ingest.adapter import CollectionRepository
+from . import exports
 from . import settings as settings_module
 from . import tags as tags_module
 from .config import Config
@@ -322,6 +323,67 @@ def create_app(config: Config | None = None) -> FastAPI:
     @app.post(f'{api}/cache/clear')
     def clear_cache():
         return {'removed': library.clear_cache()}
+
+    # --- exports (OP-09 to OP-11): saved reviews only, never drafts (BR-11) ---------------------------
+    def selection(papers):
+        """``(ids, saved)``: the requested ids (all papers when empty), and ``{id: (review, stored)}`` of those with a valid review."""
+        ids = sorted({library.known(x.strip()) for x in papers.split(',') if x.strip()}, key=int) if papers else list(library.papers)
+        saved = {}
+        for n in ids:
+            stored = store.read(n)
+            if stored['review'] is not None:
+                saved[n] = (stored['review'], stored)
+        return ids, saved
+
+    def attachment(data, media, name, headers=None):
+        return Response(data, media_type=media, headers={'Content-Disposition': f'attachment; filename="{name}"', **(headers or {})})
+
+    @app.get(f'{api}/export/papers.zip')
+    def export_zip(papers: str = ''):
+        ids, saved = selection(papers)
+        items = []
+        for n, (review, _) in saved.items():
+            library.ensure_original(n)
+            items.append((n, (config.originals / f'{n}.json').read_bytes(), review))
+        headers = {'X-Drafts-Ignored': ','.join(n for n in ids if store.read(n)['draft']),
+                   'X-Papers-Omitted': ','.join(n for n in ids if n not in saved)}
+        return attachment(exports.build_zip(items), 'application/zip', 'parsing-validator-reviews.zip', headers)
+
+    def summary_rows(papers):
+        ids, saved = selection(papers)
+        out = []
+        for n, (review, _) in saved.items():
+            original = library.ensure_original(n)
+            out.append((n, original['document']['title'], exports.rows(review, original)))
+        return out
+
+    @app.get(f'{api}/export/summary.csv')
+    def export_summary_csv(papers: str = ''):
+        return attachment(exports.summary_csv([r for _, _, body in summary_rows(papers) for r in body]),
+                          'text/csv; charset=utf-8', 'parsing-validator-summary.csv')
+
+    @app.get(f'{api}/export/summary.md')
+    def export_summary_md(papers: str = ''):
+        return attachment(exports.summary_markdown(summary_rows(papers)), 'text/markdown; charset=utf-8',
+                          'parsing-validator-summary.md')
+
+    def statistics():
+        settings, _ = settings_module.load(config)
+        reviews, warnings = [], []
+        for n in library.papers:
+            stored = store.read(n)
+            if stored['review'] is not None:
+                reviews.append(stored['review'])
+            warnings += [w for w in stored['warnings'] if w['file'].endswith('.review.json')]
+        return {**exports.stats(reviews, settings), 'warnings': warnings}
+
+    @app.get(f'{api}/stats')
+    def stats():
+        return statistics()
+
+    @app.get(f'{api}/export/stats.csv')
+    def export_stats_csv():
+        return attachment(exports.stats_csv(statistics()), 'text/csv; charset=utf-8', 'parsing-validator-stats.csv')
 
     # --- OP-08 ---------------------------------------------------------------------
     @app.post(f'{api}/tags/replace')

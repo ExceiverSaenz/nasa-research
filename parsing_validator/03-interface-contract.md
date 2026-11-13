@@ -453,6 +453,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 - **Output** · `200` `application/zip`, one `<n>.original.json` (copied from `originals/<n>.json`) and one `<n>.review.json` per paper; in the exported review every `pending` block is `accepted` with `auto_accepted: true`. Header `X-Drafts-Ignored: 7` lists papers that have a draft.
 - **Postcondition** · Nothing on disk changes.
 - **Invariant** · The export is built from the saved review only (BR-11); papers without a review are omitted and named in `X-Papers-Omitted`.
+- **Implemented (2026-11-13)** · The zip is deterministic (fixed entry times, paper order). A paper whose review file is invalid counts as omitted. The original is generated first if it was missing.
 
 ### Errors
 
@@ -485,6 +486,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 - **Output** · `200`. CSV: UTF-8 with BOM, comma separator, all fields quoted, one row per non-clean decision with columns `paper,page,box,reason,tag_predicted,tag_final,error_types,delete_reasons,layer_issue,note,auto_accepted`; multi-valued cells joined by `; `. Markdown: one table per paper with the same columns, each row linking to its page.
 - **Postcondition** · Read-only.
 - **Invariant** · `reason` is one of `rejected`, `deleted`, `wrong tag`, `content wrong`, `reading order changed`, `part moved out`, `layer issue`, `note`; a block with several decisions yields several rows.
+- **Implemented (2026-11-13)** · Meaning of each reason: `wrong tag` = final tag differs from the MinerU tag (not for drawn or deleted blocks); `reading order changed` = the block is outside the longest run of the page that keeps MinerU's order, so moving one block flags one row (for an adjacent swap either of the two may be flagged, always the same one); `part moved out` = a detached block exists and the row is on its source block; `layer issue` = at least one layer issue, written `layer: kind, kind` and joined by `; `; `note` = non-empty note. Every column is filled on every row of the block. `page` is shown 1-based like the interface; `auto_accepted` is `true` when the saved status is `pending`. A block with `Other` shows `Other: <label>`. Control characters become U+2400 plus the code (BR-21). In the CSV a cell starting with `=`, `+`, `-`, `@`, tab or carriage return is prefixed with `'` so a spreadsheet does not run it. Markdown escapes `|` and `\`, turns line breaks into `<br>` and links the page to `/#/papers/<n>/pages/<index>` (0-based index; **provisional route, to be fixed with the front end**). A paper with no rows still gets its heading and "No decisions to report." Drawn blocks give no row by themselves; they are counted in the statistics.
 
 ### Errors
 
@@ -515,6 +517,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 
 - **Output** · `200` `{ "kpis": { "wrong_or_deleted": 0, "tags_corrected": 0, "boxes_drawn": 0, "tables_edited": 0, "layer_issues": 0 }, "error_types": [ { "label", "count" } ], "tag_corrections": [ { "from", "to", "count" } ], "delete_reasons": [ … ], "layer_issues_by_layer": [ … ], "other_classifications": [ { "label", "count" } ] }`; the CSV is the same data flattened.
 - **Postcondition** · Read-only; drafts are not counted.
+- **Implemented (2026-11-13)** · `kpis.wrong_or_deleted` counts blocks (content wrong or deleted); `tags_corrected` blocks whose final tag differs from the MinerU tag (not drawn or deleted); `tables_edited` blocks with a table edit; `layer_issues` the number of issues. `error_types`, `delete_reasons` and `layer_issues_by_layer` list every catalog entry (including `Other` and zero counts), ordered by count then label. `other_classifications` is `{kind, label, count}` over the free text of every `Other` (`kind` is `error_type`, `delete_reason`, `tag` or `layer_issue`). The response adds `reviews_counted`. The CSV has the columns `section,label,from,to,count`.
 
 ### Errors
 
