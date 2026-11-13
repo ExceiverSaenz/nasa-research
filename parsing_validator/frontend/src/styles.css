@@ -174,3 +174,22 @@ textarea { resize: vertical; }
 .box.drawn { border-color: var(--teal); border-style: solid; }
 .box.replaced { opacity: 0.35; pointer-events: none; }
 .drawn-note { font-size: 13px; padding: 8px 10px; border-radius: 8px; background: #e3f1f4; }
+
+.layer-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.layer-overlay { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+.layer-overlay .element { pointer-events: all; cursor: pointer; fill: transparent; stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+.layer-overlay .element.layout { stroke: #0b7285; fill: rgba(11, 114, 133, 0.06); }
+.layer-overlay .element.ocr { stroke: #6b4e9b; fill: rgba(107, 78, 155, 0.12); stroke-width: 1; }
+.layer-overlay .element.cells { stroke: #b5651d; fill: rgba(181, 101, 29, 0.08); stroke-width: 1; }
+.layer-overlay .element:hover { fill: rgba(227, 154, 75, 0.35); }
+.layer-overlay .element.flagged { stroke: #a63d2f; stroke-width: 2.2; fill: rgba(166, 61, 47, 0.15); }
+.layer-overlay .correction { fill: rgba(11, 114, 133, 0.08); stroke: #0b7285; stroke-width: 2; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
+.issues { display: flex; flex-direction: column; gap: 8px; }
+.issues ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.issues li { display: flex; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; }
+.issue-buttons { display: flex; gap: 10px; white-space: nowrap; }
+.issue-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.issue-actions button { min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; }
+.correction-tag { color: var(--teal); }
+.dialog.wide { width: min(560px, 100%); }
+.check { display: flex; align-items: center; gap: 8px; }

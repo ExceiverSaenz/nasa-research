@@ -205,3 +205,16 @@ export function removeDrawnBlock(state, page, id) {
     pages: { ...state.pages, [page]: { reading_order: state.pages[page].reading_order.filter((x) => x !== id), blocks } },
   };
 }
+
+// Layer issues of a box (OP-07 rule 7: kinds not empty, Other needs text, ref required except missing/other).
+export const addLayerIssue = (state, page, id, issue) =>
+  setBlock(state, page, id, (block) => ({ ...block, layer_issues: [...block.layer_issues, issue] }));
+
+export const updateLayerIssue = (state, page, id, index, change) =>
+  setBlock(state, page, id, (block) => ({
+    ...block,
+    layer_issues: block.layer_issues.map((issue, i) => (i === index ? { ...issue, ...change } : issue)),
+  }));
+
+export const removeLayerIssue = (state, page, id, index) =>
+  setBlock(state, page, id, (block) => ({ ...block, layer_issues: block.layer_issues.filter((_, i) => i !== index) }));

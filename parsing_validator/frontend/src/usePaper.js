@@ -48,6 +48,20 @@ export function usePaper(paper, settings) {
     }
   }, [paper, pages]);
 
+  // Layer items are opt-in (OP-04): fetched the first time a layer is switched on, then kept.
+  const loadLayer = useCallback(async (index, name) => {
+    try {
+      const { data } = await api(`/papers/${paper}/pages/${index}?layers=${name}`);
+      setPages((previous) => {
+        const page = previous[index];
+        if (!page) return previous;
+        return { ...previous, [index]: { ...page, layers: { ...page.layers, [name]: data.layers[name] } } };
+      });
+    } catch (error) {
+      setNotice({ kind: 'error', text: error.message });
+    }
+  }, [paper]);
+
   // One edit: `change(state)` returns the next state; `meta` names the version it creates (BR-05).
   const edit = useCallback((change, meta) => {
     setWork((previous) => {
@@ -129,5 +143,5 @@ export function usePaper(paper, settings) {
     return () => window.removeEventListener('pagehide', onHide);
   }, [paper]);
 
-  return { load, detail, work, pages, dirty, busy, notice, setNotice, loadPage, edit, saveDraft, saveReview };
+  return { load, detail, work, pages, dirty, busy, notice, setNotice, loadPage, loadLayer, edit, saveDraft, saveReview };
 }

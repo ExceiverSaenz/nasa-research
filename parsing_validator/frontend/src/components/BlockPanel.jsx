@@ -19,7 +19,7 @@ function Chips({ options, chosen, onToggle, name }) {
   );
 }
 
-export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced }) {
+export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift, replaced, missingEvidence }) {
   if (!block) return <aside className="panel"><p className="muted">Pick a box on the page or in the list.</p></aside>;
   const kinds = Object.fromEntries(settings.tags.map((t) => [t.name, t.kind]));
   const kind = block.tag.value === OTHER ? 'text' : kinds[block.tag.value];
@@ -140,6 +140,36 @@ export default function BlockPanel({ id, original, block, settings, actions, pos
           <p className="muted small">A deleted box is not part of the reading order.</p>
         )}
         {original?.continues_prev && <p className="muted small">Continues the paragraph of the previous page.</p>}
+      </section>
+
+      <section className="issues">
+        <h3>Layer issues</h3>
+        {block.layer_issues.length === 0 && <p className="muted small">None flagged. Turn on a layer above the page and click an element, or flag something below.</p>}
+        <ul>
+          {block.layer_issues.map((issue, i) => (
+            <li key={i}>
+              <div>
+                <strong>{issue.layer}</strong>: {issue.kinds.map((k) => (k === OTHER ? `Other: ${issue.other}` : k)).join(', ')}
+                {issue.text && <span className="muted"> · {issue.text}</span>}
+                {issue.correction_bbox_pct && <em className="correction-tag"> · correct box drawn</em>}
+              </div>
+              <span className="issue-buttons">
+                <button type="button" className="link" onClick={() => actions.editIssue(i)}>Edit</button>
+                <button type="button" className="link" onClick={() => actions.removeIssue(i)}>Remove</button>
+              </span>
+            </li>
+          ))}
+        </ul>
+        <div className="issue-actions">
+          <button type="button" onClick={() => actions.flag('other')}>Flag an issue…</button>
+          <button type="button" onClick={() => actions.flag('missing')}>Flag something not drawn…</button>
+        </div>
+        {missingEvidence && (
+          <p className="muted small">
+            This table has no cell boxes captured for its page.{' '}
+            <button type="button" className="link" onClick={actions.reportMissingEvidence}>Record it as missing evidence</button>
+          </p>
+        )}
       </section>
 
       <label className="field">

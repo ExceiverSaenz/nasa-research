@@ -4,6 +4,8 @@ import * as d from '../lib/decisions.js';
 import { reviewHash } from '../lib/route.js';
 import BlockPanel from './BlockPanel.jsx';
 import PageView from './PageView.jsx';
+import IssueDialog from './IssueDialog.jsx';
+import { LAYER_LABELS, blankIssue, blockContaining, elementLabel, flaggedKeys } from '../lib/layers.js';
 
 const typing = (target) => ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) || target?.isContentEditable;
 
@@ -64,7 +66,21 @@ export default function Review({ paper, page, settings }) {
   const shift = useCallback((id, delta) => p.edit((s) => d.shiftBlock(s, key, id, delta), orderMeta), [p.edit, key]); // eslint-disable-line react-hooks/exhaustive-deps
   // Draw box (spec: "Cajas nuevas, reemplazo y eliminación"): null, or { replaces } while the user drags on the page.
   const [drawing, setDrawing] = useState(null);
+  // Context layers (spec): chips switch them on; an element click opens the issue dialog for the box that contains it.
+  const [shown, setShown] = useState({ layout: false, ocr: false, cells: false });
+  const [flagging, setFlagging] = useState(null); // { layer, ref, blockId, element, edit? }
+  const toggleLayer = (name) => {
+    const on = !shown[name];
+    setShown((s) => ({ ...s, [name]: on }));
+    if (on && !pageData?.layers[name].items.length) p.loadLayer(page, name);
+  };
   const finishDraw = useCallback((bbox) => {
+    if (drawing?.correctionFor) {
+      const { id: target, index } = drawing.correctionFor;
+      p.edit((s) => d.updateLayerIssue(s, key, target, index, { correction_bbox_pct: bbox }), { label: `Correct box drawn for ${target}` });
+      setDrawing(null);
+      return;
+    }
     const replaces = drawing?.replaces || null;
     const base = replaces ? pageState.blocks[replaces] : null;
     const id = `n${work.state.next_new_id}`;
@@ -87,7 +103,36 @@ export default function Review({ paper, page, settings }) {
     note: (value) => p.edit((s) => d.setNote(s, key, selected, value), label('Note', selected)),
     removeDrawn: () => p.edit((s) => d.removeDrawnBlock(s, key, selected), { label: `Drawn box ${selected} removed` }),
     drawReplacement: () => setDrawing({ replaces: selected }),
+    flag: (layer) => setFlagging({ layer, ref: null, blockId: selected, element: null }),
+    editIssue: (index) => {
+      const issue = pageState.blocks[selected].layer_issues[index];
+      setFlagging({ layer: issue.layer, ref: issue.ref, blockId: selected, element: null, edit: index, initial: issue });
+    },
+    removeIssue: (index) => p.edit((s) => d.removeLayerIssue(s, key, selected, index), { label: `Issue removed from ${selected}` }),
+    reportMissingEvidence: () => p.edit((s) => d.addLayerIssue(s, key, selected, { ...blankIssue('missing'), kinds: ['Cell boxes not captured'] }),
+                                         { label: `Missing evidence on ${selected}` }),
   } : null;
+
+  const onElement = (layer, item) => {
+    const owner = blockContaining(item, ordered) || selected;
+    if (!owner) return;
+    setSelected(owner);
+    setFlagging({ layer, ref: item.source, blockId: owner, element: elementLabel(layer, item) });
+  };
+  const saveIssue = (fields, drawCorrection) => {
+    const { layer, ref, blockId, edit } = flagging;
+    const current = pageState.blocks[blockId].layer_issues;
+    if (edit !== undefined) {
+      p.edit((s) => d.updateLayerIssue(s, key, blockId, edit, fields), { label: `Issue edited on ${blockId}` });
+    } else {
+      p.edit((s) => d.addLayerIssue(s, key, blockId, { ...blankIssue(layer, ref), ...fields }), { label: `Issue flagged on ${blockId}` });
+      if (drawCorrection) setDrawing({ correctionFor: { id: blockId, index: current.length } });
+    }
+    setFlagging(null);
+  };
+  const layerItems = Object.fromEntries(Object.entries(shown).filter(([, on]) => on).map(([n]) => [n, pageData?.layers[n]?.items || []]));
+  const corrections = pageState ? Object.values(pageState.blocks).flatMap((b) => b.layer_issues.map((i) => i.correction_bbox_pct).filter(Boolean)) : [];
+  const flagged = useMemo(() => (work ? flaggedKeys(work.state, key) : new Set()), [work, key]);
 
   useEffect(() => {
     const onKey = (event) => {
@@ -225,22 +270,45 @@ export default function Review({ paper, page, settings }) {
             {drawing ? (
               <>
                 <span role="status">
-                  {drawing.replaces ? `Drag on the page to draw the box that replaces ${drawing.replaces}.` : 'Drag on the page to draw a box the parser missed.'}
+                  {drawing.correctionFor ? `Drag on the page to draw the correct box for the issue on ${drawing.correctionFor.id}.`
+                    : drawing.replaces ? `Drag on the page to draw the box that replaces ${drawing.replaces}.` : 'Drag on the page to draw a box the parser missed.'}
                 </span>
                 <button type="button" onClick={() => setDrawing(null)}>Cancel<kbd>Esc</kbd></button>
               </>
             ) : (
-              <button type="button" onClick={() => setDrawing({ replaces: null })}>Draw box<kbd>D</kbd></button>
+              <>
+                <button type="button" onClick={() => setDrawing({ replaces: null })}>Draw box<kbd>D</kbd></button>
+                <span className="layer-chips" role="group" aria-label="Context layers">
+                  {Object.entries(LAYER_LABELS).map(([name, text]) => {
+                    const info = pageData?.layers[name];
+                    const unavailable = info && !info.available;
+                    return (
+                      <button key={name} type="button" className={`chip ${shown[name] ? 'on' : ''}`} aria-pressed={shown[name]}
+                              disabled={unavailable} title={unavailable ? `Not captured for this page (${info.reason})` : undefined}
+                              onClick={() => toggleLayer(name)}>
+                        {text}
+                      </button>
+                    );
+                  })}
+                </span>
+              </>
             )}
           </div>
           <PageView paper={paper} page={page} pageData={pageData} selected={selected} onSelect={setSelected}
-                    boxes={ordered.filter((b) => b.bbox)} drawing={Boolean(drawing)} onDraw={finishDraw} />
+                    boxes={ordered.filter((b) => b.bbox)} drawing={Boolean(drawing)} onDraw={finishDraw}
+                    layers={layerItems} flagged={flagged} onElement={onElement} corrections={corrections} />
         </section>
 
         <BlockPanel id={selected} original={originals[selected]} block={selectedBlock} settings={settings} actions={actions || {}}
                     position={ordered.find((b) => b.id === selected)?.number ?? null} total={total_listed(ordered)}
-                    onShift={(delta) => shift(selected, delta)} replaced={ordered.find((b) => b.id === selected)?.replaced} />
+                    onShift={(delta) => shift(selected, delta)} replaced={ordered.find((b) => b.id === selected)?.replaced}
+                    missingEvidence={selectedBlock?.tag.value === 'table' && pageData && !pageData.layers.cells.available && !selectedBlock.layer_issues.some((i) => i.layer === 'missing')} />
       </div>
+
+      {flagging && (
+        <IssueDialog layer={flagging.layer} elementText={flagging.element ? `${flagging.element} · assigned to box ${flagging.blockId}` : `Assigned to box ${flagging.blockId}`}
+                     initial={flagging.initial} onSave={saveIssue} onCancel={() => setFlagging(null)} />
+      )}
 
       {confirming && (
         <div className="overlay" role="presentation">

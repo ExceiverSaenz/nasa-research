@@ -181,3 +181,44 @@ test('moving skips the hidden rejected box and indexes count numbered boxes only
   assert.deepEqual(d.numberedOrder(up, '7'), ['k2', 'k0', 'n1']);
   assert.equal(d.shiftBlock(state, '7', 'k1', 1), state); // a replaced box cannot move
 });
+
+import * as l from './layers.js';
+
+const ref = (n) => ({ sha256: 'a'.repeat(64), pointer: `/layers/${n}` });
+
+test('layer issues are appended, edited and removed without touching other boxes', () => {
+  const issue = l.blankIssue('ocr', ref(1));
+  let state = d.addLayerIssue(fresh(), '7', 'k0', issue);
+  assert.equal(state.pages[7].blocks.k0.layer_issues.length, 1);
+  assert.deepEqual(state.pages[7].blocks.k1.layer_issues, []);
+  state = d.updateLayerIssue(state, '7', 'k0', 0, { kinds: ['Merged lines'], text: 'two lines' });
+  assert.deepEqual(state.pages[7].blocks.k0.layer_issues[0].kinds, ['Merged lines']);
+  assert.equal(state.pages[7].blocks.k0.layer_issues[0].ref.pointer, '/layers/1');
+  state = d.updateLayerIssue(state, '7', 'k0', 0, { correction_bbox_pct: { x: 1, y: 2, w: 3, h: 4 } });
+  assert.equal(state.pages[7].blocks.k0.layer_issues[0].correction_bbox_pct.w, 3);
+  assert.deepEqual(d.removeLayerIssue(state, '7', 'k0', 0).pages[7].blocks.k0.layer_issues, []);
+});
+
+test('kinds per layer follow the specification and always end with Other', () => {
+  assert.deepEqual(l.kindsFor('layout'), ['Wrong label', 'Wrong bounds', 'Missing detection', 'Extra detection', 'Other']);
+  assert.ok(l.kindsFor('missing').includes('Cell boxes not captured'));
+  assert.deepEqual(l.kindsFor('other'), ['Other']);
+});
+
+test('an element belongs to the smallest final box that contains its centre', () => {
+  const boxes = [
+    { id: 'big', bbox: { x: 0, y: 0, w: 100, h: 100 }, status: 'accepted' },
+    { id: 'small', bbox: { x: 10, y: 10, w: 20, h: 20 }, status: 'pending' },
+    { id: 'gone', bbox: { x: 10, y: 10, w: 5, h: 5 }, status: 'deleted' },
+    { id: 'old', bbox: { x: 10, y: 10, w: 8, h: 8 }, status: 'rejected', replaced: true },
+  ];
+  assert.equal(l.blockContaining({ id: 'L1', bbox_pct: { x: 12, y: 12, w: 4, h: 4 } }, boxes), 'small');
+  assert.equal(l.blockContaining({ id: 'O1', poly_pct: [[50, 50], [60, 50], [60, 55], [50, 55]] }, boxes), 'big');
+  assert.equal(l.blockContaining({ id: 'L2', bbox_pct: { x: 0, y: 0, w: 1, h: 1 } }, []), null);
+});
+
+test('flagged elements are found by their sealed identity', () => {
+  const state = d.addLayerIssue(fresh(), '7', 'k0', l.blankIssue('layout', ref(3)));
+  state.pages[7].blocks.k1.layer_issues = [l.blankIssue('missing')];
+  assert.deepEqual([...l.flaggedKeys(state, '7')], [l.refKey(ref(3))]);
+});

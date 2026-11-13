@@ -3,7 +3,7 @@ import { normalizeBox } from '../lib/decisions.js';
 import { pageImageUrl } from '../lib/api.js';
 
 // The rendered page with every box on top, positioned in percent of the page (one projection, no approximation).
-export default function PageView({ paper, page, pageData, boxes, selected, onSelect, drawing, onDraw }) {
+export default function PageView({ paper, page, pageData, boxes, selected, onSelect, drawing, onDraw, layers = {}, flagged, onElement, corrections = [] }) {
   const [loaded, setLoaded] = useState(false);
   const frame = useRef(null);
   const [start, setStart] = useState(null);
@@ -32,6 +32,25 @@ export default function PageView({ paper, page, pageData, boxes, selected, onSel
           {rubber && <div className="rubber" style={{ left: `${rubber.x}%`, top: `${rubber.y}%`, width: `${rubber.w}%`, height: `${rubber.h}%` }} />}
         </div>
       )}
+      <svg className="layer-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-label="Context layers">
+        {Object.entries(layers).map(([name, items]) => items.map((item) => {
+          const key = `${item.source?.sha256}:${item.source?.pointer}`;
+          const props = {
+            className: `element ${name} ${flagged?.has(key) ? 'flagged' : ''}`,
+            onClick: () => onElement(name, item),
+            role: 'button',
+            'aria-label': `${name} ${item.id}`,
+          };
+          return item.bbox_pct ? (
+            <rect key={`${name}${item.id}`} x={item.bbox_pct.x} y={item.bbox_pct.y} width={item.bbox_pct.w} height={item.bbox_pct.h} {...props} />
+          ) : (
+            <polygon key={`${name}${item.id}`} points={item.poly_pct.map((q) => q.join(',')).join(' ')} {...props} />
+          );
+        }))}
+        {corrections.map((c, i) => (
+          <rect key={`c${i}`} className="correction" x={c.x} y={c.y} width={c.w} height={c.h} />
+        ))}
+      </svg>
       {boxes.map((box) => (
         <button
           key={box.id}
