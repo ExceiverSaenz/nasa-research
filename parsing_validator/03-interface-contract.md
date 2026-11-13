@@ -416,6 +416,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 - **Output** · `200` `{ "papers": [ { "id": "3", "reviews_changed": 1, "drafts_changed": 1, "blocks_changed": 14, "versions_changed": 9 } ], "failures": [] }`.
 - **Postcondition** · Every block tagged `from` in every review, draft and draft version now carries `to`, each recorded as a tag correction with its predicted tag intact; revisions of changed reviews increase by one. Originals are untouched. After a full success the catalog can drop `from` (OP-13 enforces this).
 - **Invariant** · Idempotent: a second call finds nothing to change.
+- **Implemented (2026-11-13)** · `blocks_changed` counts distinct blocks changed in the review and the current draft state; `versions_changed` counts temporary versions that held the tag; the draft chain is rebuilt from the retagged states (labels and times kept, hashes recomputed). A draft that was not stale keeps `base_revision` equal to the new review revision. The draft file is written before the review, so an interrupted run is finished by repeating it. `failures[].reason` is `file_invalid`, `version_corrupt`, `decision_rules_violation` (the retagged review would break a rule, e.g. text edits on a block that becomes an image; nothing of that paper is written) or `storage_error`.
 
 ### Errors
 
@@ -585,6 +586,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 - **Output** · `200` the stored settings; `ETag` is its hash.
 - **Postcondition** · `settings.json` replaced atomically. Changing a folder does not move files; the service re-verifies the collection and reports the result.
 - **Invariant** · `Other` is always available and never removed.
+- **Implemented (2026-11-13)** · `PUT` also honors an optional `If-Match` with the settings ETag (`409` if it differs). A tag counts as in use when any review, current draft state or temporary version still carries it; `409 tag_in_use` details `{tag, blocks, versions}`. Changing a folder is saved and the response says `restart_required: true`: the running service keeps its folders and `python -m parsing_validator` applies the saved ones on the next start. For a new `results` folder only the catalog check runs on save; the full seal check of each paper runs in the background after the restart.
 
 ### Errors
 

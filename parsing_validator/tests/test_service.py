@@ -371,6 +371,199 @@ class Writes(Base):
         self.assertIn('tag_unknown', {v['code'] for v in r.json()['error']['details']['violations']})
 
 
+class TagsAndSettings(Base):
+    def setUp(self):
+        super().setUp()
+        self.services = self.client.app.state.services
+        self.services.library.state['8']['verification'] = 'ok'
+        self.original8 = json.loads((REAL_ORIGINALS / '8.json').read_text(encoding='utf-8'))
+        self.stamp = {n: (REAL_ORIGINALS / f'{n}.json').stat().st_mtime_ns for n in ('7', '8')}
+
+    def count(self, original, name):
+        return sum(b['type'] == name for p in original['pages'] for b in p['blocks'])
+
+    def review_state(self, original, edit=None):
+        state = blank_state(original)
+        if edit:
+            edit(state)
+        return state
+
+    def save_review(self, paper, state, revision='0'):
+        r = self.client.put(f'{API}/papers/{paper}/review', json={'state': state}, headers={'If-Match': f'"{revision}"'})
+        self.assertEqual(r.status_code, 200, r.text)
+
+    def replace(self, **body):
+        return self.client.post(API + '/tags/replace', json=body)
+
+    def seeded(self):
+        """Reviews for papers 7 and 8, and a draft of paper 7 with two temporary versions."""
+        self.save_review('7', blank_state(self.original))
+        self.save_review('8', blank_state(self.original8))
+        first = blank_state(self.original)
+        second = copy.deepcopy(first)
+        second['pages']['7']['blocks']['k11']['note'] = 'a'
+        third = copy.deepcopy(second)
+        third['pages']['7']['blocks']['k12']['note'] = 'b'
+        self.client.put(API + '/papers/7/draft', json={'base_revision': 1, 'trigger': 'manual', 'state': first, 'new_versions': []})
+        r = self.client.put(API + '/papers/7/draft', json={
+            'base_revision': 1, 'trigger': 'manual', 'state': third,
+            'new_versions': [{'label': 'one', 'at': '2026-11-13T10:00:00Z', 'state': first},
+                             {'label': 'two', 'at': '2026-11-13T10:01:00Z', 'state': second}]})
+        self.assertEqual(r.status_code, 200)
+
+    def test_ac10_replace_everywhere_with_matching_counts(self):
+        self.seeded()
+        want7, want8 = self.count(self.original, 'text'), self.count(self.original8, 'text')
+        files = {n: self.store.review_path(n).read_bytes() for n in ('7', '8')}
+        dry = self.replace(**{'from': 'text', 'to': 'ref_text', 'dry_run': True}).json()
+        self.assertEqual({p['id']: p['blocks_changed'] for p in dry['papers']}, {'7': want7, '8': want8})
+        self.assertEqual(files, {n: self.store.review_path(n).read_bytes() for n in ('7', '8')}, 'dry run writes nothing')
+
+        done = self.replace(**{'from': 'text', 'to': 'ref_text'}).json()
+        self.assertEqual(done['failures'], [])
+        self.assertEqual(done['papers'], dry['papers'])
+        seven = next(p for p in done['papers'] if p['id'] == '7')
+        self.assertEqual((seven['reviews_changed'], seven['drafts_changed'], seven['versions_changed']), (1, 1, 2))
+        review = json.loads(self.store.review_path('7').read_text(encoding='utf-8'))
+        self.assertEqual(review['revision'], 2)
+        block = next(b for p in review['pages'].values() for b in p['blocks'].values() if b['tag']['predicted'] == 'text')
+        self.assertEqual(block['tag']['value'], 'ref_text')                  # corrected tag, prediction kept
+        self.assertEqual(self.count(self.original, 'text'), want7)           # the original is as it was
+        self.assertEqual({n: (REAL_ORIGINALS / f'{n}.json').stat().st_mtime_ns for n in ('7', '8')}, self.stamp)
+        # the draft is not stale after the review revision moved, and every version was retagged
+        state = self.get('/papers/7/state').json()
+        self.assertEqual((state['source'], state['draft']['stale']), ('draft', False))
+        for i in range(2):
+            version = self.get(f'/papers/7/draft/versions/{i}').json()['state']
+            self.assertFalse([1 for p in version['pages'].values() for b in p['blocks'].values() if b['tag']['value'] == 'text'])
+        self.assertEqual(self.replace(**{'from': 'text', 'to': 'ref_text'}).json(), {'papers': [], 'failures': []})
+
+    def test_replace_with_other_stores_the_label(self):
+        self.save_review('7', blank_state(self.original))
+        self.assertEqual(self.replace(**{'from': 'page_number', 'to': 'Other', 'other_label': 'Folio'}).status_code, 200)
+        review = json.loads(self.store.review_path('7').read_text(encoding='utf-8'))
+        retagged = [b['tag'] for p in review['pages'].values() for b in p['blocks'].values() if b['tag']['predicted'] == 'page_number']
+        self.assertTrue(retagged and all(t['value'] == 'Other' and t['other_label'] == 'Folio' for t in retagged))
+
+    def test_a_paper_that_would_break_the_rules_is_a_failure_and_the_rest_apply(self):
+        def edit(state):
+            block = state['pages']['7']['blocks']['k11']
+            block['content']['latex'] = [{'source': 'x'}]                    # text-capable content on an equation
+        self.save_review('7', self.review_state(self.original, edit))
+        self.save_review('8', blank_state(self.original8))
+        before = self.store.review_path('7').read_bytes()
+        r = self.replace(**{'from': 'equation', 'to': 'image'}).json()
+        self.assertEqual([f['paper'] for f in r['failures']], ['7'])
+        self.assertEqual(r['failures'][0]['reason'], 'decision_rules_violation')
+        self.assertEqual(self.store.review_path('7').read_bytes(), before)
+        if self.count(self.original8, 'equation'):
+            self.assertEqual([p['id'] for p in r['papers']], ['8'])
+
+    def test_invalid_review_file_is_a_failure_and_left_alone(self):
+        self.store.folder.mkdir(parents=True, exist_ok=True)
+        self.store.review_path('7').write_text('{broken', encoding='utf-8')
+        r = self.replace(**{'from': 'text', 'to': 'ref_text'}).json()
+        self.assertEqual([(f['paper'], f['reason']) for f in r['failures']], [('7', 'file_invalid')])
+        self.assertEqual(self.store.review_path('7').read_text(encoding='utf-8'), '{broken')
+
+    def test_replace_request_validation(self):
+        for body in ({'from': 'Other', 'to': 'text'}, {'from': 'text', 'to': 'text'}, {'from': 'nope', 'to': 'text'},
+                     {'from': 'text', 'to': 'nope'}, {'from': 'text', 'to': 'Other'}, {'from': 'text', 'to': 'Other', 'other_label': '  '}):
+            r = self.replace(**body)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (400, 'invalid_request'), body)
+        self.assertEqual(self.client.post(API + '/tags/replace', json={'to': 'text'}).status_code, 400)
+
+    # --- OP-13 ---
+    def settings(self):
+        return self.get('/settings').json()
+
+    def put_settings(self, body, **kw):
+        return self.client.put(API + '/settings', json=body, **kw)
+
+    def test_put_stores_and_returns_the_settings(self):
+        body = self.settings()
+        body['papers_per_set'] = 6
+        body['tags'] = [t for t in body['tags'] if t['name'] != 'aside_text']     # unused: may go
+        r = self.put_settings(body)
+        self.assertEqual(r.status_code, 200, r.text)
+        self.assertFalse(r.json()['restart_required'])
+        self.assertTrue(r.headers['etag'])
+        stored = json.loads((self.tmp / 'settings.json').read_text(encoding='utf-8'))
+        self.assertEqual((stored['papers_per_set'], len(stored['tags'])), (6, 12))
+        self.assertEqual(self.settings()['papers_per_set'], 6)
+
+    def test_removing_a_tag_in_use_is_refused_until_it_is_replaced(self):
+        self.save_review('7', blank_state(self.original))
+        used = self.count(self.original, 'ref_text')
+        self.assertGreater(used, 0)
+        body = self.settings()
+        body['tags'] = [t for t in body['tags'] if t['name'] != 'ref_text']
+        r = self.put_settings(body)
+        self.assertEqual((r.status_code, r.json()['error']['code']), (409, 'tag_in_use'))
+        self.assertEqual(r.json()['error']['details']['blocks'], used)
+        self.assertFalse((self.tmp / 'settings.json').exists())
+        self.assertEqual(self.replace(**{'from': 'ref_text', 'to': 'text'}).status_code, 200)
+        self.assertEqual(self.put_settings(body).status_code, 200)
+
+    def test_a_tag_used_only_by_a_temporary_version_is_in_use(self):
+        first = blank_state(self.original)
+        later = copy.deepcopy(first)
+        later['pages']['7']['blocks']['k11']['tag']['value'] = 'text'           # the old state keeps `equation`
+        self.client.put(API + '/papers/7/draft', json={'base_revision': 0, 'trigger': 'manual', 'state': later, 'new_versions': [
+            {'label': 'v', 'at': '2026-11-13T10:00:00Z', 'state': first}]})
+        body = self.settings()
+        body['tags'] = [t for t in body['tags'] if t['name'] != 'equation']
+        r = self.put_settings(body)
+        self.assertEqual(r.status_code, 409)
+        self.assertGreaterEqual(r.json()['error']['details']['versions'], 1)
+
+    def test_shape_errors_are_listed_with_pointers(self):
+        body = self.settings()
+        body['tags'].append({'name': 'text', 'kind': 'text'})                    # duplicate
+        body['error_types'] = ['Other']
+        body['draft_interval_minutes'] = 0
+        r = self.put_settings(body)
+        self.assertEqual(r.status_code, 400)
+        pointers = {e['pointer'] for e in r.json()['error']['details']['errors']}
+        self.assertEqual(pointers, {'/tags', '/error_types', '/draft_interval_minutes'})
+        self.assertEqual(self.put_settings({'schema': 'x'}).status_code, 400)
+        self.assertEqual(self.client.put(API + '/settings', content='{nope').status_code, 400)
+
+    def test_folders_are_checked(self):
+        body = self.settings()
+        results = body['paths']['results']
+        for key, value in (('annotations', str(Path(results) / 'inside')), ('originals', str(self.tmp / 'annotations')),
+                           ('results', str(self.tmp / 'missing'))):
+            changed = copy.deepcopy(body)
+            changed['paths'][key] = value
+            r = self.put_settings(changed)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (400, 'invalid_request'), key)
+        self.assertFalse((self.tmp / 'settings.json').exists())
+
+    def test_results_folder_that_is_not_a_collection(self):
+        body = self.settings()
+        empty = self.tmp / 'not_a_collection'
+        empty.mkdir()
+        body['paths']['results'] = str(empty)
+        r = self.put_settings(body)
+        self.assertEqual((r.status_code, r.json()['error']['code']), (422, 'paper_unavailable'))
+        self.assertFalse((self.tmp / 'settings.json').exists())
+
+    def test_changing_a_folder_asks_for_a_restart(self):
+        body = self.settings()
+        body['paths']['annotations'] = str(self.tmp / 'other_annotations')
+        r = self.put_settings(body)
+        self.assertEqual(r.status_code, 200, r.text)
+        self.assertTrue(r.json()['restart_required'])
+
+    def test_if_match_protects_against_a_concurrent_change(self):
+        body = self.settings()
+        tag = self.get('/settings').headers['etag']
+        self.assertEqual(self.put_settings(body, headers={'If-Match': tag}).status_code, 200)
+        body['papers_per_set'] = 3
+        self.assertEqual(self.put_settings(body, headers={'If-Match': '"stale"'}).status_code, 409)
+
+
 class Verification(unittest.TestCase):
     """AC-02 (generated on first request) and the identity checks of an existing original."""
 

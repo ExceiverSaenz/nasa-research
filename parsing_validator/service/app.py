@@ -8,7 +8,7 @@ import json
 import os
 import sys
 import tempfile
-from contextlib import asynccontextmanager
+from contextlib import ExitStack, asynccontextmanager
 from typing import Literal
 from urllib.parse import urlsplit
 
@@ -17,15 +17,17 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .. import __version__
-from ..domain import DecisionRulesViolation, MathRenderer, blank_state, check_state
+from ..domain import OTHER, DecisionRulesViolation, MathRenderer, blank_state, check_state
 from ..storage.atomic import StorageError
 from ..storage.files import AnnotationStore, RevisionConflict
 from ..storage.schemas import problems
 from ..storage.versions import VersionError
+from ..ingest.adapter import CollectionRepository
 from . import settings as settings_module
+from . import tags as tags_module
 from .config import Config
 from .errors import ApiError, body, install
 from .library import SCALE_RANGE, Library
@@ -44,6 +46,14 @@ class DraftBody(BaseModel):
 
 class ReviewBody(BaseModel):
     state: dict
+
+
+class ReplaceBody(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+    from_: str = Field(alias='from')
+    to: str
+    other_label: str | None = None
+    dry_run: bool = False
 
 
 async def read_body(request: Request, model):
@@ -312,6 +322,67 @@ def create_app(config: Config | None = None) -> FastAPI:
     @app.post(f'{api}/cache/clear')
     def clear_cache():
         return {'removed': library.clear_cache()}
+
+    # --- OP-08 ---------------------------------------------------------------------
+    @app.post(f'{api}/tags/replace')
+    async def replace_tag(request: Request):
+        data = await read_body(request, ReplaceBody)
+        catalog = {t['name'] for t in settings_module.load(config)[0]['tags']}
+        bad = []
+        if data.from_ not in catalog:
+            bad.append({'pointer': '/from', 'message': 'must be a tag of the catalog (Other cannot be replaced)'})
+        if data.to == data.from_:
+            bad.append({'pointer': '/to', 'message': 'must differ from "from"'})
+        elif data.to != OTHER and data.to not in catalog:
+            bad.append({'pointer': '/to', 'message': 'must be a tag of the catalog or Other'})
+        if data.to == OTHER and not (data.other_label or '').strip():
+            bad.append({'pointer': '/other_label', 'message': 'Other needs a non-empty other_label'})
+        if bad:
+            raise ApiError(400, 'invalid_request', 'The request body is not valid', {'errors': bad})
+        return await run_in_threadpool(lambda: tags_module.replace_tag(
+            services, data.from_, data.to, (data.other_label or '').strip() or None, data.dry_run))
+
+    # --- OP-13 (write) -----------------------------------------------------------------
+    @app.put(f'{api}/settings')
+    async def write_settings(request: Request, response: Response):
+        try:
+            incoming = json.loads(await request.body())
+        except ValueError:
+            raise ApiError(400, 'invalid_request', 'The request body is not valid', {'errors': [{'pointer': '', 'message': 'Malformed JSON'}]}) from None
+        bad = settings_module.shape_problems(incoming)
+        if not bad:
+            bad = settings_module.path_problems(incoming['paths'])
+        if bad:
+            raise ApiError(400, 'invalid_request', 'The request body is not valid', {'errors': bad})
+
+        def commit():
+            with ExitStack() as stack:
+                for lock in store.all_locks(library.papers):
+                    stack.enter_context(lock)
+                current, _ = settings_module.load(config)
+                header = request.headers.get('if-match')
+                if header is not None and header.strip('"') != settings_module.etag(current):
+                    raise ApiError(409, 'revision_conflict', 'The settings changed since they were read')
+                if incoming['paths']['results'] != current['paths']['results']:
+                    try:
+                        CollectionRepository(incoming['paths']['results'])
+                    except Exception as error:  # noqa: BLE001 - any failure means the folder is not a usable collection
+                        raise ApiError(422, 'paper_unavailable', 'The results folder is not a valid sealed collection',
+                                       {'reason': type(error).__name__}) from None
+                for gone in sorted({t['name'] for t in current['tags']} - {t['name'] for t in incoming['tags']}):
+                    used = tags_module.usage(store, library.papers, gone)
+                    if used['blocks'] or used['versions']:
+                        raise ApiError(409, 'tag_in_use', f'Tag {gone} is still used', {'tag': gone, **used})
+                try:
+                    settings_module.save(config, incoming)
+                except StorageError as error:
+                    raise ApiError(500, 'storage_error', str(error)) from None
+                return incoming
+
+        stored = await run_in_threadpool(commit)
+        response.headers['ETag'] = f'"{settings_module.etag(stored)}"'
+        running = settings_module.defaults(config)['paths']
+        return {**stored, 'restart_required': stored['paths'] != running}
 
     # --- OP-13 (read) --------------------------------------------------------------
     @app.get(f'{api}/settings')

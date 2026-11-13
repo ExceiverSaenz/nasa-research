@@ -32,7 +32,11 @@ def main(argv=None):
     from .service.config import Config
     from .storage.atomic import InstanceLock, StorageError
 
+    from .service import settings as settings_module
     config = Config(port=args.port)
+    stored, _ = settings_module.load(config)          # folders saved in Settings apply from this start on
+    for name, key in (('collection', 'results'), ('pdfs', 'pdfs'), ('originals', 'originals'), ('annotations', 'annotations')):
+        setattr(config, name, type(config.pdfs)(stored['paths'][key]))
     try:
         lock = InstanceLock(config.annotations / 'parsing-validator.lock').acquire()
     except StorageError as error:

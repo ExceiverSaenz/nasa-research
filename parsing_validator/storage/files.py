@@ -160,6 +160,23 @@ class AnnotationStore:
                 warnings.append({'code': 'draft_not_removed', 'file': self.draft_path(paper).name})
             return {'revision': review['revision'], 'saved_at': review['saved_at'], 'warnings': warnings}
 
+    def rewrite(self, paper, *, review=None, draft=None):
+        """Replace whole, already built files (the tag replacement of OP-08); each file is fully old or fully new.
+
+        The draft is written before the review: if the process stops in between, the draft already claims the new
+        revision (never stale) and re-running the operation finishes the review.
+        """
+        with self.lock(paper):
+            for kind, value in (('draft', draft), ('review', review)):
+                if value is not None:
+                    bad = problems(kind, value)
+                    if bad:
+                        raise ValueError('; '.join(bad[:5]))
+            if draft is not None:
+                atomic_write_bytes(self.draft_path(paper), _dumps(draft), fault=self._fault)
+            if review is not None:
+                atomic_write_bytes(self.review_path(paper), _dumps(review), fault=self._fault)
+
     def draft_versions(self, paper):
         """``[{index, label, at, sha256}]`` of the paper's draft, without any state."""
         draft, _ = self._load(self.draft_path(paper), 'draft')
