@@ -12,11 +12,11 @@ npm run dev        # Vite on :5173, proxying /api to the service on :8765
 ## What is built
 
 - **Collection** (`#/`): the papers with progress, filter, a "continue where you left off" card and the background verification state.
-- **Review** (`#/papers/<n>/pages/<index>`, index 0-based like the API): the rendered page with every box on top, the list of boxes in reading order, and for the selected box: accept, reject, delete (with reasons), tag (catalog or Other), content correct or wrong with error types and corrected text, and a note. Keys: `J`/`K` move through the boxes, `A` accepts, `R` rejects, `N`/`P` change page.
+- **Review** (`#/papers/<n>/pages/<index>`, index 0-based like the API): the rendered page with every box on top, the list of boxes in reading order, and for the selected box: accept, reject, delete (with reasons), tag (catalog or Other), content correct or wrong with error types and corrected text, and a note. Reading order: drag a row by its handle, use the arrows of a row, or "Earlier" and "Later" in the panel (`[` and `]`); the numbers on the page follow the order, a deleted box has none, and consecutive reorders on a page are one temporary version. Keys: `J`/`K` move through the boxes, `A` accepts, `R` rejects, `N`/`P` change page.
 - **Saving:** Save draft (also automatic every `draft_interval_minutes`, and a `pagehide` attempt), and Save changes with confirmation. A review that breaks decision rules shows every violation and links to the box.
 
 ## Not built yet
 
-Reading-order editing, drawing and replacing boxes, tables, LaTeX, the layer panels and layer issues, Settings, statistics, exports and the bug-report dialog. The service already supports all of them.
+Drawing and replacing boxes, tables, LaTeX, the layer panels and layer issues, Settings, statistics, exports and the bug-report dialog. The service already supports all of them.
 
 `src/lib/decisions.js` holds the state updates and mirrors the service's decision rules closely enough to keep the state valid while editing; the service remains the authority on save.

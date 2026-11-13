@@ -120,3 +120,20 @@ export function originalText(block) {
   if (Array.isArray(content)) return content.map((span) => span.content ?? span.text ?? '').join('');
   return '';
 }
+
+// Reading order (spec: "Orden de lectura"): move one block inside the page's list. Deleted blocks are not in it.
+export function moveBlock(state, page, id, toIndex) {
+  const order = state.pages[page].reading_order;
+  const from = order.indexOf(id);
+  if (from < 0) return state;
+  const to = Math.max(0, Math.min(order.length - 1, toIndex));
+  if (to === from) return state;
+  const next = order.filter((x) => x !== id);
+  next.splice(to, 0, id);
+  return setOrder(state, page, next);
+}
+
+export const shiftBlock = (state, page, id, delta) => {
+  const at = state.pages[page].reading_order.indexOf(id);
+  return at < 0 ? state : moveBlock(state, page, id, at + delta);
+};

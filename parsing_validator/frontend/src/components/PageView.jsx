@@ -20,12 +20,10 @@ export default function PageView({ paper, page, pageData, boxes, selected, onSel
           aria-label={`Box ${box.id}, ${box.tag}, ${box.status}`}
           aria-pressed={selected === box.id}
         >
+          {box.number !== null && <span className="box-num">{box.number}</span>}
           <span className="box-tag">{box.tag}</span>
         </button>
       ))}
     </div>
   );
 }
-
-// Keep the image from being re-requested when only the selection changes.
-export const pageViewKey = (paper, page) => `${paper}:${page}`;

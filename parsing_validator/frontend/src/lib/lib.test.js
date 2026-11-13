@@ -104,3 +104,38 @@ test('routes', () => {
   assert.equal(reviewHash('7', 3), '#/papers/7/pages/3');
   for (const hash of ['', '#/', '#/papers/x/pages/1', '#/papers/7', undefined]) assert.equal(parseRoute(hash).name, 'collection');
 });
+
+test('moving a block changes only the reading order and clamps at the ends', () => {
+  const state = fresh();
+  const down = d.shiftBlock(state, '7', 'k0', 1);
+  assert.deepEqual(down.pages[7].reading_order, ['k1', 'k0', 'k2']);
+  assert.deepEqual(state.pages[7].reading_order, ['k0', 'k1', 'k2']);
+  assert.equal(down.pages[7].blocks, state.pages[7].blocks);
+  assert.deepEqual(d.moveBlock(state, '7', 'k2', 0).pages[7].reading_order, ['k2', 'k0', 'k1']);
+  assert.deepEqual(d.moveBlock(state, '7', 'k0', 99).pages[7].reading_order, ['k1', 'k2', 'k0']);
+});
+
+test('a move that changes nothing returns the same state, so no version is recorded', () => {
+  const state = fresh();
+  assert.equal(d.shiftBlock(state, '7', 'k0', -1), state);
+  assert.equal(d.shiftBlock(state, '7', 'k2', 1), state);
+  assert.equal(d.moveBlock(state, '7', 'k1', 1), state);
+  const deleted = d.setStatus(state, '7', 'k1', 'deleted', ids);
+  assert.equal(d.shiftBlock(deleted, '7', 'k1', 1), deleted); // a deleted block has no place to move
+});
+
+test('a reordered block that is deleted and restored goes back by MinerU position among those still listed', () => {
+  let state = d.moveBlock(fresh(), '7', 'k0', 2); // k1 k2 k0
+  state = d.setStatus(state, '7', 'k1', 'deleted', ids); // k2 k0
+  state = d.setStatus(state, '7', 'k1', 'accepted', ids);
+  assert.deepEqual(state.pages[7].reading_order, ['k1', 'k2', 'k0']);
+});
+
+test('consecutive reorders on a page group into one temporary version', () => {
+  const a = fresh();
+  const b = d.shiftBlock(a, '7', 'k0', 1);
+  let pending = recordVersion([], a, { label: 'Reading order', key: 'order:7' }, 't1');
+  pending = recordVersion(pending, b, { label: 'Reading order', key: 'order:7' }, 't2');
+  assert.equal(pending.length, 1);
+  assert.equal(pending[0].state, a);
+});

@@ -7,6 +7,8 @@ import PageView from './PageView.jsx';
 
 const typing = (target) => ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) || target?.isContentEditable;
 
+const total_listed = (rows) => rows.filter((r) => r.number !== null).length;
+
 export default function Review({ paper, page, settings }) {
   const p = usePaper(paper, settings);
   const { load, detail, work, pages, dirty, busy, notice } = p;
@@ -33,7 +35,9 @@ export default function Review({ paper, page, settings }) {
     return [...inOrder, ...rest].map((id) => {
       const block = pageState.blocks[id];
       const box = originals[id]?.bbox_pct || block.origin?.bbox_pct || null;
-      return { id, status: block.status, tag: block.tag.value, bbox: box, weak: originals[id]?.layout_match?.weak };
+      const position = inOrder.indexOf(id);
+      return { id, status: block.status, tag: block.tag.value, bbox: box, weak: originals[id]?.layout_match?.weak,
+               number: position >= 0 ? position + 1 : null };
     });
   }, [pageState, originals]);
 
@@ -52,6 +56,12 @@ export default function Review({ paper, page, settings }) {
   const goTo = useCallback((index) => { window.location.hash = reviewHash(paper, index); }, [paper]);
 
   const label = (text, id) => ({ label: `${text} on ${id}`, key: `${text}:${id}` });
+  // Consecutive reorders on a page are one temporary version (spec: "varios seguidos se agrupan en una")
+  const orderMeta = { label: 'Reading order changed', key: `order:${key}` };
+  const reorder = useCallback((id, toIndex) => p.edit((s) => d.moveBlock(s, key, id, toIndex), orderMeta), [p.edit, key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const shift = useCallback((id, delta) => p.edit((s) => d.shiftBlock(s, key, id, delta), orderMeta), [p.edit, key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [dragging, setDragging] = useState(null);
+  const [dropAt, setDropAt] = useState(null);
   const actions = selected && pageState?.blocks[selected] ? {
     status: (value) => p.edit((s) => d.setStatus(s, key, selected, value, originalIds), { label: `${value} ${selected}`, key: `status:${selected}:${value}` }),
     tag: (value, other) => p.edit((s) => d.setTag(s, key, selected, value, other, kinds), label('Tag', selected)),
@@ -72,6 +82,8 @@ export default function Review({ paper, page, settings }) {
       else if (k === 'k') move(-1);
       else if (k === 'a' && actions) actions.status('accepted');
       else if (k === 'r' && actions) actions.status('rejected');
+      else if (k === '[' && selected) shift(selected, -1);
+      else if (k === ']' && selected) shift(selected, 1);
       else if (k === 'n' && at < pageIndexes.length - 1) goTo(pageIndexes[at + 1]);
       else if (k === 'p' && at > 0) goTo(pageIndexes[at - 1]);
       else return;
@@ -159,17 +171,34 @@ export default function Review({ paper, page, settings }) {
             {counts.pending} pending · {counts.accepted} accepted · {counts.rejected} rejected · {counts.deleted} deleted
           </p>
           <ol>
-            {ordered.map((b, i) => (
-              <li key={b.id}>
-                <button type="button" className={`row ${b.status} ${selected === b.id ? 'selected' : ''}`} onClick={() => setSelected(b.id)}>
-                  <span className="num">{b.status === 'deleted' ? '–' : i + 1}</span>
-                  <span className="name">{b.tag}</span>
-                  <span className="id">{b.id}{!b.bbox && ' · no box'}</span>
-                </button>
-              </li>
-            ))}
+            {ordered.map((b, i) => {
+              const listed = b.number !== null;
+              return (
+                <li key={b.id} className={`${dropAt === i && dragging && dragging !== b.id ? 'drop-here' : ''}`}
+                    onDragOver={(e) => { if (dragging && listed) { e.preventDefault(); setDropAt(i); } }}
+                    onDrop={(e) => { e.preventDefault(); if (dragging && listed) reorder(dragging, i); setDragging(null); setDropAt(null); }}>
+                  <div className={`row ${b.status} ${selected === b.id ? 'selected' : ''} ${dragging === b.id ? 'dragging' : ''}`}>
+                    <span className="handle" draggable={listed} title={listed ? 'Drag to change the reading order' : undefined}
+                          aria-hidden="true"
+                          onDragStart={(e) => { setDragging(b.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', b.id); }}
+                          onDragEnd={() => { setDragging(null); setDropAt(null); }}>{listed ? '⋮⋮' : ''}</span>
+                    <button type="button" className="pick" onClick={() => setSelected(b.id)} aria-current={selected === b.id}>
+                      <span className="num">{listed ? b.number : '–'}</span>
+                      <span className="name">{b.tag}</span>
+                      <span className="id">{b.id}{!b.bbox && ' · no box'}</span>
+                    </button>
+                    {listed && (
+                      <span className="arrows">
+                        <button type="button" aria-label={`Move ${b.id} earlier`} disabled={b.number === 1} onClick={() => shift(b.id, -1)}>↑</button>
+                        <button type="button" aria-label={`Move ${b.id} later`} disabled={b.number === total_listed(ordered)} onClick={() => shift(b.id, 1)}>↓</button>
+                      </span>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ol>
-          <p className="muted small">J / K move through the boxes, A accepts, R rejects.</p>
+          <p className="muted small">J / K move through the boxes, A accepts, R rejects, [ and ] change the reading order.</p>
         </section>
 
         <section className="stage" aria-label="Page">
@@ -177,7 +206,9 @@ export default function Review({ paper, page, settings }) {
                     boxes={ordered.filter((b) => b.bbox)} />
         </section>
 
-        <BlockPanel id={selected} original={originals[selected]} block={selectedBlock} settings={settings} actions={actions || {}} />
+        <BlockPanel id={selected} original={originals[selected]} block={selectedBlock} settings={settings} actions={actions || {}}
+                    position={ordered.find((b) => b.id === selected)?.number ?? null} total={total_listed(ordered)}
+                    onShift={(delta) => shift(selected, delta)} />
       </div>
 
       {confirming && (

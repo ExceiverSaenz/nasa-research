@@ -19,7 +19,7 @@ function Chips({ options, chosen, onToggle, name }) {
   );
 }
 
-export default function BlockPanel({ id, original, block, settings, actions }) {
+export default function BlockPanel({ id, original, block, settings, actions, position, total, onShift }) {
   if (!block) return <aside className="panel"><p className="muted">Pick a box on the page or in the list.</p></aside>;
   const kinds = Object.fromEntries(settings.tags.map((t) => [t.name, t.kind]));
   const kind = block.tag.value === OTHER ? 'text' : kinds[block.tag.value];
@@ -111,6 +111,22 @@ export default function BlockPanel({ id, original, block, settings, actions }) {
           )}
         </section>
       )}
+
+      <section className="order">
+        <h3>Reading order</h3>
+        {position !== null ? (
+          <div className="order-row">
+            <span>Position {position} of {total}</span>
+            <span className="order-buttons">
+              <button type="button" disabled={position === 1} onClick={() => onShift(-1)}>Earlier<kbd>[</kbd></button>
+              <button type="button" disabled={position === total} onClick={() => onShift(1)}>Later<kbd>]</kbd></button>
+            </span>
+          </div>
+        ) : (
+          <p className="muted small">A deleted box is not part of the reading order.</p>
+        )}
+        {original?.continues_prev && <p className="muted small">Continues the paragraph of the previous page.</p>}
+      </section>
 
       <label className="field">
         <span>Note <em>(optional)</em></span>
