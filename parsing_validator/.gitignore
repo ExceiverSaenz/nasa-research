@@ -6,3 +6,4 @@ annotations/_bug_reports/
 annotations/*.lock
 annotations/*.tmp
 __pycache__/
+frontend/node_modules/

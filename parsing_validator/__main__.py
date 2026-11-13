@@ -25,6 +25,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog='python -m parsing_validator')
     parser.add_argument('--port', type=int, default=int(os.environ.get(PORT_VARIABLE, DEFAULT_PORT)))
     parser.add_argument('--no-browser', action='store_true')
+    parser.add_argument('--annotations', help='use another annotations folder (for trying the tool without touching saved reviews)')
+    parser.add_argument('--cache', help='use another folder for the page-image cache')
     args = parser.parse_args(argv)
 
     import uvicorn
@@ -37,6 +39,10 @@ def main(argv=None):
     stored, _ = settings_module.load(config)          # folders saved in Settings apply from this start on
     for name, key in (('collection', 'results'), ('pdfs', 'pdfs'), ('originals', 'originals'), ('annotations', 'annotations')):
         setattr(config, name, type(config.pdfs)(stored['paths'][key]))
+    if args.annotations:
+        config.annotations = type(config.pdfs)(args.annotations)
+    if args.cache:
+        config.cache = type(config.pdfs)(args.cache)
     try:
         lock = InstanceLock(config.annotations / 'parsing-validator.lock').acquire()
     except StorageError as error:
