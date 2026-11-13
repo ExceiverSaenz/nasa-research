@@ -554,6 +554,7 @@ Implemented in `parsing_validator/domain/rules.py` (28 tests, plus the blank sta
 - **Output** · `201` `{ "file": "bug-saving-2026-11-13T12-00-00Z.json" }`.
 - **Postcondition** · One new file in `<annotations folder>/_bug_reports/`; no outbound connection is made.
 - **Invariant** · Never overwrites; a name collision adds a numeric suffix.
+- **Implemented (2026-11-13)** · The file is built from a whitelist, so unknown keys are dropped. With `included: false`, or no `context`, the stored context is exactly `{ "included": false }`. With `included: true` the service keeps `screen`, `paper` (digits), `page` (integer), `box`, `tool`, `browser`, `window {w, h}` and the last 50 `last_actions` (each at most 120 characters), and always writes its own `tool_version`. `category_other` is kept only for `other`. Limits: texts of 10,000 characters, short fields of 200, body of 200,000 bytes; anything over is `400`. The file is written to a temporary name and linked into place, so a name collision never overwrites. The service cannot tell whether an action label contains paper text; the limit on length is the only guard, so the client must send labels only.
 
 ### Errors
 

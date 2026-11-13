@@ -26,7 +26,7 @@ from ..storage.files import AnnotationStore, RevisionConflict
 from ..storage.schemas import problems
 from ..storage.versions import VersionError
 from ..ingest.adapter import CollectionRepository
-from . import exports
+from . import bugs, exports
 from . import settings as settings_module
 from . import tags as tags_module
 from .config import Config
@@ -384,6 +384,25 @@ def create_app(config: Config | None = None) -> FastAPI:
     @app.get(f'{api}/export/stats.csv')
     def export_stats_csv():
         return attachment(exports.stats_csv(statistics()), 'text/csv; charset=utf-8', 'parsing-validator-stats.csv')
+
+    # --- OP-12 ---------------------------------------------------------------------
+    @app.post(f'{api}/bug-reports', status_code=201)
+    async def file_bug_report(request: Request):
+        raw = await request.body()
+        if len(raw) > bugs.MAX_BODY:
+            raise ApiError(400, 'invalid_request', 'The report is too large', {'max_bytes': bugs.MAX_BODY})
+        try:
+            body = json.loads(raw)
+        except ValueError:
+            raise ApiError(400, 'invalid_request', 'The request body is not valid', {'errors': [{'pointer': '', 'message': 'Malformed JSON'}]}) from None
+        report, problems_found = bugs.build(body, store._now(), __version__)
+        if problems_found:
+            raise ApiError(400, 'invalid_request', 'The request body is not valid', {'errors': problems_found})
+        try:
+            name = await run_in_threadpool(bugs.write, config.annotations / '_bug_reports', report)
+        except StorageError as error:
+            raise ApiError(500, 'storage_error', str(error)) from None
+        return {'file': name}
 
     # --- OP-08 ---------------------------------------------------------------------
     @app.post(f'{api}/tags/replace')
