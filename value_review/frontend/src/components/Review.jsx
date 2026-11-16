@@ -240,6 +240,7 @@ export default function Review({ paperId, guard }) {
     setSelectedId(res.id);
     setDialog(null);
     setDrawing({ action: 'add', id: res.id, hint: 'Mark where the value you added appears.' });
+    if (compact) { setScreen('detail'); window.scrollTo(0, 0); }   // the page must be visible to mark the value
   };
 
   const onDrawn = (bbox) => {
@@ -488,7 +489,7 @@ export default function Review({ paperId, guard }) {
         <SummaryModal paperId={paperId} title={doc.title} rows={rows} counts={total} labels={labels} recordLabel={recordLabel}
           changesOf={(r) => (r.obs ? changesOf(r, state, featureName, recordLabel) : [])} changedRecords={changedRecords}
           onClose={() => setSummary(null)} onSubmit={submit} submitting={!!summary.submitting} submitted={summary.submitted}
-          error={summary.error} onReload={reload} />
+          error={summary.error} onReload={reload} readOnly={readOnly} />
       )}
       {leave && (
         <div className="backdrop">
