@@ -1,9 +1,14 @@
-"""FastAPI application: read endpoints of the contract (OP-01, OP-02, OP-03, OP-10, OP-11).
+"""FastAPI application: OP-01, OP-02, OP-03, OP-05, OP-06, OP-07, OP-09, OP-10, OP-11 of the contract.
 
-Write endpoints (drafts, versions, restore, exports) are added in step 4 on top of the same objects.
+Drafts (OP-04) come in step 6 and restore (OP-08) in step 8, on top of the same objects.
 """
+import json
+import logging
 import os
 import tempfile
+import threading
+from collections import defaultdict
+from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, Query, Request, Response
@@ -12,13 +17,18 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
+from .. import schemas
+from ..domain.materialize import counts as count_values, values as materialize
+from ..domain.rules import check_state, shape_problems
 from ..domain.state import empty_state, progress, status_of
 from ..storage import StorageError
 from ..storage.files import AnnotationStore
+from . import exports
 from .config import Config
 from .errors import ApiError, body, install
 from .library import WIDTH_DEFAULT, Library
 
+log = logging.getLogger('value_review')
 LOCAL_HOSTS = {'127.0.0.1', 'localhost', '::1'}
 API = '/api/v1'
 WEB = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web')
@@ -31,14 +41,42 @@ class Settings(BaseModel):
     autosave_minutes: int = Field(ge=1, le=60)
 
 
+class SubmitBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    state: dict
+
+
 def _etag(n):
     return f'"{n}"'
 
 
-def create_app(config: Config | None = None, web_dir=WEB) -> FastAPI:
+def utc_now():
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def if_match(request):
+    """The version number in If-Match (quotes and W/ allowed). 428 when missing, 400 when not a number."""
+    raw = request.headers.get('if-match')
+    if raw is None:
+        raise ApiError(428, 'precondition_required', 'If-Match with the current version is required')
+    text = raw.strip()
+    if text.startswith('W/'):
+        text = text[2:]
+    try:
+        return int(text.strip('"'))
+    except ValueError:
+        raise ApiError(400, 'invalid_request', 'If-Match must be a version number') from None
+
+
+def attachment(data, media_type, filename):
+    return Response(data, media_type=media_type, headers={'Content-Disposition': f'attachment; filename="{filename}"'})
+
+
+def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> FastAPI:
     config = config or Config()
     library = Library(config)
     store = AnnotationStore(config.annotations)
+    paper_locks = defaultdict(threading.Lock)   # requests that write take the paper's lock
 
     app = FastAPI(title='Tensile Value Review', docs_url=None, redoc_url=None, openapi_url=None)
     app.state.library, app.state.store, app.state.config = library, store, config
@@ -61,7 +99,7 @@ def create_app(config: Config | None = None, web_dir=WEB) -> FastAPI:
         return await call_next(request)
 
     def working(paper, original):
-        """What the paper's working copy starts from: (version, state of that version, draft, problems)."""
+        """What the paper's working copy starts from: (version, newest version, its state, draft, problems)."""
         latest, problems = store.latest(paper)
         draft, draft_problem = store.read_draft(paper)
         if draft_problem:
@@ -128,6 +166,95 @@ def create_app(config: Config | None = None, web_dir=WEB) -> FastAPI:
         except StorageError as error:
             raise ApiError(500, 'storage_error', str(error)) from None
         return Response(png, media_type='image/png', headers={'Cache-Control': 'max-age=31536000, immutable'})
+
+    # --- OP-05: submit a version -----------------------------------------------
+    @app.post(f'{API}/papers/{{paper}}/versions', status_code=201)
+    def submit(paper: str, payload: SubmitBody, request: Request, response: Response):
+        expected = if_match(request)
+        original = library.original(paper)
+        with paper_locks[paper]:
+            source = library.source_problems(original)
+            if source:
+                raise ApiError(422, 'source_changed', 'The source changed since ingest; the paper is read-only', {'problems': source})
+            k, _latest, n, _problems = store.current(paper)
+            if expected != k:
+                raise ApiError(409, 'version_conflict', f'The paper is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
+            state = payload.state
+            shape = shape_problems(state)
+            if shape:
+                raise ApiError(400, 'invalid_request', 'The working copy does not match the schema', {'pointers': shape})
+            broken = check_state(original, state, submit=True)
+            if broken:
+                raise ApiError(422, 'rules_violation', 'The working copy breaks a review rule', {'items': broken})
+            settings = store.settings()
+            rows = materialize(original, state)
+            src = original['source']
+            version = {
+                'schema': 'value-review-version/1', 'paper': paper, 'n': n, 'at': clock(),
+                'by': settings['reviewer_name'], 'note': 'Submitted', 'base_version': k,
+                'source': {'run_id': src['run_id'] or '', 'result_sha256': src['result_sha256'], 'pdf_sha256': src['pdf_sha256'],
+                           'original_sha256': library.original_sha256(paper)},
+                'state': state, 'counts': count_values(rows, state), 'values': rows,
+            }
+            problems = schemas.errors('version', version)
+            if problems:  # a bug, not a client error: never write an invalid version
+                raise RuntimeError(f'version would not validate: {problems[:3]}')
+            try:
+                store.write_version(paper, version)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+            try:   # the version stands even if these fail; pruning is retried on the next write
+                store.prune(paper, settings['keep_versions'])
+                store.delete_draft(paper)
+            except StorageError as error:
+                log.warning('after writing v%s of paper %s: %s', n, paper, error)
+        response.headers['ETag'] = _etag(n)
+        response.headers['Location'] = f'{API}/papers/{paper}/versions/{n}'
+        return {'n': n, 'at': version['at'], 'by': version['by'], 'counts': version['counts']}
+
+    # --- OP-06, OP-07 ------------------------------------------------------------
+    def read_version(paper, k):
+        library.original(paper)   # 404 for an unknown paper
+        data, problem = store.read_version(paper, k)
+        if data is None:
+            if problem:
+                raise ApiError(500, 'storage_error', f'Version {k} cannot be read', {'problem': problem})
+            raise ApiError(404, 'version_not_found', f'Paper {paper} has no version {k}')
+        return data
+
+    @app.get(f'{API}/papers/{{paper}}/versions')
+    def list_versions(paper: str):
+        library.original(paper)
+        out = []
+        for n in store.version_numbers(paper):
+            data, _problem = store.read_version(paper, n)
+            if data is not None:
+                out.append({'n': data['n'], 'at': data['at'], 'by': data['by'], 'note': data['note'], 'counts': data['counts']})
+        return out
+
+    @app.get(f'{API}/papers/{{paper}}/versions/{{k}}')
+    def get_version(paper: str, k: int):
+        return read_version(paper, k)
+
+    # --- OP-09: exports ----------------------------------------------------------
+    @app.get(f'{API}/papers/{{paper}}/versions/{{k}}/export.json')
+    def export_json(paper: str, k: int):
+        version = read_version(paper, k)
+        data = json.dumps(exports.export_json(library.original(paper), version), ensure_ascii=False, indent=1).encode('utf-8')
+        return attachment(data, 'application/json', f'paper-{paper}-v{k}.json')
+
+    @app.get(f'{API}/papers/{{paper}}/versions/{{k}}/export.csv')
+    def export_csv(paper: str, k: int):
+        return attachment(exports.export_csv(read_version(paper, k)), 'text/csv; charset=utf-8', f'paper-{paper}-v{k}.csv')
+
+    @app.get(f'{API}/export/latest.zip')
+    def export_latest():
+        items = []
+        for paper in library.papers():
+            latest, _problems = store.latest(paper)
+            if latest is not None:
+                items.append((library.original(paper), latest))
+        return attachment(exports.latest_zip(items), 'application/zip', 'value-review-latest.zip')
 
     # --- OP-10 -----------------------------------------------------------------
     @app.get(f'{API}/settings')

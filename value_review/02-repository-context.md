@@ -1,6 +1,6 @@
 # Repository Context · Tensile Value Review
 
-> Paths are relative to the repository root (`nasa_research`). Paths under `value_review/` marked *(proposed)* do not exist yet; ingest (step 2) and the read API (step 3) are implemented. Everything else was checked on 2026-11-16.
+> Paths are relative to the repository root (`nasa_research`). Paths under `value_review/` marked *(proposed)* do not exist yet; ingest (step 2), the read API (step 3) and submit, versions and exports (step 4) are implemented. Everything else was checked on 2026-11-16.
 
 **Reference** · [01-specification.md](01-specification.md) · front-end design: canvas [Extraction Review Tool](https://claude.ai/artifact/RkuaEejuysoNsSLvEM7w4f)
 
@@ -9,12 +9,12 @@
 | Path or symbol | What the LLM should review |
 |---|---|
 | `value_review/__main__.py` | Entry point: `python -B -m value_review [--port N] [--no-browser] [--data DIR]`. Mirror `parsing_validator/__main__.py` (port, instance lock, open browser, one uvicorn worker on 127.0.0.1). |
-| `value_review/service/app.py`, `service/library.py`, `service/config.py`, `service/errors.py` | `create_app(config, web_dir)`: read routes OP-01, 02, 03, 10, 11 implemented; write routes *(proposed, step 4)*. `Library`: originals, source hash check (BR-09), page rendering and cache. Model it on `parsing_validator/service/app.py`: OpenAPI off, Host-check middleware, static build served from `value_review/web/`, one error envelope. |
+| `value_review/service/app.py`, `service/library.py`, `service/config.py`, `service/errors.py` | `create_app(config, web_dir)`: OP-01, 02, 03, 05, 06, 07, 09, 10, 11 implemented; drafts OP-04 *(step 6)* and restore OP-08 *(step 8)* proposed. `service/exports.py`: JSON, CSV and latest ZIP. `Library`: originals, source hash check (BR-09), page rendering and cache. Model it on `parsing_validator/service/app.py`: OpenAPI off, Host-check middleware, static build served from `value_review/web/`, one error envelope. |
 | `value_review/ingest/` (`original.py`: `build_original`, `write_original`; `__init__.py`: `ingest_run`; `features.py`: column labels) | Builds `value_review/originals/<n>.json` from the LLM result and the PDF, validated by `schemas/original.schema.json`. Replaces the prototype shape in `.design_assets/paper1-review-data.json`. |
-| `value_review/domain/checks.py` | `needs_check`, `action_codes`, `info_codes` (BR-06). The rest of `domain/` *(proposed)*: working-copy rules BR-03…BR-12, materialization, compare. |
-| `value_review/storage/atomic.py` | Copy of `parsing_validator/storage/atomic.py` (atomic write with Windows retry, `InstanceLock`). The rest of `storage/` *(proposed)*: drafts, version snapshots, pruning, settings, following the revision-conflict pattern in `parsing_validator/storage/files.py`. |
+| `value_review/domain/` | `checks.py`: `needs_check` (BR-06). `rules.py`: `check_state` (ids, BR-04, boxes) and `shape_problems`. `materialize.py`: `values`, `counts` (original + working copy → effective values). `state.py`: `empty_state`, `progress`. Compare *(proposed, step 8)*. |
+| `value_review/storage/atomic.py` | Copy of `parsing_validator/storage/atomic.py` (atomic write with Windows retry, `InstanceLock`). `storage/files.py`: `AnnotationStore` reads drafts and versions, writes versions once, prunes, deletes drafts, keeps settings; draft writes *(proposed, step 6)*. |
 | `value_review/config.py`, `value_review/schemas/__init__.py` | Folder layout and source root; schema validator with `$ref` resolution (`schemas.errors(name, instance)`). |
-| `value_review/tests/test_ingest.py`, `test_ingest_real.py` | Ingest tests: synthetic sources, and the real run (skipped when the sources are absent). |
+| `value_review/tests/` | `test_ingest.py`, `test_ingest_real.py` (ingest), `test_service.py` (read API, Host check, lock), `test_versions.py` (submit, pruning, exports, rules). Tests on the real run are skipped when the sources are absent. |
 | `parsing_validator/storage/schemas.py` | Pattern for jsonschema validation of state, draft and review bodies. Here the schemas live as files in `value_review/schemas/`. |
 | `parsing_validator/storage/versions.py` | Precedent for draft versions (undo patches, cap 100). Not reused: this design stores full snapshots per submit (ADR-002). |
 | `parsing_validator/frontend/` | React 18.3.1 + Vite 5.4.11 setup, `vite.config.js` proxy `/api`, `node --test` for `src/lib/*.test.js`. Copy the setup for `value_review/frontend/`. |
@@ -41,7 +41,7 @@
 
 | Command | What it verifies |
 |---|---|
-| `python -B -m unittest discover -s value_review/tests -p "test_*.py"` (repository root; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout) | Ingest and needs-a-check today (55 tests, including the read API); later domain rules, storage, service, sealed-tree hashes |
+| `python -B -m unittest discover -s value_review/tests -p "test_*.py"` (repository root; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout) | 74 tests: ingest, read API, submit and version rules, pruning, exports, sealed-source hashes |
 | `npm test` (in `value_review/frontend`) *(pending)* | Client libraries: working-copy reducer, needs-a-check, compare, bulk accept/undo |
 | `npm run build` (in `value_review/frontend`) *(pending)* | Front end builds into `value_review/web/` |
 | `python -B -m value_review --no-browser` (repository root), then open `http://127.0.0.1:8766/api/v1/papers` | Service starts, lists 14 papers, refuses a second instance (exit 2); the UI arrives in step 5 |

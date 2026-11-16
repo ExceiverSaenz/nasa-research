@@ -1,6 +1,6 @@
 """Files under annotations/: drafts, versions and settings (contract, "Files").
 
-This module has the read side and settings; drafts and version writes are added in step 4.
+Reading, settings, version writes and pruning; draft writes are added in step 6.
 A file that cannot be read (malformed JSON, wrong schema) is reported, never repaired or deleted.
 """
 import json
@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 from .. import schemas
-from .atomic import atomic_write_bytes
+from .atomic import StorageError, atomic_write_bytes
 
 VERSION_FILE = re.compile(r'v([1-9][0-9]{0,5})\.json')
 SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5}
@@ -77,6 +77,45 @@ class AnnotationStore:
 
     def read_draft(self, paper):
         return self._read(self.draft_path(paper), 'draft')
+
+    def current(self, paper):
+        """(current version number, newest readable version or None, next free number, problems).
+
+        The current version is the newest readable one; the next number is one past every file present,
+        so a number is never reused even when the newest file is unreadable (BR-03)."""
+        latest, problems = self.latest(paper)
+        nums = self.version_numbers(paper)
+        return (latest['n'] if latest else 0), latest, (nums[0] + 1 if nums else 1), problems
+
+    # --- writing versions (OP-05) -------------------------------------------------
+    def write_version(self, paper, data):
+        """Write v<n> once; an existing file is never replaced (versions are immutable)."""
+        path = self.version_path(paper, data['n'])
+        if path.exists():
+            raise StorageError(f'{path.name} already exists')
+        atomic_write_bytes(path, _dumps(data))
+
+    def prune(self, paper, keep):
+        """Delete the oldest version files beyond the ``keep`` newest. Returns the numbers deleted."""
+        deleted = []
+        for n in self.version_numbers(paper)[keep:]:
+            try:
+                self.version_path(paper, n).unlink()
+                deleted.append(n)
+            except FileNotFoundError:
+                pass
+            except OSError as error:
+                raise StorageError(f'Could not delete v{n}.json: {error}') from error
+        return deleted
+
+    def delete_draft(self, paper):
+        try:
+            self.draft_path(paper).unlink()
+            return True
+        except FileNotFoundError:
+            return False
+        except OSError as error:
+            raise StorageError(f'Could not delete the draft: {error}') from error
 
     # --- settings (OP-10) ------------------------------------------------------
     def settings(self):

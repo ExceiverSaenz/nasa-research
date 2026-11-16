@@ -61,6 +61,9 @@ class Library:
             self._originals[paper] = (key, data)
         return data
 
+    def original_sha256(self, paper):
+        return self._hash(self.config.originals / f'{paper}.json')
+
     # --- source check (BR-09) --------------------------------------------------
     def _hash(self, path):
         try:

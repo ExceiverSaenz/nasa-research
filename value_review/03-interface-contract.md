@@ -35,7 +35,7 @@
 - `originals/<n>.json` · [`original.schema.json`](schemas/original.schema.json) (`value-review-original/1`), written once by ingest, deterministic (no timestamps, no absolute paths), never written again (BR-01). Contents: `paper` (id), `source {run_id, mode, result_file, result_sha256, pdf_file, pdf_sha256}`, `document {title, page_count, completion {status, pages_unreviewed, summary}}`, `pages [{number, width_pt, height_pt}]` (displayed size, rotation applied), `features [{feature_id, label}]` in the guide's order, `records [{record_id, label, summary, kind, statistic, replicate_count, notes}]`, `observations [{observation_id, feature_id, record_ids, candidate_record_ids, assignment_status, scope, source_status, value, unit, flags, derivation, notes, needs_check, action [codes], info [codes], evidence [{evidence_id, page, bbox, role, text, location_quality, region_id, region_kind, region_label}]}]`, `counts {records, values, needs_check}`, `issues [{code, ref}]`. `needs_check` and its `action` codes are computed once with BR-06; `info` lists the information-only codes. Unresolvable references in the source (unknown evidence, region or record, page out of range, PDF hash different from the one the run recorded) are kept as `issues` instead of failing the paper. Ingest refuses to replace an original whose content would change (exit code 2, see OQ-02).
 - `annotations/drafts/<n>.draft.json` · [`draft.schema.json`](schemas/draft.schema.json). At most one per paper; overwritten on each draft save; deleted on submit, restore and start over.
 - `annotations/versions/<n>/v<k>.json` · [`version.schema.json`](schemas/version.schema.json). Written once; deleted only by pruning (BR-03).
-- `annotations/index.json` · per paper `{version, latest {n, at, by}, reviewed, total, status}`; derived data, rebuilt from the version files if missing or inconsistent.
+- No index file: the paper list and the current version are computed from the version files on each request (at most 20 small files per paper). The **current version** is the newest readable version file; a **new version number** is one past every `v<k>.json` present, readable or not, so numbers are never reused (BR-03).
 - `annotations/settings.json` · `{reviewer_name, keep_versions, autosave_minutes}`.
 
 ## OP-01 · List papers
@@ -92,8 +92,8 @@
 | `If-Match` | header | Yes | must equal the paper's version `k` |
 | `state` | `value-review-state/1` | Yes | schema + all shared rules including BR-04 |
 
-- **Output** · `201 { "n": k+1, "at", "by", "counts" }`, `ETag: "<k+1>"`, `Location: /papers/{n}/versions/{k+1}`.
-- **Postcondition** · `versions/<n>/v<k+1>.json` is written atomically with `by` = `reviewer_name`, `note` "Submitted", the source hashes, the state, counts and the materialized values; then the index is updated; then versions older than the `keep_versions` most recent are deleted; then the draft is deleted. Pending values are allowed (the summary warns; the submit is not blocked).
+- **Output** · `201 { "n", "at", "by", "counts" }`, `ETag: "<n>"`, `Location: /papers/{n}/versions/{n}`. `n` is `k+1` unless an unreadable newer file exists (see Files).
+- **Postcondition** · `versions/<n>/v<n>.json` is written atomically (never over an existing file) with `by` = `reviewer_name`, `note` "Submitted", `base_version k`, the source hashes (including the SHA-256 of the original file), the state, counts and the materialized values; then version files beyond the `keep_versions` newest are deleted; then the draft is deleted. Pending values are allowed (the summary warns; the submit is not blocked). Check order, once the body parses as `{state: object}`: `If-Match` present → paper exists → source unchanged → `If-Match` = `k` → schema → rules.
 - **Invariant** · Originals and source files unchanged (BR-01). Version numbers strictly increase and are never reused.
 - **Errors**
 
@@ -101,9 +101,10 @@
 |---|---|---|
 | No `If-Match` | 428 `precondition_required` | Nothing written |
 | `If-Match` ≠ `k` | 409 `version_conflict`, `details.current = k` | Nothing written |
-| Reject/unsure without reason, unknown id | 422 `rules_violation` | Nothing written |
+| State breaks the schema (e.g. `corrected` without `value`) | 400 `invalid_request`, `details.pointers` | Nothing written |
+| Reject/unsure without reason, unknown id, empty box, page out of range | 422 `rules_violation`, `details.items [{ref, rule}]` (rules: `reason_required`, `value_required`, `duplicate_id`, `unknown_observation`, `unknown_record`, `unknown_feature`, `unknown_evidence`, `page_out_of_range`, `empty_box`) | Nothing written |
 | Source hash differs | 422 `source_changed` | Nothing written |
-| Write of the version file fails | 500 `storage_error` | No new version; index, older versions and draft untouched |
+| Write of the version file fails | 500 `storage_error` | No new version; older versions and draft untouched |
 | Prune or draft delete fails after the version is written | 201 (logged) | New version stands; pruning retried on the next write |
 
 - **Retries** · A repeated submit with the same `If-Match` after success gets 409 (it never creates a duplicate).
@@ -118,14 +119,14 @@
 
 **Interface** · `GET /papers/{n}/versions/{k}`
 
-- **Output** · `200` the version file. **Errors** · 404 `version_not_found` (pruned or never written).
+- **Output** · `200` the version file. **Errors** · 404 `version_not_found` (pruned or never written); 500 `storage_error` when the file exists but cannot be read (it is left as it is). OP-06 lists only readable versions.
 
 ## OP-08 · Restore a version
 
 **Interface** · `POST /papers/{n}/versions/{k}/restore` with `If-Match: "<current>"`
 
 - **Output** · `201 { "n": current+1, … }` exactly as OP-05, with `state` copied from v`k`, `note` "Restored from v`k`", `restored_from k`.
-- **Postcondition** · Same as OP-05 (index, prune, draft deleted). v`k` itself is unchanged.
+- **Postcondition** · Same as OP-05 (new file, prune, draft deleted). v`k` itself is unchanged. *(Step 8.)*
 - **Errors** · 404 `version_not_found`; 409 `version_conflict`; 428; 422 `source_changed` if the version's `source.result_sha256` differs from the current original (OQ-02).
 
 ## OP-09 · Export a version
@@ -133,7 +134,7 @@
 **Interface** · `GET /papers/{n}/versions/{k}/export.json` · `GET /papers/{n}/versions/{k}/export.csv` · `GET /export/latest.zip`
 
 - **Output** ·
-  - JSON: [`export.schema.json`](schemas/export.schema.json). Model fields are copied unchanged; each observation gets `review`; reviewer-made records, values and boxes appear with `origin: "reviewer"` (BR-12).
+  - JSON: [`export.schema.json`](schemas/export.schema.json). Model fields are copied unchanged under their LLM names (`value_as_reported`, `flags`, `derivation`, `evidence_ids`…); each observation gets `review`; reviewer-made records, values and boxes appear with `origin: "reviewer"` (BR-12). Edited records keep `model_label` and `model_condition_summary`. `evidence` has one entry per observation and box, because removals and redraws apply to one value: a redrawn box carries its new `page_number`/`bbox` and the model's `model_bbox`; a removed one has `removed: true`; an added one has id `<observation>#added<i>`.
   - CSV: UTF-8 with BOM, RFC 4180 quoting, one row per value (same order as the version's `values`), columns `paper, version, observation_id, record, record_id, column, feature_id, value, unit, original_value, original_unit, status, note, by, at, origin, needs_check`. Values exactly as stored (symbols kept, BR-05).
   - ZIP: for each paper with a version, its latest JSON and CSV, plus `summary.csv` (one row per paper with counts).
   - `Content-Disposition: attachment; filename="paper-<n>-v<k>.<ext>"`.
