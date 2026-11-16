@@ -1,6 +1,6 @@
 # Repository Context · Tensile Value Review
 
-> Paths are relative to the repository root (`nasa_research`). Paths under `value_review/` marked *(proposed)* do not exist yet; ingest (step 2) is implemented. Everything else was checked on 2026-11-16.
+> Paths are relative to the repository root (`nasa_research`). Paths under `value_review/` marked *(proposed)* do not exist yet; ingest (step 2) and the read API (step 3) are implemented. Everything else was checked on 2026-11-16.
 
 **Reference** · [01-specification.md](01-specification.md) · front-end design: canvas [Extraction Review Tool](https://claude.ai/artifact/RkuaEejuysoNsSLvEM7w4f)
 
@@ -8,8 +8,8 @@
 
 | Path or symbol | What the LLM should review |
 |---|---|
-| `value_review/__main__.py` *(proposed)* | Entry point: `python -B -m value_review [--port N] [--no-browser] [--data DIR]`. Mirror `parsing_validator/__main__.py` (port, instance lock, open browser, one uvicorn worker on 127.0.0.1). |
-| `value_review/service/app.py` *(proposed)* | `create_app(config)`, routes under `/api/v1` from [03-interface-contract.md](03-interface-contract.md). Model it on `parsing_validator/service/app.py`: OpenAPI off, Host-check middleware, static build served from `value_review/web/`, one error envelope. |
+| `value_review/__main__.py` | Entry point: `python -B -m value_review [--port N] [--no-browser] [--data DIR]`. Mirror `parsing_validator/__main__.py` (port, instance lock, open browser, one uvicorn worker on 127.0.0.1). |
+| `value_review/service/app.py`, `service/library.py`, `service/config.py`, `service/errors.py` | `create_app(config, web_dir)`: read routes OP-01, 02, 03, 10, 11 implemented; write routes *(proposed, step 4)*. `Library`: originals, source hash check (BR-09), page rendering and cache. Model it on `parsing_validator/service/app.py`: OpenAPI off, Host-check middleware, static build served from `value_review/web/`, one error envelope. |
 | `value_review/ingest/` (`original.py`: `build_original`, `write_original`; `__init__.py`: `ingest_run`; `features.py`: column labels) | Builds `value_review/originals/<n>.json` from the LLM result and the PDF, validated by `schemas/original.schema.json`. Replaces the prototype shape in `.design_assets/paper1-review-data.json`. |
 | `value_review/domain/checks.py` | `needs_check`, `action_codes`, `info_codes` (BR-06). The rest of `domain/` *(proposed)*: working-copy rules BR-03…BR-12, materialization, compare. |
 | `value_review/storage/atomic.py` | Copy of `parsing_validator/storage/atomic.py` (atomic write with Windows retry, `InstanceLock`). The rest of `storage/` *(proposed)*: drafts, version snapshots, pruning, settings, following the revision-conflict pattern in `parsing_validator/storage/files.py`. |
@@ -41,10 +41,10 @@
 
 | Command | What it verifies |
 |---|---|
-| `python -B -m unittest discover -s value_review/tests -p "test_*.py"` (repository root; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout) | Ingest and needs-a-check today (34 tests); later domain rules, storage, service, sealed-tree hashes |
+| `python -B -m unittest discover -s value_review/tests -p "test_*.py"` (repository root; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout) | Ingest and needs-a-check today (55 tests, including the read API); later domain rules, storage, service, sealed-tree hashes |
 | `npm test` (in `value_review/frontend`) *(pending)* | Client libraries: working-copy reducer, needs-a-check, compare, bulk accept/undo |
 | `npm run build` (in `value_review/frontend`) *(pending)* | Front end builds into `value_review/web/` |
-| `python -B -m value_review --no-browser` (repository root), then open `http://127.0.0.1:8766` *(pending)* | Manual end-to-end workflow (spec AC-01…AC-05) |
+| `python -B -m value_review --no-browser` (repository root), then open `http://127.0.0.1:8766/api/v1/papers` | Service starts, lists 14 papers, refuses a second instance (exit 2); the UI arrives in step 5 |
 | `python -B -m unittest discover -s parsing_validator/tests -p "test_*.py"` (repository root) | Existing tool still passes (regression check; nothing shared at runtime) |
 | `python -B -m unittest llm_baseline.tests.test_run_extraction` (repository root) *(unverified)* | Source validator tests |
 

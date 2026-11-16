@@ -1,0 +1,260 @@
+"""Tests of the read API (step 3): OP-01, OP-02, OP-03, OP-10, OP-11, the Host check and the instance lock.
+
+Covers AC-01, AC-02, AC-18 (read side) and AC-20. Synthetic sources and data folders in temporary
+folders; a short smoke test runs on the real originals when the sources are present.
+"""
+import contextlib
+import hashlib
+import io
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from value_review import config as vr_config, schemas  # noqa: E402
+from value_review.__main__ import main as launch  # noqa: E402
+from value_review.domain.state import empty_state  # noqa: E402
+from value_review.ingest import ingest_run  # noqa: E402
+from value_review.service.app import create_app  # noqa: E402
+from value_review.service.config import Config  # noqa: E402
+from value_review.storage import InstanceLock, StorageError  # noqa: E402
+from value_review.storage.files import AnnotationStore  # noqa: E402
+from value_review.tests.test_ingest import make_pdf, result, sha  # noqa: E402
+
+PNG = b'\x89PNG\r\n\x1a\n'
+AT0, AT1, AT2 = '2026-11-16T10:00:00Z', '2026-11-16T11:00:00Z', '2026-11-16T12:00:00Z'
+
+
+def decision(verdict='accepted', note=''):
+    return {'verdict': verdict, 'note': note, 'by': 'Expert reviewer', 'at': AT1}
+
+
+def version_file(original, n, state, at):
+    return {'schema': 'value-review-version/1', 'paper': original['paper'], 'n': n, 'at': at, 'by': 'Expert reviewer',
+            'note': 'Submitted', 'base_version': n - 1,
+            'source': {'run_id': 'run-test', 'result_sha256': original['source']['result_sha256'],
+                       'pdf_sha256': original['source']['pdf_sha256'], 'original_sha256': 'b' * 64},
+            'state': state,
+            'counts': {'total': 4, 'pending': 4 - len(state['decisions']), 'accepted': len(state['decisions']), 'corrected': 0,
+                       'rejected': 0, 'unsure': 0, 'added_values': 0, 'added_records': 0, 'edited_records': 0},
+            'values': []}
+
+
+class Base(unittest.TestCase):
+    PORT = None
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        d = Path(self.tmp.name)
+        self.run, self.pdfs, self.data = d / 'run', d / 'pdfs', d / 'data'
+        self.run.mkdir(); self.pdfs.mkdir()
+        self.pdf = self.pdfs / '7.pdf'
+        make_pdf(self.pdf, [(612, 792), (612, 792)])
+        self.res = self.run / '7-pdf_with_feature_guide.json'
+        self.res.write_text(json.dumps(result(sha(self.pdf)), ensure_ascii=False), encoding='utf-8')
+        ingest_run(self.run, self.pdfs, self.data / 'originals')
+        self.original = json.loads((self.data / 'originals' / '7.json').read_text(encoding='utf-8'))
+        self.config = Config(data=self.data, run_dir=self.run, pdf_dir=self.pdfs, port=self.PORT)
+        self.client = TestClient(create_app(self.config, web_dir=None), base_url='http://127.0.0.1')
+        self.store = AnnotationStore(self.config.annotations)
+
+    def tearDown(self):
+        self.client.close()
+        self.tmp.cleanup()
+
+    def write_json(self, path, data):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
+
+
+class Papers(Base):  # OP-01, AC-01
+    def test_fresh_paper(self):
+        r = self.client.get('/api/v1/papers')
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.json(), [{
+            'paper': '7', 'title': 'A test paper', 'pages': 2, 'records': 2, 'values': 4, 'needs_check': 3,
+            'reviewed': 0, 'total': 4, 'status': 'not_started', 'version': 0, 'latest': None, 'draft_at': None,
+            'source_changed': False, 'completion': 'partial'}])
+
+    def test_latest_version_and_newer_draft(self):
+        s1 = empty_state(); s1['decisions'] = {'o1': decision()}
+        self.write_json(self.store.version_path('7', 1), version_file(self.original, 1, s1, AT1))
+        row = self.client.get('/api/v1/papers').json()[0]
+        self.assertEqual((row['version'], row['latest'], row['reviewed'], row['status']),
+                         (1, {'n': 1, 'at': AT1, 'by': 'Expert reviewer'}, 1, 'in_progress'))
+        s2 = empty_state(); s2['decisions'] = {k: decision() for k in ('o1', 'o2', 'o3', 'o4')}
+        self.write_json(self.store.draft_path('7'), {'schema': 'value-review-draft/1', 'paper': '7', 'base_version': 1,
+                                                     'trigger': 'auto', 'saved_at': AT2, 'state': s2})
+        row = self.client.get('/api/v1/papers').json()[0]
+        self.assertEqual((row['reviewed'], row['status'], row['draft_at']), (4, 'done', AT2))
+
+    def test_unreadable_files_are_reported_not_fatal(self):
+        bad = self.store.version_path('7', 2)
+        bad.parent.mkdir(parents=True, exist_ok=True)
+        bad.write_text('{not json', encoding='utf-8')
+        s1 = empty_state()
+        self.write_json(self.store.version_path('7', 1), version_file(self.original, 1, s1, AT1))
+        row = self.client.get('/api/v1/papers').json()[0]
+        self.assertEqual(row['version'], 1)
+        self.assertEqual(len(row['warnings']), 1)
+        self.assertTrue(row['warnings'][0].startswith('v2.json'))
+        self.assertTrue(bad.exists())  # never repaired or deleted
+
+    def test_source_changed_is_flagged(self):  # AC-18
+        self.res.write_text(self.res.read_text(encoding='utf-8').replace('710', '711'), encoding='utf-8')
+        self.assertTrue(self.client.get('/api/v1/papers').json()[0]['source_changed'])
+        r = self.client.get('/api/v1/papers/7').json()
+        self.assertEqual((r['source_changed'], r['source_problems']), (True, ['result_changed']))
+
+
+class OpenPaper(Base):  # OP-02, AC-02
+    def test_fresh(self):
+        r = self.client.get('/api/v1/papers/7')
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.headers['etag'], '"0"')
+        body = r.json()
+        self.assertEqual(body['original'], self.original)
+        self.assertEqual((body['version'], body['current'], body['draft'], body['draft_stale'], body['source_changed']),
+                         (0, empty_state(), None, False, False))
+        self.assertEqual(schemas.errors('state', body['current']), [])
+        ev = body['original']['observations'][0]['evidence'][0]
+        self.assertEqual((ev['page'], ev['bbox']), (1, [0.5262, 0.3837, 0.5763, 0.3932]))
+
+    def test_version_and_stale_draft(self):
+        s1 = empty_state(); s1['decisions'] = {'o1': decision('rejected', 'It belongs to another record')}
+        self.write_json(self.store.version_path('7', 1), version_file(self.original, 1, s1, AT1))
+        self.write_json(self.store.draft_path('7'), {'schema': 'value-review-draft/1', 'paper': '7', 'base_version': 0,
+                                                     'trigger': 'manual', 'saved_at': AT0, 'state': empty_state()})
+        r = self.client.get('/api/v1/papers/7')
+        self.assertEqual(r.headers['etag'], '"1"')
+        body = r.json()
+        self.assertEqual((body['version'], body['current'], body['draft_stale']), (1, s1, True))
+
+    def test_unknown_or_malformed_ids(self):
+        for path in ('/api/v1/papers/8', '/api/v1/papers/abc', '/api/v1/papers/..%2Foriginals%2F7'):
+            r = self.client.get(path)
+            self.assertEqual(r.status_code, 404, path)
+            self.assertIn(r.json()['error']['code'], ('paper_not_found', 'not_found'))
+
+
+class PageImages(Base):  # OP-03
+    def test_png_rendered_once_and_cached(self):
+        r = self.client.get('/api/v1/papers/7/pages/1/image?w=1000')
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.headers['content-type'], 'image/png')
+        self.assertIn('immutable', r.headers['cache-control'])
+        self.assertTrue(r.content.startswith(PNG))
+        files = list((self.data / 'cache' / 'pages' / '7').glob('*.png'))
+        self.assertEqual([f.name.split('-', 1)[1] for f in files], ['1-1000.png'])
+        mtime = files[0].stat().st_mtime_ns
+        self.assertEqual(self.client.get('/api/v1/papers/7/pages/1/image?w=1000').content, r.content)
+        self.assertEqual(files[0].stat().st_mtime_ns, mtime)
+
+    def test_width_is_snapped_and_validated(self):
+        self.client.get('/api/v1/papers/7/pages/2/image?w=1290')
+        self.assertTrue(any(f.name.endswith('-2-1200.png') for f in (self.data / 'cache' / 'pages' / '7').glob('*.png')))
+        self.assertEqual(self.client.get('/api/v1/papers/7/pages/1/image?w=100').status_code, 400)
+
+    def test_page_out_of_range(self):
+        r = self.client.get('/api/v1/papers/7/pages/3/image')
+        self.assertEqual((r.status_code, r.json()['error']['code']), (404, 'page_not_found'))
+
+    def test_changed_pdf_is_refused(self):  # BR-09
+        make_pdf(self.pdf, [(612, 792), (612, 792), (612, 792)])
+        r = self.client.get('/api/v1/papers/7/pages/1/image')
+        self.assertEqual((r.status_code, r.json()['error']['code']), (422, 'source_changed'))
+
+    def test_sources_untouched(self):  # BR-01
+        before = (sha(self.res), sha(self.pdf))
+        self.client.get('/api/v1/papers'); self.client.get('/api/v1/papers/7'); self.client.get('/api/v1/papers/7/pages/1/image')
+        self.assertEqual((sha(self.res), sha(self.pdf)), before)
+
+
+class SettingsAndHealth(Base):  # OP-10, OP-11
+    def test_defaults_and_update(self):
+        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5})
+        new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_minutes': 10}
+        self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), new)
+        self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), new)
+
+    def test_invalid_settings_rejected(self):
+        for bad in ({'reviewer_name': '', 'keep_versions': 20, 'autosave_minutes': 5},
+                    {'reviewer_name': 'x', 'keep_versions': 0, 'autosave_minutes': 5},
+                    {'reviewer_name': 'x', 'keep_versions': 20, 'autosave_minutes': 5, 'extra': 1}):
+            r = self.client.put('/api/v1/settings', json=bad)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (400, 'invalid_request'), bad)
+        self.assertFalse(self.store.settings_path.exists())
+
+    def test_health(self):
+        self.assertEqual(self.client.get('/api/v1/health').json(), {'status': 'ok', 'papers': 1, 'data_dir_writable': True})
+
+    def test_unknown_endpoint(self):
+        r = self.client.get('/api/v1/nothing')
+        self.assertEqual((r.status_code, r.json()['error']['code']), (404, 'not_found'))
+
+
+class LocalOnly(Base):  # AC-20
+    PORT = 8766
+
+    def test_non_local_host_or_origin_refused(self):
+        for headers in ({'host': 'evil.example'}, {'host': '127.0.0.1:9999'}, {'host': '127.0.0.1:8766', 'origin': 'http://evil.example'}):
+            r = self.client.get('/api/v1/health', headers=headers)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (403, 'forbidden_host'), headers)
+
+    def test_local_names_served(self):
+        for host in ('127.0.0.1:8766', 'localhost:8766', 'localhost'):
+            self.assertEqual(self.client.get('/api/v1/health', headers={'host': host}).status_code, 200, host)
+
+    def test_second_instance_refused(self):
+        lock = InstanceLock(self.store.lock_path).acquire()
+        try:
+            with self.assertRaises(StorageError):
+                InstanceLock(self.store.lock_path).acquire()
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                self.assertEqual(launch(['--no-browser', '--data', str(self.data), '--port', '8799']), 2)
+            self.assertIn('already running', err.getvalue())
+        finally:
+            lock.release()
+        self.assertFalse(self.store.lock_path.exists())
+
+
+@unittest.skipUnless(vr_config.default_run_dir().is_dir() and vr_config.default_pdf_dir().is_dir(),
+                     'LLM run or PDFs not found; set VALUE_REVIEW_SOURCE_ROOT')
+class RealPapers(unittest.TestCase):  # AC-01, AC-02 on the real run
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        data = Path(cls.tmp.name)
+        ingest_run(vr_config.default_run_dir(), vr_config.default_pdf_dir(), data / 'originals')
+        cls.client = TestClient(create_app(Config(data=data), web_dir=None), base_url='http://127.0.0.1')
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.client.close()
+        cls.tmp.cleanup()
+
+    def test_fourteen_papers(self):
+        rows = self.client.get('/api/v1/papers').json()
+        self.assertEqual(len(rows), 14)
+        self.assertEqual(sum(r['values'] for r in rows), 2581)
+        p1 = rows[0]
+        self.assertEqual((p1['paper'], p1['values'], p1['needs_check'], p1['status'], p1['source_changed']), ('1', 255, 6, 'not_started', False))
+
+    def test_paper_1_page_5_renders(self):
+        body = self.client.get('/api/v1/papers/1').json()
+        first = body['original']['observations'][0]
+        self.assertEqual((first['value'], first['evidence'][0]['page']), ('710 ± 25', 5))
+        r = self.client.get('/api/v1/papers/1/pages/5/image')
+        self.assertEqual(r.status_code, 200)
+        self.assertTrue(r.content.startswith(PNG))
+        self.assertEqual(hashlib.sha256(r.content).hexdigest(), hashlib.sha256(self.client.get('/api/v1/papers/1/pages/5/image').content).hexdigest())
+
+
+if __name__ == '__main__':
+    unittest.main()

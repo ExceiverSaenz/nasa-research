@@ -42,7 +42,7 @@
 
 **Interface** · `GET /papers`
 
-- **Output** · `200 [{ "paper", "title", "pages", "records", "values", "needs_check", "reviewed", "status": "not_started|in_progress|done", "version", "latest": {n, at, by} | null, "draft_at" | null, "source_changed", "completion" }]` ordered by paper id. `reviewed` counts the latest version's decided values, or the draft's if newer.
+- **Output** · `200 [{ "paper", "title", "pages", "records", "values", "needs_check", "reviewed", "total", "status": "not_started|in_progress|done", "version", "latest": {n, at, by} | null, "draft_at" | null, "source_changed", "completion", "warnings"? }]` ordered by paper id. `reviewed` / `total` count decided values over the model values plus added ones, from the draft when it is newer than the latest version, else from that version. `warnings` (only when present) lists draft or version files that could not be read; they are reported, never repaired or deleted, and the newest readable version is used.
 - **Errors** · none beyond the shared ones.
 - **Example** · Fresh install, 14 originals → 14 items, all `not_started`, `version 0`, paper 1 `values 255, needs_check 6` (AC-01, AC-16).
 
@@ -54,7 +54,7 @@
 |---|---|---|---|
 | `n` | paper id | Yes | must exist |
 
-- **Output** · `200 { "original": <originals/<n>.json>, "version": k, "current": <state of v<k>> | <empty state>, "draft": <draft> | null, "draft_stale": bool, "source_changed": bool }` with `ETag: "<k>"`.
+- **Output** · `200 { "original": <originals/<n>.json>, "version": k, "current": <state of v<k>> | <empty state>, "draft": <draft> | null, "draft_stale": bool, "source_changed": bool, "source_problems": ["result_changed" | "result_missing" | "pdf_changed" | "pdf_missing"], "warnings"? }` with `ETag: "<k>"`.
 - **Postcondition** · Nothing is written. The client uses `draft` (if the user chooses Continue) or `current` as its working copy.
 - **Errors** · 404 `paper_not_found`.
 - **Example** · Paper 1 after one submit and a later draft → `version 1`, `draft.base_version 1`, `draft_stale false` (AC-09).
@@ -63,7 +63,7 @@
 
 **Interface** · `GET /papers/{n}/pages/{p}/image?w=<px>`
 
-- **Input** · `w` integer 400–2400, default 1240, rounded to a step of 200.
+- **Input** · `w` integer 400–2400 (outside → 400 `invalid_request`), default 1240, rounded to a step of 200.
 - **Output** · `200 image/png`, `Cache-Control: max-age=31536000, immutable` (the key includes the PDF hash). Rendered with pypdfium2 on first request and cached in `cache/pages/`.
 - **Errors** · 404 `page_not_found`; 422 `source_changed`.
 
