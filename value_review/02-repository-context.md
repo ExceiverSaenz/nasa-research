@@ -29,7 +29,7 @@
 ## Conventions and constraints
 
 - `AGENTS.md` (repository root): preserve originals and provenance; write new versions to new files, never overwrite; never impute or invent values; search with `rg` before reading; run Python as `python -B`.
-- Precedent documents: `parsing_validator/01-specification.md` … `05-coverage-audit.md` (same structure as this set; add a `05-coverage-audit.md` at the end).
+- Precedent documents: `parsing_validator/01-specification.md` … `05-coverage-audit.md`; this set follows the same structure, with [05-coverage-audit.md](05-coverage-audit.md) and a [README](README.md) for running the tool.
 - Runtime: Windows 11, Python 3.13.5, Node v24.14.1. Installed and sufficient: FastAPI 0.135.2, uvicorn 0.42.0, pydantic 2.12.5, jsonschema 4.26.0, pypdfium2, Pillow 12.0.0. A new dependency needs an ADR.
 - Local only: bind 127.0.0.1, reject non-local `Host`, no CORS, no auth, no outbound network.
 - Sealed trees (`papers/`, `llm_baseline/results/`) are never written; tests prove it with a hash inventory.
