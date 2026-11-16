@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/draft.schema.json",
+  "title": "Saved draft of one paper (annotations/drafts/<n>.draft.json)",
+  "type": "object",
+  "required": ["schema", "paper", "base_version", "trigger", "saved_at", "state"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-draft/1" },
+    "paper": { "type": "string", "pattern": "^[0-9]{1,4}$" },
+    "base_version": { "type": "integer", "minimum": 0, "description": "Version the working copy started from (0 = original only)." },
+    "trigger": { "enum": ["manual", "auto", "pagehide"] },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "ui": {
+      "type": "object",
+      "description": "Optional view to restore (mode, record or column, selected value). Never affects data.",
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "enum": ["record", "value"] },
+        "record_id": { "type": "string" },
+        "feature_id": { "type": "string" },
+        "observation_id": { "type": "string" }
+      }
+    },
+    "state": { "$ref": "state.schema.json" }
+  }
+}

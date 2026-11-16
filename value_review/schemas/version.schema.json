@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/version.schema.json",
+  "title": "One submitted version of a paper (annotations/versions/<n>/v<k>.json), immutable",
+  "type": "object",
+  "required": ["schema", "paper", "n", "at", "by", "note", "base_version", "source", "state", "counts", "values"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-version/1" },
+    "paper": { "type": "string", "pattern": "^[0-9]{1,4}$" },
+    "n": { "type": "integer", "minimum": 1 },
+    "at": { "type": "string", "format": "date-time" },
+    "by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "note": { "type": "string", "description": "'Submitted' or 'Restored from v<k>'." },
+    "base_version": { "type": "integer", "minimum": 0 },
+    "restored_from": { "type": "integer", "minimum": 1 },
+    "source": { "$ref": "#/$defs/source" },
+    "state": { "$ref": "state.schema.json" },
+    "counts": { "$ref": "#/$defs/counts" },
+    "values": { "type": "array", "items": { "$ref": "#/$defs/value" } }
+  },
+  "$defs": {
+    "source": {
+      "type": "object", "required": ["run_id", "result_sha256", "pdf_sha256", "original_sha256"], "additionalProperties": false,
+      "properties": {
+        "run_id": { "type": "string" },
+        "result_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "pdf_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "original_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "counts": {
+      "type": "object", "required": ["total", "pending", "accepted", "corrected", "rejected", "unsure", "added_values", "added_records", "edited_records"], "additionalProperties": false,
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 }, "pending": { "type": "integer", "minimum": 0 },
+        "accepted": { "type": "integer", "minimum": 0 }, "corrected": { "type": "integer", "minimum": 0 },
+        "rejected": { "type": "integer", "minimum": 0 }, "unsure": { "type": "integer", "minimum": 0 },
+        "added_values": { "type": "integer", "minimum": 0 }, "added_records": { "type": "integer", "minimum": 0 },
+        "edited_records": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "value": {
+      "description": "One materialized value: original + working copy. Same fields as a CSV row.",
+      "type": "object",
+      "required": ["observation_id", "record_ids", "record_labels", "feature_id", "value", "unit", "original_value", "original_unit", "status", "note", "by", "at", "origin", "needs_check"],
+      "additionalProperties": false,
+      "properties": {
+        "observation_id": { "type": "string" },
+        "record_ids": { "type": "array", "items": { "type": "string" } },
+        "record_labels": { "type": "array", "items": { "type": "string" } },
+        "feature_id": { "type": "string" },
+        "original_feature_id": { "type": ["string", "null"] },
+        "original_record_ids": { "type": ["array", "null"], "items": { "type": "string" } },
+        "value": { "type": ["string", "null"] },
+        "unit": { "type": ["string", "null"] },
+        "original_value": { "type": ["string", "null"] },
+        "original_unit": { "type": ["string", "null"] },
+        "status": { "enum": ["pending", "accepted", "corrected", "rejected", "unsure"] },
+        "note": { "type": "string" },
+        "by": { "type": ["string", "null"] },
+        "at": { "type": ["string", "null"], "format": "date-time" },
+        "origin": { "enum": ["model", "reviewer"] },
+        "needs_check": { "type": "boolean" }
+      }
+    }
+  }
+}
