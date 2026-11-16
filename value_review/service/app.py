@@ -1,6 +1,6 @@
-"""FastAPI application: OP-01, OP-02, OP-03, OP-05, OP-06, OP-07, OP-09, OP-10, OP-11 of the contract.
+"""FastAPI application: OP-01 to OP-07, OP-09, OP-10, OP-11 of the contract.
 
-Drafts (OP-04) come in step 6 and restore (OP-08) in step 8, on top of the same objects.
+Restore (OP-08) comes in step 8, on top of the same objects.
 """
 import json
 import logging
@@ -9,6 +9,7 @@ import tempfile
 import threading
 from collections import defaultdict
 from datetime import datetime, timezone
+from typing import Literal
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, Query, Request, Response
@@ -44,6 +45,14 @@ class Settings(BaseModel):
 class SubmitBody(BaseModel):
     model_config = ConfigDict(extra='forbid')
     state: dict
+
+
+class DraftBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    base_version: int = Field(ge=0)
+    trigger: Literal['manual', 'auto', 'pagehide']
+    state: dict
+    ui: dict | None = None
 
 
 def _etag(n):
@@ -166,6 +175,47 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         except StorageError as error:
             raise ApiError(500, 'storage_error', str(error)) from None
         return Response(png, media_type='image/png', headers={'Cache-Control': 'max-age=31536000, immutable'})
+
+    # --- OP-04: draft -----------------------------------------------------------
+    @app.put(f'{API}/papers/{{paper}}/draft')
+    def save_draft(paper: str, payload: DraftBody):
+        original = library.original(paper)
+        with paper_locks[paper]:
+            source = library.source_problems(original)
+            if source:
+                raise ApiError(422, 'source_changed', 'The source changed since ingest; the paper is read-only', {'problems': source})
+            k, _latest, _n, _problems = store.current(paper)
+            if payload.base_version != k:
+                raise ApiError(409, 'version_conflict', f'The paper is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
+            shape = shape_problems(payload.state)
+            if shape:
+                raise ApiError(400, 'invalid_request', 'The working copy does not match the schema', {'pointers': shape})
+            broken = check_state(original, payload.state, submit=False)   # a reason may still be being typed
+            if broken:
+                raise ApiError(422, 'rules_violation', 'The working copy breaks a review rule', {'items': broken})
+            draft = {'schema': 'value-review-draft/1', 'paper': paper, 'base_version': k, 'trigger': payload.trigger,
+                     'saved_at': clock(), 'state': payload.state}
+            if payload.ui:
+                draft['ui'] = payload.ui
+            problems = schemas.errors('draft', draft)
+            if problems:
+                raise ApiError(400, 'invalid_request', 'The draft does not match the schema',
+                               {'pointers': [{'pointer': p, 'message': m} for p, m in problems[:10]]})
+            try:
+                store.write_draft(paper, draft)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        return {'saved_at': draft['saved_at']}
+
+    @app.delete(f'{API}/papers/{{paper}}/draft', status_code=204)
+    def delete_draft(paper: str):
+        library.original(paper)
+        with paper_locks[paper]:
+            try:
+                store.delete_draft(paper)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        return Response(status_code=204)
 
     # --- OP-05: submit a version -----------------------------------------------
     @app.post(f'{API}/papers/{{paper}}/versions', status_code=201)

@@ -78,10 +78,11 @@
 | `state` | `value-review-state/1` | Yes | schema + shared rules, except BR-04 (a draft may hold a reject whose reason is still being typed: stored as given) |
 | `ui` | object | No | see draft schema |
 
-- **Output** · `PUT 200 { "saved_at" }`; `DELETE 204`.
-- **Postcondition** · The draft file holds exactly this state. No version is created (BR-02).
-- **Errors** · 409 `version_conflict` when a newer version exists (the client offers to reload); 422 `source_changed`.
+- **Output** · `PUT 200 { "saved_at" }`; `DELETE 204` (also when there is no draft).
+- **Postcondition** · The draft file holds exactly this state, the trigger, `saved_at` and `ui` when sent; it replaces any previous draft. No version is created (BR-02). A failed submit leaves the draft as it was.
+- **Errors** · 400 `invalid_request` (body, schema, unknown `trigger` or `ui` key); 404 `paper_not_found`; 409 `version_conflict` with `details.current` when a newer version exists (the client offers to reload); 422 `rules_violation` (ids, boxes; not BR-04); 422 `source_changed`. Nothing is written on error.
 - **Retries** · Repeating the same PUT gives the same file content (except `saved_at`).
+- **Client behavior (AC-09, AC-10)** · The client saves with `manual` (Save draft, or Save draft and leave), `auto` (every `autosave_minutes` while the working copy differs from the last saved draft or version) and `pagehide` (`fetch` with `keepalive`). On open, a draft whose `base_version` equals the version is offered (Continue / Discard); a stale one can only be discarded. Leaving the review with unsaved changes asks Stay / Leave without saving / Save draft and leave; closing the tab triggers the browser's own warning.
 
 ## OP-05 · Submit a version
 

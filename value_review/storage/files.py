@@ -1,6 +1,6 @@
 """Files under annotations/: drafts, versions and settings (contract, "Files").
 
-Reading, settings, version writes and pruning; draft writes are added in step 6.
+Reading, settings, draft writes, version writes and pruning.
 A file that cannot be read (malformed JSON, wrong schema) is reported, never repaired or deleted.
 """
 import json
@@ -107,6 +107,10 @@ class AnnotationStore:
             except OSError as error:
                 raise StorageError(f'Could not delete v{n}.json: {error}') from error
         return deleted
+
+    def write_draft(self, paper, data):
+        """Replace the paper's draft (at most one per paper; a draft is not a version, BR-02)."""
+        atomic_write_bytes(self.draft_path(paper), _dumps(data))
 
     def delete_draft(self, paper):
         try:

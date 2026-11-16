@@ -90,7 +90,8 @@ export default function Papers() {
                         <tr key={r.paper}>
                           <td className="mono">{r.paper}</td>
                           <td className="title-cell"><a href={`#/paper/${r.paper}`} title={r.title}>{r.title}</a>
-                            {r.source_changed && <span className="chip st-rejected" style={{ marginLeft: 8 }}>Source changed</span>}
+                            {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected" style={{ marginLeft: 8 }} title={`Draft saved ${shortDate(r.draft_at)}`}>Draft</span>}
+                            {r.source_changed &&<span className="chip st-rejected" style={{ marginLeft: 8 }}>Source changed</span>}
                             {r.completion && r.completion !== 'complete' && <span className="chip st-unsure" style={{ marginLeft: 8 }}>Model run {r.completion}</span>}</td>
                           <td>{r.latest ? <>{shortDate(r.latest.at)} <span className="muted">v{r.latest.n}</span></> : '—'}</td>
                           <td>{r.latest ? r.latest.by : '—'}</td>

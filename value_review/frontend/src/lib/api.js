@@ -11,11 +11,12 @@ export class ApiError extends Error {
 
 const BASE = './api/v1';
 
-async function request(path, { method = 'GET', body, headers = {} } = {}) {
+async function request(path, { method = 'GET', body, headers = {}, keepalive = false } = {}) {
   let res;
   try {
     res = await fetch(BASE + path, {
       method,
+      keepalive,
       headers: body === undefined ? headers : { 'Content-Type': 'application/json', ...headers },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
@@ -38,6 +39,9 @@ export const api = {
   settings: async () => (await request('/settings')).data,
   submit: async (id, version, state) =>
     (await request(`/papers/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { state }, headers: { 'If-Match': `"${version}"` } })).data,
-  pageUrl: (id, page, width) => `${BASE}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
+  saveDraft: async (id, body, { keepalive = false } = {}) =>
+    (await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'PUT', body, keepalive })).data,
+  deleteDraft: async (id) => { await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'DELETE' }); },
+  pageUrl:(id, page, width) => `${BASE}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
   exportUrl: (id, n, kind) => `${BASE}/papers/${encodeURIComponent(id)}/versions/${n}/export.${kind}`,
 };
