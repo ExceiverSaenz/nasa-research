@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
+import VersionHistory from './VersionHistory.jsx';
 
 const STATUS = { not_started: 'Not started', in_progress: 'In progress', done: 'Done' };
 const DOT = { not_started: '#9AA3B2', in_progress: '#0B3D91', done: '#17703A' };
@@ -15,10 +16,18 @@ export default function Papers() {
   const [q, setQ] = useState('');
   const [filter, setFilter] = useState('all');
   const [sort, setSort] = useState({ key: 'paper', dir: 1 });
+  const [menu, setMenu] = useState(null);         // paper id whose row menu is open
+  const [history, setHistory] = useState(null);   // paper row whose version history is open
+  const [keep, setKeep] = useState(20);
 
+  const reload = () => api.papers().then(setRows).catch((e) => setError(e.message));
   useEffect(() => {
     document.title = 'Papers · Tensile Data Review';
-    api.papers().then(setRows).catch((e) => setError(e.message));
+    reload();
+    api.settings().then((s) => setKeep(s.keep_versions)).catch(() => {});
+    const close = (e) => { if (e.key === 'Escape') setMenu(null); };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
   }, []);
 
   const shown = useMemo(() => {
@@ -89,7 +98,20 @@ export default function Papers() {
                       return (
                         <tr key={r.paper}>
                           <td className="mono">{r.paper}</td>
-                          <td className="title-cell"><a href={`#/paper/${r.paper}`} title={r.title}>{r.title}</a>
+                          <td className="title-cell" style={{ position: 'relative' }}>
+                            <button type="button" className="icon-btn" style={{ width: 32, height: 32, border: 0, float: 'right', background: 'transparent' }}
+                              aria-haspopup="menu" aria-expanded={menu === r.paper} aria-label={`More actions for paper ${r.paper}`}
+                              onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
+                            {menu === r.paper && (
+                              <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 0, top: 44 }}>
+                                <a role="menuitem" className="menu-link" href={`#/paper/${r.paper}`}>Open</a>
+                                <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
+                                {r.latest
+                                  ? <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>
+                                  : <span className="muted" style={{ display: 'block', padding: '6px 14px 8px', whiteSpace: 'normal' }}>No versions yet. A version is saved each time the paper is submitted.</span>}
+                              </div>
+                            )}
+                            <a href={`#/paper/${r.paper}`} title={r.title}>{r.title}</a>
                             {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected" style={{ marginLeft: 8 }} title={`Draft saved ${shortDate(r.draft_at)}`}>Draft</span>}
                             {r.source_changed &&<span className="chip st-rejected" style={{ marginLeft: 8 }}>Source changed</span>}
                             {r.completion && r.completion !== 'complete' && <span className="chip st-unsure" style={{ marginLeft: 8 }}>Model run {r.completion}</span>}</td>
@@ -112,6 +134,7 @@ export default function Papers() {
         )}
         {!rows && !error && <p className="muted">Loading papers…</p>}
       </main>
+      {history && <VersionHistory paper={history} keep={keep} onClose={() => setHistory(null)} onChanged={reload} />}
     </div>
   );
 }

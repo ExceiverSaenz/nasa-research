@@ -126,8 +126,9 @@
 
 **Interface** · `POST /papers/{n}/versions/{k}/restore` with `If-Match: "<current>"`
 
-- **Output** · `201 { "n": current+1, … }` exactly as OP-05, with `state` copied from v`k`, `note` "Restored from v`k`", `restored_from k`.
-- **Postcondition** · Same as OP-05 (new file, prune, draft deleted). v`k` itself is unchanged. *(Step 8.)*
+- **Output** · `201 { "n", "at", "by", "note", "counts" }` exactly as OP-05 (which also returns `note`), with `state` copied from v`k`, `note` "Restored from v`k`" and `restored_from k` in the new file. The values are materialized again from the current original.
+- **Postcondition** · Same as OP-05 (new file, prune, draft deleted). v`k` itself is unchanged; a restore counts toward `keep_versions` like a submit, so restoring can prune the oldest version.
+- **Client behavior (AC-11, AC-12, AC-13)** · Papers opens a version history per paper: View (the decided and added values of a version), Compare with current (values that differ in value, unit, status, column or records, matched by observation id, plus values only in one version), Restore (after a confirmation that names the new version and says the draft is discarded), Download as CSV or JSON. Start over from model output (review screen) deletes the draft with `DELETE …/draft` and resets the working copy to the empty state; versions are not touched.
 - **Errors** · 404 `version_not_found`; 409 `version_conflict`; 428; 422 `source_changed` if the version's `source.result_sha256` differs from the current original (OQ-02).
 
 ## OP-09 · Export a version

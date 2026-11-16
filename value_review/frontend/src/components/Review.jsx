@@ -25,6 +25,8 @@ export default function Review({ paperId, guard }) {
   const [offer, setOffer] = useState(null);       // {draft, stale}: a draft found when the paper opened
   const [problem, setProblem] = useState(null);   // {message, reload}
   const [leave, setLeave] = useState(null);       // target hash while asking before leaving
+  const [startOver, setStartOver] = useState(false);
+  const versionState = useRef(emptyState());      // state of the current version (what "saved" means without a draft)
   const [view, setView] = useState({ mode: 'record', recordId: null, featureId: null, onlyCheck: false, status: 'any' });
   const [selectedId, setSelectedId] = useState(null);
   const [page, setPage] = useState(1);
@@ -43,6 +45,7 @@ export default function Review({ paperId, guard }) {
       setVersion(data.version);
       setState(data.current);
       setSaved({ sig: signature(data.current), kind: data.version ? 'version' : 'original', version: data.version });
+      versionState.current = data.current;
       setOffer(data.draft ? { draft: data.draft, stale: data.draft_stale } : null);
       setLoad({ status: 'ready', data });
       document.title = `Paper ${paperId} · Tensile Data Review`;
@@ -215,11 +218,30 @@ export default function Review({ paperId, guard }) {
     setSelBox(null);
   };
 
+  // Start over (BR-08, AC-13): the working copy becomes the model output; the draft is deleted; versions stay.
+  const doStartOver = async () => {
+    try {
+      await api.deleteDraft(paperId);
+    } catch (e) {
+      setProblem({ message: `The draft could not be deleted, so nothing was changed: ${e.message}` });
+      setStartOver(false);
+      return;
+    }
+    setState(emptyState());
+    setSaved({ sig: signature(versionState.current), kind: version ? 'version' : 'original', version });
+    setOffer(null);
+    setStartOver(false);
+    setSelBox(null);
+    setDrawing(null);
+    setToast('Started over from the model output.');
+  };
+
   const submit = () => {
     setSummary((s) => ({ ...s, submitting: true, error: null }));
     api.submit(paperId, version, state).then((res) => {
       setVersion(res.n);
       setSaved({ sig: signature(state), kind: 'version', version: res.n });
+      versionState.current = state;
       setOffer(null);
       setSummary({ submitted: res });
     }).catch((e) => {
@@ -274,7 +296,23 @@ export default function Review({ paperId, guard }) {
   return (
     <div className="review">
       <Header paperId={paperId} title={doc.title} reviewed={total.reviewed} total={total.total} pill={pill}
-        canSave={dirty && !readOnly} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})} />
+        canSave={dirty && !readOnly} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})}
+        onStartOver={readOnly ? null : () => setStartOver(true)} />
+      {startOver && (
+        <div className="backdrop">
+          <div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="so-t" aria-describedby="so-d" style={{ width: 540, borderTop: '6px solid var(--reject)' }}>
+            <div className="modal-head"><h2 id="so-t" style={{ fontSize: 20 }}>Start over from the model output?</h2></div>
+            <div className="modal-body" id="so-d">
+              <span>This clears every decision, note, column or record change, added value and highlight edit in your working copy, and deletes your saved draft.</span>
+              <span>The model's original output is never changed, so you start again from it. Submitted versions are kept{version ? `; v${version} stays in the version history` : ''}. <b>This cannot be undone.</b></span>
+            </div>
+            <div className="modal-foot" style={{ justifyContent: 'flex-end' }}>
+              <button type="button" className="btn big" onClick={() => setStartOver(false)} autoFocus>Cancel</button>
+              <button type="button" className="btn big" style={{ background: 'var(--reject)', borderColor: 'var(--reject)', color: '#fff', fontWeight: 600 }} onClick={doStartOver}>Yes, start over</button>
+            </div>
+          </div>
+        </div>
+      )}
       {problem && <div className="banner error" role="alert"><span style={{ flex: 1 }}>{problem.message}</span>
         {problem.reload ? <button type="button" className="btn" onClick={reload}>Reload paper</button>
           : <button type="button" className="btn" onClick={() => setProblem(null)}>Dismiss</button>}</div>}
@@ -360,8 +398,9 @@ export default function Review({ paperId, guard }) {
   );
 }
 
-function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFinish }) {
+function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFinish, onStartOver }) {
   const pct = total ? Math.round((reviewed / total) * 100) : 0;
+  const [menu, setMenu] = useState(false);
   return (
     <header className="app-header">
       <div className="brand" aria-hidden="true">TD</div>
@@ -378,6 +417,16 @@ function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFini
           <button type="button" className="btn link" style={{ height: 44, fontSize: 16 }} disabled={!canSave} onClick={onSave}>Save draft</button>
         </span>
         <button type="button" className="btn big primary" onClick={onFinish}>Finish paper</button>
+        <span style={{ position: 'relative' }}>
+          <button type="button" className="icon-btn" style={{ width: 44, height: 44 }} aria-haspopup="menu" aria-expanded={menu}
+            aria-label="More actions" onClick={() => setMenu((m) => !m)}>⋯</button>
+          {menu && (
+            <div className="menu" role="menu" aria-label="More actions" style={{ right: 0, top: 50, minWidth: 260 }}>
+              <button type="button" role="menuitem" style={{ color: 'var(--reject)' }} disabled={!onStartOver}
+                onClick={() => { setMenu(false); onStartOver(); }}>Start over from model output</button>
+            </div>
+          )}
+        </span>
       </>}
     </header>
   );

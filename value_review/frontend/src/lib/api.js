@@ -42,6 +42,10 @@ export const api = {
   saveDraft: async (id, body, { keepalive = false } = {}) =>
     (await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'PUT', body, keepalive })).data,
   deleteDraft: async (id) => { await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'DELETE' }); },
-  pageUrl:(id, page, width) => `${BASE}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
+  versions: async (id) => (await request(`/papers/${encodeURIComponent(id)}/versions`)).data,
+  version: async (id, n) => (await request(`/papers/${encodeURIComponent(id)}/versions/${n}`)).data,
+  restore: async (id, n, current) =>
+    (await request(`/papers/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+  pageUrl: (id, page, width) => `${BASE}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
   exportUrl: (id, n, kind) => `${BASE}/papers/${encodeURIComponent(id)}/versions/${n}/export.${kind}`,
 };

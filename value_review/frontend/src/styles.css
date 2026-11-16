@@ -68,8 +68,8 @@ table.grid { width: 100%; min-width: 1000px; border-collapse: collapse; }
 .grid th button { border: 0; background: none; padding: 0; font-weight: 600; color: inherit; }
 .grid td { padding: 10px 12px; border-bottom: 1px solid var(--line-4); vertical-align: middle; }
 .grid tr:hover td { background: #F2F6FC; }
-.grid .title-cell { max-width: 480px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.grid .title-cell a { color: var(--ink); text-decoration: none; }
+.grid .title-cell { max-width: 480px; }
+.grid .title-cell > a { display: block; color: var(--ink); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 32px; }
 .grid .title-cell a:hover { text-decoration: underline; }
 .mini-bar { display: flex; align-items: center; gap: 8px; }
 .mini-bar .bar { flex: 1; height: 4px; }
@@ -125,7 +125,8 @@ table.grid { width: 100%; min-width: 1000px; border-collapse: collapse; }
 .swatch.added { border: 2px solid #0E7C86; background: rgba(14, 124, 134, 0.16); }
 .menu { position: absolute; z-index: 6; background: #fff; border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 24px rgba(7, 27, 63, 0.16); padding: 4px 0; min-width: 200px; }
 .menu button { display: block; width: 100%; min-height: 36px; padding: 0 14px; border: 0; background: transparent; text-align: left; }
-.menu button:hover { background: var(--sel); }
+.menu button:hover, .menu .menu-link:hover { background: var(--sel); }
+.menu .menu-link { display: flex; align-items: center; min-height: 36px; padding: 0 14px; color: var(--ink); text-decoration: none; }
 .hl-label { position: absolute; transform: translateY(-100%); background: var(--navy); color: #fff; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 3px; white-space: nowrap; pointer-events: none; }
 
 /* detail */

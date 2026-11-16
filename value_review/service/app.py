@@ -1,7 +1,4 @@
-"""FastAPI application: OP-01 to OP-07, OP-09, OP-10, OP-11 of the contract.
-
-Restore (OP-08) comes in step 8, on top of the same objects.
-"""
+"""FastAPI application: OP-01 to OP-11 of the contract (03-interface-contract.md)."""
 import json
 import logging
 import os
@@ -221,9 +218,10 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 raise ApiError(500, 'storage_error', str(error)) from None
         return Response(status_code=204)
 
-    # --- OP-05: submit a version -----------------------------------------------
-    @app.post(f'{API}/papers/{{paper}}/versions', status_code=201)
-    def submit(paper: str, payload: SubmitBody, request: Request, response: Response):
+    # --- OP-05 and OP-08: new versions -------------------------------------------
+    def new_version(paper, request, response, state_for):
+        """Shared by submit and restore. ``state_for(original, k)`` returns (state, note, restored_from)
+        or raises ApiError; it runs under the paper's lock after the version check."""
         expected = if_match(request)
         original = library.original(paper)
         with paper_locks[paper]:
@@ -233,7 +231,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             k, _latest, n, _problems = store.current(paper)
             if expected != k:
                 raise ApiError(409, 'version_conflict', f'The paper is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
-            state = payload.state
+            state, note, restored_from = state_for(original, k)
             shape = shape_problems(state)
             if shape:
                 raise ApiError(400, 'invalid_request', 'The working copy does not match the schema', {'pointers': shape})
@@ -245,11 +243,13 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             src = original['source']
             version = {
                 'schema': 'value-review-version/1', 'paper': paper, 'n': n, 'at': clock(),
-                'by': settings['reviewer_name'], 'note': 'Submitted', 'base_version': k,
+                'by': settings['reviewer_name'], 'note': note, 'base_version': k,
                 'source': {'run_id': src['run_id'] or '', 'result_sha256': src['result_sha256'], 'pdf_sha256': src['pdf_sha256'],
                            'original_sha256': library.original_sha256(paper)},
                 'state': state, 'counts': count_values(rows, state), 'values': rows,
             }
+            if restored_from is not None:
+                version['restored_from'] = restored_from
             problems = schemas.errors('version', version)
             if problems:  # a bug, not a client error: never write an invalid version
                 raise RuntimeError(f'version would not validate: {problems[:3]}')
@@ -264,7 +264,20 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 log.warning('after writing v%s of paper %s: %s', n, paper, error)
         response.headers['ETag'] = _etag(n)
         response.headers['Location'] = f'{API}/papers/{paper}/versions/{n}'
-        return {'n': n, 'at': version['at'], 'by': version['by'], 'counts': version['counts']}
+        return {'n': n, 'at': version['at'], 'by': version['by'], 'note': note, 'counts': version['counts']}
+
+    @app.post(f'{API}/papers/{{paper}}/versions', status_code=201)
+    def submit(paper: str, payload: SubmitBody, request: Request, response: Response):
+        return new_version(paper, request, response, lambda _original, _k: (payload.state, 'Submitted', None))
+
+    @app.post(f'{API}/papers/{{paper}}/versions/{{k}}/restore', status_code=201)
+    def restore(paper: str, k: int, request: Request, response: Response):
+        def state_for(original, _current):
+            old = read_version(paper, k)
+            if old['source']['result_sha256'] != original['source']['result_sha256']:   # OQ-02
+                raise ApiError(422, 'source_changed', f'v{k} was made on another version of the model output', {'version': k})
+            return old['state'], f'Restored from v{k}', k
+        return new_version(paper, request, response, state_for)
 
     # --- OP-06, OP-07 ------------------------------------------------------------
     def read_version(paper, k):
