@@ -4,7 +4,8 @@ import { displayValue, STATUS_LABEL } from '../lib/values.js';
 // Left panel (canvas Review.dc.html, "Browse values"): mode, navigator, filters and the value list.
 export default function ValuesPanel({ mode, setMode, items, currentId, onPick, sub, status, setStatus, statusCounts,
   onlyCheck, setOnlyCheck, anyFilter, clearFilters, values, selectedId, onSelect, labels, recordLabel,
-  editable, canEditRecord, recordIsAdded, onEditRecord, onNewRecord, onRemoveRecord, onAddValue }) {
+  editable, canEditRecord, recordIsAdded, onEditRecord, onNewRecord, onRemoveRecord, onAddValue,
+  bulkCount = 0, onBulk, undo, onUndo }) {
   const [menu, setMenu] = useState(false);
   const kind = mode === 'record' ? 'record' : 'column';
   const act = (fn) => () => { setMenu(false); fn(); };
@@ -58,6 +59,12 @@ export default function ValuesPanel({ mode, setMode, items, currentId, onPick, s
           {anyFilter && <button type="button" className="btn link" onClick={clearFilters}>Clear filters</button>}
         </div>
       </div>
+      {undo && (
+        <div role="status" style={{ margin: '8px 16px', padding: '4px 4px 4px 12px', borderRadius: 6, background: 'var(--accept-bg)', color: 'var(--accept-ink)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 600, fontSize: 13 }}>Accepted {undo.count} value{undo.count === 1 ? '' : 's'}.</span>
+          <button type="button" className="btn link" style={{ color: 'var(--accept-ink)', fontWeight: 700 }} onClick={onUndo}>Undo</button>
+        </div>
+      )}
       <div className="values">
         {values.length === 0 && <div className="empty">No values here with these filters.{editable ? ' If the model missed one, use + Add value.' : ''}</div>}
         {values.map((v) => {
@@ -72,6 +79,11 @@ export default function ValuesPanel({ mode, setMode, items, currentId, onPick, s
           );
         })}
       </div>
+      {editable && bulkCount > 0 && (
+        <div style={{ borderTop: '1px solid var(--line-3)', padding: '12px 16px', flex: 'none' }}>
+          <button type="button" className="btn" style={{ background: '#F6F8FB', fontWeight: 600 }} onClick={onBulk}>Accept {bulkCount} pending</button>
+        </div>
+      )}
     </section>
   );
 }

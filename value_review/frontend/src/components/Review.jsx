@@ -6,6 +6,7 @@ import {
   redrawBox, removeBox, removeRecord, removeValue, restoreAllBoxes, restoreBox, undoRedraw,
 } from '../lib/edits.js';
 import { RecordDialog, ValueDialog } from './Dialogs.jsx';
+import { bulkAccept, bulkTargets, undoBulk } from '../lib/bulk.js';
 import { clearDecision, decide, emptyState, signature } from '../lib/state.js';
 import { browseFeatures, browseRecords, counts, effectiveValues, featureLabels, inScope, recordLabels, UNASSIGNED } from '../lib/values.js';
 import DetailPanel from './DetailPanel.jsx';
@@ -36,10 +37,12 @@ export default function Review({ paperId, guard }) {
   const [selBox, setSelBox] = useState(null);     // key of the highlight selected on the page
   const [drawing, setDrawing] = useState(null);   // {action: 'add' | 'redraw', box?, id?, hint}
   const [dialog, setDialog] = useState(null);     // {kind: 'record' | 'value', editing?, recordId?}
+  const [bulkAsk, setBulkAsk] = useState(false);
+  const [undo, setUndo] = useState(null);         // last bulk accept, while it can still be undone
 
   const reload = useCallback(() => {
     setLoad({ status: 'loading' });
-    setSummary(null); setProblem(null); setLeave(null);
+    setSummary(null); setProblem(null); setLeave(null); setUndo(null);
     Promise.all([api.paper(paperId), api.settings()]).then(([data, s]) => {
       setSettings(s);
       setVersion(data.version);
@@ -162,9 +165,20 @@ export default function Review({ paperId, guard }) {
     try {
       setState((s) => decide(s, row.id, verdict, opts, settings.reviewer_name));
     } catch (e) { return; }
+    setUndo(null);   // a bulk accept is undoable only until the next decision (BR-10)
     setToast(`${{ accepted: 'Accepted', corrected: 'Correction saved', rejected: 'Rejected', unsure: 'Marked as unsure' }[verdict]}.`);
     const next = list[index + 1];
     if (next && verdict === 'accepted') select(next.id);
+  };
+
+  // --- bulk accept (AC-17) ---------------------------------------------------------
+  const bulkRows = bulkTargets(list);
+  const doBulk = () => {
+    const res = bulkAccept(state, list, settings.reviewer_name);
+    setState(res.state);
+    setUndo(res.undo);
+    setBulkAsk(false);
+    setToast('');
   };
 
   // --- edits: moves, records, added values, highlights (AC-14, AC-15) ----------------------
@@ -228,6 +242,7 @@ export default function Review({ paperId, guard }) {
       return;
     }
     setState(emptyState());
+    setUndo(null);
     setSaved({ sig: signature(versionState.current), kind: version ? 'version' : 'original', version });
     setOffer(null);
     setStartOver(false);
@@ -346,7 +361,9 @@ export default function Review({ paperId, guard }) {
           editable={editable} canEditRecord={view.mode === 'record' && !!view.recordId && view.recordId !== UNASSIGNED}
           recordIsAdded={recordIsAdded} onEditRecord={() => setDialog({ kind: 'record', editing: true, recordId: view.recordId })}
           onNewRecord={() => setDialog({ kind: 'record', editing: false })} onRemoveRecord={removeCurrentRecord}
-          onAddValue={() => setDialog({ kind: 'value' })} />
+          onAddValue={() => setDialog({ kind: 'value' })}
+          bulkCount={bulkRows.length} onBulk={() => setBulkAsk(true)}
+          undo={undo} onUndo={() => { setState((s) => undoBulk(s, undo)); setUndo(null); }} />
         <PageViewer paperId={paperId} page={page} pageCount={doc.page_count} aspect={pageInfo.height_pt / pageInfo.width_pt}
           onPage={setPage} zoom={zoom} onZoom={setZoom} boxes={boxes} label={row ? labels[row.featureId] || row.featureId : ''}
           selectedKey={selBox} onSelectBox={setSelBox} drawing={drawing} onDrawn={onDrawn} onCancelDraw={() => setDrawing(null)}
@@ -357,12 +374,30 @@ export default function Review({ paperId, guard }) {
           onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} />
         <DetailPanel row={row} index={index} total={list.length} onPrev={() => select(list[index - 1].id)} onNext={() => select(list[index + 1].id)}
           label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={readOnly}
-          onDecide={onDecide} onClear={() => setState((s) => clearDecision(s, row.id))} onShowPage={setPage} toast={toast}
+          onDecide={onDecide} onClear={() => { setUndo(null); setState((s) => clearDecision(s, row.id)); }} onShowPage={setPage} toast={toast}
           boxes={boxes} onShowBox={(b) => { setPage(b.page); setSelBox(b.key); }}
           onRemoveBox={onDeleteBox} onRestoreBox={(b) => setState((s) => restoreBox(s, row.id, b.evidenceId))}
           columnOptions={catalog} recordOptions={allRecords} moves={moves}
           onMoveColumn={onMoveColumn} onMoveRecord={onMoveRecord} onRemoveValue={onRemoveValue} />
       </div>
+      {bulkAsk && (
+        <div className="backdrop">
+          <div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="bk-t" style={{ width: 540, borderTop: '6px solid var(--accept)' }}>
+            <div className="modal-head"><h2 id="bk-t" style={{ fontSize: 20 }}>
+              Accept {bulkRows.length} value{bulkRows.length === 1 ? '' : 's'} {view.mode === 'record' ? `in ${recordLabel(view.recordId)}` : `in the column ${featureName(view.featureId)}`}?</h2></div>
+            <div className="modal-body">
+              <span>Only values still to review in this list are accepted{view.onlyCheck || view.status !== 'any' ? ', with the filters you set' : ''}. Values you already decided stay as they are.</span>
+              <b style={{ color: 'var(--unsure-ink)' }}>{(() => { const n = bulkRows.filter((r) => r.needsCheck).length;
+                return n ? `${n} of them ${n === 1 ? 'has' : 'have'} a “Check this” warning.` : 'None of them has a “Check this” warning.'; })()}</b>
+              <span>You can undo this right after, until your next decision.</span>
+            </div>
+            <div className="modal-foot" style={{ justifyContent: 'flex-end' }}>
+              <button type="button" className="btn big" onClick={() => setBulkAsk(false)} autoFocus>Cancel</button>
+              <button type="button" className="btn big" style={{ background: 'var(--accept)', borderColor: 'var(--accept)', color: '#fff', fontWeight: 600 }} onClick={doBulk}>Accept {bulkRows.length}</button>
+            </div>
+          </div>
+        </div>
+      )}
       {dialog && dialog.kind === 'record' && (
         <RecordDialog editing={dialog.editing} initial={dialog.editing ? editRecordInitial() : null}
           modelLabel={dialog.editing && state.record_edits[dialog.recordId] ? original.records.find((r) => r.record_id === dialog.recordId).label : ''}
