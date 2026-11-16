@@ -124,6 +124,9 @@ class OpenPaper(Base):  # OP-02, AC-02
         self.assertEqual(schemas.errors('state', body['current']), [])
         ev = body['original']['observations'][0]['evidence'][0]
         self.assertEqual((ev['page'], ev['bbox']), (1, [0.5262, 0.3837, 0.5763, 0.3932]))
+        catalog = body['feature_catalog']
+        self.assertEqual(len(catalog), 54)   # the extraction guide's columns
+        self.assertIn({'feature_id': 'strain_rate', 'label': 'Strain rate'}, catalog)
 
     def test_version_and_stale_draft(self):
         s1 = empty_state(); s1['decisions'] = {'o1': decision('rejected', 'It belongs to another record')}

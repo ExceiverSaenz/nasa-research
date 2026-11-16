@@ -4,7 +4,7 @@ import { displayValue, STATUS_LABEL } from '../lib/values.js';
 
 // Finish paper: summary, then Submit as a new version (canvas Review.dc.html, summary). AC-05, AC-06.
 export default function SummaryModal({ paperId, title, rows, counts, labels, recordLabel, onClose, onSubmit, submitting,
-  submitted, error, onReload }) {
+  submitted, error, onReload, changesOf = () => [], changedRecords = [] }) {
   const dialog = useRef(null);
   useEffect(() => { if (dialog.current) dialog.current.focus(); }, []);
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function SummaryModal({ paperId, title, rows, counts, labels, rec
   }, [onClose, submitting]);
 
   const unsure = rows.filter((r) => r.status === 'unsure');
-  const changed = rows.filter((r) => r.status === 'rejected' || r.status === 'corrected');
+  const changed = rows.filter((r) => r.status === 'rejected' || r.status === 'corrected' || r.origin === 'reviewer' || changesOf(r).length);
   const item = (r) => `${labels[r.featureId] || r.featureId} · ${r.recordIds.map(recordLabel).join(', ') || 'Unassigned'}`;
 
   return (
@@ -46,12 +46,21 @@ export default function SummaryModal({ paperId, title, rows, counts, labels, rec
           )}
           {changed.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <b>Rejected and corrected values</b>
+              <b>Rejected, corrected and edited values</b>
               {changed.map((r) => <div key={r.id} className="sum-item"><b>{item(r)}</b> <span className={`chip st-${r.status}`}>{STATUS_LABEL[r.status]}</span>
-                <div className="mono" style={{ fontSize: 13 }}>{r.status === 'corrected'
+                {r.origin === 'reviewer' && <span className="chip st-corrected" style={{ marginLeft: 6 }}>Added by you</span>}
+                <div className="mono" style={{ fontSize: 13 }}>{r.status === 'corrected' && r.origin === 'model'
                   ? <><span className="diff-old">{displayValue(r.originalValue, r.originalUnit)}</span> → {displayValue(r.value, r.unit)}</>
                   : displayValue(r.value, r.unit)}</div>
-                {r.decision.note && <div className="muted" style={{ fontSize: 13 }}>{r.decision.note}</div>}</div>)}
+                {changesOf(r).map((c) => <div key={c} style={{ fontSize: 13, color: '#6B4A00' }}>{c}</div>)}
+                {r.decision && r.decision.note && <div className="muted" style={{ fontSize: 13 }}>{r.decision.note}</div>}</div>)}
+            </div>
+          )}
+          {changedRecords.length > 0 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <b>Records you added or edited</b>
+              {changedRecords.map((r) => <div key={r.id} className="sum-item"><b>{r.label}</b> · <span style={{ fontSize: 13, color: '#6B4A00' }}>{r.note}</span>
+                {r.summary && <div className="muted" style={{ fontSize: 13 }}>{r.summary}</div>}</div>)}
             </div>
           )}
         </div>

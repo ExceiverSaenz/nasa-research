@@ -54,7 +54,7 @@
 |---|---|---|---|
 | `n` | paper id | Yes | must exist |
 
-- **Output** · `200 { "original": <originals/<n>.json>, "version": k, "current": <state of v<k>> | <empty state>, "draft": <draft> | null, "draft_stale": bool, "source_changed": bool, "source_problems": ["result_changed" | "result_missing" | "pdf_changed" | "pdf_missing"], "warnings"? }` with `ETag: "<k>"`.
+- **Output** · `200 { "original": <originals/<n>.json>, "version": k, "current": <state of v<k>> | <empty state>, "draft": <draft> | null, "draft_stale": bool, "feature_catalog": [{feature_id, label}], "source_changed": bool, "source_problems": ["result_changed" | "result_missing" | "pdf_changed" | "pdf_missing"], "warnings"? }` with `ETag: "<k>"`. `feature_catalog` lists every column of the extraction guide (54), the columns a value may be moved to or added in.
 - **Postcondition** · Nothing is written. The client uses `draft` (if the user chooses Continue) or `current` as its working copy.
 - **Errors** · 404 `paper_not_found`.
 - **Example** · Paper 1 after one submit and a later draft → `version 1`, `draft.base_version 1`, `draft_stale false` (AC-09).

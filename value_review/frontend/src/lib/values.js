@@ -60,10 +60,11 @@ export function browseRecords(original, state, rows) {
   const labels = recordLabels(original, state);
   const ids = original.records.map((r) => r.record_id).concat(state.added_records.map((r) => r.record_id));
   if (rows.some((r) => r.scopeRecordIds.includes(UNASSIGNED))) ids.push(UNASSIGNED);
+  const added = new Set(state.added_records.map((r) => r.record_id));
   return ids.map((id) => {
     const mine = rows.filter((r) => r.scopeRecordIds.includes(id));
     return { id, label: id === UNASSIGNED ? 'Unassigned' : labels[id] || id, total: mine.length, done: mine.filter((r) => r.status !== 'pending').length };
-  }).filter((r) => r.total > 0);
+  }).filter((r) => r.total > 0 || added.has(r.id));   // a record the reviewer just added shows even while empty
 }
 
 export function browseFeatures(original, rows) {

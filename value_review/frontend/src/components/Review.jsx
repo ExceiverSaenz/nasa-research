@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../lib/api.js';
 import { savePill, uiOf, viewFromUi } from '../lib/draft.js';
+import {
+  addBox, addRecord, addValue, boxesOf, changesOf, deleteAddedBox, editRecord, moveColumn, moveRecord, recordNameTaken,
+  redrawBox, removeBox, removeRecord, removeValue, restoreAllBoxes, restoreBox, undoRedraw,
+} from '../lib/edits.js';
+import { RecordDialog, ValueDialog } from './Dialogs.jsx';
 import { clearDecision, decide, emptyState, signature } from '../lib/state.js';
 import { browseFeatures, browseRecords, counts, effectiveValues, featureLabels, inScope, recordLabels, UNASSIGNED } from '../lib/values.js';
 import DetailPanel from './DetailPanel.jsx';
@@ -26,6 +31,9 @@ export default function Review({ paperId, guard }) {
   const [zoom, setZoom] = useState(1);
   const [toast, setToast] = useState('');
   const [summary, setSummary] = useState(null);   // {submitting, submitted, error}
+  const [selBox, setSelBox] = useState(null);     // key of the highlight selected on the page
+  const [drawing, setDrawing] = useState(null);   // {action: 'add' | 'redraw', box?, id?, hint}
+  const [dialog, setDialog] = useState(null);     // {kind: 'record' | 'value', editing?, recordId?}
 
   const reload = useCallback(() => {
     setLoad({ status: 'loading' });
@@ -45,7 +53,9 @@ export default function Review({ paperId, guard }) {
   const original = load.status === 'ready' ? load.data.original : null;
   const readOnly = load.status === 'ready' && load.data.source_changed;
   const rows = useMemo(() => (original ? effectiveValues(original, state) : []), [original, state]);
-  const labels = useMemo(() => (original ? featureLabels(original) : {}), [original]);
+  const catalog = load.status === 'ready' ? load.data.feature_catalog : [];
+  const catalogLabels = useMemo(() => Object.fromEntries(catalog.map((f) => [f.feature_id, f.label])), [catalog]);
+  const labels = useMemo(() => (original ? { ...catalogLabels, ...featureLabels(original) } : {}), [original, catalogLabels]);
   const recLabels = useMemo(() => (original ? recordLabels(original, state) : {}), [original, state]);
   const recordLabel = useCallback((id) => (id === UNASSIGNED ? 'Unassigned' : recLabels[id] || id), [recLabels]);
   const records = useMemo(() => (original ? browseRecords(original, state, rows) : []), [original, state, rows]);
@@ -66,10 +76,12 @@ export default function Review({ paperId, guard }) {
   const select = useCallback((id) => {
     setSelectedId(id);
     setToast('');
+    setSelBox(null);
+    setDrawing(null);
     const r = rows.find((x) => x.id === id);
-    const ev = r && r.obs && r.obs.evidence[0];
-    if (ev) setPage(ev.page);
-  }, [rows]);
+    const first = r && boxesOf(r, state).find((b) => b.bbox && !b.removed);
+    if (first) setPage(first.page);
+  }, [rows, state]);
 
   // Keep a selection inside the list.
   useEffect(() => {
@@ -152,6 +164,57 @@ export default function Review({ paperId, guard }) {
     if (next && verdict === 'accepted') select(next.id);
   };
 
+  // --- edits: moves, records, added values, highlights (AC-14, AC-15) ----------------------
+  const by = settings.reviewer_name;
+  const featureName = (fid) => (catalogLabels[fid] || labels[fid] || fid);
+  const onMoveColumn = (fid) => { setState((s) => moveColumn(s, row.obs, fid, by)); setToast(`Moved to the column ${featureName(fid)}.`); };
+  const onMoveRecord = (rid) => { if (rid) { setState((s) => moveRecord(s, row.obs, [rid], by)); setToast(`Moved to the record ${recordLabel(rid)}.`); } };
+  const onRemoveValue = () => { const id = row.id; setState((s) => removeValue(s, id)); setToast('Removed the value you added.'); };
+
+  const saveRecord = (values) => {
+    if (dialog.editing) {
+      setState((s) => editRecord(s, original, dialog.recordId, values, by));
+    } else {
+      const res = addRecord(state, values, by);
+      setState(res.state);
+      setView((v) => ({ ...v, mode: 'record', recordId: res.id }));
+    }
+    setDialog(null);
+  };
+  const removeCurrentRecord = () => {
+    try { setState((s) => removeRecord(s, view.recordId)); } catch (e) {
+      setProblem({ message: 'This record still has values. Move them to another record, or remove the values you added, first.' });
+    }
+  };
+  const saveValue = (values) => {
+    const res = addValue(state, values, by);
+    setState(res.state);
+    setView((v) => ({ ...v, mode: 'record', recordId: values.recordIds[0], status: 'any', onlyCheck: false }));
+    setSelectedId(res.id);
+    setDialog(null);
+    setDrawing({ action: 'add', id: res.id, hint: 'Mark where the value you added appears.' });
+  };
+
+  const onDrawn = (bbox) => {
+    const d = drawing;
+    setDrawing(null);
+    if (!d) return;
+    const id = d.id || row.id;
+    if (d.action === 'add') {
+      setState((s) => addBox(s, id, page, bbox, by));
+      setSelBox(`a:${(state.boxes[id] ? state.boxes[id].added.length : 0)}`);
+    } else if (d.box.kind === 'added') {
+      setState((s) => addBox(deleteAddedBox(s, id, d.box.index), id, page, bbox, by));
+      setSelBox(null);
+    } else {
+      setState((s) => redrawBox(s, id, d.box.evidenceId, page, bbox, by));
+    }
+  };
+  const onDeleteBox = (b) => {
+    setState((s) => (b.kind === 'added' ? deleteAddedBox(s, row.id, b.index) : removeBox(s, row.id, b.evidenceId)));
+    setSelBox(null);
+  };
+
   const submit = () => {
     setSummary((s) => ({ ...s, submitting: true, error: null }));
     api.submit(paperId, version, state).then((res) => {
@@ -182,8 +245,26 @@ export default function Review({ paperId, guard }) {
 
   const doc = original.document;
   const pageInfo = original.pages.find((p) => p.number === page) || original.pages[0];
-  const evidence = row && row.obs ? row.obs.evidence : [];
-  const boxes = evidence.filter((e) => e.page === page).map((e) => ({ key: `${row.id}:${e.evidence_id}`, bbox: e.bbox, kind: evidence[0] === e ? 'main' : 'context' }));
+  const boxes = row ? boxesOf(row, state) : [];
+  const editable = !readOnly;
+  const allRecords = original.records.map((r) => ({ id: r.record_id, label: recordLabel(r.record_id) }))
+    .concat(state.added_records.map((r) => ({ id: r.record_id, label: r.label })));
+  const recordIsAdded = view.mode === 'record' && state.added_records.some((r) => r.record_id === view.recordId);
+  const moves = row && row.obs ? {
+    colOriginal: state.column_moves[row.id] ? featureName(row.obs.feature_id) : '',
+    recOriginal: state.record_moves[row.id] ? (row.obs.record_ids.map(recordLabel).join(', ') || 'no record') : '',
+  } : {};
+  moves.changed = !!(moves.colOriginal || moves.recOriginal);
+  const editRecordInitial = () => {
+    const id = view.recordId;
+    const added = state.added_records.find((r) => r.record_id === id);
+    if (added) return { label: added.label, summary: added.summary };
+    const m = original.records.find((r) => r.record_id === id);
+    return state.record_edits[id] || { label: m.label, summary: m.summary };
+  };
+  const changedRecords = state.added_records.map((r) => ({ id: r.record_id, label: r.label, note: 'New record', summary: r.summary }))
+    .concat(Object.entries(state.record_edits).map(([id, e]) => ({ id, label: e.label, summary: e.summary,
+      note: `Edited; the model called it ${original.records.find((r) => r.record_id === id).label}` })));
   const scopeItem = items.find((i) => i.id === currentId);
   const recText = row ? (row.recordIds.map(recordLabel).join(', ') || (row.obs && row.obs.candidate_record_ids.length ? `Candidates: ${row.obs.candidate_record_ids.map(recordLabel).join(', ')}` : 'Unassigned')) : '';
   const recSummary = row && row.recordIds.length === 1 ? (state.record_edits[row.recordIds[0]] || original.records.find((r) => r.record_id === row.recordIds[0]) || {}).summary : '';
@@ -223,15 +304,42 @@ export default function Review({ paperId, guard }) {
           status={view.status} setStatus={(status) => setView((v) => ({ ...v, status }))} statusCounts={statusCounts}
           onlyCheck={view.onlyCheck} setOnlyCheck={(onlyCheck) => setView((v) => ({ ...v, onlyCheck }))}
           anyFilter={view.onlyCheck || view.status !== 'any'} clearFilters={() => setView((v) => ({ ...v, onlyCheck: false, status: 'any' }))}
-          values={list} selectedId={selectedId} onSelect={select} labels={labels} recordLabel={recordLabel} />
+          values={list} selectedId={selectedId} onSelect={select} labels={labels} recordLabel={recordLabel}
+          editable={editable} canEditRecord={view.mode === 'record' && !!view.recordId && view.recordId !== UNASSIGNED}
+          recordIsAdded={recordIsAdded} onEditRecord={() => setDialog({ kind: 'record', editing: true, recordId: view.recordId })}
+          onNewRecord={() => setDialog({ kind: 'record', editing: false })} onRemoveRecord={removeCurrentRecord}
+          onAddValue={() => setDialog({ kind: 'value' })} />
         <PageViewer paperId={paperId} page={page} pageCount={doc.page_count} aspect={pageInfo.height_pt / pageInfo.width_pt}
-          onPage={setPage} zoom={zoom} onZoom={setZoom} boxes={boxes} label={row ? labels[row.featureId] || row.featureId : ''} />
+          onPage={setPage} zoom={zoom} onZoom={setZoom} boxes={boxes} label={row ? labels[row.featureId] || row.featureId : ''}
+          selectedKey={selBox} onSelectBox={setSelBox} drawing={drawing} onDrawn={onDrawn} onCancelDraw={() => setDrawing(null)}
+          editable={editable && !!row}
+          onAddHighlight={() => setDrawing({ action: 'add', hint: 'Mark where this value appears.' })}
+          onRedraw={(b) => setDrawing({ action: 'redraw', box: b, hint: 'Draw the box again.' })}
+          onDelete={onDeleteBox} onUndoRedraw={(b) => setState((s) => undoRedraw(s, row.id, b.evidenceId))}
+          onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} />
         <DetailPanel row={row} index={index} total={list.length} onPrev={() => select(list[index - 1].id)} onNext={() => select(list[index + 1].id)}
           label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={readOnly}
-          onDecide={onDecide} onClear={() => setState((s) => clearDecision(s, row.id))} onShowPage={setPage} toast={toast} />
+          onDecide={onDecide} onClear={() => setState((s) => clearDecision(s, row.id))} onShowPage={setPage} toast={toast}
+          boxes={boxes} onShowBox={(b) => { setPage(b.page); setSelBox(b.key); }}
+          onRemoveBox={onDeleteBox} onRestoreBox={(b) => setState((s) => restoreBox(s, row.id, b.evidenceId))}
+          columnOptions={catalog} recordOptions={allRecords} moves={moves}
+          onMoveColumn={onMoveColumn} onMoveRecord={onMoveRecord} onRemoveValue={onRemoveValue} />
       </div>
+      {dialog && dialog.kind === 'record' && (
+        <RecordDialog editing={dialog.editing} initial={dialog.editing ? editRecordInitial() : null}
+          modelLabel={dialog.editing && state.record_edits[dialog.recordId] ? original.records.find((r) => r.record_id === dialog.recordId).label : ''}
+          nameTaken={(label) => recordNameTaken(original, state, label, dialog.editing ? dialog.recordId : null)}
+          onCancel={() => setDialog(null)} onSave={saveRecord} />
+      )}
+      {dialog && dialog.kind === 'value' && (
+        <ValueDialog records={allRecords} columns={catalog}
+          initialRecord={view.mode === 'record' && view.recordId !== UNASSIGNED ? view.recordId : null}
+          initialColumn={view.mode === 'value' ? view.featureId : null}
+          onCancel={() => setDialog(null)} onSave={saveValue} />
+      )}
       {summary && (
         <SummaryModal paperId={paperId} title={doc.title} rows={rows} counts={total} labels={labels} recordLabel={recordLabel}
+          changesOf={(r) => (r.obs ? changesOf(r, state, featureName, recordLabel) : [])} changedRecords={changedRecords}
           onClose={() => setSummary(null)} onSubmit={submit} submitting={!!summary.submitting} submitted={summary.submitted}
           error={summary.error} onReload={reload} />
       )}

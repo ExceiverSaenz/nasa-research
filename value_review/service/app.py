@@ -22,6 +22,7 @@ from .. import schemas
 from ..domain.materialize import counts as count_values, values as materialize
 from ..domain.rules import check_state, shape_problems
 from ..domain.state import empty_state, progress, status_of
+from ..ingest import features
 from ..storage import StorageError
 from ..storage.files import AnnotationStore
 from . import exports
@@ -30,6 +31,8 @@ from .errors import ApiError, body, install
 from .library import WIDTH_DEFAULT, Library
 
 log = logging.getLogger('value_review')
+# Every column a value may be moved to or added in (the extraction guide), in the guide's order.
+FEATURE_CATALOG = [{'feature_id': f, 'label': label} for f, label in features.FEATURES]
 LOCAL_HOSTS = {'127.0.0.1', 'localhost', '::1'}
 API = '/api/v1'
 WEB = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web')
@@ -161,6 +164,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         source = library.source_problems(original)
         response.headers['ETag'] = _etag(k)
         out = {'original': original, 'version': k, 'current': state, 'draft': draft,
+               'feature_catalog': FEATURE_CATALOG,
                'draft_stale': bool(draft and draft['base_version'] != k),
                'source_changed': bool(source), 'source_problems': source}
         if problems:

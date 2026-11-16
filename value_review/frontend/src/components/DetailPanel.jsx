@@ -20,7 +20,9 @@ const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 
 
 // Detail panel (canvas Review.dc.html, "Value detail"): value, evidence, decision. AC-03, AC-04.
 export default function DetailPanel({ row, index, total, onPrev, onNext, label, recordText, recordSummary, readOnly,
-  onDecide, onClear, onShowPage, toast }) {
+  onDecide, onClear, onShowPage, toast, boxes = [], onShowBox, onRemoveBox, onRestoreBox,
+  columnOptions = [], recordOptions = [], moves = {}, onMoveColumn, onMoveRecord, onRemoveValue }) {
+  const [whereOpen, setWhereOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draftV, setDraftV] = useState('');
   const [draftU, setDraftU] = useState('');
@@ -40,8 +42,8 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
   if (!row) return <section className="panel" aria-label="Value detail"><div className="empty">Pick a value on the left to check it.</div></section>;
 
   const o = row.obs;
-  const evidence = o ? o.evidence : [];
-  const firstPage = evidence.length ? evidence[0].page : null;
+  const visible = boxes.find((b) => b.bbox && !b.removed);
+  const firstPage = visible ? visible.page : null;
 
   const askReason = (verdict) => {
     if (asking === verdict && note.trim()) { onDecide(verdict, { note }); return; }
@@ -105,19 +107,60 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
           <div className="alert info"><b style={{ color: 'var(--ink)' }}>About this value</b>{o.info.map((c) => <span key={c}>{codeText(c, INFO_TEXT)}</span>)}</div>
         )}
 
+        {row.origin === 'reviewer' && (
+          <div className="alert info"><b style={{ color: 'var(--ink)' }}>Added by you</b><span>The model had not found this value.</span>
+            {row.added.note && <span>Your note: {row.added.note}</span>}</div>
+        )}
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div className="row-between">
             <b style={{ color: 'var(--ink-2)' }}>Evidence</b>
             {firstPage && <button type="button" className="btn link" onClick={() => onShowPage(firstPage)}>Show on page {firstPage}</button>}
           </div>
-          {evidence.length === 0 && <span className="muted" style={{ fontSize: 14 }}>The model gave no location for this value.</span>}
-          {evidence.map((e, i) => (
-            <div key={e.evidence_id} className={`quote ${i ? 'ctx' : ''}`}>
-              <span className="t">“{e.text || '(no text)'}”</span>
-              <span className="muted">{(e.role || '').replace(/_/g, ' ')} · {e.region_label || e.region_kind} · page {e.page}{e.bbox ? '' : ' · not located'}</span>
+          {boxes.length === 0 && <span className="muted" style={{ fontSize: 14 }}>No highlight for this value yet.{readOnly ? '' : ' Use + Add highlight above the page.'}</span>}
+          {boxes.map((b) => (
+            <div key={b.key} className={`quote ${b.kind === 'main' ? '' : 'ctx'}`} style={b.kind === 'added' ? { borderLeftColor: '#0E7C86' } : null}>
+              <span className="t" style={b.removed ? { textDecoration: 'line-through', color: 'var(--ink-3)' } : null}>
+                {b.kind === 'added' ? 'A highlight you added' : `“${b.text || '(no text)'}”`}</span>
+              <span className="muted" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4 }}>
+                {b.kind !== 'added' && <>{(b.role || '').replace(/_/g, ' ')} · {b.e.region_label || b.e.region_kind} · </>}
+                page {b.page}{b.bbox ? '' : ' · not located'}{b.redrawn ? ' · redrawn by you' : ''}{b.removed ? ' · removed' : ''}
+                {b.bbox && !b.removed && <button type="button" className="btn link" style={{ height: 28 }} onClick={() => onShowBox(b)}>Show</button>}
+                {!readOnly && b.kind !== 'added' && <button type="button" className="btn link" style={{ height: 28, color: b.removed ? 'var(--navy)' : 'var(--reject)' }}
+                  onClick={() => (b.removed ? onRestoreBox(b) : onRemoveBox(b))}>{b.removed ? 'Restore' : 'Remove'}</button>}
+                {!readOnly && b.kind === 'added' && <button type="button" className="btn link" style={{ height: 28, color: 'var(--reject)' }} onClick={() => onRemoveBox(b)}>Delete</button>}
+              </span>
             </div>
           ))}
           {o && o.notes && <span className="muted" style={{ fontSize: 14 }}><b>Model's note:</b> {o.notes}</span>}
+        </div>
+
+        <div style={{ borderTop: '1px solid var(--line-3)' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <button type="button" className="btn link" aria-expanded={whereOpen} onClick={() => setWhereOpen((w) => !w)}
+            style={{ padding: 0, display: 'flex', justifyContent: 'space-between', color: 'var(--ink)', fontSize: 16, fontWeight: 500 }}>
+            <span>Column and record</span><span className="muted" style={{ fontSize: 14 }}>{moves.changed ? 'Changed ' : ''}{whereOpen ? '▴' : '▾'}</span>
+          </button>
+          {whereOpen && (
+            <>
+              <label className="field">Column
+                <select value={row.featureId} disabled={readOnly || row.origin === 'reviewer'} onChange={(e) => onMoveColumn(e.target.value)}>
+                  {columnOptions.map((c) => <option key={c.feature_id} value={c.feature_id}>{c.label}</option>)}
+                </select>
+                {moves.colOriginal && <span style={{ color: '#6B4A00' }}>The model had put this under {moves.colOriginal}.</span>}
+              </label>
+              <label className="field">Record
+                <select value={row.recordIds.length === 1 ? row.recordIds[0] : ''} disabled={readOnly || row.origin === 'reviewer'} onChange={(e) => onMoveRecord(e.target.value)}>
+                  {row.recordIds.length !== 1 && <option value="">{row.recordIds.length ? 'Several records' : 'No record yet'}</option>}
+                  {recordOptions.map((r) => <option key={r.id} value={r.id}>{r.label}</option>)}
+                </select>
+                {moves.recOriginal && <span style={{ color: '#6B4A00' }}>The model had put this under {moves.recOriginal}.</span>}
+              </label>
+              {row.origin === 'reviewer' && !readOnly && (
+                <button type="button" className="btn link" style={{ alignSelf: 'flex-start', padding: 0, color: 'var(--reject)' }} onClick={onRemoveValue}>Remove the value I added</button>
+              )}
+            </>
+          )}
         </div>
 
         {!noteOpen && !readOnly && <button type="button" className="btn link" style={{ alignSelf: 'flex-start', padding: 0 }} onClick={() => { setNoteOpen(true); setTimeout(() => noteRef.current && noteRef.current.focus(), 0); }}>+ Add note</button>}
