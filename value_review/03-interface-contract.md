@@ -160,6 +160,7 @@
 
 - The client keeps the working copy in memory, sends it whole on draft and submit, and never sends partial patches.
 - Autosave: every `autosave_minutes` the client calls OP-04 with `trigger: auto` only when the state differs from the last saved or submitted one; on `pagehide` it sends `trigger: pagehide` with `fetch(…, {keepalive: true})`.
+- Layouts and keys (AC-19): below 1024 px wide the review shows a list screen and a detail screen (sticky decision bar, full-screen PDF), and Papers shows cards; touch targets are at least 44 px. On desktop the keyboard shortcuts of `frontend/src/lib/shortcuts.js` apply (S/D/F reject, unsure, accept; J/K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; ? the full list), matched by physical key and off while typing in a field or with a dialog open.
 - Bulk accept (BR-10, AC-17) is client state: it sets `accepted` on the pending values of the current list (scope and filters), after a confirmation that says how many have a "Check this" warning. Undo removes exactly the decisions it made (accepted, stamped with the bulk's time) and is offered until the next decision. Both reach the server only through the next draft or submit.
 
 ## Verifiable example

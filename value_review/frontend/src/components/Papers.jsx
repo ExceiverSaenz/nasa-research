@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
 import VersionHistory from './VersionHistory.jsx';
+import useMedia, { COMPACT } from './useMedia.js';
 
 const STATUS = { not_started: 'Not started', in_progress: 'In progress', done: 'Done' };
 const DOT = { not_started: '#9AA3B2', in_progress: '#0B3D91', done: '#17703A' };
@@ -19,6 +20,7 @@ export default function Papers() {
   const [menu, setMenu] = useState(null);         // paper id whose row menu is open
   const [history, setHistory] = useState(null);   // paper row whose version history is open
   const [keep, setKeep] = useState(20);
+  const compact = useMedia(COMPACT);
 
   const reload = () => api.papers().then(setRows).catch((e) => setError(e.message));
   useEffect(() => {
@@ -86,7 +88,36 @@ export default function Papers() {
                   ))}
                 </div>
               </div>
-              <div className="scroll-x">
+              {compact && (
+                <div className="paper-cards">
+                  {shown.map((r) => {
+                    const pct = r.total ? Math.round((r.reviewed / r.total) * 100) : 0;
+                    return (
+                      <div key={r.paper} className="paper-card">
+                        <a href={`#/paper/${r.paper}`}>
+                          <span className="t">{r.title}</span>
+                          <span className="muted">Paper {r.paper} · {r.values} values · {r.needs_check} need a check{r.latest ? ` · v${r.latest.n}, ${shortDate(r.latest.at)}` : ''}</span>
+                          <span className="mini-bar"><span className="bar"><span style={{ width: `${pct}%` }} /></span><span className="mono muted">{pct}%</span>
+                            <span className="chip" style={{ background: '#EEF1F5' }}><span className="dot" aria-hidden="true" style={{ background: DOT[r.status] }} />{STATUS[r.status]}</span>
+                            {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected">Draft</span>}
+                            {r.source_changed && <span className="chip st-rejected">Source changed</span>}</span>
+                        </a>
+                        <button type="button" aria-haspopup="menu" aria-expanded={menu === r.paper} aria-label={`More actions for paper ${r.paper}`}
+                          onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
+                        {menu === r.paper && (
+                          <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 8, top: 56 }}>
+                            <a role="menuitem" className="menu-link" href={`#/paper/${r.paper}`}>Open</a>
+                            <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
+                            {r.latest && <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                  {shown.length === 0 && <div className="empty">No papers match this search.</div>}
+                </div>
+              )}
+              {!compact && <div className="scroll-x">
                 <table className="grid">
                   <thead><tr>
                     {head('paper', 'Paper')}{head('title', 'Name')}{head('modified', 'Modified')}{head('by', 'Modified by')}
@@ -127,7 +158,7 @@ export default function Papers() {
                     {shown.length === 0 && <tr><td colSpan={8} className="empty">No papers match this search.</td></tr>}
                   </tbody>
                 </table>
-              </div>
+              </div>}
             </section>
             <p className="note">Open a paper by its name. Counts come from the model's output; reviewed values come from the latest submitted version.</p>
           </>

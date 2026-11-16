@@ -9,8 +9,9 @@ const PRESETS = [0.75, 1, 1.25, 1.5, 2];
 // PDF page with the selected value's boxes (canvas Review.dc.html, viewer). AC-02, AC-15.
 // boxes: from boxesOf(); only those on this page and not removed are drawn.
 export default function PageViewer({ paperId, page, pageCount, aspect, onPage, zoom, onZoom, boxes, label,
-  selectedKey, onSelectBox, drawing, onDrawn, onCancelDraw, editable, onAddHighlight, onRedraw, onDelete, onUndoRedraw, onRestoreRemoved }) {
+  selectedKey, onSelectBox, drawing, onDrawn, onCancelDraw, editable, onAddHighlight, onRedraw, onDelete, onUndoRedraw, onRestoreRemoved, compact }) {
   const stage = useRef(null);
+  const [full, setFull] = useState(false);   // tablet: the page fills the screen
   const sheet = useRef(null);
   const [drag, setDrag] = useState(null);   // {x0, y0, x1, y1} in 0-1 while drawing
   const sheetW = Math.round(BASE_W * zoom);
@@ -66,7 +67,7 @@ export default function PageViewer({ paperId, page, pageCount, aspect, onPage, z
   const dragBox = drag && boxFromDrag(drag.x0, drag.y0, drag.x1, drag.y1);
 
   return (
-    <section className="panel" aria-label="PDF page">
+    <section className={`panel ${full ? 'pdf-full' : ''}`} aria-label="PDF page">
       <div className="viewer-bar">
         <button type="button" className="icon-btn" aria-label="Previous page" disabled={page <= 1} onClick={() => onPage(page - 1)}>‹</button>
         <span aria-live="polite" style={{ minWidth: 56, textAlign: 'center' }}>{page} / {pageCount}</span>
@@ -82,6 +83,8 @@ export default function PageViewer({ paperId, page, pageCount, aspect, onPage, z
         <button type="button" className="icon-btn" aria-label="Zoom in" onClick={() => onZoom((z) => clampZoom(z + 0.25))}>+</button>
         <span style={{ flex: 1 }} />
         {editable && <button type="button" className="btn" style={{ borderColor: 'var(--navy)', color: 'var(--navy)', fontWeight: 600 }} onClick={onAddHighlight}>+ Add highlight</button>}
+        {(compact || full) && <button type="button" className="icon-btn" aria-label={full ? 'Close full screen' : 'Full screen'} title={full ? 'Close full screen' : 'Full screen'}
+          onClick={() => setFull((f) => !f)}>{full ? '×' : '⤢'}</button>}
       </div>
       {editable && (
         <div className="viewer-bar" style={{ background: '#F8FAFC', padding: '6px 16px', minHeight: 44 }}>

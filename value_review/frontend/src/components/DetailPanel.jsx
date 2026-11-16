@@ -21,7 +21,7 @@ const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 
 // Detail panel (canvas Review.dc.html, "Value detail"): value, evidence, decision. AC-03, AC-04.
 export default function DetailPanel({ row, index, total, onPrev, onNext, label, recordText, recordSummary, readOnly,
   onDecide, onClear, onShowPage, toast, boxes = [], onShowBox, onRemoveBox, onRestoreBox,
-  columnOptions = [], recordOptions = [], moves = {}, onMoveColumn, onMoveRecord, onRemoveValue }) {
+  columnOptions = [], recordOptions = [], moves = {}, onMoveColumn, onMoveRecord, onRemoveValue, commands, compact }) {
   const [whereOpen, setWhereOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [draftV, setDraftV] = useState('');
@@ -39,7 +39,10 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
     setNoteOpen(!!(row && row.decision && row.decision.note));
   }, [row && row.id, row && row.decision]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!row) return <section className="panel" aria-label="Value detail"><div className="empty">Pick a value on the left to check it.</div></section>;
+  if (!row) {
+    if (commands) commands.current = null;
+    return <section className="panel" aria-label="Value detail"><div className="empty">Pick a value on the left to check it.</div></section>;
+  }
 
   const o = row.obs;
   const visible = boxes.find((b) => b.bbox && !b.removed);
@@ -57,6 +60,22 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
   };
   const reasons = asking === 'unsure' ? UNSURE_REASONS : REJECT_REASONS;
   const changed = draftV !== (row.originalValue || '') || draftU !== (row.originalUnit || '');
+  const openNote = () => { setNoteOpen(true); setTimeout(() => noteRef.current && noteRef.current.focus(), 0); };
+  const cancelEdit = () => { setEditing(false); setDraftV(row.value || ''); setDraftU(row.unit || ''); setError(''); };
+
+  // Keyboard shortcuts reach the panel through these commands (lib/shortcuts.js).
+  if (commands) {
+    commands.current = readOnly ? null : {
+      editing,
+      accept: () => onDecide('accepted', { note }),
+      reject: () => askReason('rejected'),
+      unsure: () => askReason('unsure'),
+      note: openNote,
+      edit: () => setEditing(true),
+      saveEdit: () => { if (editing && changed) saveCorrection(); },
+      escape: () => { if (editing) { cancelEdit(); return true; } if (asking) { setAsking(null); setError(''); return true; } return false; },
+    };
+  }
 
   return (
     <section className="panel" aria-label="Value detail">
@@ -94,7 +113,7 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
             </div>
             {changed && <span className="muted">Model: <span className="mono diff-old">{displayValue(row.originalValue, row.originalUnit)}</span> → <span className="mono">{displayValue(draftV, draftU)}</span></span>}
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-              <button type="button" className="btn" onClick={() => { setEditing(false); setDraftV(row.value || ''); setDraftU(row.unit || ''); setError(''); }}>Cancel</button>
+              <button type="button" className="btn" onClick={cancelEdit}>Cancel</button>
               {changed && <button type="button" className="btn primary" onClick={saveCorrection}>Save correction</button>}
             </div>
           </div>
@@ -163,7 +182,7 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
           )}
         </div>
 
-        {!noteOpen && !readOnly && <button type="button" className="btn link" style={{ alignSelf: 'flex-start', padding: 0 }} onClick={() => { setNoteOpen(true); setTimeout(() => noteRef.current && noteRef.current.focus(), 0); }}>+ Add note</button>}
+        {!noteOpen && !readOnly && <button type="button" className="btn link" style={{ alignSelf: 'flex-start', padding: 0 }} onClick={openNote}>+ Add note</button>}
       </div>
 
       {!readOnly && (
@@ -181,9 +200,9 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
           {error && <span className="error-text" role="alert">{error}</span>}
           {toast && <span className="toast" role="status">{toast}</span>}
           <div className="decide">
-            <button type="button" className="d-reject" onClick={() => askReason('rejected')}>{asking === 'rejected' ? 'Confirm reject' : 'Reject'}</button>
-            <button type="button" className="d-unsure" onClick={() => askReason('unsure')}>{asking === 'unsure' ? 'Confirm unsure' : 'Unsure'}</button>
-            <button type="button" className="d-accept" onClick={() => onDecide('accepted', { note })}>Accept</button>
+            <button type="button" className="d-reject" onClick={() => askReason('rejected')} aria-keyshortcuts="S">{asking === 'rejected' ? 'Confirm reject' : 'Reject'}{!compact && <kbd>S</kbd>}</button>
+            <button type="button" className="d-unsure" onClick={() => askReason('unsure')} aria-keyshortcuts="D">{asking === 'unsure' ? 'Confirm unsure' : 'Unsure'}{!compact && <kbd>D</kbd>}</button>
+            <button type="button" className="d-accept" onClick={() => onDecide('accepted', { note })} aria-keyshortcuts="F">Accept{!compact && <kbd>F</kbd>}</button>
           </div>
           {row.decision && <button type="button" className="btn link" style={{ alignSelf: 'center', fontSize: 13 }} onClick={onClear}>Clear my decision</button>}
         </div>

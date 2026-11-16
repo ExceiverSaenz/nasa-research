@@ -5,7 +5,9 @@ import {
   addBox, addRecord, addValue, boxesOf, changesOf, deleteAddedBox, editRecord, moveColumn, moveRecord, recordNameTaken,
   redrawBox, removeBox, removeRecord, removeValue, restoreAllBoxes, restoreBox, undoRedraw,
 } from '../lib/edits.js';
-import { RecordDialog, ValueDialog } from './Dialogs.jsx';
+import { RecordDialog, ShortcutsDialog, ValueDialog } from './Dialogs.jsx';
+import { actionFor } from '../lib/shortcuts.js';
+import useMedia, { COMPACT } from './useMedia.js';
 import { bulkAccept, bulkTargets, undoBulk } from '../lib/bulk.js';
 import { clearDecision, decide, emptyState, signature } from '../lib/state.js';
 import { browseFeatures, browseRecords, counts, effectiveValues, featureLabels, inScope, recordLabels, UNASSIGNED } from '../lib/values.js';
@@ -39,10 +41,22 @@ export default function Review({ paperId, guard }) {
   const [dialog, setDialog] = useState(null);     // {kind: 'record' | 'value', editing?, recordId?}
   const [bulkAsk, setBulkAsk] = useState(false);
   const [undo, setUndo] = useState(null);         // last bulk accept, while it can still be undone
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [screen, setScreen] = useState('list');   // tablet: 'list' of values or 'detail' of one value
+  const compact = useMedia(COMPACT);
+  const commands = useRef(null);                  // filled by DetailPanel for the keyboard
+  const history = useRef([]);                     // [{id, prev}] decisions to undo with Ctrl+Z
+  const keys = useRef(() => {});
+  useEffect(() => {
+    const onKey = (e) => keys.current(e);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const reload = useCallback(() => {
     setLoad({ status: 'loading' });
     setSummary(null); setProblem(null); setLeave(null); setUndo(null);
+    history.current = [];
     Promise.all([api.paper(paperId), api.settings()]).then(([data, s]) => {
       setSettings(s);
       setVersion(data.version);
@@ -165,10 +179,26 @@ export default function Review({ paperId, guard }) {
     try {
       setState((s) => decide(s, row.id, verdict, opts, settings.reviewer_name));
     } catch (e) { return; }
+    history.current.push({ id: row.id, prev: state.decisions[row.id] || null });
+    if (history.current.length > 50) history.current.shift();
     setUndo(null);   // a bulk accept is undoable only until the next decision (BR-10)
     setToast(`${{ accepted: 'Accepted', corrected: 'Correction saved', rejected: 'Rejected', unsure: 'Marked as unsure' }[verdict]}.`);
     const next = list[index + 1];
     if (next && verdict === 'accepted') select(next.id);
+  };
+
+  // Ctrl+Z: undo a bulk accept while it is offered, else the last single decision.
+  const undoLast = () => {
+    if (undo) { setState((s) => undoBulk(s, undo)); setUndo(null); setToast('Bulk accept undone.'); return; }
+    const h = history.current.pop();
+    if (!h) return;
+    setState((s) => {
+      const decisions = { ...s.decisions };
+      if (h.prev) decisions[h.id] = h.prev; else delete decisions[h.id];
+      return { ...s, decisions };
+    });
+    select(h.id);
+    setToast('Last decision undone.');
   };
 
   // --- bulk accept (AC-17) ---------------------------------------------------------
@@ -243,6 +273,7 @@ export default function Review({ paperId, guard }) {
     }
     setState(emptyState());
     setUndo(null);
+    history.current = [];
     setSaved({ sig: signature(versionState.current), kind: version ? 'version' : 'original', version });
     setOffer(null);
     setStartOver(false);
@@ -308,11 +339,51 @@ export default function Review({ paperId, guard }) {
   const statusCounts = counts(inScope(rows, { ...view, status: 'any' }));
   const pill = savePill(dirty, saved);
 
+  // Keyboard shortcuts (desktop; lib/shortcuts.js). Rebuilt every render so it sees the current state.
+  keys.current = (e) => {
+    if (compact) return;
+    const cmd = commands.current;
+    const anyDialog = !!(summary || dialog || bulkAsk || startOver || leave || shortcutsOpen);
+    const action = actionFor(e, { dialog: anyDialog, editing: !!(cmd && cmd.editing) });
+    if (!action) return;
+    const run = (fn) => { e.preventDefault(); fn(); };
+    const selected = boxes.find((b) => b.key === selBox);
+    const step = (d) => { if (items.length) { const i = items.findIndex((x) => x.id === currentId); const next = items[(i + d + items.length) % items.length];
+      setView((v) => (v.mode === 'record' ? { ...v, recordId: next.id } : { ...v, featureId: next.id })); } };
+    switch (action) {
+      case 'escape':
+        if (shortcutsOpen) run(() => setShortcutsOpen(false));
+        else if (drawing) run(() => setDrawing(null));
+        else if (!anyDialog && cmd && cmd.escape()) e.preventDefault();
+        return;
+      case 'help': run(() => setShortcutsOpen(true)); return;
+      case 'save': run(() => { if (dirty && !readOnly) saveDraft('manual'); }); return;
+      case 'finish': run(() => setSummary({})); return;
+      case 'saveEdit': run(() => cmd && cmd.saveEdit()); return;
+      case 'undo': if (!readOnly) run(undoLast); return;
+      case 'next': run(() => { if (list[index + 1]) select(list[index + 1].id); }); return;
+      case 'prev': run(() => { if (index > 0) select(list[index - 1].id); }); return;
+      case 'nextScope': run(() => step(1)); return;
+      case 'prevScope': run(() => step(-1)); return;
+      case 'evidence': run(() => { const b = boxes.find((x) => x.bbox && !x.removed); if (b) { setPage(b.page); setSelBox(b.key); } }); return;
+      case 'prevPage': run(() => setPage((p) => Math.max(1, p - 1))); return;
+      case 'nextPage': run(() => setPage((p) => Math.min(doc.page_count, p + 1))); return;
+      case 'fit': run(() => setZoom(1)); return;
+      default: break;
+    }
+    if (readOnly || !row) return;
+    if (['accept', 'unsure', 'reject', 'note', 'edit'].includes(action)) { run(() => cmd && cmd[action]()); return; }
+    if (action === 'addBox') run(() => setDrawing({ action: 'add', hint: 'Mark where this value appears.' }));
+    if (action === 'redraw' && selected && !selected.removed) run(() => setDrawing({ action: 'redraw', box: selected, hint: 'Draw the box again.' }));
+    if (action === 'deleteBox' && selected && !selected.removed) run(() => onDeleteBox(selected));
+  };
+
   return (
-    <div className="review">
+    <div className={`review ${compact ? 'compact' : ''}`}>
       <Header paperId={paperId} title={doc.title} reviewed={total.reviewed} total={total.total} pill={pill}
         canSave={dirty && !readOnly} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})}
-        onStartOver={readOnly ? null : () => setStartOver(true)} />
+        onStartOver={readOnly ? null : () => setStartOver(true)} onShortcuts={() => setShortcutsOpen(true)}
+        compact={compact} onBack={compact && screen === 'detail' ? () => setScreen('list') : null} />
       {startOver && (
         <div className="backdrop">
           <div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="so-t" aria-describedby="so-d" style={{ width: 540, borderTop: '6px solid var(--reject)' }}>
@@ -349,7 +420,7 @@ export default function Review({ paperId, guard }) {
         <div className="banner warn" role="status">The model's run on this paper is {doc.completion.status}
           {doc.completion.pages_unreviewed.length ? `: pages ${doc.completion.pages_unreviewed.join(', ')} were not reviewed by the model.` : '.'}</div>
       )}
-      <div className="workspace">
+      <div className={`workspace ${compact ? `compact ${screen}` : ''}`}>
         <ValuesPanel mode={view.mode} setMode={(mode) => setView((v) => ({ ...v, mode }))}
           items={items} currentId={currentId}
           onPick={(id) => setView((v) => (v.mode === 'record' ? { ...v, recordId: id } : { ...v, featureId: id }))}
@@ -357,7 +428,8 @@ export default function Review({ paperId, guard }) {
           status={view.status} setStatus={(status) => setView((v) => ({ ...v, status }))} statusCounts={statusCounts}
           onlyCheck={view.onlyCheck} setOnlyCheck={(onlyCheck) => setView((v) => ({ ...v, onlyCheck }))}
           anyFilter={view.onlyCheck || view.status !== 'any'} clearFilters={() => setView((v) => ({ ...v, onlyCheck: false, status: 'any' }))}
-          values={list} selectedId={selectedId} onSelect={select} labels={labels} recordLabel={recordLabel}
+          values={list} selectedId={selectedId} onSelect={(id) => { select(id); if (compact) { setScreen('detail'); window.scrollTo(0, 0); } }}
+          labels={labels} recordLabel={recordLabel}
           editable={editable} canEditRecord={view.mode === 'record' && !!view.recordId && view.recordId !== UNASSIGNED}
           recordIsAdded={recordIsAdded} onEditRecord={() => setDialog({ kind: 'record', editing: true, recordId: view.recordId })}
           onNewRecord={() => setDialog({ kind: 'record', editing: false })} onRemoveRecord={removeCurrentRecord}
@@ -371,15 +443,17 @@ export default function Review({ paperId, guard }) {
           onAddHighlight={() => setDrawing({ action: 'add', hint: 'Mark where this value appears.' })}
           onRedraw={(b) => setDrawing({ action: 'redraw', box: b, hint: 'Draw the box again.' })}
           onDelete={onDeleteBox} onUndoRedraw={(b) => setState((s) => undoRedraw(s, row.id, b.evidenceId))}
-          onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} />
+          onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} compact={compact} />
         <DetailPanel row={row} index={index} total={list.length} onPrev={() => select(list[index - 1].id)} onNext={() => select(list[index + 1].id)}
           label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={readOnly}
           onDecide={onDecide} onClear={() => { setUndo(null); setState((s) => clearDecision(s, row.id)); }} onShowPage={setPage} toast={toast}
           boxes={boxes} onShowBox={(b) => { setPage(b.page); setSelBox(b.key); }}
           onRemoveBox={onDeleteBox} onRestoreBox={(b) => setState((s) => restoreBox(s, row.id, b.evidenceId))}
           columnOptions={catalog} recordOptions={allRecords} moves={moves}
-          onMoveColumn={onMoveColumn} onMoveRecord={onMoveRecord} onRemoveValue={onRemoveValue} />
+          onMoveColumn={onMoveColumn} onMoveRecord={onMoveRecord} onRemoveValue={onRemoveValue}
+          commands={commands} compact={compact} />
       </div>
+      {shortcutsOpen && <ShortcutsDialog onClose={() => setShortcutsOpen(false)} />}
       {bulkAsk && (
         <div className="backdrop">
           <div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="bk-t" style={{ width: 540, borderTop: '6px solid var(--accept)' }}>
@@ -433,9 +507,37 @@ export default function Review({ paperId, guard }) {
   );
 }
 
-function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFinish, onStartOver }) {
+function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFinish, onStartOver, onShortcuts, compact, onBack }) {
   const pct = total ? Math.round((reviewed / total) * 100) : 0;
   const [menu, setMenu] = useState(false);
+  const moreMenu = menu && (
+    <div className="menu" role="menu" aria-label="More actions" style={{ right: 0, top: 50, minWidth: 260 }}>
+      {compact && <button type="button" role="menuitem" disabled={!canSave} onClick={() => { setMenu(false); onSave(); }}>Save draft</button>}
+      {!compact && onShortcuts && <button type="button" role="menuitem" onClick={() => { setMenu(false); onShortcuts(); }}
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>Keyboard shortcuts <kbd>?</kbd></button>}
+      <button type="button" role="menuitem" style={{ color: 'var(--reject)' }} disabled={!onStartOver}
+        onClick={() => { setMenu(false); onStartOver(); }}>Start over from model output</button>
+    </div>
+  );
+  if (compact && onFinish) {
+    return (
+      <header className="app-header compact-bar">
+        {onBack ? <button type="button" className="btn link back" onClick={onBack}>‹ Values</button>
+          : <a className="btn link back" href="#/" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>‹ Papers</a>}
+        <div className="head-title" style={{ textAlign: 'center' }}>
+          <b style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={title}>Paper {paperId} · {title}</b>
+          <span className="muted">{reviewed} of {total} reviewed · <span className={`chip st-${pill.tone}`} role="status">{pill.text}</span></span>
+        </div>
+        <button type="button" className="btn primary" style={{ borderRadius: 22 }} onClick={onFinish}>Finish</button>
+        <span style={{ position: 'relative' }}>
+          <button type="button" className="icon-btn" style={{ width: 44, height: 44, border: 0 }} aria-haspopup="menu" aria-expanded={menu}
+            aria-label="More actions" onClick={() => setMenu((m) => !m)}>⋯</button>
+          {moreMenu}
+        </span>
+        <span className="bar thin" aria-hidden="true"><span style={{ width: `${pct}%` }} /></span>
+      </header>
+    );
+  }
   return (
     <header className="app-header">
       <div className="brand" aria-hidden="true">TD</div>
@@ -455,12 +557,7 @@ function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFini
         <span style={{ position: 'relative' }}>
           <button type="button" className="icon-btn" style={{ width: 44, height: 44 }} aria-haspopup="menu" aria-expanded={menu}
             aria-label="More actions" onClick={() => setMenu((m) => !m)}>⋯</button>
-          {menu && (
-            <div className="menu" role="menu" aria-label="More actions" style={{ right: 0, top: 50, minWidth: 260 }}>
-              <button type="button" role="menuitem" style={{ color: 'var(--reject)' }} disabled={!onStartOver}
-                onClick={() => { setMenu(false); onStartOver(); }}>Start over from model output</button>
-            </div>
-          )}
+          {moreMenu}
         </span>
       </>}
     </header>
