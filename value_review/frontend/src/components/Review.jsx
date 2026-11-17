@@ -541,7 +541,7 @@ function Header({ paperId, title, reviewed, total, pill, canSave, onSave, onFini
   }
   return (
     <header className="app-header">
-      <div className="brand" aria-hidden="true">TD</div>
+      <a className="brand" href="#/" aria-label="Back to papers" title="Back to papers">TD</a>
       <div className="head-title">
         <nav aria-label="Breadcrumb" className="crumbs"><span>Tensile Data Review</span><span aria-hidden="true">/</span>
           <a href="#/">Papers</a><span aria-hidden="true">/</span><span style={{ color: 'var(--ink)' }}>Paper {paperId}</span></nav>

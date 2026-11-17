@@ -41,6 +41,8 @@ h1, h2, h3 { margin: 0; }
 /* app header */
 .app-header { display: flex; align-items: center; gap: 12px 24px; padding: 10px 24px; min-height: 72px; background: #fff; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 .brand { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--navy-dark); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+a.brand { color: #fff; text-decoration: none; }
+a.brand:hover { background: var(--navy); }
 .crumbs { display: flex; gap: 8px; font-size: 14px; color: var(--ink-3); }
 .head-title { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; }
 .head-title h1 { font-size: 20px; color: var(--navy-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
