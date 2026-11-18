@@ -7,7 +7,7 @@ The interface follows the canvas design [Extraction Review Tool](https://claude.
 ## Requirements
 
 - Windows 11, Python 3.13 with FastAPI, uvicorn, pydantic, jsonschema, pypdfium2 and Pillow (already installed in this environment); Node 24 only to rebuild the front end.
-- The LLM run in `llm_baseline/results/gpt-6.1-sol-low-pdf-only/` and the PDFs in `papers/Tensile_Properties_of_Sub-sized_Specimens_papers/`. If they live in another checkout, set `VALUE_REVIEW_SOURCE_ROOT` to it.
+- The LLM run in `llm_baseline/results/gpt-6.1-sol-low-pdf-only/` and the PDFs in `papers/Tensile_Properties_of_Sub-sized_Specimens_papers/`. From a git worktree (under `.claude/worktrees/`) the tool finds them in the checkout above it; if they live elsewhere, set `VALUE_REVIEW_SOURCE_ROOT` or pick the folders in **Settings**.
 
 Run every command from the repository root.
 

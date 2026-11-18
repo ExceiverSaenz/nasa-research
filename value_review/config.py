@@ -15,7 +15,15 @@ RESULT_SUFFIX = '-pdf_with_feature_guide.json'
 
 
 def source_root():
-    return Path(os.environ.get('VALUE_REVIEW_SOURCE_ROOT') or REPO_ROOT)
+    """``VALUE_REVIEW_SOURCE_ROOT`` if set; else the repository root, or the nearest folder above it
+    that holds the LLM run (a git worktree under ``.claude/worktrees/`` has no sources of its own)."""
+    env = os.environ.get('VALUE_REVIEW_SOURCE_ROOT')
+    if env:
+        return Path(env)
+    for root in (REPO_ROOT, *REPO_ROOT.parents):
+        if (root / RUN_REL).is_dir() and (root / PDFS_REL).is_dir():
+            return root
+    return REPO_ROOT
 
 
 def data_root():
