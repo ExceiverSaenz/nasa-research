@@ -499,14 +499,23 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         problems = folder_problems(run_dir, pdf_dir)
         if problems:
             raise ApiError(422, 'invalid_folder', 'A folder cannot be used', {'fields': problems})
+        # A paper needs both files. Those missing one are not loaded and are reported by what is missing:
+        # an LLM result without its PDF, or a PDF without an LLM result.
+        with_results = find_papers(run_dir)
+        pdfs = {p.stem for p in pdf_dir.glob('*.pdf')}
+        complete = [p for p in with_results if p in pdfs]
         if not ingest_lock.acquire(blocking=False):
             raise ApiError(409, 'ingest_running', 'Papers are already being loaded')
         try:
-            rows = ingest_run(run_dir, pdf_dir, c.originals)
+            rows = ingest_run(run_dir, pdf_dir, c.originals, complete) if complete else []
         finally:
             ingest_lock.release()
         totals = {k: sum(1 for r in rows if r['outcome'] == k) for k in ('written', 'unchanged', 'changed', 'failed')}
-        return {**totals, 'source': c.id, 'papers': [{k: r[k] for k in ('paper', 'outcome', 'values', 'error')} for r in rows]}
+        order = lambda s: (not s.isdigit(), int(s) if s.isdigit() else 0, s)   # noqa: E731
+        return {**totals, 'source': c.id,
+                'results_without_pdf': [p for p in with_results if p not in pdfs],
+                'pdfs_without_results': sorted(pdfs - set(with_results), key=order),
+                'papers': [{k: r[k] for k in ('paper', 'outcome', 'values', 'error')} for r in rows]}
 
     @app.api_route(API + '/{rest:path}', methods=['GET', 'POST', 'PUT', 'DELETE'])
     def unknown(rest: str):

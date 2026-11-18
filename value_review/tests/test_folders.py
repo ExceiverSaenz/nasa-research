@@ -92,6 +92,18 @@ class Folders(Base):
         self.assertEqual(self.client.get('/api/v1/sources/second-run/papers/9/pages/1/image').status_code, 200)
         self.assertEqual(self.client.get('/api/v1/papers/9').status_code, 404)
 
+    def test_papers_missing_a_file_are_reported_by_what_is_missing(self):
+        for name in ('12.pdf', '3.pdf'):   # PDFs without an LLM result
+            make_pdf(self.pdfs2 / name, [(612, 792)])
+        shutil.copy(self.run2 / '9-pdf_with_feature_guide.json', self.run2 / '11-pdf_with_feature_guide.json')   # result without PDF
+        self.add_second()
+        body = self.client.post('/api/v1/sources/second-run/ingest').json()
+        self.assertEqual((body['written'], body['failed']), (2, 0))
+        self.assertEqual((body['results_without_pdf'], body['pdfs_without_results']), (['11'], ['3', '12']))
+        self.assertEqual([p['paper'] for p in self.client.get('/api/v1/sources/second-run/papers').json()], ['7', '9'])
+        body = self.client.post('/api/v1/ingest').json()   # default pair: both files for every paper
+        self.assertEqual((body['results_without_pdf'], body['pdfs_without_results']), ([], []))
+
     def test_versions_are_kept_per_pair(self):
         self.add_second()
         self.client.post('/api/v1/sources/second-run/ingest')

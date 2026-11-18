@@ -166,7 +166,7 @@
 
 **Interface** · `POST /sources/{source}/ingest` (or `POST /ingest` for the active pair)
 
-- **Output** · `200 { "written", "unchanged", "changed", "failed", "source", "papers": [{ "paper", "outcome", "values", "error" }] }`.
+- **Output** · `200 { "written", "unchanged", "changed", "failed", "source", "results_without_pdf": [paper], "pdfs_without_results": [paper], "papers": [{ "paper", "outcome", "values", "error" }] }`. A paper needs both files: one whose LLM result has no `<paper>.pdf` is listed in `results_without_pdf`, a PDF with no result in `pdfs_without_results` (by file name without `.pdf`); neither is loaded nor counted in the totals. The client shows each list on its own line, saying which file is missing.
 - **Postcondition** · An original is written in the pair's `originals/` for every paper of its data folder that has none. Existing originals are never rewritten (BR-01): a paper whose result differs is reported as `changed` and shows as Source changed; a paper missing from the folders is kept and shows as Source not found (`source_problems` `result_missing` / `pdf_missing` in OP-01 and OP-02). Reviews, drafts and versions are not touched. Nothing is written in the source folders.
 - **Errors** · 422 `invalid_folder` (the stored folders no longer exist or are empty); 409 `ingest_running` while another load runs.
 

@@ -9,7 +9,16 @@ function ingestText(r) {
   if (r.unchanged) parts.push(`${r.unchanged} already loaded`);
   if (r.changed) parts.push(`${r.changed} with a different model output kept as they were (shown as Source changed)`);
   if (r.failed) parts.push(`${r.failed} could not be loaded`);
-  return parts.length ? `${parts.join(' · ')}.` : 'No papers found.';
+  return parts.length ? `${parts.join(' · ')}.` : 'No papers loaded.';
+}
+
+// Papers not loaded because one of their two files is missing, saying which one.
+function missingLines(r) {
+  const out = [];
+  const noPdf = r.results_without_pdf || [], noResults = r.pdfs_without_results || [];
+  if (noPdf.length) out.push(`Missing PDF (LLM results found, not loaded): ${plural(noPdf.length, 'paper')}: ${noPdf.join(', ')}.`);
+  if (noResults.length) out.push(`Missing LLM results (PDF found, not loaded): ${plural(noResults.length, 'paper')}: ${noResults.join(', ')}.`);
+  return out;
 }
 
 let nextKey = 0;
@@ -54,7 +63,9 @@ export default function SettingsDialog({ onClose, onLoaded }) {
         const r = await api.ingest(p.id);
         const failures = r.papers.filter((x) => x.outcome === 'failed').map((x) => `paper ${x.paper}: ${x.error}`);
         lines.push(`${p.name}: ${ingestText(r)}${failures.length ? ` ${failures.join(' · ')}` : ''}`);
-        if (r.failed) tone = 'warn';
+        const missing = missingLines(r);
+        lines.push(...missing.map((text) => ({ text, sub: true })));
+        if (tone === 'ok' && (r.failed || missing.length)) tone = 'warn';
       } catch (e) {
         lines.push(`${p.name}: ${e.message}`);
         tone = 'error';
@@ -120,7 +131,7 @@ export default function SettingsDialog({ onClose, onLoaded }) {
           <button type="button" className="icon-btn" style={{ border: 0 }} aria-label="Close" onClick={onClose} disabled={!!busy}>×</button>
         </div>
         {message && <div className={`banner ${message.tone}`} role="status">
-          <span>{message.lines.map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>)}</span></div>}
+          <span>{message.lines.map((l, i) => <span key={i} style={{ display: 'block', paddingLeft: l.sub === true ? 16 : 0 }}>{typeof l === 'string' ? l : l.text}</span>)}</span></div>}
         {!values && !message && <div className="modal-body"><span className="muted">Loading…</span></div>}
         {values && (
           <div className="modal-body">
