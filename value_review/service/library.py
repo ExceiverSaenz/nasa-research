@@ -28,10 +28,12 @@ def snap_width(w):
 
 
 class Library:
-    def __init__(self, config, paths=None):
-        """``paths()`` returns the current (results folder, PDF folder); they can change in Settings."""
-        self.config = config
+    def __init__(self, config, paths=None, originals=None, cache=None):
+        """``paths()`` returns the current (results folder, PDF folder); they can change in Settings.
+        ``originals`` and ``cache`` are the folders of one source (folder pair); default: the data folder's."""
         self.paths = paths or (lambda: (Path(config.run_dir), Path(config.pdf_dir)))
+        self.originals = Path(originals or config.originals)
+        self.cache = Path(cache or config.cache)
         self._originals = {}
         self._hashes = {}           # path -> ((size, mtime_ns), sha256)
         self._lock = threading.Lock()
@@ -39,7 +41,7 @@ class Library:
 
     # --- originals -------------------------------------------------------------
     def papers(self):
-        folder = self.config.originals
+        folder = self.originals
         if not folder.is_dir():
             return []
         ids = [p.stem for p in folder.glob('*.json') if PAPER_ID.fullmatch(p.stem)]
@@ -48,7 +50,7 @@ class Library:
     def original(self, paper):
         if not PAPER_ID.fullmatch(str(paper)):
             raise ApiError(404, 'paper_not_found', f'No paper {paper}')
-        path = self.config.originals / f'{paper}.json'
+        path = self.originals / f'{paper}.json'
         try:
             st = path.stat()
         except OSError:
@@ -64,7 +66,7 @@ class Library:
         return data
 
     def original_sha256(self, paper):
-        return self._hash(self.config.originals / f'{paper}.json')
+        return self._hash(self.originals / f'{paper}.json')
 
     # --- source check (BR-09) --------------------------------------------------
     def _hash(self, path):
@@ -107,7 +109,7 @@ class Library:
             raise ApiError(422, 'source_changed', 'The PDF is missing or changed since ingest', {'problems': problems})
         width = snap_width(width)
         sha = original['source']['pdf_sha256']
-        target = self.config.cache / 'pages' / str(paper) / f'{sha[:16]}-{page}-{width}.png'
+        target = self.cache / 'pages' / str(paper) / f'{sha[:16]}-{page}-{width}.png'
         if target.is_file():
             return target.read_bytes()
         with self._render_lock:

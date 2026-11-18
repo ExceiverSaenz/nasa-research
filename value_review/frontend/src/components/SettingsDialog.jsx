@@ -12,36 +12,60 @@ function ingestText(r) {
   return parts.length ? `${parts.join(' · ')}.` : 'No papers found.';
 }
 
-// Settings (OP-10, OP-12): reviewer, versions, autosave, and the folders the papers come from.
-// Changing a folder loads the papers it holds; papers already loaded are never changed.
+let nextKey = 0;
+const withKeys = (sources) => sources.map((s) => ({ ...s, key: s.id || `new-${nextKey++}` }));
+const sameFolders = (a, b) => a && b && a.run_dir === b.run_dir && a.pdf_dir === b.pdf_dir;
+
+// Settings (OP-10, OP-12): the folder pairs (each LLM results folder with its PDFs), reviewer, versions,
+// autosave. Saving a new pair, or new folders for a pair, loads its papers; papers already loaded are never changed.
 export default function SettingsDialog({ onClose, onLoaded }) {
   const [values, setValues] = useState(null);
   const [initial, setInitial] = useState(null);
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState(null);   // {text, tone, failures}
+  const [message, setMessage] = useState(null);   // {lines: [text], tone}
   const [busy, setBusy] = useState('');
   const pressedOutside = useRef(false);
 
+  const take = (s) => { const v = { ...s, sources: withKeys(s.sources) }; setValues(v); setInitial(v); };
   useEffect(() => {
-    api.settings().then((s) => { setValues(s); setInitial(s); }).catch((e) => setMessage({ text: e.message, tone: 'error' }));
+    api.settings().then(take).catch((e) => setMessage({ lines: [e.message], tone: 'error' }));
     const onKey = (e) => { if (e.key === 'Escape' && !busy) onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const set = (k) => (e) => { const v = e.target.value; setValues((s) => ({ ...s, [k]: v })); setErrors((x) => ({ ...x, [k]: '' })); };
-
-  const load = async () => {
-    setBusy('Loading papers…');
-    try {
-      const r = await api.ingest();
-      setMessage({ text: ingestText(r), tone: r.failed ? 'warn' : 'ok', failures: r.papers.filter((p) => p.outcome === 'failed') });
-      onLoaded();
-    } catch (e) {
-      if (e.code === 'invalid_folder') setErrors(e.details.fields || {});
-      setMessage({ text: e.message, tone: 'error' });
-    } finally { setBusy(''); }
+  const clear = (k) => setErrors((x) => ({ ...x, [k]: '' }));
+  const set = (k) => (e) => { const v = e.target.value; setValues((s) => ({ ...s, [k]: v })); clear(k); };
+  const setPair = (i, k) => (e) => {
+    const v = e.target.value;
+    setValues((s) => ({ ...s, sources: s.sources.map((x, j) => (j === i ? { ...x, [k]: v } : x)) }));
+    clear(`sources.${i}.${k}`);
   };
+  const addPair = () => setValues((s) => ({ ...s, sources: [...s.sources, ...withKeys([{ name: '', run_dir: '', pdf_dir: '' }])] }));
+  const removePair = (i) => { setValues((s) => ({ ...s, sources: s.sources.filter((_, j) => j !== i) })); setErrors({}); };
+
+  // Load the papers of the given pairs, one after the other; one line per pair.
+  const load = async (pairs) => {
+    const lines = [];
+    let tone = 'ok';
+    for (const p of pairs) {
+      setBusy(`Loading papers of ${p.name}…`);
+      try {
+        const r = await api.ingest(p.id);
+        const failures = r.papers.filter((x) => x.outcome === 'failed').map((x) => `paper ${x.paper}: ${x.error}`);
+        lines.push(`${p.name}: ${ingestText(r)}${failures.length ? ` ${failures.join(' · ')}` : ''}`);
+        if (r.failed) tone = 'warn';
+      } catch (e) {
+        lines.push(`${p.name}: ${e.message}`);
+        tone = 'error';
+      }
+    }
+    setBusy('');
+    onLoaded();
+    return { lines, tone };
+  };
+
+  const loadAll = async () => setMessage(await load(values.sources.filter((p) => p.id)));
 
   const save = async (e) => {
     e.preventDefault();
@@ -50,53 +74,75 @@ export default function SettingsDialog({ onClose, onLoaded }) {
     const keep = Number(values.keep_versions), auto = Number(values.autosave_minutes);
     if (!Number.isInteger(keep) || keep < 1 || keep > 100) local.keep_versions = 'A whole number from 1 to 100.';
     if (!Number.isInteger(auto) || auto < 1 || auto > 60) local.autosave_minutes = 'A whole number from 1 to 60.';
-    if (!values.run_dir.trim()) local.run_dir = 'Type the folder.';
-    if (!values.pdf_dir.trim()) local.pdf_dir = 'Type the folder.';
-    if (Object.keys(local).length) { setErrors(local); return; }
+    values.sources.forEach((p, i) => {
+      if (!p.name.trim()) local[`sources.${i}.name`] = 'Type a name.';
+      if (!p.run_dir.trim()) local[`sources.${i}.run_dir`] = 'Type the folder.';
+      if (!p.pdf_dir.trim()) local[`sources.${i}.pdf_dir`] = 'Type the folder.';
+    });
+    if (Object.keys(local).length) { setErrors(local); setMessage({ lines: ['Check the fields marked below. Nothing was saved.'], tone: 'error' }); return; }
     setBusy('Saving…');
     setMessage(null);
     try {
-      const saved = await api.saveSettings({ ...values, reviewer_name: values.reviewer_name.trim(), keep_versions: keep, autosave_minutes: auto });
-      const foldersChanged = saved.run_dir !== initial.run_dir || saved.pdf_dir !== initial.pdf_dir;
-      setValues(saved); setInitial(saved);
-      if (foldersChanged) { await load(); return; }
-      setMessage({ text: 'Settings saved.', tone: 'ok' });
+      const sources = values.sources.map(({ key, ...p }) => (p.id ? p : { name: p.name, run_dir: p.run_dir, pdf_dir: p.pdf_dir }));
+      const saved = await api.saveSettings({ reviewer_name: values.reviewer_name.trim(), keep_versions: keep, autosave_minutes: auto,
+        sources, active_source: values.active_source });
+      const before = Object.fromEntries(initial.sources.filter((p) => p.id).map((p) => [p.id, p]));
+      const toLoad = saved.sources.filter((p) => !sameFolders(before[p.id], p));
+      take(saved);
+      setErrors({});
+      if (toLoad.length) { setMessage(await load(toLoad)); return; }
+      setMessage({ lines: ['Settings saved.'], tone: 'ok' });
+      onLoaded();
     } catch (err) {
       if (err.code === 'invalid_folder') setErrors(err.details.fields || {});
-      setMessage({ text: err.code === 'invalid_folder' ? 'Check the folders below. Nothing was saved.' : err.message, tone: 'error' });
+      setMessage({ lines: [err.code === 'invalid_folder' ? 'Check the fields marked below. Nothing was saved.' : err.message], tone: 'error' });
     } finally { setBusy(''); }
   };
 
-  const field = (k, label, props = {}, hint = '') => (
+  const input = (id, label, value, onChange, error, props = {}, hint = '') => (
     <label className="field">{label}
-      <input value={values[k]} onChange={set(k)} aria-invalid={!!errors[k]} aria-describedby={errors[k] || hint ? `${k}-help` : undefined}
-        style={errors[k] ? { borderColor: 'var(--reject)' } : null} {...props} />
-      {(errors[k] || hint) && <span id={`${k}-help`} className={errors[k] ? 'error-text' : 'muted'} style={{ fontWeight: errors[k] ? 600 : 400 }}>{errors[k] || hint}</span>}
+      <input value={value} onChange={onChange} aria-invalid={!!error} aria-describedby={error || hint ? `${id}-help` : undefined}
+        style={error ? { borderColor: 'var(--reject)' } : null} {...props} />
+      {(error || hint) && <span id={`${id}-help`} className={error ? 'error-text' : 'muted'} style={{ fontWeight: error ? 600 : 400 }}>{error || hint}</span>}
     </label>
   );
+  const field = (k, label, props = {}, hint = '') => input(k, label, values[k], set(k), errors[k], props, hint);
+  const mono = { className: 'mono', spellCheck: false };
 
   return (
     // A click on the dark area around the dialog closes it, like ×. The press must also start there,
     // so selecting text in a field and releasing outside does not close it.
     <div className="backdrop" onMouseDown={(e) => { pressedOutside.current = e.target === e.currentTarget; }}
       onClick={(e) => { if (pressedOutside.current && e.target === e.currentTarget && !busy) onClose(); pressedOutside.current = false; }}>
-      <form className="modal" role="dialog" aria-modal="true" aria-labelledby="st-t" style={{ width: 640 }} onSubmit={save}>
+      <form className="modal" role="dialog" aria-modal="true" aria-labelledby="st-t" style={{ width: 680 }} onSubmit={save} noValidate>
         <div className="modal-head row-between">
           <h2 id="st-t" style={{ fontSize: 20 }}>Settings</h2>
           <button type="button" className="icon-btn" style={{ border: 0 }} aria-label="Close" onClick={onClose} disabled={!!busy}>×</button>
         </div>
-        {message && <div className={`banner ${message.tone === 'ok' ? 'ok' : message.tone === 'warn' ? 'warn' : 'error'}`} role="status">
-          <span>{message.text}{message.failures && message.failures.length > 0 && <>
-            {' '}{message.failures.map((f) => `Paper ${f.paper}: ${f.error}`).join(' · ')}</>}</span></div>}
+        {message && <div className={`banner ${message.tone}`} role="status">
+          <span>{message.lines.map((l, i) => <span key={i} style={{ display: 'block' }}>{l}</span>)}</span></div>}
         {!values && !message && <div className="modal-body"><span className="muted">Loading…</span></div>}
         {values && (
           <div className="modal-body">
             <b>Folders</b>
-            {field('run_dir', 'Data folder (LLM results)', { className: 'mono', spellCheck: false },
-              'The folder with the extraction results, one file per paper named <paper>-pdf_with_feature_guide.json.')}
-            {field('pdf_dir', 'Papers folder (PDFs)', { className: 'mono', spellCheck: false },
-              'The folder with the PDFs, named <paper>.pdf.')}
-            <span className="muted">When you save a new folder, the papers in it are loaded. Papers already loaded are never changed or removed: if their file is different or missing in the new folder, they show as Source changed and open read-only.</span>
+            <span className="muted">Each pair is a folder of LLM results with the folder of PDFs it was made from. Each pair is reviewed on its own, with its own drafts and versions; choose the one to review on Papers.</span>
+            {errors.sources && <span className="error-text" style={{ fontWeight: 600 }}>{errors.sources}</span>}
+            {values.sources.map((p, i) => (
+              <fieldset key={p.key} className="pair-card" aria-label={p.name || `Folder pair ${i + 1}`} style={{ margin: 0 }}>
+                <div className="pair-top">
+                  {input(`p${i}-name`, 'Name', p.name, setPair(i, 'name'), errors[`sources.${i}.name`], { placeholder: 'For example: gpt-6.1 low, PDF only' })}
+                  <button type="button" className="btn" onClick={() => removePair(i)} disabled={values.sources.length === 1 || !!busy}
+                    title={values.sources.length === 1 ? 'At least one pair is needed' : 'Remove this pair. Its reviews stay on disk.'}
+                    style={{ alignSelf: errors[`sources.${i}.name`] ? 'center' : 'flex-end' }}>Remove</button>
+                </div>
+                {input(`p${i}-run`, 'Data folder (LLM results)', p.run_dir, setPair(i, 'run_dir'), errors[`sources.${i}.run_dir`], mono,
+                  'One file per paper, named <paper>-pdf_with_feature_guide.json.')}
+                {input(`p${i}-pdf`, 'Papers folder (PDFs)', p.pdf_dir, setPair(i, 'pdf_dir'), errors[`sources.${i}.pdf_dir`], mono,
+                  'The PDFs, named <paper>.pdf.')}
+              </fieldset>
+            ))}
+            <div><button type="button" className="btn" onClick={addPair} disabled={!!busy}>+ Add folder pair</button></div>
+            <span className="muted">Saving a new pair, or new folders for a pair, loads its papers. Papers already loaded are never changed or removed: if their file is different or missing, they show as Source changed or Source not found and open read-only. Removing a pair keeps its reviews on disk.</span>
             <b style={{ marginTop: 8 }}>Review</b>
             {field('reviewer_name', 'Reviewer name', {}, 'Shown as the author of your decisions and versions.')}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
@@ -106,7 +152,8 @@ export default function SettingsDialog({ onClose, onLoaded }) {
           </div>
         )}
         <div className="modal-foot" style={{ justifyContent: 'space-between' }}>
-          <button type="button" className="btn big" onClick={load} disabled={!values || !!busy}>Load papers again</button>
+          <button type="button" className="btn big" onClick={loadAll} disabled={!values || !!busy}
+            title="Load files added to the saved folders since">Load papers again</button>
           <span style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             {busy && <span className="muted" role="status">{busy}</span>}
             <button type="button" className="btn big" onClick={onClose} disabled={!!busy}>Close</button>

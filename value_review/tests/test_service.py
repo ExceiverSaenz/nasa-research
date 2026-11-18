@@ -180,7 +180,8 @@ class PageImages(Base):  # OP-03
 
 class SettingsAndHealth(Base):  # OP-10, OP-11
     def test_defaults_and_update(self):
-        folders = {'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}
+        folders = {'sources': [{'id': 'default', 'name': 'run', 'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}],
+                   'active_source': 'default'}
         self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5, **folders})
         new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_minutes': 10}
         self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **folders})   # folders left out: unchanged

@@ -1,4 +1,5 @@
-"""Tests of the source folders in Settings and of loading papers from them (OP-10, OP-12)."""
+"""Tests of the folder pairs in Settings (each LLM results folder with its PDFs) and of loading papers
+from them (OP-10, OP-12). Each pair keeps its own originals, drafts and versions."""
 import json
 import shutil
 import sys
@@ -8,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from value_review.tests.test_ingest import make_pdf, result, sha  # noqa: E402
+from value_review.domain.state import empty_state  # noqa: E402
 from value_review.tests.test_service import Base  # noqa: E402
 
 SETTINGS = '/api/v1/settings'
@@ -28,44 +30,104 @@ class Folders(Base):
         data['paper']['paper_id'] = '9'
         data['paper']['title'] = 'A new paper'
         (self.run2 / '9-pdf_with_feature_guide.json').write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
+        self.first = {'id': 'default', 'name': 'run', 'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}
 
-    def put(self, **folders):
-        return self.client.put(SETTINGS, json={**BASE, **folders})
+    def put(self, sources, **extra):
+        return self.client.put(SETTINGS, json={**BASE, 'sources': sources, **extra})
 
-    def test_folders_are_validated(self):
+    def add_second(self, **pair):
+        r = self.put([self.first, {'name': 'Second run', 'run_dir': str(self.run2), 'pdf_dir': str(self.pdfs2), **pair}])
+        self.assertEqual(r.status_code, 200, r.text)
+        return r.json()
+
+    def test_default_pair(self):
+        s = self.client.get(SETTINGS).json()
+        self.assertEqual((s['sources'], s['active_source']), ([self.first], 'default'))
+
+    def test_settings_saved_before_pairs_become_the_default_pair(self):
+        self.write_json(self.store.settings_path, {**BASE, 'run_dir': str(self.run2), 'pdf_dir': str(self.pdfs2)})
+        s = self.client.get(SETTINGS).json()
+        self.assertEqual(s['sources'], [{'id': 'default', 'name': 'run2', 'run_dir': str(self.run2), 'pdf_dir': str(self.pdfs2)}])
+
+    def test_folders_are_validated_per_field(self):
         empty = Path(self.tmp.name) / 'empty'
         empty.mkdir()
-        r = self.put(run_dir=str(empty), pdf_dir=str(Path(self.tmp.name) / 'nope'))
+        r = self.put([self.first, {'name': 'run', 'run_dir': str(empty), 'pdf_dir': str(Path(self.tmp.name) / 'nope')}])
         self.assertEqual((r.status_code, r.json()['error']['code']), (422, 'invalid_folder'))
-        self.assertEqual(set(r.json()['error']['details']['fields']), {'run_dir', 'pdf_dir'})
-        r = self.put(run_dir=str(self.run2), pdf_dir=str(empty))
-        self.assertEqual(list(r.json()['error']['details']['fields']), ['pdf_dir'])
+        self.assertEqual(r.json()['error']['details']['fields'], {
+            'sources.1.name': 'Another pair has this name.',
+            'sources.1.run_dir': 'No LLM results here (files named <paper>-pdf_with_feature_guide.json).',
+            'sources.1.pdf_dir': 'This folder does not exist.'})
+        r = self.put([{'name': ' ', 'run_dir': '', 'pdf_dir': str(self.pdfs2)}])
+        self.assertEqual(set(r.json()['error']['details']['fields']), {'sources.0.name', 'sources.0.run_dir'})
+        r = self.put([])
+        self.assertEqual(r.json()['error']['details']['fields'], {'sources': 'Add at least one folder pair.'})
         self.assertFalse(self.store.settings_path.exists())
 
-    def test_quotes_and_spaces_are_cleaned(self):
-        r = self.put(run_dir=f'  "{self.run2}"  ', pdf_dir=f"'{self.pdfs2}'")
-        self.assertEqual(r.status_code, 200, r.text)
-        self.assertEqual((r.json()['run_dir'], r.json()['pdf_dir']), (str(self.run2), str(self.pdfs2)))
+    def test_unknown_or_repeated_id_is_refused(self):
+        for sources in ([{**self.first, 'id': 'nope'}], [self.first, self.first]):
+            self.assertEqual(self.put(sources).status_code, 400)
 
-    def test_ingest_adds_new_papers_and_keeps_existing(self):
-        self.assertEqual(self.put(run_dir=str(self.run2), pdf_dir=str(self.pdfs2)).status_code, 200)
-        before = (self.data / 'originals' / '7.json').read_bytes()
-        r = self.client.post('/api/v1/ingest')
+    def test_unchanged_folders_are_not_checked_again(self):
+        self.add_second()
+        shutil.rmtree(self.run2)   # the second pair's folder is gone, but saving other settings still works
+        s = self.client.get(SETTINGS).json()
+        r = self.client.put(SETTINGS, json={**BASE, 'reviewer_name': 'Dr. R', 'sources': s['sources']})
+        self.assertEqual(r.status_code, 200, r.text)
+
+    def test_quotes_and_spaces_are_cleaned_and_ids_made_from_names(self):
+        s = self.add_second(run_dir=f'  "{self.run2}"  ', pdf_dir=f"'{self.pdfs2}'")
+        self.assertEqual(s['sources'][1], {'id': 'second-run', 'name': 'Second run', 'run_dir': str(self.run2), 'pdf_dir': str(self.pdfs2)})
+        self.assertEqual(s['active_source'], 'default')
+
+    def test_each_pair_has_its_own_papers(self):
+        self.add_second()
+        r = self.client.post('/api/v1/sources/second-run/ingest')
         self.assertEqual(r.status_code, 200, r.text)
         body = r.json()
-        self.assertEqual((body['written'], body['unchanged'], body['changed'], body['failed']), (1, 1, 0, 0))
-        self.assertEqual({p['paper']: p['outcome'] for p in body['papers']}, {'7': 'unchanged', '9': 'written'})
-        self.assertEqual((self.data / 'originals' / '7.json').read_bytes(), before)
-        rows = {p['paper']: p for p in self.client.get('/api/v1/papers').json()}
-        self.assertEqual(set(rows), {'7', '9'})
-        self.assertEqual((rows['9']['title'], rows['9']['source_changed']), ('A new paper', False))
-        self.assertEqual(self.client.get('/api/v1/papers/9/pages/1/image').status_code, 200)   # PDF from the new folder
+        self.assertEqual((body['source'], body['written'], body['unchanged']), ('second-run', 2, 0))
+        self.assertTrue((self.data / 'sources' / 'second-run' / 'originals' / '9.json').is_file())
+        self.assertEqual([p['paper'] for p in self.client.get('/api/v1/papers').json()], ['7'])   # active: default
+        self.assertEqual([p['paper'] for p in self.client.get('/api/v1/sources/second-run/papers').json()], ['7', '9'])
+        self.assertEqual(self.client.get('/api/v1/sources/second-run/papers/9/pages/1/image').status_code, 200)
+        self.assertEqual(self.client.get('/api/v1/papers/9').status_code, 404)
+
+    def test_versions_are_kept_per_pair(self):
+        self.add_second()
+        self.client.post('/api/v1/sources/second-run/ingest')
+        r = self.client.post('/api/v1/sources/second-run/papers/7/versions', json={'state': empty_state()}, headers={'If-Match': '0'})
+        self.assertEqual(r.status_code, 201, r.text)
+        self.assertEqual(r.headers['Location'], '/api/v1/sources/second-run/papers/7/versions/1')
+        self.assertTrue((self.data / 'sources' / 'second-run' / 'annotations' / 'versions' / '7' / 'v1.json').is_file())
+        self.assertEqual(self.client.get('/api/v1/papers/7/versions').json(), [])   # default pair: none
+        self.assertEqual(len(self.client.get('/api/v1/sources/second-run/papers/7/versions').json()), 1)
+
+    def test_switching_the_active_pair(self):
+        self.add_second()
+        self.client.post('/api/v1/sources/second-run/ingest')
+        r = self.client.put('/api/v1/active-source', json={'source': 'second-run'})
+        self.assertEqual((r.status_code, r.json()['active_source']), (200, 'second-run'))
+        self.assertEqual([p['paper'] for p in self.client.get('/api/v1/papers').json()], ['7', '9'])
+        self.assertEqual(self.client.put('/api/v1/active-source', json={'source': 'nope'}).status_code, 404)
+        self.assertEqual(self.client.get('/api/v1/sources/nope/papers').json()['error']['code'], 'source_not_found')
+
+    def test_removing_a_pair_keeps_its_data(self):
+        self.add_second()
+        self.client.post('/api/v1/sources/second-run/ingest')
+        self.client.put('/api/v1/active-source', json={'source': 'second-run'})
+        s = self.put([self.first]).json()
+        self.assertEqual((len(s['sources']), s['active_source']), (1, 'default'))
+        self.assertTrue((self.data / 'sources' / 'second-run' / 'originals' / '9.json').is_file())
+        again = self.add_second()   # a new pair with the same name gets a fresh id: old data is not mixed in
+        self.assertEqual(again['sources'][1]['id'], 'second-run-2')
 
     def test_a_changed_source_is_not_overwritten(self):
         (self.run2 / self.res.name).write_text(self.res.read_text(encoding='utf-8').replace('710', '711'), encoding='utf-8')
-        self.put(run_dir=str(self.run2), pdf_dir=str(self.pdfs2))
+        self.put([{**self.first, 'run_dir': str(self.run2), 'pdf_dir': str(self.pdfs2)}])
+        before = (self.data / 'originals' / '7.json').read_bytes()
         body = self.client.post('/api/v1/ingest').json()
         self.assertEqual({p['paper']: p['outcome'] for p in body['papers']}, {'7': 'changed', '9': 'written'})
+        self.assertEqual((self.data / 'originals' / '7.json').read_bytes(), before)
         row = next(p for p in self.client.get('/api/v1/papers').json() if p['paper'] == '7')
         self.assertEqual((row['source_changed'], row['source_problems']), (True, ['result_changed']))
 
@@ -73,15 +135,16 @@ class Folders(Base):
         only9 = Path(self.tmp.name) / 'only9'
         only9.mkdir()
         shutil.copy(self.run2 / '9-pdf_with_feature_guide.json', only9)
-        self.put(run_dir=str(only9), pdf_dir=str(self.pdfs2))
+        self.put([{**self.first, 'run_dir': str(only9), 'pdf_dir': str(self.pdfs2)}])
         self.client.post('/api/v1/ingest')
         row = next(p for p in self.client.get('/api/v1/papers').json() if p['paper'] == '7')
         self.assertEqual(row['source_problems'], ['result_missing'])   # reviewed papers are never removed
 
     def test_sources_untouched(self):
         before = {p.name: sha(p) for p in list(self.run2.iterdir()) + list(self.pdfs2.iterdir())}
-        self.put(run_dir=str(self.run2), pdf_dir=str(self.pdfs2))
-        self.client.post('/api/v1/ingest')
+        self.add_second()
+        self.client.post('/api/v1/sources/second-run/ingest')
+        self.client.get('/api/v1/sources/second-run/papers/9/pages/1/image')
         self.assertEqual({p.name: sha(p) for p in list(self.run2.iterdir()) + list(self.pdfs2.iterdir())}, before)
 
 

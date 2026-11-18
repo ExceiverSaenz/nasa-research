@@ -56,6 +56,12 @@ a.brand:hover { background: var(--navy); }
 .papers { max-width: 1320px; margin: 0 auto; padding: 32px 24px 48px; display: flex; flex-direction: column; gap: 24px; }
 .papers h1 { font-size: 28px; font-weight: 600; }
 .lead { margin: 4px 0 0; color: var(--ink-3); max-width: 720px; }
+.papers-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 24px; flex-wrap: wrap; }
+.pair-select { width: 320px; max-width: 100%; }
+.pair-select select { font-size: 14px; color: var(--ink); }
+.pair-card { border: 1px solid var(--line-2); border-radius: 8px; padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; }
+.pair-card .pair-top { display: flex; gap: 8px; align-items: flex-end; }
+.pair-card .pair-top .field { flex: 1; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
 .tile { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; display: flex; flex-direction: column; gap: 2px; }
 .tile .k { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }

@@ -11,6 +11,12 @@ export class ApiError extends Error {
 
 const BASE = './api/v1';
 
+// The folder pair (LLM results + PDFs) this tab works on. Paper requests name it, so a tab keeps
+// working on its pair even if another tab switches the active one. Null = the active pair.
+let source = null;
+export const setSource = (id) => { source = id || null; };
+const P = () => (source ? `/sources/${encodeURIComponent(source)}` : '');
+
 async function request(path, { method = 'GET', body, headers = {}, keepalive = false } = {}) {
   let res;
   try {
@@ -34,20 +40,21 @@ async function request(path, { method = 'GET', body, headers = {}, keepalive = f
 }
 
 export const api = {
-  papers: async () => (await request('/papers')).data,
-  paper: async (id) => (await request(`/papers/${encodeURIComponent(id)}`)).data,
+  papers: async () => (await request(`${P()}/papers`)).data,
+  paper: async (id) => (await request(`${P()}/papers/${encodeURIComponent(id)}`)).data,
   settings: async () => (await request('/settings')).data,
+  setActiveSource: async (id) => (await request('/active-source', { method: 'PUT', body: { source: id } })).data,
   saveSettings: async (values) => (await request('/settings', { method: 'PUT', body: values })).data,
-  ingest: async () => (await request('/ingest', { method: 'POST' })).data,
+  ingest: async (id) => (await request(`${id ? `/sources/${encodeURIComponent(id)}` : P()}/ingest`, { method: 'POST' })).data,
   submit: async (id, version, state) =>
-    (await request(`/papers/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { state }, headers: { 'If-Match': `"${version}"` } })).data,
+    (await request(`${P()}/papers/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { state }, headers: { 'If-Match': `"${version}"` } })).data,
   saveDraft: async (id, body, { keepalive = false } = {}) =>
-    (await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'PUT', body, keepalive })).data,
-  deleteDraft: async (id) => { await request(`/papers/${encodeURIComponent(id)}/draft`, { method: 'DELETE' }); },
-  versions: async (id) => (await request(`/papers/${encodeURIComponent(id)}/versions`)).data,
-  version: async (id, n) => (await request(`/papers/${encodeURIComponent(id)}/versions/${n}`)).data,
+    (await request(`${P()}/papers/${encodeURIComponent(id)}/draft`, { method: 'PUT', body, keepalive })).data,
+  deleteDraft: async (id) => { await request(`${P()}/papers/${encodeURIComponent(id)}/draft`, { method: 'DELETE' }); },
+  versions: async (id) => (await request(`${P()}/papers/${encodeURIComponent(id)}/versions`)).data,
+  version: async (id, n) => (await request(`${P()}/papers/${encodeURIComponent(id)}/versions/${n}`)).data,
   restore: async (id, n, current) =>
-    (await request(`/papers/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
-  pageUrl: (id, page, width) => `${BASE}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
-  exportUrl: (id, n, kind) => `${BASE}/papers/${encodeURIComponent(id)}/versions/${n}/export.${kind}`,
+    (await request(`${P()}/papers/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+  pageUrl: (id, page, width) => `${BASE}${P()}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
+  exportUrl: (id, n, kind) => `${BASE}${P()}/papers/${encodeURIComponent(id)}/versions/${n}/export.${kind}`,
 };

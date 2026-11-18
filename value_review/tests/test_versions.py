@@ -76,7 +76,7 @@ class Submit(Versions):  # OP-05, AC-03, AC-05
         before = (sha(self.res), sha(self.pdf), sha(self.data / 'originals' / '7.json'))
         r = self.submit(three_decisions())
         self.assertEqual(r.status_code, 201, r.text)
-        self.assertEqual((r.headers['etag'], r.headers['location']), ('"1"', '/api/v1/papers/7/versions/1'))
+        self.assertEqual((r.headers['etag'], r.headers['location']), ('"1"', '/api/v1/sources/default/papers/7/versions/1'))
         body = r.json()
         self.assertEqual((body['n'], body['by']), (1, BY))
         self.assertEqual(body['counts'], {'total': 4, 'pending': 1, 'accepted': 1, 'corrected': 1, 'rejected': 1, 'unsure': 0,

@@ -19,7 +19,7 @@ import ValuesPanel from './ValuesPanel.jsx';
 const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 
 // Review of one paper (canvas Review.dc.html): review, drafts, finish and submit.
-export default function Review({ paperId, guard }) {
+export default function Review({ paperId, sourceId = null, guard }) {
   const [load, setLoad] = useState({ status: 'loading' });
   const [settings, setSettings] = useState({ reviewer_name: 'Expert reviewer', autosave_minutes: 5 });
   const [version, setVersion] = useState(0);
@@ -151,7 +151,7 @@ export default function Review({ paperId, guard }) {
   // Leaving inside the app (links, Back): App asks this screen first.
   useEffect(() => {
     if (!guard) return undefined;
-    guard.current = { paper: paperId, dirty: () => latest.current.dirty && !latest.current.allowLeave, ask: setLeave };
+    guard.current = { paper: paperId, source: sourceId, dirty: () => latest.current.dirty && !latest.current.allowLeave, ask: setLeave };
     return () => { guard.current = null; };
   }, [guard, paperId]);
 

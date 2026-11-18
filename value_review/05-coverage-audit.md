@@ -6,7 +6,7 @@
 
 ## Method
 
-- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **94 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
+- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **101 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
 - **Automated, client** · `npm test` in `value_review/frontend`: **23 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry). There are no tests of the React components themselves.
 - **Hand checks** · Each step was run end to end in a browser on the real paper 1, with the service started on a temporary copy of the data folder (`--data`), so the repository's data never changed. Widths used: 1440 and 1280 px (desktop), 1024 px, 834 px (tablet). Dates: 2026-11-16. A second pass the same day covered the paths the first one missed (AC-06, AC-10, AC-18, AC-19), with the sources also copied to a temporary folder (`VALUE_REVIEW_SOURCE_ROOT`) so one could be changed; it found and fixed three bugs (see *Fixed in the second pass*).
 - **Read-only sources** · Hash and modification-time inventories of the LLM result files and PDFs, taken before and after the ingest and service tests, are identical (BR-01).
@@ -64,11 +64,11 @@
 6. **OQ-03**: `keep_versions` applies per paper, as assumed.
 7. **Git**: whether generated `originals/` (and later `annotations/`) are committed is still undecided; nothing generated is committed today.
 
-## Settings: source folders (added 2026-11-18)
+## Settings: folder pairs (added 2026-11-18)
 
-- **Automated** · `test_folders.py` (6 tests): folders are validated per field and nothing is saved on error; quotes and spaces are cleaned; loading adds new papers and leaves existing originals byte-identical; a changed result is reported as `changed` and shown as Source changed; a paper missing from the new folders is kept with `result_missing`; the source folders are not written. `test_service.py` settings tests include the folders.
-- **Hand check** · In Settings, a missing folder showed "This folder does not exist." under the field and nothing was saved; a quoted path to a folder holding papers 1 and 2 was saved without its quotes and loading reported "2 already loaded"; the other 12 papers then showed *Source not found* and opened read-only with the matching banner; paper 1 kept working with its PDF read from the new folder.
-- **Not checked by hand** · Loading genuinely new papers through the dialog (covered by `test_ingest_adds_new_papers_and_keeps_existing`).
+- **Automated** · `test_folders.py` (13 tests): the default pair, and settings saved before pairs read as it; folders validated per field (`sources.<i>.…`), names unique, at least one pair, unknown or repeated ids refused, nothing saved on error; unchanged folders not checked again; quotes and spaces cleaned and ids made from names; each pair has its own originals, page images, drafts and versions (paper 7 in two pairs is two papers); switching the active pair; removing a pair keeps its data and a new pair never reuses its id; existing originals byte-identical after loading; changed and missing sources reported; source folders not written. `test_service.py` settings tests include the pairs.
+- **Hand check** (test server on a copy of the data, with the real settings file of the old layout) · The old folders showed as the first pair, named after the results folder. Adding a second pair with a used name and a missing folder showed both errors under their fields and saved nothing; corrected, it saved without the quotes and loaded "2 new papers". A click on the backdrop closed the dialog; Papers then showed the **LLM results** selector; switching it showed the 2 papers of the second pair with links `#/source/<pair>/paper/<n>`; paper 1 of the second pair had no draft while paper 1 of the first kept its own; a review opened from such a link sent every request to its pair.
+- **Not checked by hand** · Removing a pair in the dialog (covered by `test_removing_a_pair_keeps_its_data`); two tabs on different pairs at once.
 
 ## Fixed in the second pass
 

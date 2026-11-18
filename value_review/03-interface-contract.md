@@ -12,6 +12,7 @@
 - **Base** · `http://127.0.0.1:<port>/api/v1` (default port 8766). JSON in UTF-8. Times are ISO-8601 UTC with `Z`.
 - **Identifiers** · Paper id: digits as a string (`"1"`). Page: 1-based physical page number (as in the LLM output). Observation, record and evidence ids: those of the LLM output; items the reviewer creates use ids `u_<seq>` minted by the client, unique within the paper.
 - **Boxes** · `[x_min, y_min, x_max, y_max]`, normalized 0–1, origin at the top-left of the displayed page, exactly as in the LLM output (ADR-007).
+- **Folder pairs** · Every paper operation (OP-01 to OP-09, OP-12) exists twice: under `/sources/{source}/…` for a named folder pair (an LLM results folder with its PDFs, see OP-10), and without the prefix for the *active* pair. The client always names the pair, so a tab keeps working on its pair if another tab switches the active one. Unknown pair → 404 `source_not_found`. Paper ids, drafts and versions are per pair: paper 1 of two pairs is two independent papers.
 - **Version number** · Each paper has `version` = number of its latest version (0 = never submitted). It is returned as `ETag: "<version>"`. Writes that create a version send `If-Match: "<version>"` (ADR-005).
 - **Errors** · `{ "error": { "code": "<snake_case>", "message": "<human text>", "details": {} } }`, no stack trace, no absolute path.
 
@@ -19,7 +20,7 @@
 |---|---|---|
 | 400 | `invalid_request` | Malformed JSON or schema violation (`details.pointers` lists JSON pointers) |
 | 403 | `forbidden_host` | `Host` or `Origin` is not `127.0.0.1` / `localhost` with the service port |
-| 404 | `paper_not_found`, `page_not_found`, `version_not_found` | Unknown id, page out of range, version pruned or never written |
+| 404 | `paper_not_found`, `page_not_found`, `version_not_found`, `source_not_found` | Unknown id, page out of range, version pruned or never written |
 | 409 | `version_conflict` | `If-Match` or `base_version` is not the paper's current version |
 | 422 | `rules_violation` | A state breaks a business rule (`details.items` lists `{observation_id, rule}`) |
 | 422 | `source_changed` | Source result or PDF hash differs from ingest (BR-09) |
@@ -36,7 +37,8 @@
 - `annotations/drafts/<n>.draft.json` · [`draft.schema.json`](schemas/draft.schema.json). At most one per paper; overwritten on each draft save; deleted on submit, restore and start over.
 - `annotations/versions/<n>/v<k>.json` · [`version.schema.json`](schemas/version.schema.json). Written once; deleted only by pruning (BR-03).
 - No index file: the paper list and the current version are computed from the version files on each request (at most 20 small files per paper). The **current version** is the newest readable version file; a **new version number** is one past every `v<k>.json` present, readable or not, so numbers are never reused (BR-03).
-- `annotations/settings.json` · `{reviewer_name, keep_versions, autosave_minutes}`.
+- `annotations/settings.json` · `{reviewer_name, keep_versions, autosave_minutes, sources, active_source}`. Settings saved before folder pairs existed hold `run_dir`/`pdf_dir`; they are read as the `default` pair.
+- **Per pair** · The pair `default` uses the data folder's own `originals/`, `annotations/drafts/`, `annotations/versions/` and `cache/` (the paths above); any other pair uses the same layout under `sources/<id>/`. Removing a pair from Settings never deletes its folder.
 
 ## OP-01 · List papers
 
@@ -93,7 +95,7 @@
 | `If-Match` | header | Yes | must equal the paper's version `k` |
 | `state` | `value-review-state/1` | Yes | schema + all shared rules including BR-04 |
 
-- **Output** · `201 { "n", "at", "by", "counts" }`, `ETag: "<n>"`, `Location: /papers/{n}/versions/{n}`. `n` is `k+1` unless an unreadable newer file exists (see Files).
+- **Output** · `201 { "n", "at", "by", "counts" }`, `ETag: "<n>"`, `Location: /sources/{source}/papers/{n}/versions/{n}`. `n` is `k+1` unless an unreadable newer file exists (see Files).
 - **Postcondition** · `versions/<n>/v<n>.json` is written atomically (never over an existing file) with `by` = `reviewer_name`, `note` "Submitted", `base_version k`, the source hashes (including the SHA-256 of the original file), the state, counts and the materialized values; then version files beyond the `keep_versions` newest are deleted; then the draft is deleted. Pending values are allowed (the summary warns; the submit is not blocked). Check order, once the body parses as `{state: object}`: `If-Match` present → paper exists → source unchanged → `If-Match` = `k` → schema → rules.
 - **Invariant** · Originals and source files unchanged (BR-01). Version numbers strictly increase and are never reused.
 - **Errors**
@@ -151,20 +153,21 @@
 | `reviewer_name` | string 1–80 | Yes | default `"Expert reviewer"` |
 | `keep_versions` | integer | Yes | 1–100, default 20; lowering it prunes on the next version write, not immediately |
 | `autosave_minutes` | integer | Yes | 1–60, default 5 |
-| `run_dir` | string | No | Data folder: the LLM results. Must exist and hold at least one `<paper>-pdf_with_feature_guide.json`. Left out = unchanged. Default: the source root's `llm_baseline/results/gpt-6.1-sol-low-pdf-only` |
-| `pdf_dir` | string | No | Papers folder: the PDFs. Must exist and hold at least one `.pdf`. Left out = unchanged. Default: the source root's `papers/Tensile_Properties_of_Sub-sized_Specimens_papers` |
+| `sources` | list of 1–50 `{id?, name, run_dir, pdf_dir}` | No | The folder pairs. Left out = unchanged. `id` names an existing pair (unknown or repeated → 400); a pair without `id` is new and gets an id made from its name (lowercase, `-`), never one in use or with a folder under `sources/`. `name` 1–80, unique ignoring case. `run_dir`: the LLM results, must exist and hold at least one `<paper>-pdf_with_feature_guide.json`; `pdf_dir`: must exist and hold at least one `.pdf`. Folders are checked only for new pairs and changed folders. Default: one pair `default`, named after the results folder, with the source root's `llm_baseline/results/gpt-6.1-sol-low-pdf-only` and `papers/Tensile_Properties_of_Sub-sized_Specimens_papers` |
+| `active_source` | pair id | No | The pair Papers shows. Left out, or not in `sources` = unchanged, else the first pair |
 
 - Folder strings are cleaned (surrounding quotes and spaces removed, `~` expanded) before they are checked and stored.
-- **Output** · `200` the stored settings, folders included (`GET` always returns all five keys).
-- **Errors** · 400 `invalid_request` (types, ranges, unknown keys); 422 `invalid_folder` with `details.fields {run_dir?, pdf_dir?}` giving a message per folder. Nothing is saved on error.
-- **Effect** · Source checks (BR-09), page images and ingest use the stored folders from the next request on. The client loads the papers of new folders right after saving them (OP-12).
+- **Output** · `200` the stored settings (`GET` always returns all five keys).
+- **Errors** · 400 `invalid_request` (types, ranges, unknown keys or ids); 422 `invalid_folder` with `details.fields` giving a message per field, keyed `sources.<i>.name|run_dir|pdf_dir`, or `sources` when the list is empty. Nothing is saved on error.
+- **Effect** · Source checks (BR-09), page images and ingest use the stored folders from the next request on. The client loads the papers of new pairs and changed folders right after saving them (OP-12).
+- **Active pair** · `PUT /active-source {"source": id}` → `200` the settings; 404 `source_not_found`. Papers' selector (shown when there are two or more pairs) uses it.
 
-## OP-12 · Load papers from the configured folders
+## OP-12 · Load the papers of a folder pair
 
-**Interface** · `POST /ingest`
+**Interface** · `POST /sources/{source}/ingest` (or `POST /ingest` for the active pair)
 
-- **Output** · `200 { "written", "unchanged", "changed", "failed", "papers": [{ "paper", "outcome", "values", "error" }] }`.
-- **Postcondition** · An original is written for every paper of the data folder that has none. Existing originals are never rewritten (BR-01): a paper whose result differs is reported as `changed` and shows as Source changed; a paper missing from the new folders is kept and shows as Source not found (`source_problems` `result_missing` / `pdf_missing` in OP-01 and OP-02). Reviews, drafts and versions are not touched. Nothing is written in the source folders.
+- **Output** · `200 { "written", "unchanged", "changed", "failed", "source", "papers": [{ "paper", "outcome", "values", "error" }] }`.
+- **Postcondition** · An original is written in the pair's `originals/` for every paper of its data folder that has none. Existing originals are never rewritten (BR-01): a paper whose result differs is reported as `changed` and shows as Source changed; a paper missing from the folders is kept and shows as Source not found (`source_problems` `result_missing` / `pdf_missing` in OP-01 and OP-02). Reviews, drafts and versions are not touched. Nothing is written in the source folders.
 - **Errors** · 422 `invalid_folder` (the stored folders no longer exist or are empty); 409 `ingest_running` while another load runs.
 
 ## OP-11 · Health
@@ -173,6 +176,7 @@
 
 ## Front-end guarantees (client side, same contract)
 
+- Routes: `#/` Papers of the active pair; `#/source/<pair>/paper/<n>` the review of a paper of that pair (`#/paper/<n>`, from before pairs, opens the active pair's paper).
 - The client keeps the working copy in memory, sends it whole on draft and submit, and never sends partial patches.
 - Autosave: every `autosave_minutes` the client calls OP-04 with `trigger: auto` only when the state differs from the last saved or submitted one; on `pagehide` it sends `trigger: pagehide` with `fetch(…, {keepalive: true})`.
 - Layouts and keys (AC-19): below 1024 px wide the review shows a list screen and a detail screen (sticky decision bar, full-screen PDF), and Papers shows cards; touch targets are at least 44 px. On desktop the keyboard shortcuts of `frontend/src/lib/shortcuts.js` apply (S/D/F reject, unsure, accept; J/K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; ? the full list), matched by physical key and off while typing in a field or with a dialog open.

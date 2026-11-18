@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { api } from '../lib/api.js';
+import { api, setSource } from '../lib/api.js';
 import VersionHistory from './VersionHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 import useMedia, { COMPACT } from './useMedia.js';
@@ -27,13 +27,23 @@ export default function Papers() {
   const [history, setHistory] = useState(null);   // paper row whose version history is open
   const [keep, setKeep] = useState(20);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settings, setSettings] = useState(null);   // folder pairs and the active one
   const compact = useMedia(COMPACT);
 
-  const reload = () => api.papers().then(setRows).catch((e) => setError(e.message));
+  // Settings first: the papers shown are those of the active folder pair, and every link names it.
+  const reload = () => api.settings()
+    .then((s) => { setSettings(s); setKeep(s.keep_versions); setSource(s.active_source); return api.papers(); })
+    .then((r) => { setRows(r); setError(''); })
+    .catch((e) => setError(e.message));
+  const switchPair = (id) => {
+    setRows(null); setMenu(null);
+    api.setActiveSource(id).then(reload).catch((e) => setError(e.message));
+  };
+  const pair = settings && settings.active_source;
+  const link = (paper) => `#/source/${pair}/paper/${paper}`;
   useEffect(() => {
     document.title = 'Papers · Tensile Data Review';
     reload();
-    api.settings().then((s) => setKeep(s.keep_versions)).catch(() => {});
     const close = (e) => { if (e.key === 'Escape') setMenu(null); };
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
@@ -72,9 +82,19 @@ export default function Papers() {
         </button>
       </header>
       <main className="papers">
-        <div>
+        <div className="papers-head">
+          <div>
           <h1>Papers to review</h1>
           <p className="lead">The model read each PDF and pulled out tensile test values. Open a paper and check every value against the page it came from.</p>
+          </div>
+          {settings && settings.sources.length > 1 && (
+            <label className="field pair-select">LLM results
+              <select value={pair} onChange={(e) => switchPair(e.target.value)} aria-describedby="pair-help">
+                {settings.sources.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+              </select>
+              <span id="pair-help" className="muted">Each set of results is reviewed on its own.</span>
+            </label>
+          )}
         </div>
         {error && <div className="banner error" role="alert">{error}</div>}
         {rows && (
@@ -107,7 +127,7 @@ export default function Papers() {
                     const pct = r.total ? Math.round((r.reviewed / r.total) * 100) : 0;
                     return (
                       <div key={r.paper} className="paper-card">
-                        <a href={`#/paper/${r.paper}`}>
+                        <a href={link(r.paper)}>
                           <span className="t">{r.title}</span>
                           <span className="muted">Paper {r.paper} · {r.values} values · {r.needs_check} need a check{r.latest ? ` · v${r.latest.n}, ${shortDate(r.latest.at)}` : ''}</span>
                           <span className="mini-bar"><span className="bar"><span style={{ width: `${pct}%` }} /></span><span className="mono muted">{pct}%</span>
@@ -119,7 +139,7 @@ export default function Papers() {
                           onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
                         {menu === r.paper && (
                           <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 8, top: 56 }}>
-                            <a role="menuitem" className="menu-link" href={`#/paper/${r.paper}`}>Open</a>
+                            <a role="menuitem" className="menu-link" href={link(r.paper)}>Open</a>
                             <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
                             {r.latest && <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>}
                           </div>
@@ -148,14 +168,14 @@ export default function Papers() {
                               onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
                             {menu === r.paper && (
                               <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 0, top: 44 }}>
-                                <a role="menuitem" className="menu-link" href={`#/paper/${r.paper}`}>Open</a>
+                                <a role="menuitem" className="menu-link" href={link(r.paper)}>Open</a>
                                 <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
                                 {r.latest
                                   ? <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>
                                   : <span className="muted" style={{ display: 'block', padding: '6px 14px 8px', whiteSpace: 'normal' }}>No versions yet. A version is saved each time the paper is submitted.</span>}
                               </div>
                             )}
-                            <a href={`#/paper/${r.paper}`} title={r.title}>{r.title}</a>
+                            <a href={link(r.paper)} title={r.title}>{r.title}</a>
                             {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected" style={{ marginLeft: 8 }} title={`Draft saved ${shortDate(r.draft_at)}`}>Draft</span>}
                             {r.source_changed && <span className="chip st-rejected" style={{ marginLeft: 8 }} title={sourceTitle(r)}>{sourceText(r)}</span>}
                             {r.completion && r.completion !== 'complete' && <span className="chip st-unsure" style={{ marginLeft: 8 }}>Model run {r.completion}</span>}</td>
@@ -179,7 +199,7 @@ export default function Papers() {
         {!rows && !error && <p className="muted">Loading papers…</p>}
       </main>
       {history && <VersionHistory paper={history} keep={keep} onClose={() => setHistory(null)} onChanged={reload} />}
-      {settingsOpen && <SettingsDialog onClose={() => { setSettingsOpen(false); reload(); api.settings().then((s) => setKeep(s.keep_versions)).catch(() => {}); }}
+      {settingsOpen && <SettingsDialog onClose={() => { setSettingsOpen(false); reload(); }}
         onLoaded={reload} />}
     </div>
   );

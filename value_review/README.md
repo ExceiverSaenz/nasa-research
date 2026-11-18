@@ -40,7 +40,7 @@ The built front end in `value_review/web/` is committed, so Node is not needed t
 - **Save draft** keeps your work for later (also automatically every 5 minutes and when the tab closes). **Finish paper** shows a summary and **Submit paper** saves a new version. The 20 most recent versions are kept per paper.
 - **Start over from model output** (⋯ in the review) clears the working copy and the draft; versions stay.
 - **Keyboard** (desktop): S · D · F reject, unsure, accept; J · K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; **?** shows every shortcut. On a tablet (under 1024 px wide) the review shows a list screen and a detail screen.
-- **Settings** (button at the top of Papers): the **data folder** (LLM results, `<paper>-pdf_with_feature_guide.json`) and the **papers folder** (PDFs), the reviewer name, the versions kept (1–100) and the autosave interval. Saving a new folder loads the papers in it; papers already loaded are never changed or removed, and show as *Source changed* or *Source not found* (read-only) when their file differs or is missing. *Load papers again* picks up files added later.
+- **Settings** (gear at the top of Papers): the **folder pairs**, each a named **data folder** (LLM results, `<paper>-pdf_with_feature_guide.json`) with its **papers folder** (PDFs); the reviewer name, the versions kept (1–100) and the autosave interval. Each pair is reviewed on its own, with its own drafts and versions; when there are two or more, the **LLM results** selector on Papers chooses the one shown. Saving a new pair or new folders loads their papers; papers already loaded are never changed or removed, and show as *Source changed* or *Source not found* (read-only) when their file differs or is missing. Removing a pair keeps its reviews on disk. *Load papers again* picks up files added later.
 
 ## Data
 
@@ -53,6 +53,7 @@ Under `value_review/` (or the `--data` folder):
 | `annotations/versions/<n>/v<k>.json` | Submitted and restored versions, never changed | Submit, Restore |
 | `annotations/settings.json` | Settings | Settings |
 | `cache/pages/` | Rendered page images; safe to delete | The service |
+| `sources/<id>/…` | The same `originals/`, `annotations/` and `cache/` for every folder pair but the first | Settings, the service |
 
 Exports: `GET /api/v1/papers/<n>/versions/<k>/export.json` (the model's fields plus a `review` per value), `…/export.csv` (one row per value), and `GET /api/v1/export/latest.zip` (latest version of every paper plus `summary.csv`).
 
