@@ -79,7 +79,7 @@ class Papers(Base):  # OP-01, AC-01
         self.assertEqual(r.json(), [{
             'paper': '7', 'title': 'A test paper', 'pages': 2, 'records': 2, 'values': 4, 'needs_check': 3,
             'reviewed': 0, 'total': 4, 'status': 'not_started', 'version': 0, 'latest': None, 'draft_at': None,
-            'source_changed': False, 'completion': 'partial'}])
+            'source_changed': False, 'source_problems': [], 'completion': 'partial'}])
 
     def test_latest_version_and_newer_draft(self):
         s1 = empty_state(); s1['decisions'] = {'o1': decision()}
@@ -180,10 +180,11 @@ class PageImages(Base):  # OP-03
 
 class SettingsAndHealth(Base):  # OP-10, OP-11
     def test_defaults_and_update(self):
-        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5})
+        folders = {'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}
+        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5, **folders})
         new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_minutes': 10}
-        self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), new)
-        self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), new)
+        self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **folders})   # folders left out: unchanged
+        self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), {**new, **folders})
 
     def test_invalid_settings_rejected(self):
         for bad in ({'reviewer_name': '', 'keep_versions': 20, 'autosave_minutes': 5},

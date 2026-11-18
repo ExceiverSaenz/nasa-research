@@ -28,8 +28,10 @@ def snap_width(w):
 
 
 class Library:
-    def __init__(self, config):
+    def __init__(self, config, paths=None):
+        """``paths()`` returns the current (results folder, PDF folder); they can change in Settings."""
         self.config = config
+        self.paths = paths or (lambda: (Path(config.run_dir), Path(config.pdf_dir)))
         self._originals = {}
         self._hashes = {}           # path -> ((size, mtime_ns), sha256)
         self._lock = threading.Lock()
@@ -84,8 +86,9 @@ class Library:
         """Codes for sources that are missing or no longer match the original: [] when all is well."""
         src = original['source']
         out = []
-        for name, folder, expected in (('result', self.config.run_dir, src['result_sha256']),
-                                       ('pdf', self.config.pdf_dir, src['pdf_sha256'])):
+        run_dir, pdf_dir = self.paths()
+        for name, folder, expected in (('result', run_dir, src['result_sha256']),
+                                       ('pdf', pdf_dir, src['pdf_sha256'])):
             digest = self._hash(Path(folder) / src[f'{name}_file'])
             if digest is None:
                 out.append(f'{name}_missing')
@@ -110,7 +113,7 @@ class Library:
         with self._render_lock:
             if target.is_file():
                 return target.read_bytes()
-            data = self._render(Path(self.config.pdf_dir) / original['source']['pdf_file'], page, width / pages[page]['width_pt'])
+            data = self._render(Path(self.paths()[1]) / original['source']['pdf_file'], page, width / pages[page]['width_pt'])
             atomic_write_bytes(target, data)
         return data
 

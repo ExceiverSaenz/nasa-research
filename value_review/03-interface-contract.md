@@ -42,7 +42,7 @@
 
 **Interface** · `GET /papers`
 
-- **Output** · `200 [{ "paper", "title", "pages", "records", "values", "needs_check", "reviewed", "total", "status": "not_started|in_progress|done", "version", "latest": {n, at, by} | null, "draft_at" | null, "source_changed", "completion", "warnings"? }]` ordered by paper id. `reviewed` / `total` count decided values over the model values plus added ones, from the draft when it is newer than the latest version, else from that version. `warnings` (only when present) lists draft or version files that could not be read; they are reported, never repaired or deleted, and the newest readable version is used.
+- **Output** · `200 [{ "paper", "title", "pages", "records", "values", "needs_check", "reviewed", "total", "status": "not_started|in_progress|done", "version", "latest": {n, at, by} | null, "draft_at" | null, "source_changed", "source_problems", "completion", "warnings"? }]` ordered by paper id. `reviewed` / `total` count decided values over the model values plus added ones, from the draft when it is newer than the latest version, else from that version. `warnings` (only when present) lists draft or version files that could not be read; they are reported, never repaired or deleted, and the newest readable version is used.
 - **Errors** · none beyond the shared ones.
 - **Example** · Fresh install, 14 originals → 14 items, all `not_started`, `version 0`, paper 1 `values 255, needs_check 6` (AC-01, AC-16).
 
@@ -151,6 +151,21 @@
 | `reviewer_name` | string 1–80 | Yes | default `"Expert reviewer"` |
 | `keep_versions` | integer | Yes | 1–100, default 20; lowering it prunes on the next version write, not immediately |
 | `autosave_minutes` | integer | Yes | 1–60, default 5 |
+| `run_dir` | string | No | Data folder: the LLM results. Must exist and hold at least one `<paper>-pdf_with_feature_guide.json`. Left out = unchanged. Default: the source root's `llm_baseline/results/gpt-6.1-sol-low-pdf-only` |
+| `pdf_dir` | string | No | Papers folder: the PDFs. Must exist and hold at least one `.pdf`. Left out = unchanged. Default: the source root's `papers/Tensile_Properties_of_Sub-sized_Specimens_papers` |
+
+- Folder strings are cleaned (surrounding quotes and spaces removed, `~` expanded) before they are checked and stored.
+- **Output** · `200` the stored settings, folders included (`GET` always returns all five keys).
+- **Errors** · 400 `invalid_request` (types, ranges, unknown keys); 422 `invalid_folder` with `details.fields {run_dir?, pdf_dir?}` giving a message per folder. Nothing is saved on error.
+- **Effect** · Source checks (BR-09), page images and ingest use the stored folders from the next request on. The client loads the papers of new folders right after saving them (OP-12).
+
+## OP-12 · Load papers from the configured folders
+
+**Interface** · `POST /ingest`
+
+- **Output** · `200 { "written", "unchanged", "changed", "failed", "papers": [{ "paper", "outcome", "values", "error" }] }`.
+- **Postcondition** · An original is written for every paper of the data folder that has none. Existing originals are never rewritten (BR-01): a paper whose result differs is reported as `changed` and shows as Source changed; a paper missing from the new folders is kept and shows as Source not found (`source_problems` `result_missing` / `pdf_missing` in OP-01 and OP-02). Reviews, drafts and versions are not touched. Nothing is written in the source folders.
+- **Errors** · 422 `invalid_folder` (the stored folders no longer exist or are empty); 409 `ingest_running` while another load runs.
 
 ## OP-11 · Health
 

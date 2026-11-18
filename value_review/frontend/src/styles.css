@@ -41,6 +41,8 @@ h1, h2, h3 { margin: 0; }
 /* app header */
 .app-header { display: flex; align-items: center; gap: 12px 24px; padding: 10px 24px; min-height: 72px; background: #fff; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 .brand { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--navy-dark); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+.gear-btn { width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: var(--ink-2); display: inline-flex; align-items: center; justify-content: center; }
+.gear-btn:hover { background: var(--soft); color: var(--navy); }
 a.brand { color: #fff; text-decoration: none; }
 a.brand:hover { background: var(--navy); }
 .crumbs { display: flex; gap: 8px; font-size: 14px; color: var(--ink-3); }

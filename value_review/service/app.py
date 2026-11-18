@@ -1,4 +1,4 @@
-"""FastAPI application: OP-01 to OP-11 of the contract (03-interface-contract.md)."""
+"""FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md)."""
 import json
 import logging
 import os
@@ -6,6 +6,7 @@ import tempfile
 import threading
 from collections import defaultdict
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
@@ -19,7 +20,8 @@ from .. import schemas
 from ..domain.materialize import counts as count_values, values as materialize
 from ..domain.rules import check_state, shape_problems
 from ..domain.state import empty_state, progress, status_of
-from ..ingest import features
+from ..config import RESULT_SUFFIX
+from ..ingest import features, find_papers, ingest_run
 from ..storage import StorageError
 from ..storage.files import AnnotationStore
 from . import exports
@@ -40,6 +42,29 @@ class Settings(BaseModel):
     reviewer_name: str = Field(min_length=1, max_length=80)
     keep_versions: int = Field(ge=1, le=100)
     autosave_minutes: int = Field(ge=1, le=60)
+    # Folders the papers come from: the LLM results (data) and the PDFs. Optional: left out = unchanged.
+    run_dir: str | None = Field(default=None, min_length=1, max_length=1000)
+    pdf_dir: str | None = Field(default=None, min_length=1, max_length=1000)
+
+
+def clean_folder(text):
+    """A folder typed or pasted by the reviewer: surrounding quotes and spaces removed, ~ expanded."""
+    return str(Path(text.strip().strip('"').strip("'").strip()).expanduser())
+
+
+def folder_problems(run_dir, pdf_dir):
+    """Per-field messages for folders that cannot be used; empty when both are usable."""
+    out = {}
+    run, pdfs = Path(run_dir), Path(pdf_dir)
+    if not run.is_dir():
+        out['run_dir'] = 'This folder does not exist.'
+    elif not find_papers(run):
+        out['run_dir'] = f'No LLM results here (files named <paper>{RESULT_SUFFIX}).'
+    if not pdfs.is_dir():
+        out['pdf_dir'] = 'This folder does not exist.'
+    elif not any(pdfs.glob('*.pdf')):
+        out['pdf_dir'] = 'No PDF files in this folder.'
+    return out
 
 
 class SubmitBody(BaseModel):
@@ -83,9 +108,17 @@ def attachment(data, media_type, filename):
 
 def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> FastAPI:
     config = config or Config()
-    library = Library(config)
     store = AnnotationStore(config.annotations)
+    folder_defaults = {'run_dir': str(config.run_dir), 'pdf_dir': str(config.pdf_dir)}
+    settings_now = lambda: store.settings(folder_defaults)   # noqa: E731
+
+    def source_folders():
+        s = settings_now()
+        return Path(s['run_dir']), Path(s['pdf_dir'])
+
+    library = Library(config, paths=source_folders)
     paper_locks = defaultdict(threading.Lock)   # requests that write take the paper's lock
+    ingest_lock = threading.Lock()
 
     app = FastAPI(title='Tensile Value Review', docs_url=None, redoc_url=None, openapi_url=None)
     app.state.library, app.state.store, app.state.config = library, store, config
@@ -138,6 +171,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             k, latest, state, draft, problems = working(paper, original)
             newer_draft = draft is not None and (latest is None or draft['saved_at'] > latest['at'])
             reviewed, total = progress(original, draft['state'] if newer_draft else state)
+            source = library.source_problems(original)
             entry = {
                 'paper': paper, 'title': original['document']['title'], 'pages': original['document']['page_count'],
                 'records': original['counts']['records'], 'values': original['counts']['values'],
@@ -145,7 +179,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 'reviewed': reviewed, 'total': total, 'status': status_of(reviewed, total),
                 'version': k, 'latest': {'n': latest['n'], 'at': latest['at'], 'by': latest['by']} if latest else None,
                 'draft_at': draft['saved_at'] if draft else None,
-                'source_changed': bool(library.source_problems(original)),
+                'source_changed': bool(source),
+                'source_problems': source,
                 'completion': original['document']['completion']['status'],
             }
             if problems:
@@ -326,15 +361,40 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     # --- OP-10 -----------------------------------------------------------------
     @app.get(f'{API}/settings')
     def get_settings():
-        return store.settings()
+        return settings_now()
 
     @app.put(f'{API}/settings')
     def put_settings(values: Settings):
+        current = settings_now()
+        new = values.model_dump()
+        for key in ('run_dir', 'pdf_dir'):
+            new[key] = clean_folder(new[key]) if new[key] else current[key]
+        problems = folder_problems(new['run_dir'], new['pdf_dir'])
+        if problems:
+            raise ApiError(422, 'invalid_folder', 'A folder cannot be used', {'fields': problems})
         try:
-            store.save_settings(values.model_dump())
+            store.save_settings(new)
         except StorageError as error:
             raise ApiError(500, 'storage_error', str(error)) from None
-        return store.settings()
+        return settings_now()
+
+    # --- OP-12: load the papers of the configured folders ---------------------------
+    @app.post(f'{API}/ingest')
+    def ingest():
+        """Build originals for papers in the configured folders that have none yet. Existing originals are
+        never rewritten (BR-01): a paper whose source differs is reported as `changed` and shows as Source changed."""
+        run_dir, pdf_dir = source_folders()
+        problems = folder_problems(run_dir, pdf_dir)
+        if problems:
+            raise ApiError(422, 'invalid_folder', 'A folder cannot be used', {'fields': problems})
+        if not ingest_lock.acquire(blocking=False):
+            raise ApiError(409, 'ingest_running', 'Papers are already being loaded')
+        try:
+            rows = ingest_run(run_dir, pdf_dir, config.originals)
+        finally:
+            ingest_lock.release()
+        totals = {k: sum(1 for r in rows if r['outcome'] == k) for k in ('written', 'unchanged', 'changed', 'failed')}
+        return {**totals, 'papers': [{k: r[k] for k in ('paper', 'outcome', 'values', 'error')} for r in rows]}
 
     @app.api_route(API + '/{rest:path}', methods=['GET', 'POST', 'PUT', 'DELETE'])
     def unknown(rest: str):

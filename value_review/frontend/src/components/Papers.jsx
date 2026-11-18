@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
 import VersionHistory from './VersionHistory.jsx';
+import SettingsDialog from './SettingsDialog.jsx';
 import useMedia, { COMPACT } from './useMedia.js';
 
 const STATUS = { not_started: 'Not started', in_progress: 'In progress', done: 'Done' };
@@ -9,6 +10,11 @@ const FILTERS = [['all', 'All'], ['not_started', 'Not started'], ['in_progress',
 
 const shortDate = (iso) => (iso ? new Date(iso).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
 const n = (x) => x.toLocaleString('en-US');
+// A paper whose files are missing from the configured folders, or differ from when it was loaded (read-only).
+const missing = (r) => (r.source_problems || []).some((p) => p.endsWith('_missing'));
+const sourceText = (r) => (missing(r) ? 'Source not found' : 'Source changed');
+const sourceTitle = (r) => (missing(r) ? 'Its file is not in the folders set in Settings. It opens read-only.'
+  : 'Its file differs from the one it was loaded from. It opens read-only.');
 
 // Papers list (canvas Main.dc.html): AC-01.
 export default function Papers() {
@@ -20,6 +26,7 @@ export default function Papers() {
   const [menu, setMenu] = useState(null);         // paper id whose row menu is open
   const [history, setHistory] = useState(null);   // paper row whose version history is open
   const [keep, setKeep] = useState(20);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const compact = useMedia(COMPACT);
 
   const reload = () => api.papers().then(setRows).catch((e) => setError(e.message));
@@ -57,6 +64,12 @@ export default function Papers() {
       <header className="app-header">
         <div className="brand" aria-hidden="true">TD</div>
         <div className="head-title"><span className="crumbs">Tensile Data Review</span></div>
+        <button type="button" className="icon-btn gear-btn" aria-label="Settings" title="Settings" onClick={() => setSettingsOpen(true)}>
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+          </svg>
+        </button>
       </header>
       <main className="papers">
         <div>
@@ -100,7 +113,7 @@ export default function Papers() {
                           <span className="mini-bar"><span className="bar"><span style={{ width: `${pct}%` }} /></span><span className="mono muted">{pct}%</span>
                             <span className="chip" style={{ background: '#EEF1F5' }}><span className="dot" aria-hidden="true" style={{ background: DOT[r.status] }} />{STATUS[r.status]}</span>
                             {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected">Draft</span>}
-                            {r.source_changed && <span className="chip st-rejected">Source changed</span>}</span>
+                            {r.source_changed && <span className="chip st-rejected" title={sourceTitle(r)}>{sourceText(r)}</span>}</span>
                         </a>
                         <button type="button" aria-haspopup="menu" aria-expanded={menu === r.paper} aria-label={`More actions for paper ${r.paper}`}
                           onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
@@ -144,7 +157,7 @@ export default function Papers() {
                             )}
                             <a href={`#/paper/${r.paper}`} title={r.title}>{r.title}</a>
                             {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected" style={{ marginLeft: 8 }} title={`Draft saved ${shortDate(r.draft_at)}`}>Draft</span>}
-                            {r.source_changed &&<span className="chip st-rejected" style={{ marginLeft: 8 }}>Source changed</span>}
+                            {r.source_changed && <span className="chip st-rejected" style={{ marginLeft: 8 }} title={sourceTitle(r)}>{sourceText(r)}</span>}
                             {r.completion && r.completion !== 'complete' && <span className="chip st-unsure" style={{ marginLeft: 8 }}>Model run {r.completion}</span>}</td>
                           <td>{r.latest ? <>{shortDate(r.latest.at)} <span className="muted">v{r.latest.n}</span></> : '—'}</td>
                           <td>{r.latest ? r.latest.by : '—'}</td>
@@ -166,6 +179,8 @@ export default function Papers() {
         {!rows && !error && <p className="muted">Loading papers…</p>}
       </main>
       {history && <VersionHistory paper={history} keep={keep} onClose={() => setHistory(null)} onChanged={reload} />}
+      {settingsOpen && <SettingsDialog onClose={() => { setSettingsOpen(false); reload(); api.settings().then((s) => setKeep(s.keep_versions)).catch(() => {}); }}
+        onLoaded={reload} />}
     </div>
   );
 }

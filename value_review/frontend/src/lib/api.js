@@ -37,6 +37,8 @@ export const api = {
   papers: async () => (await request('/papers')).data,
   paper: async (id) => (await request(`/papers/${encodeURIComponent(id)}`)).data,
   settings: async () => (await request('/settings')).data,
+  saveSettings: async (values) => (await request('/settings', { method: 'PUT', body: values })).data,
+  ingest: async () => (await request('/ingest', { method: 'POST' })).data,
   submit: async (id, version, state) =>
     (await request(`/papers/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { state }, headers: { 'If-Match': `"${version}"` } })).data,
   saveDraft: async (id, body, { keepalive = false } = {}) =>

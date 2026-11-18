@@ -21,6 +21,8 @@ Run every command from the repository root.
 
    It prints one line per paper and the totals (14 papers, 2,581 values, 168 that need a check). Exit code 0 = written or unchanged, 1 = a paper failed, 2 = an original would change (it is left as it is).
 
+   The folders can also be changed later in **Settings**, which loads the papers for you.
+
 2. Start the tool:
 
    ```
@@ -38,7 +40,7 @@ The built front end in `value_review/web/` is committed, so Node is not needed t
 - **Save draft** keeps your work for later (also automatically every 5 minutes and when the tab closes). **Finish paper** shows a summary and **Submit paper** saves a new version. The 20 most recent versions are kept per paper.
 - **Start over from model output** (⋯ in the review) clears the working copy and the draft; versions stay.
 - **Keyboard** (desktop): S · D · F reject, unsure, accept; J · K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; **?** shows every shortcut. On a tablet (under 1024 px wide) the review shows a list screen and a detail screen.
-- **Settings** (`PUT /api/v1/settings`): reviewer name, versions kept (1–100), autosave minutes.
+- **Settings** (button at the top of Papers): the **data folder** (LLM results, `<paper>-pdf_with_feature_guide.json`) and the **papers folder** (PDFs), the reviewer name, the versions kept (1–100) and the autosave interval. Saving a new folder loads the papers in it; papers already loaded are never changed or removed, and show as *Source changed* or *Source not found* (read-only) when their file differs or is missing. *Load papers again* picks up files added later.
 
 ## Data
 

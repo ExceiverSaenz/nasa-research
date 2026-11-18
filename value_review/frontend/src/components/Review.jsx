@@ -416,7 +416,9 @@ export default function Review({ paperId, guard }) {
           <button type="button" className="btn" onClick={discardDraft}>Discard old draft</button>
         </div>
       )}
-      {readOnly && <div className="banner error" role="alert">The source files of this paper changed since ingest. It is read-only until it is ingested again.</div>}
+      {readOnly && <div className="banner error" role="alert">{(load.data.source_problems || []).some((p) => p.endsWith('_missing'))
+        ? 'The files of this paper are not in the folders set in Settings. It is read-only until they are found again.'
+        : 'The source files of this paper changed since they were loaded. It is read-only until it is loaded again.'}</div>}
       {doc.completion.status && doc.completion.status !== 'complete' && (
         <div className="banner warn" role="status">The model's run on this paper is {doc.completion.status}
           {doc.completion.pages_unreviewed.length ? `: pages ${doc.completion.pages_unreviewed.join(', ')} were not reviewed by the model.` : '.'}</div>

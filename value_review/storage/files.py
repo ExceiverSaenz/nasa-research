@@ -122,13 +122,15 @@ class AnnotationStore:
             raise StorageError(f'Could not delete the draft: {error}') from error
 
     # --- settings (OP-10) ------------------------------------------------------
-    def settings(self):
+    def settings(self, extra_defaults=None):
+        """Stored settings over the defaults; ``extra_defaults`` adds keys known only at run time (folders)."""
         try:
             stored = json.loads(self.settings_path.read_text(encoding='utf-8'))
         except (OSError, ValueError):
             stored = {}
         out = dict(SETTINGS_DEFAULTS)
-        out.update({k: v for k, v in stored.items() if k in SETTINGS_DEFAULTS})
+        out.update(extra_defaults or {})
+        out.update({k: v for k, v in stored.items() if k in out})
         return out
 
     def save_settings(self, values):
