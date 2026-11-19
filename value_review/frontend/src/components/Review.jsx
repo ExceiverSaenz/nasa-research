@@ -72,6 +72,10 @@ export default function Review({ paperId, sourceId = null, guard }) {
 
   const original = load.status === 'ready' ? load.data.original : null;
   const readOnly = load.status === 'ready' && load.data.source_changed;
+  // A saved draft not yet continued or discarded: nothing may change or be saved until the reviewer chooses,
+  // or the next save (manual, autosave, closing the tab, submit) would silently replace or delete that draft.
+  const draftPending = !!(offer && !offer.stale);
+  const locked = readOnly || draftPending;
   const rows = useMemo(() => (original ? effectiveValues(original, state) : []), [original, state]);
   const catalog = load.status === 'ready' ? load.data.feature_catalog : [];
   const catalogLabels = useMemo(() => Object.fromEntries(catalog.map((f) => [f.feature_id, f.label])), [catalog]);
@@ -113,7 +117,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
 
   // --- drafts (AC-09, AC-10) -------------------------------------------------
   const latest = useRef({});
-  latest.current = { ...latest.current, state, version, dirty, view, selectedId, readOnly };
+  latest.current = { ...latest.current, state, version, dirty, view, selectedId, readOnly: locked };
 
   const saveDraft = useCallback(async (trigger, keepalive = false) => {
     const cur = latest.current;
@@ -315,7 +319,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
   const doc = original.document;
   const pageInfo = original.pages.find((p) => p.number === page) || original.pages[0];
   const boxes = row ? boxesOf(row, state) : [];
-  const editable = !readOnly;
+  const editable = !locked;
   const allRecords = original.records.map((r) => ({ id: r.record_id, label: recordLabel(r.record_id) }))
     .concat(state.added_records.map((r) => ({ id: r.record_id, label: r.label })));
   const recordIsAdded = view.mode === 'record' && state.added_records.some((r) => r.record_id === view.recordId);
@@ -358,10 +362,10 @@ export default function Review({ paperId, sourceId = null, guard }) {
         else if (!anyDialog && cmd && cmd.escape()) e.preventDefault();
         return;
       case 'help': run(() => setShortcutsOpen(true)); return;
-      case 'save': run(() => { if (dirty && !readOnly) saveDraft('manual'); }); return;
+      case 'save': run(() => { if (dirty && !locked) saveDraft('manual'); }); return;
       case 'finish': run(() => setSummary({})); return;
       case 'saveEdit': run(() => cmd && cmd.saveEdit()); return;
-      case 'undo': if (!readOnly) run(undoLast); return;
+      case 'undo': if (!locked) run(undoLast); return;
       case 'next': run(() => { if (list[index + 1]) select(list[index + 1].id); }); return;
       case 'prev': run(() => { if (index > 0) select(list[index - 1].id); }); return;
       case 'nextScope': run(() => step(1)); return;
@@ -372,7 +376,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
       case 'fit': run(() => setZoom(1)); return;
       default: break;
     }
-    if (readOnly || !row) return;
+    if (locked || !row) return;
     if (['accept', 'unsure', 'reject', 'note', 'edit'].includes(action)) { run(() => cmd && cmd[action]()); return; }
     if (action === 'addBox') run(() => setDrawing({ action: 'add', hint: 'Mark where this value appears.' }));
     if (action === 'redraw' && selected && !selected.removed) run(() => setDrawing({ action: 'redraw', box: selected, hint: 'Draw the box again.' }));
@@ -382,7 +386,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
   return (
     <div className={`review ${compact ? 'compact' : ''}`}>
       <Header paperId={paperId} title={doc.title} reviewed={total.reviewed} total={total.total} pill={pill}
-        canSave={dirty && !readOnly} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})}
+        canSave={dirty && !locked} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})}
         onStartOver={readOnly ? null : () => setStartOver(true)} onShortcuts={() => setShortcutsOpen(true)}
         compact={compact} onBack={compact && screen === 'detail' ? () => setScreen('list') : null} />
       {startOver && (
@@ -405,7 +409,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
           : <button type="button" className="btn" onClick={() => setProblem(null)}>Dismiss</button>}</div>}
       {offer && !offer.stale && (
         <div className="banner" role="region" aria-label="Saved draft" style={{ background: 'var(--sel)', borderBottom: '1px solid #B9CBEA' }}>
-          <span>You have a saved draft from <b>{when(offer.draft.saved_at)}</b>.</span>
+          <span>You have a saved draft from <b>{when(offer.draft.saved_at)}</b>. Continue it or discard it to start reviewing; until then nothing can be changed.</span>
           <button type="button" className="btn primary" onClick={continueDraft}>Continue draft</button>
           <button type="button" className="btn" onClick={discardDraft}>Discard draft</button>
         </div>
@@ -448,7 +452,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
           onDelete={onDeleteBox} onUndoRedraw={(b) => setState((s) => undoRedraw(s, row.id, b.evidenceId))}
           onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} compact={compact} />
         <DetailPanel row={row} index={index} total={list.length} onPrev={() => select(list[index - 1].id)} onNext={() => select(list[index + 1].id)}
-          label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={readOnly}
+          label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={locked}
           onDecide={onDecide} onClear={() => { setUndo(null); setState((s) => clearDecision(s, row.id)); }} onShowPage={setPage} toast={toast}
           boxes={boxes} onShowBox={(b) => { setPage(b.page); setSelBox(b.key); }}
           onRemoveBox={onDeleteBox} onRestoreBox={(b) => setState((s) => restoreBox(s, row.id, b.evidenceId))}
@@ -491,7 +495,9 @@ export default function Review({ paperId, sourceId = null, guard }) {
         <SummaryModal paperId={paperId} title={doc.title} rows={rows} counts={total} labels={labels} recordLabel={recordLabel}
           changesOf={(r) => (r.obs ? changesOf(r, state, featureName, recordLabel) : [])} changedRecords={changedRecords}
           onClose={() => setSummary(null)} onSubmit={submit} submitting={!!summary.submitting} submitted={summary.submitted}
-          error={summary.error} onReload={reload} readOnly={readOnly} />
+          error={summary.error} onReload={reload}
+          lockedMessage={readOnly ? 'This paper is read-only because its source files changed since ingest; it cannot be submitted.'
+            : draftPending ? 'You have a saved draft: continue it or discard it before submitting.' : ''} />
       )}
       {leave && (
         <div className="backdrop">

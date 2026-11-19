@@ -84,12 +84,15 @@ export default function SettingsDialog({ onClose, onLoaded }) {
     } finally { setBusy(''); }
   };
 
+  // The label names the field; the hint or error is outside it and linked with aria-describedby, so a screen
+  // reader announces the name once and the hint or error as its description.
   const input = (id, label, value, onChange, error, props = {}, hint = '') => (
-    <label className="field">{label}
-      <input value={value} onChange={onChange} aria-invalid={!!error} aria-describedby={error || hint ? `${id}-help` : undefined}
+    <div className="field">
+      <label htmlFor={`${id}-input`}>{label}</label>
+      <input id={`${id}-input`} value={value} onChange={onChange} aria-invalid={!!error} aria-describedby={error || hint ? `${id}-help` : undefined}
         style={error ? { borderColor: 'var(--reject)' } : null} {...props} />
       {(error || hint) && <span id={`${id}-help`} className={error ? 'error-text' : 'muted'} style={{ fontWeight: error ? 600 : 400 }}>{error || hint}</span>}
-    </label>
+    </div>
   );
   const field = (k, label, props = {}, hint = '') => input(k, label, values[k], set(k), errors[k], props, hint);
   const mono = { className: 'mono', spellCheck: false };

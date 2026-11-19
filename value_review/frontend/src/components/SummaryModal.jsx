@@ -4,7 +4,7 @@ import { displayValue, STATUS_LABEL } from '../lib/values.js';
 
 // Finish paper: summary, then Submit as a new version (canvas Review.dc.html, summary). AC-05, AC-06.
 export default function SummaryModal({ paperId, title, rows, counts, labels, recordLabel, onClose, onSubmit, submitting,
-  submitted, error, onReload, changesOf = () => [], changedRecords = [], readOnly = false }) {
+  submitted, error, onReload, changesOf = () => [], changedRecords = [], lockedMessage = '' }) {
   const dialog = useRef(null);
   useEffect(() => { if (dialog.current) dialog.current.focus(); }, []);
   useEffect(() => {
@@ -67,8 +67,8 @@ export default function SummaryModal({ paperId, title, rows, counts, labels, rec
         <div className="modal-foot">
           {!submitted && <>
             <button type="button" className="btn big" onClick={onClose} disabled={submitting}>Back to review</button>
-            {readOnly
-              ? <span className="muted" style={{ alignSelf: 'center', fontSize: 14 }}>This paper is read-only because its source files changed since ingest; it cannot be submitted.</span>
+            {lockedMessage
+              ? <span className="muted" style={{ alignSelf: 'center', fontSize: 14 }}>{lockedMessage}</span>
               : <button type="button" className="btn big primary" onClick={onSubmit} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit paper'}</button>}
           </>}
           {submitted && <>

@@ -2,10 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import Papers from './components/Papers.jsx';
 import Review from './components/Review.jsx';
 import { setSource } from './lib/api.js';
-import { parseRoute as parseHash } from './lib/routes.js';
+import { parseRoute as parseHash, stepBack } from './lib/routes.js';
 
 // Hash routes (lib/routes.js): #/ Papers, #/source/<pair>/paper/<id> a review.
 const parseRoute = () => parseHash(window.location.hash);
+
+// Each history entry the app reaches gets an increasing stamp in history.state, so a navigation that must be undone
+// (unsaved changes, "Stay") can be reversed by stepping, instead of rewriting an entry of the history.
+let lastStamp = 0;
+const stampOf = () => (window.history.state && typeof window.history.state.vr === 'number' ? window.history.state.vr : null);
+function stamp() {
+  const known = stampOf();
+  if (known !== null) { lastStamp = Math.max(lastStamp, known); return known; }
+  lastStamp = Math.max(Date.now(), lastStamp + 1);
+  window.history.replaceState({ ...(window.history.state || {}), vr: lastStamp }, '');
+  return lastStamp;
+}
 
 export default function App() {
   const [route, setRoute] = useState(parseRoute);
@@ -13,19 +25,22 @@ export default function App() {
   // changes (a link, the Back button) asks first (AC-10).
   const guard = useRef(null);
   const skip = useRef(false);
+  const here = useRef(null);   // stamp of the entry the app is showing
 
   useEffect(() => {
-    const onHash = (e) => {
+    here.current = stamp();
+    const onHash = () => {
       if (skip.current) { skip.current = false; return; }
       const next = parseRoute();
       const current = guard.current;
       if (current && current.dirty() && !(next.view === 'review' && next.paper === current.paper && next.source === current.source)) {
         const target = window.location.hash || '#/';
         skip.current = true;
-        window.location.replace(e.oldURL);   // stay; the dialog decides
+        window.history.go(stepBack(stampOf(), here.current));   // stay where we were; the dialog decides
         current.ask(target);
         return;
       }
+      here.current = stamp();
       setRoute(next);
     };
     window.addEventListener('hashchange', onHash);

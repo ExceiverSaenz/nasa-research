@@ -59,3 +59,10 @@ test('routes: review of a pair, of the active pair, and everything else is Paper
   assert.equal(reviewHash(null, '7'), '#/paper/7');
   assert.deepEqual(parseRoute(reviewHash('a-1', '3')), { view: 'review', source: 'a-1', paper: '3' });
 });
+
+test('undoing a navigation steps instead of rewriting the history', async () => {
+  const { stepBack } = await import('./routes.js');
+  assert.equal(stepBack(null, 5), -1);   // a link added a new entry: go back to where we were
+  assert.equal(stepBack(3, 5), 1);       // Back reached an older entry: go forward again
+  assert.equal(stepBack(9, 5), -1);      // Forward reached a newer entry: go back again
+});

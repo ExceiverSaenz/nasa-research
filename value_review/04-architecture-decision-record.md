@@ -237,3 +237,42 @@ Keep the source format in files, API and exports. Criterion: no loss and no seco
 ### Verification
 
 Round-trip test: a box drawn at known pixel corners is stored, reloaded and drawn at the same corners (±1 px).
+
+## ADR-008 · Browser tests with Playwright
+
+**Status** · Accepted (with the user, 2026-11-19)  
+**Date** · 2026-11-19  
+**Reference** · AC-04, AC-09, AC-10, AC-19; 05-coverage-audit.md "Gaps"; 12-integration-test-plan.md step 6
+
+### Context
+
+The React screens had no automated tests: the client libraries were unit-tested, the service through its API, and the
+screens only by hand. A session with the Playwright MCP found six defects that no existing test could see, among them a
+silent loss of a saved draft. AGENTS.md requires an ADR for a new dependency.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| `@playwright/test` as a pinned devDependency, tests in `frontend/e2e/` | Real browser, real keys and dialogs (`beforeunload`), accessible-role locators, repeatable | One dev package (~10 MB); browser tests take ~40 s |
+| Playwright MCP only, results recorded as hand checks | No dependency | Not repeatable; regressions return silently |
+| A DOM emulator (jsdom + testing library) | Fast | No real layout, focus, history or native dialogs: misses most of what was found |
+
+### Decision and rationale
+
+`@playwright/test` 1.65.1 (latest stable, pinned exactly) as a devDependency of `value_review/frontend`. Tests use the
+installed Microsoft Edge (`channel: 'msedge'`), so no browser is downloaded. Each test starts its own service on synthetic
+papers in a new temporary folder (`value_review/tests/e2e_server.py`, `e2e/fixtures.js`), so tests are independent and the
+repository's data is never touched. Criterion: catch defects in real browser behavior, repeatably, with one dev package.
+
+### Consequences
+
+- `npm run e2e` (after `npm run build`: the tests load the built `value_review/web/`). Not part of the runtime: the tool
+  still needs no Node to run.
+- Locators use roles and accessible names, so a broken label or dialog role fails a test.
+- The package lock now includes Playwright; `npm ci --offline` needs it in the local npm cache (it is, after the install).
+- `npm audit` reports two older dev-server advisories in `vite`/`esbuild`, unrelated to Playwright and to the built app.
+
+### Verification
+
+`npm run e2e`: 15 tests pass. Each fix they protect was undone in turn, the app rebuilt, and the matching test failed.

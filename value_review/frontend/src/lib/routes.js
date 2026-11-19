@@ -8,3 +8,11 @@ export function parseRoute(hash) {
 }
 
 export const reviewHash = (source, paper) => (source ? `#/source/${source}/paper/${paper}` : `#/paper/${paper}`);
+
+// How many history steps undo a navigation, from the stamps of the entry reached (``arrived``; null for an entry a link
+// has just added) and of the entry left (``left``): a new entry or a step forward is undone by going back, a step back
+// by going forward. The history itself is never rewritten.
+export function stepBack(arrived, left) {
+  if (arrived === null || arrived === undefined) return -1;
+  return arrived < left ? 1 : -1;
+}

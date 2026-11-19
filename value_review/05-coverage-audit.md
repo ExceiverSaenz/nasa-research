@@ -7,7 +7,10 @@
 ## Method
 
 - **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **160 tests, all passing**. Seven of them run on the real LLM runs and PDFs (`test_ingest_real.py`, including `EveryRun`, which loads, validates and serves every run found under `llm_baseline/results`, and `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
-- **Automated, client** · `npm test` in `value_review/frontend`: **38 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry, the HTTP client against a fake `fetch`, the Settings load messages, the hash routes). There are no tests of the React components themselves.
+- **Automated, browser** · `npm run e2e` in `value_review/frontend` (Playwright, ADR-008): **15 tests, all passing**, in Microsoft Edge against a
+  fresh service on synthetic papers per test: Papers, Settings, the review shortcuts and decisions, the leave warning (including the
+  browser's own prompt), the saved-draft offer, submit and download, the version history, and the tablet layout.
+- **Automated, client** · `npm test` in `value_review/frontend`: **39 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry, the HTTP client against a fake `fetch`, the Settings load messages, the hash routes). There are no tests of the React components themselves.
 - **Hand checks** · Each step was run end to end in a browser on the real paper 1, with the service started on a temporary copy of the data folder (`--data`), so the repository's data never changed. Widths used: 1440 and 1280 px (desktop), 1024 px, 834 px (tablet). Dates: 2026-11-16. A second pass the same day covered the paths the first one missed (AC-06, AC-10, AC-18, AC-19), with the sources also copied to a temporary folder (`VALUE_REVIEW_SOURCE_ROOT`) so one could be changed; it found and fixed three bugs (see *Fixed in the second pass*).
 - **Read-only sources** · Hash and modification-time inventories of the LLM result files and PDFs, taken before and after the ingest and service tests, are identical (BR-01).
 - **Abbreviations** · `ingest` = `test_ingest.py`, `real` = `test_ingest_real.py`, `service` = `test_service.py`, `versions` = `test_versions.py`, `drafts` = `test_drafts.py`, `restore` = `test_restore.py`; `lib`, `edits`, `draft`, `versions.js`, `bulk`, `shortcuts` = the client test files of the same name.
@@ -56,8 +59,8 @@
 
 ## Gaps and follow-ups
 
-1. **Not exercised**: the browser's own "Leave site?" prompt on closing the tab (the automation tool navigates without it), and real touch input on a tablet (only mouse events were sent).
-2. **No component tests**: the React components are covered by hand checks only; the logic they use is tested in `src/lib/`. A browser-driven test (for example Playwright) would need a new dependency and an ADR.
+1. ~~**Not exercised**~~: the browser's own "Leave site?" prompt and touch taps are now covered by `npm run e2e` (Playwright). Touch on a physical tablet is still untried.
+2. ~~**No component tests**~~: the screens are covered by Playwright browser tests (ADR-008).
 3. **Shortcut keys and the automation tool**: the browser automation used for the hand checks sends punctuation keys without `key`/`code`, so "?" and "." were checked with dispatched keyboard events; letters and Ctrl combinations were checked with real key presses.
 4. **OQ-01** (partial model runs): implemented as a banner listing the pages the model did not review, and a "Model run partial" tag in Papers. All 14 papers in the run are `complete`, so the status only went through the synthetic paper of the ingest and service tests; the banner itself was never seen in a browser.
 5. **OQ-02** (new model output for a paper with versions): ingest refuses to replace an original whose content would change (exit code 2), and restore refuses a version made from another output. A full "new review line" is not implemented; it would need a decision on the folder layout.
@@ -113,6 +116,26 @@ The black-box, white-box and integration designs are in [10-black-box-test-desig
   bandit, pylint errors) and `python -m mypy value_review --ignore-missing-imports --exclude "value_review/(tests|frontend|web)/"`: both pass.
 - **Mutations** · 11 more, all caught. **Correction**: an earlier line in this audit said the launcher's port refusal was tested; it was
   not until this pass.
+
+## Browser pass with Playwright (added 2026-11-19)
+
+A session with the Playwright MCP (Edge, real keys and native dialogs) drove every screen and found six defects; all are fixed and
+now covered by `npm run e2e`. Each fix was undone in turn, the app rebuilt and its test failed (7 mutations, all caught).
+
+1. **Data loss · saved draft overwritten.** A paper opened with a saved draft stayed editable while the "Continue draft / Discard
+   draft" offer was unanswered; the next save (Ctrl+S, autosave, closing the tab) replaced the draft, and Submit deleted it. The paper
+   is now read-only until the reviewer chooses, and the summary says why it cannot be submitted.
+2. **Keyboard · Settings and Version history did not take focus**, and Tab reached the page behind every dialog. `lib/modalFocus.js`
+   now moves focus into any `aria-modal` dialog, keeps Tab inside it, and returns focus to the opener.
+3. **Screen readers · Settings hints and errors were part of the field names** ("Data folder (LLM results) One file per paper…").
+   The label now names the field and the hint or error describes it (`aria-describedby`).
+4. **Navigation · Back after "Stay" rewrote the history**, so later Backs did nothing. The guard now steps back or forward (stamps in
+   `history.state`) instead of replacing an entry.
+5. **Tablet · four targets under 44 px** (pair selector, "Show" links, the "Needs a check only" row). Fixed in the compact styles.
+6. **A missing favicon** gave a console error on every load.
+
+Now verified, after being out of reach of the earlier tools: the browser's own "Leave site?" prompt (AC-10), the "?" key with a real key
+press, touch taps at 834 px, and the partial-model-run banner (OQ-01).
 
 ## Fixed in the second pass
 

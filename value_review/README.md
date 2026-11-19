@@ -66,6 +66,8 @@ python -m mypy value_review --ignore-missing-imports --exclude "value_review/(te
 cd value_review/frontend
 npm ci --offline
 npm test
+npm run build
+npm run e2e      # browser tests in Edge (Playwright), each on its own temporary service
 npm run dev      # http://localhost:5174, proxies /api to the running service
 npm run build    # writes value_review/web/
 ```
