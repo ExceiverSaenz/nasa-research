@@ -102,7 +102,8 @@ class Build(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         d = Path(self.tmp.name)
         self.run, self.pdfs, self.out = d / 'run', d / 'pdfs', d / 'originals'
-        self.run.mkdir(); self.pdfs.mkdir()
+        self.run.mkdir()
+        self.pdfs.mkdir()
         self.pdf = self.pdfs / '7.pdf'
         make_pdf(self.pdf, [(612, 792), (612, 792)], rotate_last=True)
         self.data = result(sha(self.pdf))

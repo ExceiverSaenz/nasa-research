@@ -181,6 +181,25 @@ class AnnotationFiles(unittest.TestCase):
         self.assertTrue(self.store.draft_path('7').exists())
 
 
+class StartUpCleanup(unittest.TestCase):
+    def test_every_written_folder_of_every_pair_and_nothing_else(self):
+        from value_review.__main__ import clean_leftovers
+        with tempfile.TemporaryDirectory() as tmp:
+            data = Path(tmp)
+            left = ['originals/7.json.1.tmp', 'annotations/settings.json.1.tmp', 'annotations/drafts/7.draft.json.1.tmp',
+                    'annotations/versions/7/v2.json.1.tmp', 'cache/pages/7/abc-1-1200.png.1.tmp',
+                    'sources/model-b/originals/9.json.2.tmp', 'sources/model-b/annotations/drafts/9.draft.json.2.tmp',
+                    'sources/model-b/annotations/versions/9/v1.json.2.tmp', 'sources/model-b/cache/pages/9/x.png.2.tmp']
+            kept = ['originals/7.json', 'annotations/versions/7/v1.json', 'sources/model-b/originals/9.json',
+                    'frontend/node_modules/pkg/build.tmp', 'notes.tmp']   # not written by the service: never touched
+            for rel in left + kept:
+                (data / rel).parent.mkdir(parents=True, exist_ok=True)
+                (data / rel).write_bytes(b'x')
+            self.assertEqual(clean_leftovers(data), len(left))
+            self.assertEqual(sorted(p.relative_to(data).as_posix() for p in data.rglob('*') if p.is_file()), sorted(kept))
+            self.assertEqual(clean_leftovers(data / 'missing'), 0)
+
+
 class Lock(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

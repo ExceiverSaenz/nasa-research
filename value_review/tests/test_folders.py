@@ -22,7 +22,8 @@ class Folders(Base):
         # A second pair of folders: paper 7 unchanged plus a new paper 9.
         d = Path(self.tmp.name)
         self.run2, self.pdfs2 = d / 'run2', d / 'pdfs2'
-        self.run2.mkdir(); self.pdfs2.mkdir()
+        self.run2.mkdir()
+        self.pdfs2.mkdir()
         shutil.copy(self.res, self.run2 / self.res.name)
         shutil.copy(self.pdf, self.pdfs2 / '7.pdf')
         make_pdf(self.pdfs2 / '9.pdf', [(612, 792)])
@@ -93,6 +94,19 @@ class Folders(Base):
         self.assertEqual((r.status_code, r.json()['error']['details']['fields']),
                          (422, {'sources.1.run_dir': 'No LLM results here (files named <paper>-pdf_with_feature_guide.json).'}))
         self.assertEqual(self.client.get(SETTINGS).json()['sources'][1]['run_dir'], str(self.run2))   # nothing saved
+
+    def test_loading_after_a_saved_folder_disappeared(self):  # OP-12: 422 invalid_folder, nothing changed
+        self.add_second()
+        self.client.post('/api/v1/sources/second-run/ingest')
+        originals = self.data / 'sources' / 'second-run' / 'originals'
+        before = {p.name: sha(p) for p in originals.iterdir()}
+        shutil.rmtree(self.run2)   # moved or deleted outside the app
+        r = self.client.post('/api/v1/sources/second-run/ingest')
+        self.assertEqual((r.status_code, r.json()['error']['code'], r.json()['error']['details']['fields']),
+                         (422, 'invalid_folder', {'run_dir': 'This folder does not exist.'}))
+        self.assertEqual({p.name: sha(p) for p in originals.iterdir()}, before)   # loaded papers kept
+        rows = self.client.get('/api/v1/sources/second-run/papers').json()
+        self.assertEqual({r['paper']: r['source_problems'] for r in rows}, {'7': ['result_missing'], '9': ['result_missing']})
 
     def test_wb10_pair_removed_while_in_use(self):  # WB-10: Source.folders after the pair is gone
         from value_review.service.errors import ApiError

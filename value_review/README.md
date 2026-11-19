@@ -61,6 +61,8 @@ Exports: `GET /api/v1/papers/<n>/versions/<k>/export.json` (the model's fields p
 
 ```
 python -B -m unittest discover -s value_review/tests -p "test_*.py"
+python -m ruff check value_review
+python -m mypy value_review --ignore-missing-imports --exclude "value_review/(tests|frontend|web)/"
 cd value_review/frontend
 npm ci --offline
 npm test

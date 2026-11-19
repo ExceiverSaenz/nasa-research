@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, setSource } from '../lib/api.js';
+import { reviewHash } from '../lib/routes.js';
 import VersionHistory from './VersionHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 import useMedia, { COMPACT } from './useMedia.js';
@@ -40,7 +41,7 @@ export default function Papers() {
     api.setActiveSource(id).then(reload).catch((e) => setError(e.message));
   };
   const pair = settings && settings.active_source;
-  const link = (paper) => `#/source/${pair}/paper/${paper}`;
+  const link = (paper) => reviewHash(pair, paper);
   useEffect(() => {
     document.title = 'Papers · Tensile Data Review';
     reload();

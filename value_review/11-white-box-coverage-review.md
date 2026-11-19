@@ -51,12 +51,14 @@
     (about 3 minutes), then count the lines starting with `<n>:` (run) and `>>>>>>` (never run) in `<tmp>/value_review.*.cover`.
     Do **not** add `--ignore-dir`: `trace` caches its ignore decision by the module's short name, so ignoring the standard
     library also drops every `config.py`, `errors.py` and `__init__.py` of this package. `coverage.py` is not installed (an ADR would be needed).
-- **Measured coverage** (2026-11-18, 143 Python tests, 24 client tests) ·
-  - Client `src/lib/`: lines 100 %, branches 90.3 %, functions 91.5 % (lowest branches `values.js` 83.9 %, `edits.js` 85.4 %, `draft.js` 85.7 %).
-    `src/lib/api.js` and the React components are not measured: no test imports them.
-  - Python lines (statement coverage; `trace` does not measure branches): **95.6 %** (1,340 of 1,402). `ingest/original.py`, `domain/materialize.py`, `domain/rules.py`, `storage/files.py`,
+- **Measured coverage** (2026-11-18, 160 Python tests, 38 client tests) ·
+  - Client `src/lib/`: lines 100 %, branches 92.0 %, functions 93.1 % (lowest branches `values.js` 83.9 %, `edits.js` 85.4 %, `draft.js` 85.7 %).
+    `api.js` (tested against a fake `fetch`: paths per folder pair, `If-Match`, keepalive, error mapping), `messages.js` (the Settings load
+    banner) and `routes.js` (hash routes) are at 100 % of lines; the last two were moved out of `SettingsDialog.jsx` and `App.jsx` so they
+    could be tested. The React components themselves are still not measured (they would need a browser-test dependency and an ADR).
+  - Python lines (statement coverage; `trace` does not measure branches): **96.5 %** (1,362 of 1,411; measured before the last 6 launcher and edge tests, which add more). `ingest/original.py`, `domain/materialize.py`, `domain/rules.py`, `storage/files.py`,
     `domain/checks.py`, `domain/state.py`, `service/exports.py`, `service/sources.py` 100 %; `service/library.py` 98.2 %; `service/app.py` 95.8 %;
-    `storage/atomic.py` 89.4 %; `__main__.py` 56.4 % (the launcher: lock and port refusals are tested, the server start is not).
+    `storage/atomic.py` 89.4 %; `__main__.py` 65.6 % (the launcher: since then the busy-port refusal and the server start are tested with a fake server).
 - **Relevant gaps** (unexecuted lines, by consequence) ·
   1. ~~`domain/rules.py` `check_state`~~ · **Covered (2026-11-18)**. `test_versions` `test_unknown_references_in_every_part_of_the_working_copy`
      sends one bad reference per kind through submit and draft: an unknown value in a column move, record move or box (and no further checks
@@ -74,11 +76,12 @@
      The messages now keep only the OS reason (`reason()` in `storage/atomic.py`). `test_drafts`
      `test_storage_errors_reach_the_client_without_a_path` checks it end to end. The first WB-17 test had missed it because its
      fake `PermissionError` had no file name.
-  3. `service/app.py`: loading when the stored folders have since disappeared (line 503, 422 `invalid_folder` from OP-12), the 500 paths of
-     draft write/delete and settings save (267, 298–310, 429), the health check of an unwritable folder (213), and a malformed Host port (185)
-     are not run. Next: the OP-12 case is worth a test; the others are one-line error mappings.
+  3. ~~`service/app.py`~~ · **Covered (2026-11-18)** except the infeasible lines in 4: loading after a saved folder disappeared, the
+     health check of an unwritable folder, a malformed Host port, an unreadable draft, a failed Settings save, a page image that cannot be
+     written, a 405 in the error shape, an empty data folder (`test_service` `SettingsAndHealth`, `LocalOnly`, `EdgePaths`, `Papers`).
+     The launcher's busy-port refusal and server start (with a fake server and browser) are now tested too.
   4. Infeasible here: the non-Windows branch of `pid_alive` (`storage/atomic.py` 91–97); `RuntimeError` when a version would not validate
      (`app.py` 347, a guard against a bug); the static mount (`app.py` 528, tests run with `web_dir=None`; exercised by every hand check).
-  5. Not a coverage gap but found while reviewing WB-17: the start-up cleanup of temporary files (`__main__.py`) visits the first pair's
-     `annotations/` folders only, not `sources/<id>/…` or any `originals/`. Leftover `*.tmp` files there are never read, so nothing breaks,
-     but they stay on disk after a crash.
+  5. ~~Start-up cleanup~~ · **Fixed (2026-11-18)**: `clean_leftovers` (`__main__.py`) removes temporaries from `originals/`,
+     `annotations/` and `cache/` of the data folder and of every pair under `sources/`, and nothing outside them
+     (`test_storage` `StartUpCleanup`).

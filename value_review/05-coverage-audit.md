@@ -6,8 +6,8 @@
 
 ## Method
 
-- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **143 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
-- **Automated, client** · `npm test` in `value_review/frontend`: **24 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry). There are no tests of the React components themselves.
+- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **160 tests, all passing**. Seven of them run on the real LLM runs and PDFs (`test_ingest_real.py`, including `EveryRun`, which loads, validates and serves every run found under `llm_baseline/results`, and `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
+- **Automated, client** · `npm test` in `value_review/frontend`: **38 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry, the HTTP client against a fake `fetch`, the Settings load messages, the hash routes). There are no tests of the React components themselves.
 - **Hand checks** · Each step was run end to end in a browser on the real paper 1, with the service started on a temporary copy of the data folder (`--data`), so the repository's data never changed. Widths used: 1440 and 1280 px (desktop), 1024 px, 834 px (tablet). Dates: 2026-11-16. A second pass the same day covered the paths the first one missed (AC-06, AC-10, AC-18, AC-19), with the sources also copied to a temporary folder (`VALUE_REVIEW_SOURCE_ROOT`) so one could be changed; it found and fixed three bugs (see *Fixed in the second pass*).
 - **Read-only sources** · Hash and modification-time inventories of the LLM result files and PDFs, taken before and after the ingest and service tests, are identical (BR-01).
 - **Abbreviations** · `ingest` = `test_ingest.py`, `real` = `test_ingest_real.py`, `service` = `test_service.py`, `versions` = `test_versions.py`, `drafts` = `test_drafts.py`, `restore` = `test_restore.py`; `lib`, `edits`, `draft`, `versions.js`, `bulk`, `shortcuts` = the client test files of the same name.
@@ -89,6 +89,30 @@ The black-box, white-box and integration designs are in [10-black-box-test-desig
   missing-file lines, every paper request under `/sources/<pair>/…`, v1 and v2 written to the second pair only. It found one usability
   issue, now fixed: accepting a value right after rejecting it kept the rejection reason as its note (`noteForVerdict`, `lib/state.js`). Details in
   12-integration-test-plan.md.
+
+## Priority-1 follow-ups (added 2026-11-18)
+
+- **Every real run** · `EveryRun` loads `gpt-6.1-sol-low-pdf-only` (14 papers) and `gpt-6.1-sol-high-pdf-only-first10` (10 papers): no failures,
+  no issues, every original valid, every paper opened and its first page rendered through the API, sources unchanged.
+  `gpt-5.6-sol-xhigh` holds `reference_candidate.json` files, a format the tool does not read; it is skipped (open decision).
+- **Client** · the HTTP client, the Settings load banner and the hash routes are now unit-tested (14 new tests). The banner and route logic
+  moved out of the components into `lib/messages.js` and `lib/routes.js`; Settings, Papers and the routes were rechecked in the browser.
+- **Service** · loading after a saved folder disappeared (422, nothing changed) and two simultaneous submits of one paper (one version).
+- **Mutations** · 9 more, all caught (`If-Match` dropped, pair prefix ignored, ids not encoded, network error mislabeled, a warning hiding an
+  error, missing files not indented, any pair id in a route, the folder check on load removed, the per-paper lock removed).
+- **Static analysis** · `ruff` (bug and security rules) finds nothing in the application code; `mypy` asks for one annotation.
+
+## Priority-2 follow-ups (added 2026-11-18)
+
+- **Start-up cleanup** · now covers every folder pair and `originals/`/`cache/`, never anything else (it can run in the package folder).
+- **CSV formulas** · a CSV cell starting with `=`, `+`, `-`, `@`, tab or carriage return, other than a plain number, gets a leading `'`
+  so a spreadsheet shows it as text (`exports.cell`); the JSON export keeps every value as stored. Decided with the user.
+- **Edge paths** · the remaining error paths of the service and the launcher (busy port, server start, browser) are tested; the launcher
+  test replaces the server, so a broken port check fails at once instead of starting a real server.
+- **Static analysis as a standing check** · `python -m ruff check value_review` (config in `value_review/ruff.toml`: pyflakes, bugbear,
+  bandit, pylint errors) and `python -m mypy value_review --ignore-missing-imports --exclude "value_review/(tests|frontend|web)/"`: both pass.
+- **Mutations** · 11 more, all caught. **Correction**: an earlier line in this audit said the launcher's port refusal was tested; it was
+  not until this pass.
 
 ## Fixed in the second pass
 

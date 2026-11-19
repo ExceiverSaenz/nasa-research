@@ -2,13 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import Papers from './components/Papers.jsx';
 import Review from './components/Review.jsx';
 import { setSource } from './lib/api.js';
+import { parseRoute as parseHash } from './lib/routes.js';
 
-// Hash routes: #/ (papers of the active folder pair), #/source/<pair>/paper/<id> (review of a paper of
-// that pair) and #/paper/<id> (a paper of the active pair, links made before there were several pairs).
-function parseRoute() {
-  const m = window.location.hash.match(/^#\/(?:source\/([a-z0-9-]{1,40})\/)?paper\/(\d{1,4})$/);
-  return m ? { view: 'review', source: m[1] || null, paper: m[2] } : { view: 'papers' };
-}
+// Hash routes (lib/routes.js): #/ Papers, #/source/<pair>/paper/<id> a review.
+const parseRoute = () => parseHash(window.location.hash);
 
 export default function App() {
   const [route, setRoute] = useState(parseRoute);

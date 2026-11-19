@@ -1,17 +1,31 @@
 """Exports of a version (OP-09, ADR-003): JSON in the LLM output's terms plus the review, and a flat CSV.
 
 Both are built from the version's stored ``values`` and ``state`` with the paper's original, so an export
-never depends on the current working copy. Values are written exactly as stored (BR-05).
+never depends on the current working copy. Values are written exactly as stored (BR-05), with one exception in
+the CSV only: a cell a spreadsheet would run as a formula gets a leading apostrophe (see ``cell``).
 """
 import csv
 import io
 import json
+import re
 import zipfile
 
 from ..ingest import features
 
 CSV_COLUMNS = ['paper', 'version', 'observation_id', 'record', 'record_id', 'column', 'feature_id', 'value', 'unit',
                'original_value', 'original_unit', 'status', 'note', 'by', 'at', 'origin', 'needs_check']
+FORMULA_START = ('=', '+', '-', '@', '\t', '\r')
+PLAIN_NUMBER = re.compile(r'[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?')
+
+
+def cell(value):
+    """A CSV cell that a spreadsheet will not run as a formula (CSV injection). Text starting with =, +, -, @, tab
+    or carriage return gets a leading apostrophe, which Excel shows as text; a plain number such as -5 or +1.5e3
+    is left as it is. Everything else is unchanged; the JSON export is never escaped."""
+    text = '' if value is None else str(value)
+    if text.startswith(FORMULA_START) and not PLAIN_NUMBER.fullmatch(text):
+        return "'" + text
+    return text
 
 
 def export_json(original, version):
@@ -77,11 +91,11 @@ def export_csv(version):
     writer = csv.writer(buf, lineterminator='\r\n')
     writer.writerow(CSV_COLUMNS)
     for r in version['values']:
-        writer.writerow([version['paper'], version['n'], r['observation_id'], '; '.join(r['record_labels']),
-                         '; '.join(r['record_ids']), features.label(r['feature_id']), r['feature_id'],
-                         r['value'] or '', r['unit'] or '', r['original_value'] or '', r['original_unit'] or '',
-                         r['status'], r['note'], r['by'] or '', r['at'] or '', r['origin'],
-                         'yes' if r['needs_check'] else 'no'])
+        writer.writerow([cell(x) for x in (
+            version['paper'], version['n'], r['observation_id'], '; '.join(r['record_labels']),
+            '; '.join(r['record_ids']), features.label(r['feature_id']), r['feature_id'],
+            r['value'], r['unit'], r['original_value'], r['original_unit'],
+            r['status'], r['note'], r['by'], r['at'], r['origin'], 'yes' if r['needs_check'] else 'no')])
     return ('﻿' + buf.getvalue()).encode('utf-8')
 
 
@@ -98,8 +112,9 @@ def latest_zip(items):
             z.writestr(f'{stem}.json', json.dumps(export_json(original, version), ensure_ascii=False, indent=1))
             z.writestr(f'{stem}.csv', export_csv(version))
             c = version['counts']
-            writer.writerow([version['paper'], version['n'], version['at'], version['by'], c['total'], c['pending'],
-                             c['accepted'], c['corrected'], c['rejected'], c['unsure'], c['added_values'],
-                             c['added_records'], c['edited_records']])
+            writer.writerow([cell(x) for x in (
+                version['paper'], version['n'], version['at'], version['by'], c['total'], c['pending'],
+                c['accepted'], c['corrected'], c['rejected'], c['unsure'], c['added_values'],
+                c['added_records'], c['edited_records'])])
         z.writestr('summary.csv', '﻿' + summary.getvalue())
     return buf.getvalue()

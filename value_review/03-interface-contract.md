@@ -139,7 +139,7 @@
 
 - **Output** ·
   - JSON: [`export.schema.json`](schemas/export.schema.json). Model fields are copied unchanged under their LLM names (`value_as_reported`, `flags`, `derivation`, `evidence_ids`…); each observation gets `review`; reviewer-made records, values and boxes appear with `origin: "reviewer"` (BR-12). Edited records keep `model_label` and `model_condition_summary`. `evidence` has one entry per observation and box, because removals and redraws apply to one value: a redrawn box carries its new `page_number`/`bbox` and the model's `model_bbox`; a removed one has `removed: true`; an added one has id `<observation>#added<i>`.
-  - CSV: UTF-8 with BOM, RFC 4180 quoting, one row per value (same order as the version's `values`), columns `paper, version, observation_id, record, record_id, column, feature_id, value, unit, original_value, original_unit, status, note, by, at, origin, needs_check`. Values exactly as stored (symbols kept, BR-05).
+  - CSV: UTF-8 with BOM, RFC 4180 quoting, one row per value (same order as the version's `values`), columns `paper, version, observation_id, record, record_id, column, feature_id, value, unit, original_value, original_unit, status, note, by, at, origin, needs_check`. Values exactly as stored (symbols kept, BR-05), except that a cell a spreadsheet would run as a formula (text starting with `=`, `+`, `-`, `@`, tab or carriage return, other than a plain number such as `-5`) gets a leading `'` so Excel shows it as text; the JSON export is never escaped.
   - ZIP: for each paper with a version, its latest JSON and CSV, plus `summary.csv` (one row per paper with counts).
   - `Content-Disposition: attachment; filename="paper-<n>-v<k>.<ext>"`.
 - **Errors** · 404 `version_not_found`.

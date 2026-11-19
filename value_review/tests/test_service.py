@@ -11,6 +11,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from fastapi.testclient import TestClient
 
@@ -52,7 +53,8 @@ class Base(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         d = Path(self.tmp.name)
         self.run, self.pdfs, self.data = d / 'run', d / 'pdfs', d / 'data'
-        self.run.mkdir(); self.pdfs.mkdir()
+        self.run.mkdir()
+        self.pdfs.mkdir()
         self.pdf = self.pdfs / '7.pdf'
         make_pdf(self.pdf, [(612, 792), (612, 792)])
         self.res = self.run / '7-pdf_with_feature_guide.json'
@@ -82,12 +84,14 @@ class Papers(Base):  # OP-01, AC-01
             'source_changed': False, 'source_problems': [], 'completion': 'partial'}])
 
     def test_latest_version_and_newer_draft(self):
-        s1 = empty_state(); s1['decisions'] = {'o1': decision()}
+        s1 = empty_state()
+        s1['decisions'] = {'o1': decision()}
         self.write_json(self.store.version_path('7', 1), version_file(self.original, 1, s1, AT1))
         row = self.client.get('/api/v1/papers').json()[0]
         self.assertEqual((row['version'], row['latest'], row['reviewed'], row['status']),
                          (1, {'n': 1, 'at': AT1, 'by': 'Expert reviewer'}, 1, 'in_progress'))
-        s2 = empty_state(); s2['decisions'] = {k: decision() for k in ('o1', 'o2', 'o3', 'o4')}
+        s2 = empty_state()
+        s2['decisions'] = {k: decision() for k in ('o1', 'o2', 'o3', 'o4')}
         self.write_json(self.store.draft_path('7'), {'schema': 'value-review-draft/1', 'paper': '7', 'base_version': 1,
                                                      'trigger': 'auto', 'saved_at': AT2, 'state': s2})
         row = self.client.get('/api/v1/papers').json()[0]
@@ -104,6 +108,15 @@ class Papers(Base):  # OP-01, AC-01
         self.assertEqual(len(row['warnings']), 1)
         self.assertTrue(row['warnings'][0].startswith('v2.json'))
         self.assertTrue(bad.exists())  # never repaired or deleted
+
+    def test_unreadable_draft_is_reported_and_not_offered(self):
+        self.store.draft_path('7').parent.mkdir(parents=True, exist_ok=True)
+        self.store.draft_path('7').write_text('{not json', encoding='utf-8')
+        opened = self.client.get('/api/v1/papers/7').json()
+        self.assertEqual((opened['draft'], opened['warnings']), (None, ['7.draft.json: JSONDecodeError']))
+        row = self.client.get('/api/v1/papers').json()[0]
+        self.assertEqual((row['draft_at'], row['status'], row['warnings']), (None, 'not_started', ['7.draft.json: JSONDecodeError']))
+        self.assertTrue(self.store.draft_path('7').exists())   # never repaired or deleted
 
     def test_source_changed_is_flagged(self):  # AC-18
         self.res.write_text(self.res.read_text(encoding='utf-8').replace('710', '711'), encoding='utf-8')
@@ -129,7 +142,8 @@ class OpenPaper(Base):  # OP-02, AC-02
         self.assertIn({'feature_id': 'strain_rate', 'label': 'Strain rate'}, catalog)
 
     def test_version_and_stale_draft(self):
-        s1 = empty_state(); s1['decisions'] = {'o1': decision('rejected', 'It belongs to another record')}
+        s1 = empty_state()
+        s1['decisions'] = {'o1': decision('rejected', 'It belongs to another record')}
         self.write_json(self.store.version_path('7', 1), version_file(self.original, 1, s1, AT1))
         self.write_json(self.store.draft_path('7'), {'schema': 'value-review-draft/1', 'paper': '7', 'base_version': 0,
                                                      'trigger': 'manual', 'saved_at': AT0, 'state': empty_state()})
@@ -174,7 +188,9 @@ class PageImages(Base):  # OP-03
 
     def test_sources_untouched(self):  # BR-01
         before = (sha(self.res), sha(self.pdf))
-        self.client.get('/api/v1/papers'); self.client.get('/api/v1/papers/7'); self.client.get('/api/v1/papers/7/pages/1/image')
+        self.client.get('/api/v1/papers')
+        self.client.get('/api/v1/papers/7')
+        self.client.get('/api/v1/papers/7/pages/1/image')
         self.assertEqual((sha(self.res), sha(self.pdf)), before)
 
 
@@ -202,6 +218,32 @@ class SettingsAndHealth(Base):  # OP-10, OP-11
         r = self.client.get('/api/v1/nothing')
         self.assertEqual((r.status_code, r.json()['error']['code']), (404, 'not_found'))
 
+    def test_health_reports_an_unwritable_data_folder(self):
+        with mock.patch('value_review.service.app.tempfile.mkstemp', side_effect=PermissionError(13, 'Access is denied')):
+            body = self.client.get('/api/v1/health').json()
+        self.assertEqual(body, {'status': 'degraded', 'papers': 1, 'data_dir_writable': False})
+
+    def test_settings_that_cannot_be_saved(self):
+        before = self.client.get('/api/v1/settings').json()
+        new = {k: before[k] for k in ('keep_versions', 'autosave_minutes')}
+        with mock.patch.object(AnnotationStore, 'save_settings', side_effect=StorageError('Could not write settings.json: Access is denied')):
+            r = self.client.put('/api/v1/settings', json={**new, 'reviewer_name': 'Dr. R'})
+            self.assertEqual((r.status_code, r.json()['error']), (500, {
+                'code': 'storage_error', 'message': 'Could not write settings.json: Access is denied', 'details': {}}))
+            r = self.client.put('/api/v1/active-source', json={'source': 'default'})
+            self.assertEqual((r.status_code, r.json()['error']['code']), (500, 'storage_error'))
+        self.assertEqual(self.client.get('/api/v1/settings').json(), before)   # nothing changed
+
+    def test_last_folder_messages(self):
+        empty = Path(self.tmp.name) / 'no pdfs'
+        empty.mkdir()
+        pair = {'id': 'default', 'name': 'run', 'run_dir': str(self.run)}
+        base = {'reviewer_name': 'R', 'keep_versions': 20, 'autosave_minutes': 5}
+        r = self.client.put('/api/v1/settings', json={**base, 'sources': [{**pair, 'pdf_dir': str(empty)}]})
+        self.assertEqual(r.json()['error']['details']['fields'], {'sources.0.pdf_dir': 'No PDF files in this folder.'})
+        r = self.client.put('/api/v1/settings', json={**base, 'sources': [{**pair, 'pdf_dir': '   '}]})
+        self.assertEqual(r.json()['error']['details']['fields'], {'sources.0.pdf_dir': 'Type the folder.'})
+
 
 class LocalOnly(Base):  # AC-20
     PORT = 8766
@@ -210,6 +252,11 @@ class LocalOnly(Base):  # AC-20
         for headers in ({'host': 'evil.example'}, {'host': '127.0.0.1:9999'}, {'host': '127.0.0.1:8766', 'origin': 'http://evil.example'}):
             r = self.client.get('/api/v1/health', headers=headers)
             self.assertEqual((r.status_code, r.json()['error']['code']), (403, 'forbidden_host'), headers)
+
+    def test_malformed_host_port_refused(self):
+        for host in ('127.0.0.1:abc', '127.0.0.1:99999', 'localhost:'):
+            r = self.client.get('/api/v1/health', headers={'host': host})
+            self.assertEqual(r.status_code, 403 if host != 'localhost:' else 200, host)
 
     def test_local_names_served(self):
         for host in ('127.0.0.1:8766', 'localhost:8766', 'localhost'):
@@ -227,6 +274,78 @@ class LocalOnly(Base):  # AC-20
         finally:
             lock.release()
         self.assertFalse(self.store.lock_path.exists())
+
+    def test_port_in_use_refused_and_lock_released(self):
+        (self.store.folder / 'drafts').mkdir(parents=True, exist_ok=True)
+        leftover = self.store.folder / 'drafts' / '7.draft.json.99.tmp'
+        leftover.write_bytes(b'partial')
+        err = io.StringIO()
+        # A real server must never start here: if the port check broke, the test fails at once instead of hanging.
+        with mock.patch('value_review.__main__.port_is_free', return_value=False), contextlib.redirect_stderr(err), \
+                mock.patch('uvicorn.Server', side_effect=AssertionError('the server started on a busy port')):
+            self.assertEqual(launch(['--no-browser', '--data', str(self.data), '--port', '8799']), 2)
+        self.assertIn('Port 8799 is in use', err.getvalue())
+        self.assertFalse(self.store.lock_path.exists())
+        self.assertFalse(leftover.exists())   # cleaned before the port check
+
+    def test_launcher_serves_opens_the_browser_and_releases_the_lock(self):
+        started = {}
+
+        class FakeServer:   # stands in for uvicorn.Server: no real port is opened
+            def __init__(self, config):
+                started['config'] = config
+                self.started, self.should_exit = False, False
+
+            def run(self):
+                started['lock_held'] = self_store.lock_path.exists()
+                self.started = True
+                for _ in range(50):   # give the browser thread time to see the server start
+                    if opened:
+                        break
+                    import time
+                    time.sleep(0.05)
+
+        self_store, opened = self.store, []
+        out = io.StringIO()
+        with mock.patch('uvicorn.Server', FakeServer), mock.patch('value_review.__main__.port_is_free', return_value=True), \
+                mock.patch('value_review.__main__.webbrowser.open', side_effect=opened.append), contextlib.redirect_stdout(out):
+            self.assertEqual(launch(['--data', str(self.data), '--port', '8799']), 0)
+        config = started['config']
+        self.assertEqual((config.host, config.port, config.workers), ('127.0.0.1', 8799, 1))
+        self.assertTrue(started['lock_held'])
+        self.assertEqual(opened, ['http://127.0.0.1:8799/'])
+        self.assertIn('Tensile Value Review on http://127.0.0.1:8799/', out.getvalue())
+        self.assertFalse(self.store.lock_path.exists())
+
+
+class EdgePaths(Base):
+    def test_page_image_storage_error(self):
+        from value_review.service.library import Library
+        with mock.patch.object(Library, 'page_png', side_effect=StorageError('Could not write abc-1-1200.png: Disk full')):
+            r = self.client.get('/api/v1/papers/7/pages/1/image')
+        self.assertEqual((r.status_code, r.json()['error']['code'], r.json()['error']['message']),
+                         (500, 'storage_error', 'Could not write abc-1-1200.png: Disk full'))
+
+    def test_method_not_allowed_uses_the_error_shape(self):
+        r = self.client.patch('/api/v1/settings', json={})
+        self.assertEqual((r.status_code, r.json()['error']['code']), (405, 'invalid_request'))
+
+    def test_data_folder_without_originals(self):
+        with tempfile.TemporaryDirectory() as tmp, \
+                TestClient(create_app(Config(data=Path(tmp), run_dir=self.run, pdf_dir=self.pdfs), web_dir=None), base_url='http://127.0.0.1') as client:
+            self.assertEqual(client.get('/api/v1/papers').json(), [])
+            self.assertEqual(client.get('/api/v1/health').json()['papers'], 0)
+
+    def test_folder_settings_from_the_environment(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict('os.environ', {'VALUE_REVIEW_SOURCE_ROOT': tmp, 'VALUE_REVIEW_DATA': tmp}):
+            self.assertEqual(vr_config.source_root(), Path(tmp))
+            self.assertEqual(vr_config.data_root(), Path(tmp))
+            self.assertEqual(vr_config.originals_dir(), Path(tmp) / 'originals')
+            self.assertEqual((Config().originals, Config().cache), (Path(tmp) / 'originals', Path(tmp) / 'cache'))
+        with mock.patch.dict('os.environ', {}, clear=False), mock.patch.object(vr_config, 'REPO_ROOT', Path(self.tmp.name) / 'nowhere'):
+            import os
+            os.environ.pop('VALUE_REVIEW_SOURCE_ROOT', None)
+            self.assertEqual(vr_config.source_root(), Path(self.tmp.name) / 'nowhere')   # no sources found: the repository root
 
 
 @unittest.skipUnless(vr_config.default_run_dir().is_dir() and vr_config.default_pdf_dir().is_dir(),

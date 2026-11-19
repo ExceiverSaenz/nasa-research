@@ -160,7 +160,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 contexts[sid] = Source(sid)
             return contexts[sid]
 
-    paper_locks = defaultdict(threading.Lock)   # requests that write take the paper's lock, per (source, paper)
+    paper_locks: defaultdict[tuple[str, str], threading.Lock] = defaultdict(threading.Lock)   # writes take the paper's lock, per (source, paper)
     ingest_lock = threading.Lock()
 
     app = FastAPI(title='Tensile Value Review', docs_url=None, redoc_url=None, openapi_url=None)

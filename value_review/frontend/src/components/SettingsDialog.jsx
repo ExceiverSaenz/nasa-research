@@ -1,25 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { api } from '../lib/api.js';
-
-const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
-
-function ingestText(r) {
-  const parts = [];
-  if (r.written) parts.push(`${plural(r.written, 'new paper')} loaded`);
-  if (r.unchanged) parts.push(`${r.unchanged} already loaded`);
-  if (r.changed) parts.push(`${r.changed} with a different model output kept as they were (shown as Source changed)`);
-  if (r.failed) parts.push(`${r.failed} could not be loaded`);
-  return parts.length ? `${parts.join(' · ')}.` : 'No papers loaded.';
-}
-
-// Papers not loaded because one of their two files is missing, saying which one.
-function missingLines(r) {
-  const out = [];
-  const noPdf = r.results_without_pdf || [], noResults = r.pdfs_without_results || [];
-  if (noPdf.length) out.push(`Missing PDF (LLM results found, not loaded): ${plural(noPdf.length, 'paper')}: ${noPdf.join(', ')}.`);
-  if (noResults.length) out.push(`Missing LLM results (PDF found, not loaded): ${plural(noResults.length, 'paper')}: ${noResults.join(', ')}.`);
-  return out;
-}
+import { loadReport } from '../lib/messages.js';
 
 let nextKey = 0;
 const withKeys = (sources) => sources.map((s) => ({ ...s, key: s.id || `new-${nextKey++}` }));
@@ -31,7 +12,7 @@ export default function SettingsDialog({ onClose, onLoaded }) {
   const [values, setValues] = useState(null);
   const [initial, setInitial] = useState(null);
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState(null);   // {lines: [text], tone}
+  const [message, setMessage] = useState(null);   // {lines: [text or {text, sub}], tone}
   const [busy, setBusy] = useState('');
   const pressedOutside = useRef(false);
 
@@ -53,27 +34,20 @@ export default function SettingsDialog({ onClose, onLoaded }) {
   const addPair = () => setValues((s) => ({ ...s, sources: [...s.sources, ...withKeys([{ name: '', run_dir: '', pdf_dir: '' }])] }));
   const removePair = (i) => { setValues((s) => ({ ...s, sources: s.sources.filter((_, j) => j !== i) })); setErrors({}); };
 
-  // Load the papers of the given pairs, one after the other; one line per pair.
+  // Load the papers of the given pairs, one after the other; the banner text comes from lib/messages.js.
   const load = async (pairs) => {
-    const lines = [];
-    let tone = 'ok';
+    const results = [];
     for (const p of pairs) {
       setBusy(`Loading papers of ${p.name}…`);
       try {
-        const r = await api.ingest(p.id);
-        const failures = r.papers.filter((x) => x.outcome === 'failed').map((x) => `paper ${x.paper}: ${x.error}`);
-        lines.push(`${p.name}: ${ingestText(r)}${failures.length ? ` ${failures.join(' · ')}` : ''}`);
-        const missing = missingLines(r);
-        lines.push(...missing.map((text) => ({ text, sub: true })));
-        if (tone === 'ok' && (r.failed || missing.length)) tone = 'warn';
+        results.push({ name: p.name, result: await api.ingest(p.id) });
       } catch (e) {
-        lines.push(`${p.name}: ${e.message}`);
-        tone = 'error';
+        results.push({ name: p.name, error: e.message });
       }
     }
     setBusy('');
     onLoaded();
-    return { lines, tone };
+    return loadReport(results);
   };
 
   const loadAll = async () => setMessage(await load(values.sources.filter((p) => p.id)));

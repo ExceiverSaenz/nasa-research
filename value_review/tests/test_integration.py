@@ -9,6 +9,7 @@ import io
 import shutil
 import sys
 import threading
+import time
 import unittest
 from unittest import mock
 from pathlib import Path
@@ -48,7 +49,8 @@ class Workflow(Base):
                                  base_url='http://127.0.0.1')
         d = Path(self.tmp.name)
         self.run_b, self.pdfs_b = d / 'run B', d / 'pdfs B'
-        self.run_b.mkdir(); self.pdfs_b.mkdir()
+        self.run_b.mkdir()
+        self.pdfs_b.mkdir()
         shutil.copy(self.res, self.run_b / self.res.name)
         shutil.copy(self.pdf, self.pdfs_b / '7.pdf')
         shutil.copy(self.res, self.run_b / '11-pdf_with_feature_guide.json')
@@ -190,6 +192,41 @@ class ConcurrentLoad(Workflow):  # IT-06, WB-02
         self.assertIn('internal error', logs.output[0])
         r = self.client.post(self.url)
         self.assertEqual((r.status_code, r.json()['written']), (200, 1))
+
+
+class ConcurrentSubmit(Workflow):
+    def test_two_tabs_submit_the_same_paper_at_once(self):  # BR-11 under a real race: exactly one version
+        self.add_pair_b()
+        b = f'{API}/sources/model-b'
+        self.client.post(f'{b}/ingest')
+        real_write = AnnotationStore.write_version
+        inside = threading.Event()
+
+        def slow_write(store, paper, data):   # widen the window between the version check and the write
+            inside.set()
+            time.sleep(0.3)
+            return real_write(store, paper, data)
+
+        start, results = threading.Barrier(2), {}
+
+        def tab(name):
+            with TestClient(self.client.app, base_url='http://127.0.0.1') as client:
+                start.wait(5)
+                results[name] = client.post(f'{b}/papers/7/versions', json={'state': three_decisions()}, headers={'If-Match': '"0"'})
+
+        with mock.patch.object(AnnotationStore, 'write_version', slow_write):
+            tabs = [threading.Thread(target=tab, args=(n,)) for n in ('one', 'two')]
+            for t in tabs:
+                t.start()
+            for t in tabs:
+                t.join(15)
+        self.assertTrue(inside.is_set())
+        codes = sorted(r.status_code for r in results.values())
+        self.assertEqual(codes, [201, 409], {k: r.text for k, r in results.items()})
+        loser = next(r for r in results.values() if r.status_code == 409)
+        self.assertEqual(loser.json()['error']['details']['current'], 1)
+        store_b = AnnotationStore(self.data / 'sources' / 'model-b' / 'annotations')
+        self.assertEqual(store_b.version_numbers('7'), [1])
 
 
 class FailuresAndTransitions(Workflow):

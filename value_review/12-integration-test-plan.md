@@ -46,7 +46,8 @@ export reads only what submit wrote.
 - **Environment and data** · Python 3.13, FastAPI `TestClient`, temp folders per test (`tempfile`), synthetic papers via
   `tests/test_ingest.py` `make_pdf` / `result`; cleanup by `TemporaryDirectory`. No network, no real port. Real-run checks stay
   in `test_ingest_real.py` / `RealPapers` (skipped without sources).
-- **Verification** · `value_review/tests/test_integration.py` (IT-01–06, implemented 2026-11-18, all passing), run with
+- **Verification** · `value_review/tests/test_integration.py` (IT-01–06, implemented 2026-11-18, all passing; plus `ConcurrentSubmit`, two tabs
+  submitting the same paper at the same moment: exactly one 201 and one 409, one version file), run with
   `python -B -m unittest discover -s value_review/tests -p "test_*.py"`; evidence: test output, and for IT-01 the file listing
   of the temp data folder printed on failure.
 - **Deferred checks** · Step 6 (React client ↔ API) stays a scripted hand check: start `python -B -m value_review --port 8767

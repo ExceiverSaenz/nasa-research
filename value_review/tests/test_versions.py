@@ -252,6 +252,31 @@ class ReadVersions(Versions):  # OP-06, OP-07
         self.assertEqual(self.client.get('/api/v1/papers/8/versions').status_code, 404)
 
 
+class CsvFormulas(Versions):  # OP-09: a CSV cell is never run as a formula; the JSON keeps values as stored
+    def test_cell_rule(self):
+        from value_review.service.exports import cell
+        for text, out in (('=1+1', "'=1+1"), ('+cmd', "'+cmd"), ('@SUM(A1)', "'@SUM(A1)"), ('-3 ± 1', "'-3 ± 1"),
+                          ('\tx', "'\tx"), ('\rx', "'\rx"), ('-5', '-5'), ('+1.5e3', '+1.5e3'), ('-.5', '-.5'), ('710 ± 25', '710 ± 25'),
+                          ('', ''), (None, ''), (7, '7'), ('a=b', 'a=b'), ('-', "'-")):
+            self.assertEqual(cell(text), out, repr(text))
+
+    def test_reviewer_text_is_escaped_in_the_csv_only(self):
+        self.client.put('/api/v1/settings', json={'reviewer_name': '=HYPERLINK("x")', 'keep_versions': 20, 'autosave_minutes': 5})
+        s = empty_state()
+        s['decisions'] = {'o1': d('corrected', '@SUM(A1)', value='=1+1', unit='MPa'),
+                          'o3': d('corrected', value='-5', unit='')}
+        self.assertEqual(self.submit(s).status_code, 201)
+        rows = {r['observation_id']: r for r in csv.DictReader(io.StringIO(self.client.get(f'{URL}/1/export.csv').content.decode('utf-8-sig')))}
+        self.assertEqual((rows['o1']['value'], rows['o1']['note'], rows['o1']['original_value']), ("'=1+1", "'@SUM(A1)", '710 ± 25'))
+        self.assertEqual(rows['o3']['value'], '-5')   # a plain number stays a number
+        self.assertEqual(rows['o1']['by'], d('x')['by'])   # decision author as sent; unchanged text
+        exported = {o['observation_id']: o['review'] for o in self.client.get(f'{URL}/1/export.json').json()['observations']}
+        self.assertEqual((exported['o1']['value'], exported['o1']['note']), ('=1+1', '@SUM(A1)'))   # JSON: exactly as stored
+        zipped = zipfile.ZipFile(io.BytesIO(self.client.get('/api/v1/export/latest.zip').content))
+        summary = list(csv.DictReader(io.StringIO(zipped.read('summary.csv').decode('utf-8-sig'))))
+        self.assertEqual(summary[0]['by'], '\'=HYPERLINK("x")')
+
+
 class Exports(Versions):  # OP-09, AC-08, BR-12
     def setUp(self):
         super().setUp()
@@ -277,7 +302,7 @@ class Exports(Versions):  # OP-09, AC-08, BR-12
         data = r.json()
         self.assertEqual(schemas.errors('export', data), [])
         rows = list(csv.DictReader(io.StringIO(self.client.get(f'{URL}/1/export.csv').content.decode('utf-8-sig'))))
-        for obs, row in zip(data['observations'], rows):
+        for obs, row in zip(data['observations'], rows, strict=True):
             self.assertEqual((obs['observation_id'], obs['review']['status'], obs['review']['value'] or ''),
                              (row['observation_id'], row['status'], row['value']))
         o1 = data['observations'][0]

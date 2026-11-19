@@ -69,5 +69,43 @@ class RealRun(unittest.TestCase):
         self.assertEqual((inventory(RUN, self.results), inventory(PDFS, self.pdf_names)), self.before)
 
 
+RESULTS = RUN.parent
+RUNS = sorted(p for p in RESULTS.iterdir() if p.is_dir() and find_papers(p)) if HAVE_SOURCES else []
+
+
+@unittest.skipUnless(RUNS, 'No LLM runs found; set VALUE_REVIEW_SOURCE_ROOT')
+class EveryRun(unittest.TestCase):
+    """Every LLM run under llm_baseline/results loads without failures or issues and is served by the API (read-only)."""
+
+    def test_every_run_loads_and_is_served(self):
+        import json
+        from fastapi.testclient import TestClient
+        from value_review.service.app import create_app
+        from value_review.service.config import Config
+        for run in RUNS:
+            with self.subTest(run=run.name), tempfile.TemporaryDirectory() as tmp:
+                ids = find_papers(run)
+                names = ([f'{p}{config.RESULT_SUFFIX}' for p in ids], [f'{p}.pdf' for p in ids])
+                before = (inventory(run, names[0]), inventory(PDFS, names[1]))
+                data = Path(tmp)
+                rows = ingest_run(run, PDFS, data / 'originals')
+                self.assertEqual({r['paper']: (r['outcome'], r['issues'], r['error']) for r in rows},
+                                 {p: ('written', 0, '') for p in ids})
+                for pid in ids:
+                    original = json.loads((data / 'originals' / f'{pid}.json').read_text(encoding='utf-8'))
+                    self.assertEqual(schemas.errors('original', original), [], pid)
+                with TestClient(create_app(Config(data=data, run_dir=run, pdf_dir=PDFS), web_dir=None),
+                                base_url='http://127.0.0.1') as client:
+                    listed = client.get('/api/v1/papers').json()
+                    self.assertEqual([(p['paper'], p['source_problems']) for p in listed], [(p, []) for p in ids])
+                    for pid in ids:
+                        opened = client.get(f'/api/v1/papers/{pid}')
+                        self.assertEqual(opened.status_code, 200, pid)
+                        first = opened.json()['original']['pages'][0]['number']
+                        image = client.get(f'/api/v1/papers/{pid}/pages/{first}/image?w=400')
+                        self.assertEqual((image.status_code, image.content[:4]), (200, b'\x89PNG'), pid)
+                self.assertEqual((inventory(run, names[0]), inventory(PDFS, names[1])), before)   # BR-01
+
+
 if __name__ == '__main__':
     unittest.main()
