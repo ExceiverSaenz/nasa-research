@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 
 from .. import schemas
-from .atomic import StorageError, atomic_write_bytes
+from .atomic import StorageError, atomic_write_bytes, reason
 
 VERSION_FILE = re.compile(r'v([1-9][0-9]{0,5})\.json')
 SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5}
@@ -105,7 +105,7 @@ class AnnotationStore:
             except FileNotFoundError:
                 pass
             except OSError as error:
-                raise StorageError(f'Could not delete v{n}.json: {error}') from error
+                raise StorageError(f'Could not delete v{n}.json: {reason(error)}') from error
         return deleted
 
     def write_draft(self, paper, data):
@@ -119,7 +119,7 @@ class AnnotationStore:
         except FileNotFoundError:
             return False
         except OSError as error:
-            raise StorageError(f'Could not delete the draft: {error}') from error
+            raise StorageError(f'Could not delete the draft: {reason(error)}') from error
 
     # --- settings (OP-10) ------------------------------------------------------
     def stored_settings(self):

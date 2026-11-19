@@ -1,7 +1,8 @@
-"""Tests of storage/atomic.py: atomic replace, start-up cleanup and the instance lock (WB-17 of
+"""Tests of storage/atomic.py and storage/files.py: atomic replace, start-up cleanup, the instance lock (WB-17 of
 11-white-box-coverage-review.md). Every file the service writes (originals, drafts, versions, settings, page cache)
 goes through ``atomic_write_bytes``, so a reader must never see a partial file and a failure must leave the old one.
 """
+import json
 import os
 import sys
 import tempfile
@@ -13,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from value_review.storage import atomic  # noqa: E402
 from value_review.storage.atomic import InstanceLock, StorageError, atomic_write_bytes, remove_leftover_temporaries  # noqa: E402
+from value_review.storage.files import AnnotationStore  # noqa: E402
 
 
 class Crash(BaseException):
@@ -50,10 +52,11 @@ class AtomicWrite(unittest.TestCase):
 
         def fail(point):
             if point == 'tmp_written':
-                raise OSError('device not ready')
-        with self.assertRaises(StorageError):
+                raise OSError(21, 'device not ready', str(self.target))   # OS errors carry the full file name
+        with self.assertRaises(StorageError) as caught:
             atomic_write_bytes(self.target, b'new', fault=fail)
         self.assertEqual((self.target.read_bytes(), self.temporaries()), (b'old', []))
+        self.assertEqual(str(caught.exception), 'Could not write v1.json: device not ready')   # contract: no absolute path
 
     def test_crash_after_temporary_leaves_it_for_the_start_up_cleanup(self):
         self.write_old()
@@ -83,12 +86,12 @@ class AtomicWrite(unittest.TestCase):
 
     def test_permission_error_on_every_try_fails_and_keeps_the_old_file(self):
         self.write_old()
-        with mock.patch.object(atomic.os, 'replace', side_effect=PermissionError('locked')) as replace, \
+        locked = PermissionError(13, 'Access is denied', str(self.target))   # as Windows raises it: with the full path
+        with mock.patch.object(atomic.os, 'replace', side_effect=locked) as replace, \
                 self.assertRaises(StorageError) as caught:
             atomic_write_bytes(self.target, b'new', retries=4, backoff=0)
         self.assertEqual(replace.call_count, 4)
-        self.assertIn('v1.json', str(caught.exception))
-        self.assertNotIn(self.tmp.name, str(caught.exception))   # contract: no absolute path in messages
+        self.assertEqual(str(caught.exception), 'Could not replace v1.json: Access is denied')   # contract: no absolute path
         self.assertEqual((self.target.read_bytes(), self.temporaries()), (b'old', []))
 
     def test_cleanup_touches_only_temporaries(self):
@@ -96,6 +99,86 @@ class AtomicWrite(unittest.TestCase):
         (self.target.parent / 'v2.json.123.tmp').write_bytes(b'partial')
         self.assertEqual(remove_leftover_temporaries(self.target.parent), 1)
         self.assertEqual(sorted(p.name for p in self.target.parent.iterdir()), ['v1.json'])
+
+
+class AnnotationFiles(unittest.TestCase):
+    """storage/files.py paths that only fail with damaged files or a disk that refuses (11-white-box-coverage-review.md, gap 2)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.store = AnnotationStore(Path(self.tmp.name) / 'annotations')
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    @staticmethod
+    def denied(path):
+        return PermissionError(13, 'Access is denied', str(path))   # as Windows raises it: with the full path
+
+    @staticmethod
+    def version(n):
+        state = {'schema': 'value-review-state/1', 'decisions': {}, 'column_moves': {}, 'record_moves': {}, 'record_edits': {},
+                 'added_records': [], 'added_values': [], 'boxes': {}}
+        counts = {k: 0 for k in ('total', 'pending', 'accepted', 'corrected', 'rejected', 'unsure', 'added_values',
+                                 'added_records', 'edited_records')}
+        return {'schema': 'value-review-version/1', 'paper': '7', 'n': n, 'at': '2026-11-18T10:00:00Z', 'by': 'Expert reviewer',
+                'note': 'Submitted', 'base_version': n - 1,
+                'source': {'run_id': 'r', 'result_sha256': 'a' * 64, 'pdf_sha256': 'b' * 64, 'original_sha256': 'c' * 64},
+                'state': state, 'counts': counts, 'values': []}
+
+    @staticmethod
+    def write(path, data):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data), encoding='utf-8')
+
+    def test_schema_invalid_files_are_reported_and_not_used(self):
+        self.write(self.store.version_path('7', 1), self.version(1))
+        self.assertEqual(self.store.read_version('7', 1)[1], None)   # the fixture itself is valid
+        bad = self.version(2)
+        del bad['state']
+        self.write(self.store.version_path('7', 2), bad)
+        data, problem = self.store.read_version('7', 2)
+        self.assertIsNone(data)
+        self.assertTrue(problem.startswith('v2.json: '), problem)
+        k, latest, next_n, problems = self.store.current('7')
+        self.assertEqual((k, latest['n'], next_n, len(problems)), (1, 1, 3, 1))   # v1 is current; v2's number is never reused
+        self.write(self.store.draft_path('7'), {'schema': 'value-review-draft/1', 'paper': '7'})
+        data, problem = self.store.read_draft('7')
+        self.assertIsNone(data)
+        self.assertTrue(problem.startswith('7.draft.json: '), problem)
+
+    def test_write_version_never_replaces_a_file(self):
+        self.store.write_version('7', self.version(1))
+        before = self.store.version_path('7', 1).read_bytes()
+        with self.assertRaises(StorageError) as caught:
+            self.store.write_version('7', {**self.version(1), 'note': 'Other'})
+        self.assertEqual(str(caught.exception), 'v1.json already exists')
+        self.assertEqual(self.store.version_path('7', 1).read_bytes(), before)   # BR-03: versions are immutable
+
+    def test_prune_skips_a_file_deleted_meanwhile(self):
+        for n in (2, 3):
+            self.store.write_version('7', self.version(n))
+        with mock.patch.object(self.store, 'version_numbers', return_value=[3, 2, 1]):   # v1 listed, then gone
+            self.assertEqual(self.store.prune('7', 1), [2])
+        self.assertEqual(self.store.version_numbers('7'), [3])
+
+    def test_prune_failure_is_reported_without_the_path(self):
+        for n in (1, 2):
+            self.store.write_version('7', self.version(n))
+        path = self.store.version_path('7', 1)
+        with mock.patch.object(Path, 'unlink', side_effect=self.denied(path)), self.assertRaises(StorageError) as caught:
+            self.store.prune('7', 1)
+        self.assertEqual(str(caught.exception), 'Could not delete v1.json: Access is denied')
+        self.assertTrue(path.exists())
+
+    def test_delete_draft_failure_is_reported_without_the_path(self):
+        self.assertFalse(self.store.delete_draft('7'))   # no draft: nothing to do
+        self.write(self.store.draft_path('7'), {})
+        with mock.patch.object(Path, 'unlink', side_effect=self.denied(self.store.draft_path('7'))), \
+                self.assertRaises(StorageError) as caught:
+            self.store.delete_draft('7')
+        self.assertEqual(str(caught.exception), 'Could not delete the draft: Access is denied')
+        self.assertTrue(self.store.draft_path('7').exists())
 
 
 class Lock(unittest.TestCase):

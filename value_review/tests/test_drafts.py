@@ -5,6 +5,7 @@ Covers AC-09 (server side), BR-02 and BR-11 for drafts. Synthetic paper 7 from t
 import json
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -100,6 +101,19 @@ class Drafts(Versions):
         self.assertFalse(self.store.draft_path('7').exists())
         self.assertEqual(self.client.delete(URL).status_code, 204)
         self.assertEqual(self.client.delete('/api/v1/papers/8/draft').status_code, 404)
+
+    def test_storage_errors_reach_the_client_without_a_path(self):  # contract: no absolute path in error messages
+        self.put(three_decisions())
+        denied = PermissionError(13, 'Access is denied', str(self.store.draft_path('7')))   # as Windows raises it
+        with mock.patch.object(Path, 'unlink', side_effect=denied):
+            r = self.client.delete(URL)
+        self.assertEqual((r.status_code, r.json()['error']['code']), (500, 'storage_error'))
+        self.assertEqual(r.json()['error']['message'], 'Could not delete the draft: Access is denied')
+        with mock.patch('value_review.storage.atomic.os.replace', side_effect=denied):
+            r = self.put(three_decisions())
+        self.assertEqual((r.status_code, r.json()['error']['message']), (500, 'Could not replace 7.draft.json: Access is denied'))
+        self.assertNotIn(str(self.data), r.text)
+        self.assertEqual(json.loads(self.store.draft_path('7').read_text(encoding='utf-8'))['state'], three_decisions())   # kept
 
     def test_by_and_at_are_kept_as_sent(self):
         s = empty_state()

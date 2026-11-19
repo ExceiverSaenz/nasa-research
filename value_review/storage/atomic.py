@@ -20,6 +20,12 @@ class StorageError(Exception):
     """A write failed; the previous file is intact."""
 
 
+def reason(error):
+    """The OS's reason for a failed file operation, without the file name: the text of an OSError carries the full
+    path, and StorageError messages reach the client (contract: no absolute path in error messages)."""
+    return getattr(error, 'strerror', None) or type(error).__name__
+
+
 def atomic_write_bytes(path, data, *, fault=None, retries=RETRIES, backoff=BACKOFF_SECONDS):
     """Replace ``path`` with ``data`` atomically.
 
@@ -42,7 +48,7 @@ def atomic_write_bytes(path, data, *, fault=None, retries=RETRIES, backoff=BACKO
                 break
             except PermissionError as error:
                 if attempt == retries - 1:
-                    raise StorageError(f'Could not replace {path.name}: {error}') from error
+                    raise StorageError(f'Could not replace {path.name}: {reason(error)}') from error
                 time.sleep(backoff * (2 ** attempt))
         if fault:
             fault('replaced')
@@ -51,7 +57,7 @@ def atomic_write_bytes(path, data, *, fault=None, retries=RETRIES, backoff=BACKO
         raise
     except OSError as error:
         _discard(temp)
-        raise StorageError(f'Could not write {path.name}: {error}') from error
+        raise StorageError(f'Could not write {path.name}: {reason(error)}') from error
     except BaseException:
         # A simulated or real crash after the temporary file exists leaves it for the start-up cleanup.
         raise
