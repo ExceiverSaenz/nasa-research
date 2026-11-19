@@ -89,7 +89,9 @@ test('leaving with unsaved changes: in-app question, Back keeps asking, the brow
 
   // the browser's own prompt when the tab is closed with unsaved changes
   await page.getByRole('link', { name: 'Sub-size specimens of FeCrAl' }).click();
+  await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
   await page.keyboard.press('f');
+  await expect(page.locator('header')).toContainText('Unsaved changes');   // only then does the browser warn
   const prompt = page.waitForEvent('dialog');
   await page.close({ runBeforeUnload: true });
   const dialog = await prompt;

@@ -74,3 +74,12 @@ export const smallTargets = (page) => page.evaluate(() => {
   }
   return out;
 });
+
+// Drag on the PDF page from (x0, y0) to (x1, y1), given as fractions of the page.
+export async function dragOnPage(page, x0, y0, x1, y1) {
+  const box = await page.locator('.sheet').boundingBox();
+  await page.mouse.move(box.x + x0 * box.width, box.y + y0 * box.height);
+  await page.mouse.down();
+  await page.mouse.move(box.x + x1 * box.width, box.y + y1 * box.height, { steps: 8 });
+  await page.mouse.up();
+}

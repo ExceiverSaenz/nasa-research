@@ -7,7 +7,7 @@
 ## Method
 
 - **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **160 tests, all passing**. Seven of them run on the real LLM runs and PDFs (`test_ingest_real.py`, including `EveryRun`, which loads, validates and serves every run found under `llm_baseline/results`, and `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
-- **Automated, browser** · `npm run e2e` in `value_review/frontend` (Playwright, ADR-008): **15 tests, all passing**, in Microsoft Edge against a
+- **Automated, browser** · `npm run e2e` in `value_review/frontend` (Playwright, ADR-008): **25 tests, all passing**, in Microsoft Edge against a
   fresh service on synthetic papers per test: Papers, Settings, the review shortcuts and decisions, the leave warning (including the
   browser's own prompt), the saved-draft offer, submit and download, the version history, and the tablet layout.
 - **Automated, client** · `npm test` in `value_review/frontend`: **39 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry, the HTTP client against a fake `fetch`, the Settings load messages, the hash routes). There are no tests of the React components themselves.
@@ -136,6 +136,20 @@ now covered by `npm run e2e`. Each fix was undone in turn, the app rebuilt and i
 
 Now verified, after being out of reach of the earlier tools: the browser's own "Leave site?" prompt (AC-10), the "?" key with a real key
 press, touch taps at 834 px, and the partial-model-run banner (OQ-01).
+
+## Browser tests for the remaining screens (added 2026-11-19)
+
+- **New tests (10)** · `e2e/editing.spec.js` (correct a value, move it to another column and record, add, edit and remove records, add a
+  value the model missed and mark it by dragging), `highlights.spec.js` (add, redraw, delete and restore boxes; Escape cancels),
+  `bulk.spec.js` (accept the pending values of a record, undo exactly that, cancel), `versions.spec.js` (compare a version that differs,
+  restore it as a new version, start over). Each checks the screen and what the service stored.
+- **Mutations** · 9, all caught: a correction storing the model value, a column move ignored, repeated record names allowed, drawn boxes
+  shifted, bulk undo removing every accepted decision, compare finding nothing, restore restoring the wrong version, start over keeping
+  the draft, an added value that cannot be removed.
+- **A flaky test fixed** · the leave test pressed a key before the paper had loaded, so under parallel load nothing was unsaved and the
+  browser rightly did not warn; it now waits for "Unsaved changes" (12 of 12 passes under stress).
+- **Performance tooling** · `value_review/perf/` (server benchmark, stress data, a server on a copy of the real run) and
+  `npm run perf` (browser measurements on two profiles). Results go to 13-performance-report.md.
 
 ## Fixed in the second pass
 

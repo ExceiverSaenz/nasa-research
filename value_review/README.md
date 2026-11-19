@@ -62,12 +62,14 @@ Exports: `GET /api/v1/papers/<n>/versions/<k>/export.json` (the model's fields p
 ```
 python -B -m unittest discover -s value_review/tests -p "test_*.py"
 python -m ruff check value_review
+python -B -m value_review.perf.server_bench --dataset real   # server latency, CPU, memory (also --dataset stress, --profile)
 python -m mypy value_review --ignore-missing-imports --exclude "value_review/(tests|frontend|web)/"
 cd value_review/frontend
 npm ci --offline
 npm test
 npm run build
 npm run e2e      # browser tests in Edge (Playwright), each on its own temporary service
+npm run perf     # browser measurements on a copy of the real run (laptop and slow-tablet profiles)
 npm run dev      # http://localhost:5174, proxies /api to the running service
 npm run build    # writes value_review/web/
 ```
