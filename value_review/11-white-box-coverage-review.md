@@ -51,17 +51,18 @@
     (about 3 minutes), then count the lines starting with `<n>:` (run) and `>>>>>>` (never run) in `<tmp>/value_review.*.cover`.
     Do **not** add `--ignore-dir`: `trace` caches its ignore decision by the module's short name, so ignoring the standard
     library also drops every `config.py`, `errors.py` and `__init__.py` of this package. `coverage.py` is not installed (an ADR would be needed).
-- **Measured coverage** (2026-11-18, 135 Python tests, 23 client tests) ·
+- **Measured coverage** (2026-11-18, 137 Python tests, 24 client tests) ·
   - Client `src/lib/`: lines 100 %, branches 90.3 %, functions 91.5 % (lowest branches `values.js` 83.9 %, `edits.js` 85.4 %, `draft.js` 85.7 %).
     `src/lib/api.js` and the React components are not measured: no test imports them.
-  - Python lines (statement coverage; `trace` does not measure branches): **94.1 %** (1,318 of 1,400). `ingest/original.py`, `domain/materialize.py`,
+  - Python lines (statement coverage; `trace` does not measure branches): **94.7 %** (1,326 of 1,400). `ingest/original.py`, `domain/materialize.py`, `domain/rules.py`,
     `domain/checks.py`, `domain/state.py`, `service/exports.py`, `service/sources.py` 100 %; `service/library.py` 98.2 %; `service/app.py` 95.8 %;
-    `storage/files.py` 91.8 %; `storage/atomic.py` 89.2 %; `domain/rules.py` 87.9 %; `__main__.py` 56.4 % (the launcher: lock and port refusals are tested, the server start is not).
+    `storage/files.py` 91.8 %; `storage/atomic.py` 89.2 %; `__main__.py` 56.4 % (the launcher: lock and port refusals are tested, the server start is not).
 - **Relevant gaps** (unexecuted lines, by consequence) ·
-  1. `domain/rules.py` `check_state`: `unknown_observation` for column moves, record moves and boxes, `unknown_record` for record edits and added
-     values, `unknown_feature` for added values (lines 50–74) are never run. A broken reference there could be stored in a version. Next: extend
-     `test_unknown_references` with one bad reference per kind. `value_required` (line 46) is unreachable through the API, because the schema
-     already requires `value` for `corrected`; keep it as defense in depth.
+  1. ~~`domain/rules.py` `check_state`~~ · **Covered (2026-11-18)**. `test_versions` `test_unknown_references_in_every_part_of_the_working_copy`
+     sends one bad reference per kind through submit and draft: an unknown value in a column move, record move or box (and no further checks
+     on that box), an unknown record in a record edit or added value, an unknown column in an added value, and model evidence on an added
+     value. `Domain.test_correction_needs_a_value_even_without_the_schema` covers `value_required`, which the API's schema check reaches first.
+     Every line of `rules.py` now runs, and disabling any of the 8 checks one at a time fails a test.
   2. `storage/files.py`: `write_version` refusing an existing file (line 95, the immutability guard of BR-03), a schema-invalid version or draft
      (line 54), and `prune`/`delete_draft` failing with a non-`FileNotFoundError` `OSError` (lines 105–122) are not run. Next: one test that
      writes `v1.json` by hand and calls `write_version` with `n = 1`; one with a schema-invalid file.

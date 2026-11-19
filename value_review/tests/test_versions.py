@@ -144,6 +144,30 @@ class Submit(Versions):  # OP-05, AC-03, AC-05
                                  ('o1:r9', 'unknown_record'), ('o1:e9', 'unknown_evidence'), ('o1:page 5', 'page_out_of_range'),
                                  ('o1:box 0', 'empty_box')})
 
+    def test_unknown_references_in_every_part_of_the_working_copy(self):  # check_state, one bad reference per kind
+        s = empty_state()
+        s['column_moves'] = {'o9': {'feature_id': 'strain_rate', 'by': BY, 'at': AT}}       # value not in the paper
+        s['record_moves'] = {'o8': {'record_ids': ['r1'], 'by': BY, 'at': AT}}              # value not in the paper
+        s['record_edits'] = {'r9': {'label': 'x', 'summary': '', 'by': BY, 'at': AT}}       # record not in the paper
+        s['added_values'] = [{'observation_id': 'u_2', 'record_ids': ['r9'], 'feature_id': 'not_a_feature', 'value': '1',
+                              'unit': '', 'note': '', 'by': BY, 'at': AT}]
+        s['boxes'] = {
+            # unknown value: reported once; its boxes are not checked further (no evidence or page problems for o7)
+            'o7': {'removed': ['e9'], 'redrawn': {}, 'added': [{'page': 9, 'bbox': [0.3, 0.3, 0.2, 0.4], 'by': BY, 'at': AT}]},
+            # a value the reviewer added has no model evidence to remove or redraw
+            'u_2': {'removed': ['e1'], 'redrawn': {}, 'added': []},
+        }
+        before = self.files()
+        r = self.submit(s)
+        self.assertEqual((r.status_code, r.json()['error']['code']), (422, 'rules_violation'))
+        rules = sorted((i['ref'], i['rule']) for i in r.json()['error']['details']['items'])
+        self.assertEqual(rules, sorted([('o9', 'unknown_observation'), ('o8', 'unknown_observation'), ('r9', 'unknown_record'),
+                                        ('u_2', 'unknown_feature'), ('u_2:r9', 'unknown_record'),
+                                        ('o7', 'unknown_observation'), ('u_2:e1', 'unknown_evidence')]))
+        self.assertEqual(self.files(), before)   # nothing written
+        r = self.client.put('/api/v1/papers/7/draft', json={'base_version': 0, 'trigger': 'manual', 'state': s})
+        self.assertEqual((r.status_code, len(r.json()['error']['details']['items'])), (422, 7))   # drafts are checked too
+
     def test_source_changed_blocks_submit(self):  # AC-18
         self.res.write_text(self.res.read_text(encoding='utf-8').replace('710', '711'), encoding='utf-8')
         r = self.submit(three_decisions())
@@ -297,6 +321,14 @@ class Domain(Versions):  # pure functions
         s['decisions'] = {'o1': d('rejected', '')}
         self.assertEqual(check_state(self.original, s, submit=False), [])
         self.assertEqual(check_state(self.original, s, submit=True), [{'ref': 'o1', 'rule': 'reason_required'}])
+
+    def test_correction_needs_a_value_even_without_the_schema(self):
+        # Through the API the schema refuses this first (400, test_schema_violation); check_state is the second line.
+        s = empty_state()
+        s['decisions'] = {'o1': d('corrected'), 'o3': d('corrected', value='   ')}
+        for submit in (True, False):
+            self.assertEqual(check_state(self.original, s, submit=submit),
+                             [{'ref': 'o1', 'rule': 'value_required'}, {'ref': 'o3', 'rule': 'value_required'}])
 
 
 if __name__ == '__main__':

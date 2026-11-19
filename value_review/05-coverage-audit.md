@@ -6,7 +6,7 @@
 
 ## Method
 
-- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **135 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
+- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **137 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
 - **Automated, client** · `npm test` in `value_review/frontend`: **24 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry). There are no tests of the React components themselves.
 - **Hand checks** · Each step was run end to end in a browser on the real paper 1, with the service started on a temporary copy of the data folder (`--data`), so the repository's data never changed. Widths used: 1440 and 1280 px (desktop), 1024 px, 834 px (tablet). Dates: 2026-11-16. A second pass the same day covered the paths the first one missed (AC-06, AC-10, AC-18, AC-19), with the sources also copied to a temporary folder (`VALUE_REVIEW_SOURCE_ROOT`) so one could be changed; it found and fixed three bugs (see *Fixed in the second pass*).
 - **Read-only sources** · Hash and modification-time inventories of the LLM result files and PDFs, taken before and after the ingest and service tests, are identical (BR-01).
@@ -82,7 +82,7 @@ The black-box, white-box and integration designs are in [10-black-box-test-desig
   (14 mutations, all caught; the code was restored after each).
 - **Defect found and fixed** · A failed prune after a submit left the draft behind as a stale one (WB-13); `new_version` now tries prune and
   draft deletion separately.
-- **Measured coverage** · Python lines 94.1 % (standard library `trace`), client libraries lines 100 % / branches 90.3 % (Node). The
+- **Measured coverage** · Python lines 94.7 % (standard library `trace`; `domain/rules.py` 100 % after a follow-up covering every `check_state` rule), client libraries lines 100 % / branches 90.3 % (Node). The
   unexecuted lines and what to do about them are listed in 11-white-box-coverage-review.md, *Relevant gaps*.
 - **Hand check of the client ↔ API boundary** · IT-01 run in the browser on a copy of the data passed: per-field Settings errors, the
   missing-file lines, every paper request under `/sources/<pair>/…`, v1 and v2 written to the second pair only. It found one usability
