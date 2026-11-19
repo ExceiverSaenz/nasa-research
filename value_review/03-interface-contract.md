@@ -108,7 +108,7 @@
 | Reject/unsure without reason, unknown id, empty box, page out of range | 422 `rules_violation`, `details.items [{ref, rule}]` (rules: `reason_required`, `value_required`, `duplicate_id`, `unknown_observation`, `unknown_record`, `unknown_feature`, `unknown_evidence`, `page_out_of_range`, `empty_box`) | Nothing written |
 | Source hash differs | 422 `source_changed` | Nothing written |
 | Write of the version file fails | 500 `storage_error` | No new version; older versions and draft untouched |
-| Prune or draft delete fails after the version is written | 201 (logged) | New version stands; pruning retried on the next write |
+| Prune or draft delete fails after the version is written | 201 (logged) | New version stands; each step is tried on its own (a failed prune still deletes the draft); pruning retried on the next write |
 
 - **Retries** · A repeated submit with the same `If-Match` after success gets 409 (it never creates a duplicate).
 

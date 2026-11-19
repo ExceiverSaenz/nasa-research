@@ -6,8 +6,8 @@
 
 ## Method
 
-- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **102 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
-- **Automated, client** · `npm test` in `value_review/frontend`: **23 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry). There are no tests of the React components themselves.
+- **Automated, Python** · `python -B -m unittest discover -s value_review/tests -p "test_*.py"` from the repository root: **135 tests, all passing**. Six of them run on the real LLM run and PDFs (`test_ingest_real.py`, `test_service.py::RealPapers`) and are skipped when the sources are absent; from a worktree set `VALUE_REVIEW_SOURCE_ROOT` to the main checkout. The others use small synthetic papers in temporary folders.
+- **Automated, client** · `npm test` in `value_review/frontend`: **24 tests, all passing**, on the pure libraries in `src/lib/` (working copy, values, edits, drafts, versions, bulk accept, shortcuts, geometry). There are no tests of the React components themselves.
 - **Hand checks** · Each step was run end to end in a browser on the real paper 1, with the service started on a temporary copy of the data folder (`--data`), so the repository's data never changed. Widths used: 1440 and 1280 px (desktop), 1024 px, 834 px (tablet). Dates: 2026-11-16. A second pass the same day covered the paths the first one missed (AC-06, AC-10, AC-18, AC-19), with the sources also copied to a temporary folder (`VALUE_REVIEW_SOURCE_ROOT`) so one could be changed; it found and fixed three bugs (see *Fixed in the second pass*).
 - **Read-only sources** · Hash and modification-time inventories of the LLM result files and PDFs, taken before and after the ingest and service tests, are identical (BR-01).
 - **Abbreviations** · `ingest` = `test_ingest.py`, `real` = `test_ingest_real.py`, `service` = `test_service.py`, `versions` = `test_versions.py`, `drafts` = `test_drafts.py`, `restore` = `test_restore.py`; `lib`, `edits`, `draft`, `versions.js`, `bulk`, `shortcuts` = the client test files of the same name.
@@ -70,6 +70,24 @@
 - **Hand check** (test server on a copy of the data, with the real settings file of the old layout) · The old folders showed as the first pair, named after the results folder. Adding a second pair with a used name and a missing folder showed both errors under their fields and saved nothing; corrected, it saved without the quotes and loaded "2 new papers". A click on the backdrop closed the dialog; Papers then showed the **LLM results** selector; switching it showed the 2 papers of the second pair with links `#/source/<pair>/paper/<n>`; paper 1 of the second pair had no draft while paper 1 of the first kept its own; a review opened from such a link sent every request to its pair.
 - **Missing files** (hand check) · "Load papers again" with a result without PDF (paper 3) and a PDF without result (paper 5) in the second pair showed "Missing PDF (LLM results found, not loaded): 1 paper: 3." and "Missing LLM results (PDF found, not loaded): 1 paper: 5." under that pair, as a warning; the real folders reported 9 PDFs without results (16–24).
 - **Not checked by hand** · Removing a pair in the dialog (covered by `test_removing_a_pair_keeps_its_data`); two tabs on different pairs at once.
+
+## Test design pass: load → review → submit (added 2026-11-18)
+
+The black-box, white-box and integration designs are in [10-black-box-test-design.md](10-black-box-test-design.md),
+[11-white-box-coverage-review.md](11-white-box-coverage-review.md) and [12-integration-test-plan.md](12-integration-test-plan.md).
+
+- **New tests (33)** · `test_integration.py` IT-01–06 (the whole workflow on a second folder pair; stale submit; missing PDF; changed model
+  output; failed version write; concurrent load), white-box cases in `test_folders.py`, `test_versions.py` (`StorageFailures`),
+  `test_sources.py` and `test_storage.py`. Each new case was also run against a deliberately broken copy of the code it targets
+  (14 mutations, all caught; the code was restored after each).
+- **Defect found and fixed** · A failed prune after a submit left the draft behind as a stale one (WB-13); `new_version` now tries prune and
+  draft deletion separately.
+- **Measured coverage** · Python lines 94.1 % (standard library `trace`), client libraries lines 100 % / branches 90.3 % (Node). The
+  unexecuted lines and what to do about them are listed in 11-white-box-coverage-review.md, *Relevant gaps*.
+- **Hand check of the client ↔ API boundary** · IT-01 run in the browser on a copy of the data passed: per-field Settings errors, the
+  missing-file lines, every paper request under `/sources/<pair>/…`, v1 and v2 written to the second pair only. It found one usability
+  issue, now fixed: accepting a value right after rejecting it kept the rejection reason as its note (`noteForVerdict`, `lib/state.js`). Details in
+  12-integration-test-plan.md.
 
 ## Fixed in the second pass
 

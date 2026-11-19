@@ -15,6 +15,14 @@ export function decisionProblem(verdict, { value, note } = {}) {
   return null;
 }
 
+// The note to store with a new verdict. A reason left from a previous reject or unsure, unedited, explains that
+// verdict only: it is not carried to a different one (accepting a rejected value must not keep "It belongs to
+// another record"). A note the reviewer typed or changed is always kept.
+export function noteForVerdict(previous, verdict, note) {
+  const reasoned = previous && (previous.verdict === 'rejected' || previous.verdict === 'unsure');
+  return reasoned && previous.verdict !== verdict && (note || '') === (previous.note || '') ? '' : note || '';
+}
+
 export function decide(state, id, verdict, { value, unit, note = '' } = {}, by, at = nowIso()) {
   const problem = decisionProblem(verdict, { value, note });
   if (problem) throw new Error(problem);

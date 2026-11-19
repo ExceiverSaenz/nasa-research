@@ -64,6 +64,47 @@ class Folders(Base):
         self.assertEqual(r.json()['error']['details']['fields'], {'sources': 'Add at least one folder pair.'})
         self.assertFalse(self.store.settings_path.exists())
 
+    # --- white-box cases (11-white-box-coverage-review.md) ------------------------------------
+    def test_wb01_no_complete_paper_loads_nothing(self):  # WB-01: `complete == []` must not load every paper
+        lone = Path(self.tmp.name) / 'lone pdfs'
+        lone.mkdir()
+        make_pdf(lone / '12.pdf', [(612, 792)])   # no result matches it; results 7 and 9 have no PDF here
+        self.add_second(pdf_dir=str(lone))
+        body = self.client.post('/api/v1/sources/second-run/ingest').json()
+        self.assertEqual({k: body[k] for k in ('written', 'unchanged', 'changed', 'failed', 'papers')},
+                         {'written': 0, 'unchanged': 0, 'changed': 0, 'failed': 0, 'papers': []})
+        self.assertEqual((body['results_without_pdf'], body['pdfs_without_results']), (['7', '9'], ['12']))
+        self.assertFalse((self.data / 'sources' / 'second-run' / 'originals').exists())
+
+    def test_wb03_pdfs_without_results_in_numeric_then_name_order(self):  # WB-03: `order` key
+        for name in ('notes.pdf', '10.pdf', '2.pdf'):
+            make_pdf(self.pdfs2 / name, [(612, 792)])
+        self.add_second()
+        body = self.client.post('/api/v1/sources/second-run/ingest').json()
+        self.assertEqual(body['pdfs_without_results'], ['2', '10', 'notes'])
+
+    def test_wb05_changed_folders_of_an_existing_pair_are_checked_again(self):  # WB-05
+        self.add_second()
+        empty = Path(self.tmp.name) / 'empty'
+        empty.mkdir()
+        s = self.client.get(SETTINGS).json()
+        s['sources'][1]['run_dir'] = str(empty)
+        r = self.client.put(SETTINGS, json={**BASE, 'sources': s['sources']})
+        self.assertEqual((r.status_code, r.json()['error']['details']['fields']),
+                         (422, {'sources.1.run_dir': 'No LLM results here (files named <paper>-pdf_with_feature_guide.json).'}))
+        self.assertEqual(self.client.get(SETTINGS).json()['sources'][1]['run_dir'], str(self.run2))   # nothing saved
+
+    def test_wb10_pair_removed_while_in_use(self):  # WB-10: Source.folders after the pair is gone
+        from value_review.service.errors import ApiError
+        self.add_second()
+        source = self.client.app.state.source('second-run')
+        self.assertEqual(source.folders(), (self.run2, self.pdfs2))
+        self.put([self.first])
+        with self.assertRaises(ApiError) as caught:
+            source.folders()
+        self.assertEqual((caught.exception.status, caught.exception.code), (404, 'source_not_found'))
+        self.assertEqual(self.client.get('/api/v1/sources/second-run/papers').status_code, 404)
+
     def test_unknown_or_repeated_id_is_refused(self):
         for sources in ([{**self.first, 'id': 'nope'}], [self.first, self.first]):
             self.assertEqual(self.put(sources).status_code, 400)

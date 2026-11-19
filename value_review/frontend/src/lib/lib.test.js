@@ -1,7 +1,7 @@
 // node --test src/lib/*.test.js
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { clearDecision, decide, decisionProblem, emptyState, signature, statusOf } from './state.js';
+import { clearDecision, decide, decisionProblem, emptyState, noteForVerdict, signature, statusOf } from './state.js';
 import { browseFeatures, browseRecords, counts, displayValue, effectiveValues, inScope, UNASSIGNED } from './values.js';
 import { boxStyle, clampZoom, imageWidth } from './geometry.js';
 
@@ -77,4 +77,22 @@ test('geometry', () => {
   assert.equal(clampZoom(0.1), 0.5);
   assert.equal(imageWidth(620, 2), 1200);
   assert.equal(imageWidth(100, 1), 400);
+});
+
+test('a reason left from reject or unsure is not carried to another verdict', () => {
+  const rejected = { verdict: 'rejected', note: 'It belongs to another record' };
+  const unsure = { verdict: 'unsure', note: 'Needs a second opinion' };
+  // unedited reason, different verdict: dropped
+  assert.equal(noteForVerdict(rejected, 'accepted', rejected.note), '');
+  assert.equal(noteForVerdict(rejected, 'corrected', rejected.note), '');
+  assert.equal(noteForVerdict(rejected, 'unsure', rejected.note), '');   // so unsure asks for its own reason
+  assert.equal(noteForVerdict(unsure, 'rejected', unsure.note), '');
+  // same verdict again, or a note the reviewer changed: kept
+  assert.equal(noteForVerdict(rejected, 'rejected', rejected.note), rejected.note);
+  assert.equal(noteForVerdict(rejected, 'accepted', 'Checked again: it is right'), 'Checked again: it is right');
+  // an accepted or corrected value's note is a plain note: kept on a new verdict
+  assert.equal(noteForVerdict({ verdict: 'accepted', note: 'Table 2' }, 'corrected', 'Table 2'), 'Table 2');
+  // nothing decided yet
+  assert.equal(noteForVerdict(undefined, 'accepted', ''), '');
+  assert.equal(noteForVerdict(null, 'rejected', 'The value is wrong'), 'The value is wrong');
 });

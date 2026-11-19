@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { displayValue, STATUS_LABEL } from '../lib/values.js';
+import { noteForVerdict } from '../lib/state.js';
 
 export const REJECT_REASONS = ['The value is wrong', 'It belongs to another record', 'It belongs to another column',
   'The paper does not say this', 'The highlight points to the wrong place'];
@@ -48,15 +49,18 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
   const visible = boxes.find((b) => b.bbox && !b.removed);
   const firstPage = visible ? visible.page : null;
 
+  // A reason left from another verdict is not reused (lib/state.js noteForVerdict).
+  const noteFor = (verdict) => noteForVerdict(row && row.decision, verdict, note);
   const askReason = (verdict) => {
-    if (asking === verdict && note.trim()) { onDecide(verdict, { note }); return; }
-    if (note.trim()) { onDecide(verdict, { note }); return; }
+    const reason = noteFor(verdict);
+    if (reason.trim()) { onDecide(verdict, { note: reason }); return; }
+    if (reason !== note) setNote('');   // clear the other verdict's reason so a new one is asked for
     setAsking(verdict); setNoteOpen(true); setError('Add a reason first: pick one below or type it.');
     setTimeout(() => noteRef.current && noteRef.current.focus(), 0);
   };
   const saveCorrection = () => {
     if (!draftV.trim()) { setError('Type the corrected value.'); return; }
-    onDecide('corrected', { value: draftV, unit: draftU, note });
+    onDecide('corrected', { value: draftV, unit: draftU, note: noteFor('corrected') });
   };
   const reasons = asking === 'unsure' ? UNSURE_REASONS : REJECT_REASONS;
   const changed = draftV !== (row.originalValue || '') || draftU !== (row.originalUnit || '');
@@ -67,7 +71,7 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
   if (commands) {
     commands.current = readOnly ? null : {
       editing,
-      accept: () => onDecide('accepted', { note }),
+      accept: () => onDecide('accepted', { note: noteFor('accepted') }),
       reject: () => askReason('rejected'),
       unsure: () => askReason('unsure'),
       note: openNote,
@@ -202,7 +206,7 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
           <div className="decide">
             <button type="button" className="d-reject" onClick={() => askReason('rejected')} aria-keyshortcuts="S">{asking === 'rejected' ? 'Confirm reject' : 'Reject'}{!compact && <kbd>S</kbd>}</button>
             <button type="button" className="d-unsure" onClick={() => askReason('unsure')} aria-keyshortcuts="D">{asking === 'unsure' ? 'Confirm unsure' : 'Unsure'}{!compact && <kbd>D</kbd>}</button>
-            <button type="button" className="d-accept" onClick={() => onDecide('accepted', { note })} aria-keyshortcuts="F">Accept{!compact && <kbd>F</kbd>}</button>
+            <button type="button" className="d-accept" onClick={() => onDecide('accepted', { note: noteFor('accepted') })} aria-keyshortcuts="F">Accept{!compact && <kbd>F</kbd>}</button>
           </div>
           {row.decision && <button type="button" className="btn link" style={{ alignSelf: 'center', fontSize: 13 }} onClick={onClear}>Clear my decision</button>}
         </div>

@@ -9,6 +9,7 @@ import json
 import sys
 import unittest
 import zipfile
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,6 +21,8 @@ from value_review.domain.materialize import values as materialize  # noqa: E402
 from value_review.domain.rules import check_state  # noqa: E402
 from value_review.domain.state import empty_state  # noqa: E402
 from value_review.service.app import create_app  # noqa: E402
+from value_review.storage import StorageError  # noqa: E402
+from value_review.storage.files import AnnotationStore  # noqa: E402
 from value_review.tests.test_ingest import sha  # noqa: E402
 from value_review.tests.test_service import Base  # noqa: E402
 
@@ -149,6 +152,41 @@ class Submit(Versions):  # OP-05, AC-03, AC-05
 
     def test_unknown_paper(self):
         self.assertEqual(self.client.post('/api/v1/papers/8/versions', json={'state': empty_state()}, headers={'If-Match': '0'}).status_code, 404)
+
+
+class StorageFailures(Versions):  # WB-12, WB-13 (11-white-box-coverage-review.md)
+    def save_draft(self):
+        r = self.client.put('/api/v1/papers/7/draft', json={'base_version': 0, 'trigger': 'manual', 'state': three_decisions()})
+        self.assertEqual(r.status_code, 200, r.text)
+        return self.store.draft_path('7').read_bytes()
+
+    def test_wb12_version_write_fails(self):
+        draft = self.save_draft()
+        with mock.patch.object(AnnotationStore, 'write_version', side_effect=StorageError('disk full')):
+            r = self.submit(three_decisions())
+        self.assertEqual((r.status_code, r.json()['error']['code']), (500, 'storage_error'))
+        self.assertEqual(self.files(), [])
+        self.assertEqual(self.store.draft_path('7').read_bytes(), draft)   # the reviewer's work is kept
+        self.assertEqual(self.submit(three_decisions()).status_code, 201)  # and the next try works, as v1
+
+    def test_wb13_prune_fails_after_the_version_is_written(self):
+        self.save_draft()
+        with mock.patch.object(AnnotationStore, 'prune', side_effect=StorageError('locked')), \
+                self.assertLogs('value_review', 'WARNING') as logs:
+            r = self.submit(three_decisions())
+        self.assertEqual((r.status_code, r.json()['n']), (201, 1))
+        self.assertEqual(self.files(), ['v1.json'])
+        self.assertIn('locked', logs.output[0])
+        opened = self.client.get('/api/v1/papers/7').json()
+        self.assertEqual((opened['version'], opened['draft'], opened['draft_stale']), (1, None, False))   # draft still deleted
+
+    def test_wb13_draft_delete_fails_after_the_version_is_written(self):
+        self.save_draft()
+        with mock.patch.object(AnnotationStore, 'delete_draft', side_effect=StorageError('locked')), \
+                self.assertLogs('value_review', 'WARNING'):
+            r = self.submit(three_decisions())
+        self.assertEqual((r.status_code, self.files()), (201, ['v1.json']))
+        self.assertTrue(self.client.get('/api/v1/papers/7').json()['draft_stale'])   # left behind, offered only to discard
 
 
 class Pruning(Versions):  # AC-07, BR-03

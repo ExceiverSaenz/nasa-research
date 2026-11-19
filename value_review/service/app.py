@@ -349,11 +349,13 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 c.store.write_version(paper, version)
             except StorageError as error:
                 raise ApiError(500, 'storage_error', str(error)) from None
-            try:   # the version stands even if these fail; pruning is retried on the next write
-                c.store.prune(paper, settings['keep_versions'])
-                c.store.delete_draft(paper)
-            except StorageError as error:
-                log.warning('after writing v%s of paper %s (%s): %s', n, paper, c.id, error)
+            # The version stands even if these fail; each is tried on its own, so a failed prune (retried on the
+            # next write) never leaves the draft behind as a stale one.
+            for step in (lambda: c.store.prune(paper, settings['keep_versions']), lambda: c.store.delete_draft(paper)):
+                try:
+                    step()
+                except StorageError as error:
+                    log.warning('after writing v%s of paper %s (%s): %s', n, paper, c.id, error)
         response.headers['ETag'] = _etag(n)
         response.headers['Location'] = f'{API}/sources/{c.id}/papers/{paper}/versions/{n}'
         return {'n': n, 'at': version['at'], 'by': version['by'], 'note': note, 'counts': version['counts']}
