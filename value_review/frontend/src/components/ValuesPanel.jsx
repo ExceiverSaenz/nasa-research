@@ -1,0 +1,101 @@
+import React, { useCallback, useRef, useState } from 'react';
+import { displayValue, STATUS_LABEL } from '../lib/values.js';
+
+// Left panel (canvas Review.dc.html, "Browse values"): mode, navigator, filters and the value list.
+export default function ValuesPanel({ mode, setMode, items, currentId, onPick, sub, status, setStatus, statusCounts,
+  onlyCheck, setOnlyCheck, anyFilter, clearFilters, values, selectedId, onSelect, labels, recordLabel,
+  editable, canEditRecord, recordIsAdded, onEditRecord, onNewRecord, onRemoveRecord, onAddValue,
+  bulkCount = 0, onBulk, undo, onUndo }) {
+  const [menu, setMenu] = useState(false);
+  const kind = mode === 'record' ? 'record' : 'column';
+  const act = (fn) => () => { setMenu(false); fn(); };
+  const idx = items.findIndex((i) => i.id === currentId);
+  const step = (d) => { if (items.length) onPick(items[(idx + d + items.length) % items.length].id); };
+  const selectRef = useRef(onSelect);
+  selectRef.current = onSelect;
+  const pick = useCallback((id) => selectRef.current(id), []);
+
+  return (
+    <section className="panel" aria-label="Browse values">
+      <div className="panel-pad">
+        <div className="seg" role="group" aria-label="Browse by">
+          <button type="button" aria-pressed={mode === 'record'} onClick={() => setMode('record')}>By record</button>
+          <button type="button" aria-pressed={mode === 'value'} onClick={() => setMode('value')}>By value</button>
+        </div>
+        <div className="row-between" style={{ position: 'relative' }}>
+          <h2 style={{ fontSize: 16 }}>{mode === 'record' ? 'Record' : 'Column'}</h2>
+          {editable && mode === 'record' && (
+            <button type="button" className="icon-btn" style={{ width: 32, height: 32, border: 0 }} aria-haspopup="menu" aria-expanded={menu}
+              aria-label="Record actions" onClick={() => setMenu((m) => !m)}>⋯</button>
+          )}
+          {menu && (
+            <div className="menu" role="menu" aria-label="Record actions" style={{ right: 0, top: 36 }}>
+              <button type="button" role="menuitem" disabled={!canEditRecord} onClick={act(onEditRecord)}>Edit record</button>
+              <button type="button" role="menuitem" onClick={act(onNewRecord)}>New record</button>
+              {recordIsAdded && <button type="button" role="menuitem" style={{ color: 'var(--reject)' }} onClick={act(onRemoveRecord)}>Remove record</button>}
+            </div>
+          )}
+        </div>
+        <div className="nav3">
+          <button type="button" className="icon-btn" aria-label={`Previous ${kind}`} title={`Previous ${kind}`} onClick={() => step(-1)}>‹</button>
+          <label className="sr-only" htmlFor="scope-pick">{mode === 'record' ? 'Record' : 'Column'}</label>
+          <select id="scope-pick" value={currentId || ''} onChange={(e) => onPick(e.target.value)}>
+            {items.map((i) => <option key={i.id} value={i.id}>{i.label} ({i.done}/{i.total})</option>)}
+          </select>
+          <button type="button" className="icon-btn" aria-label={`Next ${kind}`} title={`Next ${kind}`} onClick={() => step(1)}>›</button>
+        </div>
+        <span className="sub">{sub}</span>
+      </div>
+      <div className="panel-pad">
+        <div className="row-between">
+          <h2 style={{ fontSize: 16 }}>Values <span className="muted">{values.length}</span></h2>
+          {editable && <button type="button" className="btn" style={{ height: 34, borderColor: 'var(--navy)', color: 'var(--navy)', fontWeight: 600 }} onClick={onAddValue}>+ Add value</button>}
+        </div>
+        <label className="sr-only" htmlFor="status-sel">Filter by status</label>
+        <div className="field">
+          <select id="status-sel" value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="any">Any status ({statusCounts.total})</option>
+            {Object.keys(STATUS_LABEL).map((s) => <option key={s} value={s}>{STATUS_LABEL[s]} ({statusCounts[s]})</option>)}
+          </select>
+        </div>
+        <div className="row-between">
+          <label className="check-row"><input type="checkbox" checked={onlyCheck} onChange={(e) => setOnlyCheck(e.target.checked)} /> Needs a check only</label>
+          {anyFilter && <button type="button" className="btn link" onClick={clearFilters}>Clear filters</button>}
+        </div>
+      </div>
+      {undo && (
+        <div role="status" style={{ margin: '8px 16px', padding: '4px 4px 4px 12px', borderRadius: 6, background: 'var(--accept-bg)', color: 'var(--accept-ink)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 600, fontSize: 13 }}>Accepted {undo.count} value{undo.count === 1 ? '' : 's'}.</span>
+          <button type="button" className="btn link" style={{ color: 'var(--accept-ink)', fontWeight: 700 }} onClick={onUndo}>Undo</button>
+        </div>
+      )}
+      <div className="values">
+        {values.length === 0 && <div className="empty">No values here with these filters.{editable ? ' If the model missed one, use + Add value.' : ''}</div>}
+        {values.map((v) => (
+          <ValueRow key={v.id} id={v.id} current={v.id === selectedId} onPick={pick} status={v.status}
+            name={labels[v.featureId] || v.featureId} value={displayValue(v.value, v.unit)}
+            side={mode === 'value' ? v.recordIds.map(recordLabel).join(', ') || 'Unassigned' : ''}
+            tag={v.status !== 'pending' ? STATUS_LABEL[v.status] : v.origin === 'reviewer' ? 'Added' : v.needsCheck ? 'Check' : ''} />
+        ))}
+      </div>
+      {editable && bulkCount > 0 && (
+        <div style={{ borderTop: '1px solid var(--line-3)', padding: '12px 16px', flex: 'none' }}>
+          <button type="button" className="btn" style={{ background: '#F6F8FB', fontWeight: 600 }} onClick={onBulk}>Accept {bulkCount} pending</button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+// One row of the value list. It only gets text and a stable callback, so a decision re-renders the rows whose text
+// changed instead of the whole list (13-performance-report.md, B-1).
+const ValueRow = React.memo(function ValueRow({ id, current, onPick, status, name, value, side, tag }) {
+  return (
+    <button type="button" className="value-row" aria-current={current} onClick={() => onPick(id)}>
+      <span className="name" title={name}>{name}</span>
+      <span className="side">{side}</span>
+      <span className="val" title={value}>{value}</span>
+      <span className={`side tag-${status}`}>{tag}</span>
+    </button>
+  );
+});

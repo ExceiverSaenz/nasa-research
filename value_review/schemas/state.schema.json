@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/state.schema.json",
+  "title": "Working copy of one paper (overlay on the immutable original)",
+  "description": "Sent in draft and submit requests and stored inside drafts and versions. Ids refer to the original paper (observation_id, record_id, evidence_id) or to items the reviewer added (prefix 'u_').",
+  "type": "object",
+  "required": ["schema", "decisions", "column_moves", "record_moves", "record_edits", "added_records", "added_values", "boxes"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-state/1" },
+    "decisions": {
+      "type": "object",
+      "description": "Observation id -> the reviewer's decision. A missing key means pending.",
+      "additionalProperties": { "$ref": "#/$defs/decision" }
+    },
+    "column_moves": {
+      "type": "object",
+      "description": "Observation id -> the column (feature) the reviewer assigned.",
+      "additionalProperties": {
+        "type": "object", "required": ["feature_id", "by", "at"], "additionalProperties": false,
+        "properties": { "feature_id": { "$ref": "#/$defs/id" }, "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" } }
+      }
+    },
+    "record_moves": {
+      "type": "object",
+      "description": "Observation id -> the record(s) the reviewer assigned.",
+      "additionalProperties": {
+        "type": "object", "required": ["record_ids", "by", "at"], "additionalProperties": false,
+        "properties": {
+          "record_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+          "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" }
+        }
+      }
+    },
+    "record_edits": {
+      "type": "object",
+      "description": "Record id (model record) -> new name and conditions. The original label is kept in the original file.",
+      "additionalProperties": {
+        "type": "object", "required": ["label", "summary", "by", "at"], "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "summary": { "type": "string", "maxLength": 2000 },
+          "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" }
+        }
+      }
+    },
+    "added_records": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["record_id", "label", "summary", "by", "at"], "additionalProperties": false,
+        "properties": {
+          "record_id": { "$ref": "#/$defs/userId" },
+          "label": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "summary": { "type": "string", "maxLength": 2000 },
+          "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" }
+        }
+      }
+    },
+    "added_values": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["observation_id", "record_ids", "feature_id", "value", "unit", "note", "by", "at"], "additionalProperties": false,
+        "properties": {
+          "observation_id": { "$ref": "#/$defs/userId" },
+          "record_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+          "feature_id": { "$ref": "#/$defs/id" },
+          "value": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "unit": { "type": "string", "maxLength": 100 },
+          "note": { "type": "string", "maxLength": 2000 },
+          "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" }
+        }
+      }
+    },
+    "boxes": {
+      "type": "object",
+      "description": "Observation id -> highlight edits. Removed and redrawn refer to the model's evidence ids.",
+      "additionalProperties": {
+        "type": "object", "required": ["removed", "redrawn", "added"], "additionalProperties": false,
+        "properties": {
+          "removed": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
+          "redrawn": { "type": "object", "additionalProperties": { "$ref": "#/$defs/placedBox" } },
+          "added": { "type": "array", "items": { "$ref": "#/$defs/placedBox" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9_.:-]{1,80}$" },
+    "userId": { "type": "string", "pattern": "^u_[A-Za-z0-9_-]{1,40}$" },
+    "by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "at": { "type": "string", "format": "date-time" },
+    "bbox": {
+      "description": "[x_min, y_min, x_max, y_max], normalized 0-1, origin top-left of the displayed page (same as the LLM output).",
+      "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "number", "minimum": 0, "maximum": 1 }
+    },
+    "placedBox": {
+      "type": "object", "required": ["page", "bbox", "by", "at"], "additionalProperties": false,
+      "properties": { "page": { "type": "integer", "minimum": 1 }, "bbox": { "$ref": "#/$defs/bbox" }, "by": { "$ref": "#/$defs/by" }, "at": { "$ref": "#/$defs/at" } }
+    },
+    "decision": {
+      "type": "object", "required": ["verdict", "note", "by", "at"], "additionalProperties": false,
+      "properties": {
+        "verdict": { "enum": ["accepted", "corrected", "rejected", "unsure"] },
+        "value": { "type": "string", "maxLength": 500, "description": "Corrected value as typed, symbols kept. Required when verdict is corrected." },
+        "unit": { "type": "string", "maxLength": 100 },
+        "note": { "type": "string", "maxLength": 2000, "description": "Reason or note. Must be non-empty (after trimming) when verdict is rejected or unsure (BR-04); checked by the service." },
+        "by": { "$ref": "#/$defs/by" },
+        "at": { "$ref": "#/$defs/at" }
+      },
+      "allOf": [ { "if": { "properties": { "verdict": { "const": "corrected" } } }, "then": { "required": ["value"] } } ]
+    }
+  }
+}

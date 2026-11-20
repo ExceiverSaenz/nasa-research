@@ -1,0 +1,9 @@
+# OQ-06: annotations/*.review.json are committed; everything else generated is ignored.
+originals/
+.cache/
+annotations/*.draft.json
+annotations/_bug_reports/
+annotations/*.lock
+annotations/*.tmp
+__pycache__/
+frontend/node_modules/

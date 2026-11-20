@@ -1,0 +1,11 @@
+# Only the value_review code goes into the image: no data, no PDFs, no LLM results, no front-end sources.
+*
+!value_review/
+value_review/originals/
+value_review/annotations/
+value_review/cache/
+value_review/sources/
+value_review/review-data/
+value_review/frontend/
+value_review/.env
+**/__pycache__/

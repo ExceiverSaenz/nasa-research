@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/export.schema.json",
+  "title": "JSON export of one version: the LLM output schema plus the expert review",
+  "description": "Records, evidence and observations keep every field of the LLM output (extraction_prompt.md, 'Output contract'), so the extra properties are allowed; the review adds 'review' objects and reviewer-made items with origin 'reviewer'.",
+  "type": "object",
+  "required": ["schema", "paper", "version", "at", "by", "source", "records", "evidence", "observations"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-export/1" },
+    "paper": { "type": "string", "pattern": "^[0-9]{1,4}$" },
+    "version": { "type": "integer", "minimum": 1 },
+    "at": { "type": "string", "format": "date-time" },
+    "by": { "type": "string" },
+    "source": { "$ref": "version.schema.json#/$defs/source" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["record_id", "source_label", "condition_summary", "origin"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "source_label": { "type": "string", "description": "Effective name (reviewer edit applied)." },
+          "condition_summary": { "type": ["string", "null"] },
+          "origin": { "enum": ["model", "reviewer"] },
+          "model_label": { "type": ["string", "null"], "description": "Model's name when the reviewer edited it." },
+          "model_condition_summary": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["evidence_id", "page_number", "bbox", "origin", "removed"],
+        "properties": {
+          "evidence_id": { "type": "string" },
+          "page_number": { "type": "integer", "minimum": 1 },
+          "bbox": { "oneOf": [ { "type": "null" }, { "$ref": "state.schema.json#/$defs/bbox" } ] },
+          "model_bbox": { "oneOf": [ { "type": "null" }, { "$ref": "state.schema.json#/$defs/bbox" } ] },
+          "origin": { "enum": ["model", "reviewer"] },
+          "removed": { "type": "boolean" },
+          "observation_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["observation_id", "feature_id", "record_ids", "value_as_reported", "unit_as_reported", "review"],
+        "properties": {
+          "observation_id": { "type": "string" },
+          "feature_id": { "type": "string" },
+          "record_ids": { "type": "array", "items": { "type": "string" } },
+          "value_as_reported": { "type": ["string", "null"], "description": "Model's value, unchanged." },
+          "unit_as_reported": { "type": ["string", "null"] },
+          "review": {
+            "type": "object",
+            "required": ["status", "value", "unit", "feature_id", "record_ids", "note", "by", "at", "origin", "needs_check"],
+            "additionalProperties": false,
+            "properties": {
+              "status": { "enum": ["pending", "accepted", "corrected", "rejected", "unsure"] },
+              "value": { "type": ["string", "null"], "description": "Effective value: the correction if any, else the model's." },
+              "unit": { "type": ["string", "null"] },
+              "feature_id": { "type": "string", "description": "Effective column." },
+              "record_ids": { "type": "array", "items": { "type": "string" }, "description": "Effective records." },
+              "note": { "type": "string" },
+              "by": { "type": ["string", "null"] },
+              "at": { "type": ["string", "null"], "format": "date-time" },
+              "origin": { "enum": ["model", "reviewer"] },
+              "needs_check": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
