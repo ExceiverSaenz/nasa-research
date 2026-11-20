@@ -61,19 +61,36 @@ export function browseRecords(original, state, rows) {
   const ids = original.records.map((r) => r.record_id).concat(state.added_records.map((r) => r.record_id));
   if (rows.some((r) => r.scopeRecordIds.includes(UNASSIGNED))) ids.push(UNASSIGNED);
   const added = new Set(state.added_records.map((r) => r.record_id));
+  const tally = countBy(rows, (r) => r.scopeRecordIds);   // one pass over the values (13-performance-report.md, B-1)
   return ids.map((id) => {
-    const mine = rows.filter((r) => r.scopeRecordIds.includes(id));
-    return { id, label: id === UNASSIGNED ? 'Unassigned' : labels[id] || id, total: mine.length, done: mine.filter((r) => r.status !== 'pending').length };
+    const t = tally.get(id) || { total: 0, done: 0 };
+    return { id, label: id === UNASSIGNED ? 'Unassigned' : labels[id] || id, total: t.total, done: t.done };
   }).filter((r) => r.total > 0 || added.has(r.id));   // a record the reviewer just added shows even while empty
+}
+
+// {key -> {total, done}} in one pass; ``keysOf(row)`` gives the keys a row counts under (each at most once).
+function countBy(rows, keysOf) {
+  const out = new Map();
+  for (const r of rows) {
+    for (const k of new Set(keysOf(r))) {
+      const t = out.get(k) || { total: 0, done: 0 };
+      t.total += 1;
+      if (r.status !== 'pending') t.done += 1;
+      out.set(k, t);
+    }
+  }
+  return out;
 }
 
 export function browseFeatures(original, rows) {
   const labels = featureLabels(original);
   const order = original.features.map((f) => f.feature_id);
-  rows.forEach((r) => { if (!order.includes(r.featureId)) order.push(r.featureId); });
+  const known = new Set(order);
+  rows.forEach((r) => { if (!known.has(r.featureId)) { known.add(r.featureId); order.push(r.featureId); } });
+  const tally = countBy(rows, (r) => [r.featureId]);
   return order.map((id) => {
-    const mine = rows.filter((r) => r.featureId === id);
-    return { id, label: labels[id] || id, total: mine.length, done: mine.filter((r) => r.status !== 'pending').length };
+    const t = tally.get(id) || { total: 0, done: 0 };
+    return { id, label: labels[id] || id, total: t.total, done: t.done };
   }).filter((f) => f.total > 0);
 }
 

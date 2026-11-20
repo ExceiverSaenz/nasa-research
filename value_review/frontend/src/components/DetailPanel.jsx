@@ -17,7 +17,9 @@ const INFO_TEXT = {
   'source:not_explicitly_reported': 'The paper does not state this value directly.',
 };
 const codeText = (c, table) => table[c] || (c.startsWith('assignment:') ? 'The model is unsure which record this value belongs to.' : c.replace(/^source:/, '').replace(/_/g, ' '));
-const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+// One formatter, made once (13-performance-report.md, B-1); same output as toLocaleString with these options.
+const WHEN = new Intl.DateTimeFormat([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+const when = (iso) => WHEN.format(new Date(iso));
 
 // Detail panel (canvas Review.dc.html, "Value detail"): value, evidence, decision. AC-03, AC-04.
 export default function DetailPanel({ row, index, total, onPrev, onNext, label, recordText, recordSummary, readOnly,

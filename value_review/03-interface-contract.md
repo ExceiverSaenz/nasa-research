@@ -122,7 +122,7 @@
 
 **Interface** · `GET /papers/{n}/versions/{k}`
 
-- **Output** · `200` the version file. **Errors** · 404 `version_not_found` (pruned or never written); 500 `storage_error` when the file exists but cannot be read (it is left as it is). OP-06 lists only readable versions.
+- **Output** · `200` the version file. **Errors** · 404 `version_not_found` (pruned or never written); 500 `storage_error` when the file exists but cannot be read (it is left as it is). OP-06 lists the versions whose own fields (number, time, author, note, source, counts) are readable and valid; their state and values are checked when the version is read (OP-07), so a version damaged inside is listed but reading it gives the 500.
 
 ## OP-08 · Restore a version
 

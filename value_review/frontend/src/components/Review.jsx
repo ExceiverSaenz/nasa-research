@@ -16,7 +16,9 @@ import PageViewer from './PageViewer.jsx';
 import SummaryModal from './SummaryModal.jsx';
 import ValuesPanel from './ValuesPanel.jsx';
 
-const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+// One formatter, made once (13-performance-report.md, B-1); same output as toLocaleString with these options.
+const WHEN = new Intl.DateTimeFormat([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+const when = (iso) => WHEN.format(new Date(iso));
 
 // Review of one paper (canvas Review.dc.html): review, drafts, finish and submit.
 export default function Review({ paperId, sourceId = null, guard }) {

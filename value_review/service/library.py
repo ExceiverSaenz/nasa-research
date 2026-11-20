@@ -38,6 +38,7 @@ class Library:
         self._hashes = {}           # path -> ((size, mtime_ns), sha256)
         self._lock = threading.Lock()
         self._render_lock = threading.Lock()   # pdfium is not thread-safe
+        self._waiting = 0                       # reviewer renders waiting for the lock
 
     # --- originals -------------------------------------------------------------
     def papers(self):
@@ -99,7 +100,10 @@ class Library:
         return out
 
     # --- page images (OP-03) ---------------------------------------------------
-    def page_png(self, paper, page, width):
+    def page_png(self, paper, page, width, prefetch=False):
+        """The page as PNG. ``prefetch`` (a page the client fetches ahead) yields to the reviewer: when it is not cached
+        and a render is running or a reviewer's request is waiting, it returns None instead of queueing ahead of them
+        (13-performance-report.md, B-4)."""
         original = self.original(paper)
         pages = {p['number']: p for p in original['pages']}
         if page not in pages:
@@ -112,11 +116,22 @@ class Library:
         target = self.cache / 'pages' / str(paper) / f'{sha[:16]}-{page}-{width}.png'
         if target.is_file():
             return target.read_bytes()
-        with self._render_lock:
+        if prefetch and (self._render_lock.locked() or self._waiting):
+            return None
+        with self._lock:
+            self._waiting += 0 if prefetch else 1
+        try:
+            self._render_lock.acquire()
+        finally:
+            with self._lock:
+                self._waiting -= 0 if prefetch else 1
+        try:
             if target.is_file():
                 return target.read_bytes()
             data = self._render(Path(self.paths()[1]) / original['source']['pdf_file'], page, width / pages[page]['width_pt'])
             atomic_write_bytes(target, data)
+        finally:
+            self._render_lock.release()
         return data
 
     @staticmethod
@@ -132,5 +147,6 @@ class Library:
         finally:
             doc.close()
         buf = io.BytesIO()
-        image.convert('RGB').save(buf, format='PNG', optimize=False)
+        # compress_level 3: 22-42 % faster to encode than the default 6 for 1.5 % more bytes (13-performance-report.md, B-4)
+        image.convert('RGB').save(buf, format='PNG', compress_level=3)
         return buf.getvalue()

@@ -3,7 +3,8 @@ import { api } from '../lib/api.js';
 import { STATUS_LABEL } from '../lib/values.js';
 import { compareVersions, describeSide } from '../lib/versions.js';
 
-const when = (iso) => new Date(iso).toLocaleString([], { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const WHEN = new Intl.DateTimeFormat([], { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const when = (iso) => WHEN.format(new Date(iso));
 const countsText = (c) => [['accepted', 'accepted'], ['corrected', 'corrected'], ['rejected', 'rejected'], ['unsure', 'unsure']]
   .filter(([k]) => c[k]).map(([k, w]) => `${c[k]} ${w}`).join(' · ') || 'no decisions';
 

@@ -55,7 +55,7 @@ test('decide 150 values in a row', async ({ page, server }, testInfo) => {
   }
   const r = await stop();
   const heap1 = (await metrics(page, true)).heapMB;
-  const reviewed = (await page.locator('header').innerText()).match(/(\d+) \/ (\d+) values/)[1];
+  const reviewed = (await page.locator('header').innerText()).match(/(\d+) (?:\/|of) (\d+)/)[1];   // desktop "3 / 414 values", tablet "3 of 414 reviewed"
   record(testInfo, `decide ${count} values`, { reviewed: Number(reviewed), latency: latency(r.slowEvents, count), ...r,
     slowEvents: undefined, heapAfterGcMB: { before: +heap0.toFixed(1), after: +heap1.toFixed(1) } });
 });

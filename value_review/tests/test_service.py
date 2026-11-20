@@ -177,6 +177,21 @@ class PageImages(Base):  # OP-03
         self.assertTrue(any(f.name.endswith('-2-1200.png') for f in (self.data / 'cache' / 'pages' / '7').glob('*.png')))
         self.assertEqual(self.client.get('/api/v1/papers/7/pages/1/image?w=100').status_code, 400)
 
+    def test_prefetch_yields_to_the_reviewer(self):  # B-4 of 13-performance-report.md
+        library = self.client.app.state.source().library
+        url = '/api/v1/papers/7/pages/2/image?w=800&prefetch=true'
+        library._render_lock.acquire()   # a reviewer's page is being rendered
+        try:
+            r = self.client.get(url)
+        finally:
+            library._render_lock.release()
+        self.assertEqual((r.status_code, r.content), (204, b''))
+        self.assertFalse(any((self.data / 'cache').rglob('*-2-800.png')))
+        r = self.client.get(url)   # free: rendered into the cache
+        self.assertEqual((r.status_code, r.content[:len(PNG)]), (200, PNG))
+        self.assertTrue(any((self.data / 'cache').rglob('*-2-800.png')))
+        self.assertEqual(self.client.get('/api/v1/papers/7/pages/2/image?w=800').content, r.content)   # the reviewer gets it from the cache
+
     def test_page_out_of_range(self):
         r = self.client.get('/api/v1/papers/7/pages/3/image')
         self.assertEqual((r.status_code, r.json()['error']['code']), (404, 'page_not_found'))

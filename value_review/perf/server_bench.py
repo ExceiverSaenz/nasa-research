@@ -157,8 +157,8 @@ def run_bench(data, runs):
         out = {'idle_rss_mb': round(server.memory_info().rss / 2 ** 20, 1)}
         papers = json.loads(c.call('GET', '/papers')[1])
         big = max(papers, key=lambda p: p['values'])
-        out['papers'], out['largest'] = len(papers), {'paper': big['paper'], 'values': big['values'], 'pages': big['pages']}
-        pid = big['paper']
+        out['papers'], out['largest'] = len(papers), {'paper': big['paper'], 'values': big['values'], 'pages': big['pages'], 'versions': big['version']}
+        pid, base = big['paper'], big['version']
         results = {}
 
         def scenario(name, fn, n=runs):
@@ -186,15 +186,15 @@ def run_bench(data, runs):
 
         state = full_state(original)
         scenario('save draft (every value decided)', lambda i: c.call('PUT', f'/papers/{pid}/draft',
-                                                                     {'base_version': 0, 'trigger': 'auto', 'state': state})[0])
+                                                                     {'base_version': base, 'trigger': 'auto', 'state': state})[0])
         c.call('DELETE', f'/papers/{pid}/draft')
         submits = max(5, runs // 3)
         scenario('submit (full snapshot)', lambda i: c.call('POST', f'/papers/{pid}/versions', {'state': full_state(original, i)},
-                                                           {'If-Match': f'"{i}"'})[0], n=submits)
+                                                           {'If-Match': f'"{base + i}"'})[0], n=submits)
         scenario('version list', lambda i: c.call('GET', f'/papers/{pid}/versions')[0])
         scenario('list papers (after versions)', lambda i: c.call('GET', '/papers')[0])
-        scenario('export csv', lambda i: c.call('GET', f'/papers/{pid}/versions/{submits}/export.csv')[0], n=10)
-        scenario('export json', lambda i: c.call('GET', f'/papers/{pid}/versions/{submits}/export.json')[0], n=10)
+        scenario('export csv', lambda i: c.call('GET', f'/papers/{pid}/versions/{base + submits}/export.csv')[0], n=10)
+        scenario('export json', lambda i: c.call('GET', f'/papers/{pid}/versions/{base + submits}/export.json')[0], n=10)
         scenario('export latest.zip', lambda i: c.call('GET', '/export/latest.zip')[0], n=5)
         scenario('load papers again', lambda i: c.call('POST', '/ingest')[0], n=5)
 

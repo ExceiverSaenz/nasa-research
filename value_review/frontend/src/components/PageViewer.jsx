@@ -36,14 +36,41 @@ export default function PageViewer({ paperId, page, pageCount, aspect, onPage, z
   }, [onZoom]);
 
   // Bring the value's box into view when the value or page changes, and again once the image has loaded.
+  // Sizes are read before anything is written (no forced layout), and nothing moves when the box is already in view
+  // (13-performance-report.md, B-1).
   const scrollToMain = () => {
     const el = stage.current;
     if (!el || !main) return;
-    const [x0, y0, x1] = main.bbox;
-    el.scrollTop = Math.max(0, y0 * sheetW * aspect - 120);
-    el.scrollLeft = Math.max(0, ((x0 + x1) / 2) * sheetW - el.clientWidth / 2);
+    const [x0, y0, x1, y1] = main.bbox;
+    const viewW = el.clientWidth, viewH = el.clientHeight, top = el.scrollTop, left = el.scrollLeft;
+    const pageH = sheetW * aspect;
+    if (y0 * pageH >= top && y1 * pageH <= top + viewH && x0 * sheetW >= left && x1 * sheetW <= left + viewW) return;
+    el.scrollTop = Math.max(0, y0 * pageH - 120);
+    el.scrollLeft = Math.max(0, ((x0 + x1) / 2) * sheetW - viewW / 2);
   };
   useEffect(scrollToMain, [main && main.key, page, sheetW]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Once the page is drawn, ask the service to render the next page at the same width into its cache, so turning
+  // the page is instant (13-performance-report.md, B-4). Each is asked at most once per page view.
+  // Only after the reviewer has stayed 400 ms on the same page and zoom: the service renders one page at a time, so
+  // preloading during quick zooms or page turns would make the page the reviewer asked for wait behind it.
+  const preloaded = useRef(new Set());
+  const showing = useRef('');
+  showing.current = src;
+  const onImageLoad = () => {
+    scrollToMain();
+    const width = imageWidth(sheetW, ratio);
+    const at = src;
+    setTimeout(() => {
+      if (showing.current !== at) return;   // moved on meanwhile
+      const next = page + 1;   // the usual direction; the service renders it into its cache if it is free
+      if (next > pageCount) return;
+      const url = `${api.pageUrl(paperId, next, width)}&prefetch=1`;
+      if (preloaded.current.has(url)) return;
+      preloaded.current.add(url);
+      fetch(url, { priority: 'low' }).catch(() => {});
+    }, 400);
+  };
 
   // Drawing a box: drag on the page; Escape cancels.
   useEffect(() => {
@@ -105,7 +132,7 @@ export default function PageViewer({ paperId, page, pageCount, aspect, onPage, z
       )}
       <div className="stage" ref={stage}>
         <div className="sheet" ref={sheet} style={{ width: sheetW }}>
-          <img src={src} alt={`Page ${page} of the paper`} draggable={false} onLoad={scrollToMain} style={{ aspectRatio: `1 / ${aspect}` }} />
+          <img src={src} alt={`Page ${page} of the paper`} draggable={false} onLoad={onImageLoad} style={{ aspectRatio: `1 / ${aspect}` }} />
           {shown.map((b) => (
             <button type="button" key={b.key} className={`hl ${b.kind} ${b.key === selectedKey ? 'sel' : ''}`} style={boxStyle(b.bbox)}
               aria-label={describe(b)} aria-pressed={b.key === selectedKey} onClick={() => onSelectBox(b.key)} disabled={!!drawing} />

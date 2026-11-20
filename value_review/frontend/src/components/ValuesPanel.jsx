@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { displayValue, STATUS_LABEL } from '../lib/values.js';
 
 // Left panel (canvas Review.dc.html, "Browse values"): mode, navigator, filters and the value list.
@@ -11,6 +11,10 @@ export default function ValuesPanel({ mode, setMode, items, currentId, onPick, s
   const act = (fn) => () => { setMenu(false); fn(); };
   const idx = items.findIndex((i) => i.id === currentId);
   const step = (d) => { if (items.length) onPick(items[(idx + d + items.length) % items.length].id); };
+  const selectRef = useRef(onSelect);
+  selectRef.current = onSelect;
+  const pick = useCallback((id) => selectRef.current(id), []);
+
   return (
     <section className="panel" aria-label="Browse values">
       <div className="panel-pad">
@@ -67,17 +71,12 @@ export default function ValuesPanel({ mode, setMode, items, currentId, onPick, s
       )}
       <div className="values">
         {values.length === 0 && <div className="empty">No values here with these filters.{editable ? ' If the model missed one, use + Add value.' : ''}</div>}
-        {values.map((v) => {
-          const tag = v.status !== 'pending' ? STATUS_LABEL[v.status] : v.origin === 'reviewer' ? 'Added' : v.needsCheck ? 'Check' : '';
-          return (
-            <button type="button" key={v.id} className="value-row" aria-current={v.id === selectedId} onClick={() => onSelect(v.id)}>
-              <span className="name" title={labels[v.featureId] || v.featureId}>{labels[v.featureId] || v.featureId}</span>
-              <span className="side">{mode === 'value' ? v.recordIds.map(recordLabel).join(', ') || 'Unassigned' : ''}</span>
-              <span className="val" title={displayValue(v.value, v.unit)}>{displayValue(v.value, v.unit)}</span>
-              <span className={`side tag-${v.status}`}>{tag}</span>
-            </button>
-          );
-        })}
+        {values.map((v) => (
+          <ValueRow key={v.id} id={v.id} current={v.id === selectedId} onPick={pick} status={v.status}
+            name={labels[v.featureId] || v.featureId} value={displayValue(v.value, v.unit)}
+            side={mode === 'value' ? v.recordIds.map(recordLabel).join(', ') || 'Unassigned' : ''}
+            tag={v.status !== 'pending' ? STATUS_LABEL[v.status] : v.origin === 'reviewer' ? 'Added' : v.needsCheck ? 'Check' : ''} />
+        ))}
       </div>
       {editable && bulkCount > 0 && (
         <div style={{ borderTop: '1px solid var(--line-3)', padding: '12px 16px', flex: 'none' }}>
@@ -87,3 +86,16 @@ export default function ValuesPanel({ mode, setMode, items, currentId, onPick, s
     </section>
   );
 }
+
+// One row of the value list. It only gets text and a stable callback, so a decision re-renders the rows whose text
+// changed instead of the whole list (13-performance-report.md, B-1).
+const ValueRow = React.memo(function ValueRow({ id, current, onPick, status, name, value, side, tag }) {
+  return (
+    <button type="button" className="value-row" aria-current={current} onClick={() => onPick(id)}>
+      <span className="name" title={name}>{name}</span>
+      <span className="side">{side}</span>
+      <span className="val" title={value}>{value}</span>
+      <span className={`side tag-${status}`}>{tag}</span>
+    </button>
+  );
+});

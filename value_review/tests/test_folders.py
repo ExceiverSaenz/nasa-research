@@ -108,6 +108,25 @@ class Folders(Base):
         rows = self.client.get('/api/v1/sources/second-run/papers').json()
         self.assertEqual({r['paper']: r['source_problems'] for r in rows}, {'7': ['result_missing'], '9': ['result_missing']})
 
+    def test_loading_again_skips_unchanged_papers(self):  # B-3 of 13-performance-report.md
+        from unittest import mock
+        import os
+        self.add_second()
+        url = '/api/v1/sources/second-run/ingest'
+        self.assertEqual(self.client.post(url).json()['written'], 2)
+        with mock.patch('value_review.ingest.build_original') as build:
+            body = self.client.post(url).json()
+        build.assert_not_called()   # both papers' files are unchanged: nothing is built again
+        self.assertEqual((body['unchanged'], {p['paper']: p['values'] for p in body['papers']}), (2, {'7': 4, '9': 4}))
+        result = self.run2 / '9-pdf_with_feature_guide.json'
+        st = result.stat()
+        os.utime(result, ns=(st.st_atime_ns, st.st_mtime_ns + 10_000_000))   # touched: checked again, still the same content
+        body = self.client.post(url).json()
+        self.assertEqual({p['paper']: p['outcome'] for p in body['papers']}, {'7': 'unchanged', '9': 'unchanged'})
+        result.write_text(result.read_text(encoding='utf-8').replace('710', '711'), encoding='utf-8')   # really changed
+        body = self.client.post(url).json()
+        self.assertEqual({p['paper']: p['outcome'] for p in body['papers']}, {'7': 'unchanged', '9': 'changed'})
+
     def test_wb10_pair_removed_while_in_use(self):  # WB-10: Source.folders after the pair is gone
         from value_review.service.errors import ApiError
         self.add_second()

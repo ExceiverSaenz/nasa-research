@@ -5,12 +5,18 @@ A file that cannot be read (malformed JSON, wrong schema) is reported, never rep
 """
 import json
 import re
+import threading
 from pathlib import Path
 
 from .. import schemas
 from .atomic import StorageError, atomic_write_bytes, reason
 
 VERSION_FILE = re.compile(r'v([1-9][0-9]{0,5})\.json')
+_CACHE = {}            # (path, header) -> ((size, mtime_ns, schema), (data, problem)), see AnnotationStore._read
+_CACHE_MAX = 2000
+_CACHE_LOCK = threading.Lock()
+_EMPTY_STATE = {'schema': 'value-review-state/1', 'decisions': {}, 'column_moves': {}, 'record_moves': {}, 'record_edits': {},
+                'added_records': [], 'added_values': [], 'boxes': {}}
 SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5}
 
 
@@ -41,18 +47,45 @@ class AnnotationStore:
         return self.folder / 'value-review.lock'
 
     # --- reading ---------------------------------------------------------------
-    def _read(self, path, schema):
-        """(data, problem): data is None when the file is missing or unusable."""
+    def _read(self, path, schema, header=False):
+        """(data, problem): data is None when the file is missing or unusable.
+
+        A file is parsed and validated once per process and size/modification time (13-performance-report.md, B-2):
+        versions never change, and a draft or a damaged file that does change gets a new size or time and is read again.
+        Callers must not modify the returned data, which is shared.
+
+        ``header`` checks only a version's own fields (number, time, author, note, source, counts), not its state and
+        values, and returns just those fields: enough to list versions without validating every full snapshot."""
+        try:
+            st = path.stat()
+        except FileNotFoundError:
+            return None, None
+        except OSError as error:
+            return None, f'{path.name}: {type(error).__name__}'
+        key, stamp = (str(path), header), (st.st_size, st.st_mtime_ns, schema)
+        with _CACHE_LOCK:
+            hit = _CACHE.get(key)
+        if hit and hit[0] == stamp:
+            return hit[1]
         try:
             data = json.loads(path.read_text(encoding='utf-8'))
         except FileNotFoundError:
             return None, None
         except (OSError, ValueError) as error:
             return None, f'{path.name}: {type(error).__name__}'
-        errs = schemas.errors(schema, data)
-        if errs:
-            return None, f'{path.name}: {errs[0][0]} {errs[0][1]}'
-        return data, None
+        if header:
+            if not isinstance(data, dict):
+                return None, f'{path.name}: not an object'
+            data = {k: v for k, v in data.items() if k not in ('state', 'values')}
+            errs = schemas.errors(schema, {**data, 'state': _EMPTY_STATE, 'values': []})
+        else:
+            errs = schemas.errors(schema, data)
+        result = (None, f'{path.name}: {errs[0][0]} {errs[0][1]}') if errs else (data, None)
+        with _CACHE_LOCK:
+            if len(_CACHE) >= _CACHE_MAX:
+                _CACHE.pop(next(iter(_CACHE)))   # oldest entry first
+            _CACHE[key] = (stamp, result)
+        return result
 
     def version_numbers(self, paper):
         """Numbers of the version files present, newest first."""
@@ -64,6 +97,10 @@ class AnnotationStore:
 
     def read_version(self, paper, n):
         return self._read(self.version_path(paper, n), 'version')
+
+    def version_header(self, paper, n):
+        """(header, problem) of version n: its fields without state and values, checked against the version schema."""
+        return self._read(self.version_path(paper, n), 'version', header=True)
 
     def latest(self, paper):
         """(version or None, problems): the newest readable version; unreadable ones are reported."""

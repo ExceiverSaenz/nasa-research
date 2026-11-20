@@ -147,6 +147,41 @@ class AnnotationFiles(unittest.TestCase):
         self.assertIsNone(data)
         self.assertTrue(problem.startswith('7.draft.json: '), problem)
 
+    def test_validated_once_but_a_changed_file_is_read_again(self):  # B-2 of 13-performance-report.md
+        path = self.store.version_path('7', 1)
+        self.write(path, self.version(1))
+        with mock.patch('value_review.schemas.errors', wraps=__import__('value_review.schemas', fromlist=['errors']).errors) as check:
+            first = self.store.read_version('7', 1)
+            again = self.store.read_version('7', 1)
+            self.assertEqual(check.call_count, 1)   # the second read comes from the cache
+        self.assertIs(first[0], again[0])
+        bad = self.version(1)
+        bad['by'] = ''   # invalid (minLength), and the file size changes
+        self.write(path, bad)
+        self.assertIsNone(self.store.read_version('7', 1)[0])
+        good = json.dumps(self.version(1))
+        path.write_text(good, encoding='utf-8')
+        self.assertIsNotNone(self.store.read_version('7', 1)[0])
+        st = path.stat()
+        path.write_text(good.replace('"Submitted"', '"Submittex"'), encoding='utf-8')   # same size, new time
+        os.utime(path, ns=(st.st_atime_ns, st.st_mtime_ns + 10_000_000))
+        self.assertEqual(self.store.read_version('7', 1)[0]['note'], 'Submittex')
+
+    def test_version_header_checks_only_the_header(self):  # listing versions without validating full snapshots
+        broken_body = self.version(1)
+        broken_body['values'] = [{'not': 'a value'}]
+        self.write(self.store.version_path('7', 1), broken_body)
+        header, problem = self.store.version_header('7', 1)
+        self.assertIsNone(problem)
+        self.assertEqual((header['n'], header['by'], 'state' in header, 'values' in header), (1, 'Expert reviewer', False, False))
+        self.assertIsNone(self.store.read_version('7', 1)[0])   # opening it still finds the damage
+        broken_header = self.version(2)
+        broken_header['by'] = ''
+        self.write(self.store.version_path('7', 2), broken_header)
+        self.assertIsNone(self.store.version_header('7', 2)[0])
+        self.write(self.store.version_path('7', 3), ['not', 'an', 'object'])
+        self.assertEqual(self.store.version_header('7', 3), (None, 'v3.json: not an object'))
+
     def test_write_version_never_replaces_a_file(self):
         self.store.write_version('7', self.version(1))
         before = self.store.version_path('7', 1).read_bytes()

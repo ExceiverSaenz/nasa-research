@@ -182,7 +182,7 @@ class ConcurrentLoad(Workflow):  # IT-06, WB-02
         self.assertEqual((second.status_code, second.json()['error']['code']), (409, 'ingest_running'))
         self.assertEqual((first['r'].status_code, first['r'].json()['written']), (200, 1))
         originals = self.data / 'sources' / 'model-b' / 'originals'
-        self.assertEqual(sorted(p.name for p in originals.iterdir()), ['7.json'])   # no temporaries, no partial files
+        self.assertEqual(sorted(p.name for p in originals.iterdir()), ['.sources.json', '7.json'])   # no temporaries, no partial files
         again = self.client.post(self.url).json()   # WB-02: the lock is free afterwards
         self.assertEqual((again['written'], again['unchanged']), (0, 1))
 

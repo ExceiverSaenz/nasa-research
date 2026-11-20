@@ -259,12 +259,15 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
 
     # --- OP-03 -----------------------------------------------------------------
     @route('GET', '/papers/{paper}/pages/{page}/image')
-    async def page_image(paper: str, page: int, w: int = Query(WIDTH_DEFAULT, ge=400, le=2400), source: str | None = None):
+    async def page_image(paper: str, page: int, w: int = Query(WIDTH_DEFAULT, ge=400, le=2400), prefetch: bool = False,
+                         source: str | None = None):
         c = ctx(source)
         try:
-            png = await run_in_threadpool(c.library.page_png, paper, page, w)
+            png = await run_in_threadpool(c.library.page_png, paper, page, w, prefetch)
         except StorageError as error:
             raise ApiError(500, 'storage_error', str(error)) from None
+        if png is None:   # a prefetch that yielded to the reviewer: nothing to cache
+            return Response(status_code=204, headers={'Cache-Control': 'no-store'})
         return Response(png, media_type='image/png', headers={'Cache-Control': 'max-age=31536000, immutable'})
 
     # --- OP-04: draft -----------------------------------------------------------
@@ -289,7 +292,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                      'saved_at': clock(), 'state': payload.state}
             if payload.ui:
                 draft['ui'] = payload.ui
-            problems = schemas.errors('draft', draft)
+            # the state was validated above (shape_problems); check the draft's own fields without validating it twice
+            problems = schemas.errors('draft', {**draft, 'state': empty_state()})
             if problems:
                 raise ApiError(400, 'invalid_request', 'The draft does not match the schema',
                                {'pointers': [{'pointer': p, 'message': m} for p, m in problems[:10]]})
@@ -391,7 +395,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         c.library.original(paper)
         out = []
         for n in c.store.version_numbers(paper):
-            data, _problem = c.store.read_version(paper, n)
+            data, _problem = c.store.version_header(paper, n)   # the list needs only the header (13-performance-report.md)
             if data is not None:
                 out.append({'n': data['n'], 'at': data['at'], 'by': data['by'], 'note': data['note'], 'counts': data['counts']})
         return out
