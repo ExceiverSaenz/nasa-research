@@ -1,0 +1,680 @@
+{
+  "schema": "paired-region-preferences/1",
+  "source_run_id": "mineru-nativefix-20261101T034122Z",
+  "source_sha256": "237dc0d66528c3090a76a0ae285c3371cd1636c5dfb7e934866f093e5a53a5e8",
+  "examples": [
+    {
+      "paper": "1.pdf",
+      "paper_sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "page_idx": 0,
+      "negative": {
+        "tool": "heron",
+        "rect": [
+          0.22103637957987055,
+          0.7760400702714901,
+          0.5591911323701333,
+          0.8281269316940467
+        ],
+        "detection_ids": [
+          "d098bd26af4fb04043f560be",
+          "0fc7f9f10acb8f418f966d6f"
+        ],
+        "detections": [
+          {
+            "id": "d098bd26af4fb04043f560be",
+            "ordinal": 10,
+            "raw_label": "footnote",
+            "bbox_normalized": [
+              0.2284886438706342,
+              0.7823183926669034,
+              0.30032941032858457,
+              0.7930701238458807
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+            "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          },
+          {
+            "id": "0fc7f9f10acb8f418f966d6f",
+            "ordinal": 13,
+            "raw_label": "page_footer",
+            "bbox_normalized": [
+              0.2705546659581802,
+              0.807900057705966,
+              0.40603486902573527,
+              0.818691739169034
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+            "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [],
+        "native_descendants": []
+      },
+      "positives": [
+        {
+          "tool": "basic",
+          "rect": [
+            0.21949166826411465,
+            0.7777763074301395,
+            0.5452886726730711,
+            0.8203139017355546
+          ],
+          "detection_ids": [
+            "f6a4e48a23385c0214ef2d87"
+          ],
+          "detections": [
+            {
+              "id": "f6a4e48a23385c0214ef2d87",
+              "ordinal": 54,
+              "raw_label": "footer",
+              "bbox_normalized": [
+                0.224,
+                0.78,
+                0.542,
+                0.821
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/8",
+              "original_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [
+            "f65fa8069cf9235bfc9b1fa7"
+          ],
+          "native_descendants": [
+            {
+              "id": "f65fa8069cf9235bfc9b1fa7",
+              "ordinal": 55,
+              "raw_label": "text",
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/8/content/0",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/8",
+              "localization": "no_own_bbox; native_reference_only"
+            }
+          ]
+        }
+      ],
+      "reasons": [
+        "coverage"
+      ],
+      "note": "leaves text unsegmented",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "ecac961a-6d59-4714-ab18-4352d3c68307",
+      "revision": 1,
+      "created_at": "2026-11-01T09:02:35.240446+00:00",
+      "updated_at": "2026-11-01T09:02:35.240472+00:00",
+      "archived": false,
+      "history": []
+    },
+    {
+      "paper": "1.pdf",
+      "paper_sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "page_idx": 0,
+      "negative": {
+        "tool": "heron",
+        "rect": [
+          0.22103637957987055,
+          0.8315994358156895,
+          0.720966201150394,
+          0.88629061572079
+        ],
+        "detection_ids": [
+          "a5b873aa72c034f06375d0fa",
+          "568060f4df61601378355942"
+        ],
+        "detections": [
+          {
+            "id": "a5b873aa72c034f06375d0fa",
+            "ordinal": 9,
+            "raw_label": "footnote",
+            "bbox_normalized": [
+              0.22805229635799631,
+              0.8376020951704546,
+              0.45609845329733456,
+              0.8483816805752841
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+            "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          },
+          {
+            "id": "568060f4df61601378355942",
+            "ordinal": 12,
+            "raw_label": "page_footer",
+            "bbox_normalized": [
+              0.22768231560202207,
+              0.8620167125355114,
+              0.48814349006204044,
+              0.8737790194424716
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+            "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [],
+        "native_descendants": []
+      },
+      "positives": [
+        {
+          "tool": "basic",
+          "rect": [
+            0.2149979345672446,
+            0.8333356282678228,
+            0.7227916936818586,
+            0.881081919147014
+          ],
+          "detection_ids": [
+            "e660c7e488ff05e9db5e2799"
+          ],
+          "detections": [
+            {
+              "id": "e660c7e488ff05e9db5e2799",
+              "ordinal": 56,
+              "raw_label": "footer",
+              "bbox_normalized": [
+                0.224,
+                0.835,
+                0.706,
+                0.875
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/9",
+              "original_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [
+            "1d47becb0a8bdc63645f7a47"
+          ],
+          "native_descendants": [
+            {
+              "id": "1d47becb0a8bdc63645f7a47",
+              "ordinal": 57,
+              "raw_label": "text",
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/9/content/0",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/9",
+              "localization": "no_own_bbox; native_reference_only"
+            }
+          ]
+        }
+      ],
+      "reasons": [
+        "coverage"
+      ],
+      "note": "leaves text unsegmented",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "ab5d898b-a1d4-4c65-baab-21dffcf4633e",
+      "revision": 1,
+      "created_at": "2026-11-01T09:02:49.899240+00:00",
+      "updated_at": "2026-11-01T09:02:49.899262+00:00",
+      "archived": false,
+      "history": []
+    },
+    {
+      "paper": "1.pdf",
+      "paper_sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "page_idx": 0,
+      "negative": {
+        "tool": "basic",
+        "rect": [
+          0.6962505115369172,
+          0.0910977822110746,
+          0.7850020991816566,
+          0.11366873115396817
+        ],
+        "detection_ids": [
+          "9995a988f934518cd5cc2274"
+        ],
+        "detections": [
+          {
+            "id": "9995a988f934518cd5cc2274",
+            "ordinal": 0,
+            "raw_label": "header",
+            "bbox_normalized": [
+              0.719,
+              0.104,
+              0.771,
+              0.145
+            ],
+            "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/0",
+            "original_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [
+          "23d78e5dbca43cfee722d6c4"
+        ],
+        "native_descendants": [
+          {
+            "id": "23d78e5dbca43cfee722d6c4",
+            "ordinal": 1,
+            "raw_label": "text",
+            "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/0/content/0",
+            "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/0",
+            "localization": "no_own_bbox; native_reference_only"
+          }
+        ]
+      },
+      "positives": [
+        {
+          "tool": "heron",
+          "rect": [
+            0.7093104925912483,
+            0.08936155995459726,
+            0.7812105403025521,
+            0.11193250889749082
+          ],
+          "detection_ids": [
+            "697df0f831a014a5a3ef5dec"
+          ],
+          "detections": [
+            {
+              "id": "697df0f831a014a5a3ef5dec",
+              "ordinal": 2,
+              "raw_label": "picture",
+              "bbox_normalized": [
+                0.7190679572610295,
+                0.10449024547230114,
+                0.7716776769301471,
+                0.14509072043678978
+              ],
+              "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+              "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [],
+          "native_descendants": []
+        }
+      ],
+      "reasons": [
+        "labels"
+      ],
+      "note": "that is not text; it counts more as an image since it is more like a logo",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "a4008d13-d430-4199-9ab9-b2d52f57e56d",
+      "revision": 1,
+      "created_at": "2026-11-01T09:04:42.575372+00:00",
+      "updated_at": "2026-11-01T09:04:42.575393+00:00",
+      "archived": false,
+      "history": []
+    },
+    {
+      "paper": "1.pdf",
+      "paper_sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "page_idx": 0,
+      "negative": {
+        "tool": "basic",
+        "rect": [
+          0.20755512063400108,
+          0.22912795082378612,
+          0.3760707899595669,
+          0.27947860489203735
+        ],
+        "detection_ids": [
+          "4560764c6592109500e64537"
+        ],
+        "detections": [
+          {
+            "id": "4560764c6592109500e64537",
+            "ordinal": 4,
+            "raw_label": "text",
+            "bbox_normalized": [
+              0.225,
+              0.243,
+              0.334,
+              0.262
+            ],
+            "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/2",
+            "original_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [
+          "6caf893b55f1c2395ff4ea2b"
+        ],
+        "native_descendants": [
+          {
+            "id": "6caf893b55f1c2395ff4ea2b",
+            "ordinal": 5,
+            "raw_label": "text",
+            "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/2/content/0",
+            "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/2",
+            "localization": "no_own_bbox; native_reference_only"
+          }
+        ]
+      },
+      "positives": [
+        {
+          "tool": "heron",
+          "rect": [
+            0.2082572568815938,
+            0.2326004251410848,
+            0.3700322870916817,
+            0.28381919033757474
+          ],
+          "detection_ids": [
+            "041654233caf2699af89a3a2",
+            "1c398221cf12d2b2ba3b4b2c"
+          ],
+          "detections": [
+            {
+              "id": "041654233caf2699af89a3a2",
+              "ordinal": 8,
+              "raw_label": "text",
+              "bbox_normalized": [
+                0.22761921602136947,
+                0.24551055908203126,
+                0.3302674416934743,
+                0.2603474842418324
+              ],
+              "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+              "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            },
+            {
+              "id": "1c398221cf12d2b2ba3b4b2c",
+              "ordinal": 11,
+              "raw_label": "section_header",
+              "bbox_normalized": [
+                0.22761921602136947,
+                0.24551055908203126,
+                0.3302674416934743,
+                0.2603474842418324
+              ],
+              "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+              "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [],
+          "native_descendants": []
+        }
+      ],
+      "reasons": [],
+      "note": "it is an author, not a section",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "dce2c69f-0f87-4ef6-893a-10dd8f4f99ee",
+      "revision": 1,
+      "created_at": "2026-11-01T09:05:25.957619+00:00",
+      "updated_at": "2026-11-01T09:05:25.957641+00:00",
+      "archived": false,
+      "history": []
+    },
+    {
+      "paper": "1.pdf",
+      "paper_sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "page_idx": 0,
+      "negative": {
+        "tool": "heron",
+        "rect": [
+          0.7389411359378742,
+          0.1640193852222194,
+          0.8299395904310487,
+          0.2117657059057546
+        ],
+        "detection_ids": [
+          "7d4e568be442f3c47eb6f388"
+        ],
+        "detections": [
+          {
+            "id": "7d4e568be442f3c47eb6f388",
+            "ordinal": 6,
+            "raw_label": "text",
+            "bbox_normalized": [
+              0.7537643612132353,
+              0.17444538463245737,
+              0.8122939883961398,
+              0.20554351806640625
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/1/page-0.json",
+            "original_sha256": "82301ef27e9df393a65a49ed96c28f56e342d2ca1e2e580d7fcb8e87072e6679",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [],
+        "native_descendants": []
+      },
+      "positives": [
+        {
+          "tool": "basic",
+          "rect": [
+            0.7272855816594199,
+            0.15186576981818992,
+            0.8710855228013362,
+            0.218710594931664
+          ],
+          "detection_ids": [
+            "8e1943d4fff771ef7eab011f"
+          ],
+          "detections": [
+            {
+              "id": "8e1943d4fff771ef7eab011f",
+              "ordinal": 53,
+              "raw_label": "page_number",
+              "bbox_normalized": [
+                0.751,
+                0.171,
+                0.816,
+                0.209
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/1/middle.json#/pages/0/blocks/7",
+              "original_sha256": "4f6e0398309f993762e0f8017317aa13ea8ed59ac002c8a81f7c0be4a47d7665",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [],
+          "native_descendants": []
+        }
+      ],
+      "reasons": [
+        "labels"
+      ],
+      "note": "it is a number, not text",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "2875ec00-1a8a-4eeb-9a56-1bacaa9f5675",
+      "revision": 1,
+      "created_at": "2026-11-01T09:06:11.348927+00:00",
+      "updated_at": "2026-11-01T09:06:11.348951+00:00",
+      "archived": false,
+      "history": []
+    },
+    {
+      "paper": "12.pdf",
+      "paper_sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660",
+      "page_idx": 3,
+      "negative": {
+        "tool": "heron",
+        "rect": [
+          0.07835978507928291,
+          0.07494899519758061,
+          0.4558348716403933,
+          0.2089407434659518
+        ],
+        "detection_ids": [
+          "5035f9607ebf0e1ec506ab87",
+          "29a07e5e9895ea92a5259741"
+        ],
+        "detections": [
+          {
+            "id": "5035f9607ebf0e1ec506ab87",
+            "ordinal": 4,
+            "raw_label": "table",
+            "bbox_normalized": [
+              0.08681701143534613,
+              0.10459977407304068,
+              0.4446349138216067,
+              0.194568812225411
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/12/page-3.json",
+            "original_sha256": "6e42c4092c6c72b2a73733f95610522f8573dc9f6ee28659a00e2b4a57998d63",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          },
+          {
+            "id": "29a07e5e9895ea92a5259741",
+            "ordinal": 12,
+            "raw_label": "caption",
+            "bbox_normalized": [
+              0.08716004820227478,
+              0.08255503128985969,
+              0.43248474785321567,
+              0.10305351551427863
+            ],
+            "original_ref": "/content/bbx-7000c89813c1406c937e8a396496c281/results/execute/heron/12/page-3.json",
+            "original_sha256": "6e42c4092c6c72b2a73733f95610522f8573dc9f6ee28659a00e2b4a57998d63",
+            "native_parent_ref": null,
+            "relations": null,
+            "intersection_meaning": "intersects_user_region_not_semantic_membership"
+          }
+        ],
+        "native_descendant_ids": [],
+        "native_descendants": []
+      },
+      "positives": [
+        {
+          "tool": "basic",
+          "rect": [
+            0.07456817798746238,
+            0.07157811850288391,
+            0.47451209695615765,
+            0.21062613841480696
+          ],
+          "detection_ids": [
+            "fd9c4492875af2adc6ddd41c",
+            "564249a41ef913f6734d327d",
+            "4170501d5b587c1ce3be17cf",
+            "f17de90fe647bf213cd534c5"
+          ],
+          "detections": [
+            {
+              "id": "fd9c4492875af2adc6ddd41c",
+              "ordinal": 4,
+              "raw_label": "table",
+              "bbox_normalized": [
+                0.085,
+                0.105,
+                0.445,
+                0.195
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2",
+              "original_sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f",
+              "native_parent_ref": null,
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            },
+            {
+              "id": "564249a41ef913f6734d327d",
+              "ordinal": 5,
+              "raw_label": "table_caption",
+              "bbox_normalized": [
+                0.084,
+                0.081,
+                0.129,
+                0.092
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/0",
+              "original_sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2",
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            },
+            {
+              "id": "4170501d5b587c1ce3be17cf",
+              "ordinal": 7,
+              "raw_label": "table_caption",
+              "bbox_normalized": [
+                0.085,
+                0.092,
+                0.435,
+                0.104
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/1",
+              "original_sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2",
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            },
+            {
+              "id": "f17de90fe647bf213cd534c5",
+              "ordinal": 9,
+              "raw_label": "table_body",
+              "bbox_normalized": [
+                0.085,
+                0.105,
+                0.445,
+                0.195
+              ],
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/2",
+              "original_sha256": "f2d1fb5441c181a21f56cd907c5a902f4fa61019e2ee86d0a893661dbd66e47f",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2",
+              "relations": null,
+              "intersection_meaning": "intersects_user_region_not_semantic_membership"
+            }
+          ],
+          "native_descendant_ids": [
+            "4404d5a92d164fea4f57872f",
+            "74b737b1a7f293bfe57eec04"
+          ],
+          "native_descendants": [
+            {
+              "id": "4404d5a92d164fea4f57872f",
+              "ordinal": 6,
+              "raw_label": "text",
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/0/content/0",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/0",
+              "localization": "no_own_bbox; native_reference_only"
+            },
+            {
+              "id": "74b737b1a7f293bfe57eec04",
+              "ordinal": 8,
+              "raw_label": "text",
+              "original_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/1/content/0",
+              "native_parent_ref": "/content/bbx-71a6437c7ffa438bb5549482d1ebcd22/results/execute/basic/12/middle.json#/pages/3/blocks/2/content/1",
+              "localization": "no_own_bbox; native_reference_only"
+            }
+          ]
+        }
+      ],
+      "reasons": [
+        "segmentation"
+      ],
+      "note": "",
+      "reference_scope": "user_selected_preference_example; not_exhaustive_page_ground_truth",
+      "id": "1c1bbf12-536b-425c-b8e9-5553d47ddc37",
+      "revision": 1,
+      "created_at": "2026-11-01T09:09:45.890381+00:00",
+      "updated_at": "2026-11-01T09:09:45.890404+00:00",
+      "archived": false,
+      "history": []
+    }
+  ]
+}

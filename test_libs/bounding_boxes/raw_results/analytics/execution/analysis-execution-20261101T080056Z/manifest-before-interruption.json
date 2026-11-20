@@ -1,0 +1,49 @@
+{
+  "analysis_id": "auto-20261101T080056Z",
+  "created_utc": "2026-11-01T08:10:54.439703+00:00",
+  "plan_path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\plan_analisis.md",
+  "plan_sha256": "13b762a29fc2223a7390e7e1847656a71a360843101e20050b46e5a3d1975a79",
+  "source_root": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z",
+  "protocol": {
+    "version": "bbox-offline-analysis/1",
+    "iou_threshold": 0.5,
+    "candidate_edges": "all_positive_intersections_same_page",
+    "quantiles": "linear_index_(n-1)*p",
+    "iqr_multiplier": 1.5,
+    "iqr_min_n": 20,
+    "geometry_strata": [
+      "tool",
+      "raw_label",
+      "native_level"
+    ],
+    "review_order": "all_pages_by_paper; diagnostic_alerts_listed_not_quality_ranked",
+    "templates": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ],
+    "label_comparison": "literal_only; cross_schema_candidates_partial_not_equivalences",
+    "human_review": "pending",
+    "accuracy_metrics": "unavailable_without_reference",
+    "new_parsing": false,
+    "network": false,
+    "new_renders": false
+  },
+  "status": "running",
+  "authorization": "automatic_only; visual_review_deferred",
+  "phases": {
+    "F0": "complete",
+    "F1": "complete"
+  },
+  "papers": 15,
+  "pages": 397,
+  "tool_page_outputs": 1588,
+  "source_run_by_tool": {
+    "heron": "collection-20261101T015723Z",
+    "heron101": "collection-20261101T015723Z",
+    "basic": "mineru-nativefix-20261101T034122Z",
+    "standard": "mineru-nativefix-20261101T034122Z"
+  }
+}

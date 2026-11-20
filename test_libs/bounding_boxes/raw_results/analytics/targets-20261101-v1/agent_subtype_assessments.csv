@@ -1,0 +1,229 @@
+case_id,tool,reference,reference_subtype,labels,family_status,subtype_status
+T001,heron,text,publication_credit,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T001,heron101,text,publication_credit,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T002,heron,text,blank_page_notice,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T002,heron101,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T002,basic,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T002,standard,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T003,heron,text,blank_page_notice,"[""section_header""]",wrong,generic_or_compatible
+T003,heron101,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T003,basic,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T003,standard,text,blank_page_notice,"[""text""]",adequate,generic_or_compatible
+T004,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T004,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T004,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T004,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T005,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T005,heron101,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T005,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T005,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T006,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T006,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T006,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T006,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T007,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T007,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T007,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T007,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T008,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T008,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T008,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T008,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T009,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T009,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T009,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T009,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T010,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T010,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T010,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T010,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T011,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T011,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T011,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T011,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T012,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T012,heron101,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T012,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T012,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T013,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T013,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T013,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T013,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T014,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T014,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T014,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T014,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T015,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T015,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T015,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T015,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T016,heron,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T016,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T016,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T016,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T017,heron,heading,document_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T017,heron101,heading,document_heading,"[""section_header""]",adequate,document_as_section
+T017,basic,heading,document_heading,"[""text""]",wrong,generic_or_compatible
+T017,standard,heading,document_heading,"[""text""]",wrong,generic_or_compatible
+T018,heron,caption,figure_caption,"[""caption"", ""text""]",contradictory,generic_or_compatible
+T018,heron101,caption,figure_caption,"[""caption""]",adequate,generic_or_compatible
+T018,basic,caption,figure_caption,"[""table_caption""]",adequate,figure_as_table_caption
+T018,standard,caption,figure_caption,"[""table_caption""]",adequate,figure_as_table_caption
+T019,heron,heading,document_heading,"[""section_header""]",adequate,document_as_section
+T019,heron101,heading,document_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T019,basic,heading,document_heading,"[""doc_title""]",adequate,generic_or_compatible
+T019,standard,heading,document_heading,"[""doc_title""]",adequate,generic_or_compatible
+T020,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T020,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T020,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T020,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T021,heron,author,author_name,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T021,heron101,author,author_name,"[""section_header""]",wrong,generic_or_compatible
+T021,basic,author,author_name,"[""text""]",coarse_usable,generic_or_compatible
+T021,standard,author,author_name,"[""text""]",coarse_usable,generic_or_compatible
+T022,heron,number,chapter_marker,"[""text""]",coarse_usable,generic_or_compatible
+T022,heron101,number,chapter_marker,"[""picture""]",wrong,generic_or_compatible
+T022,basic,number,chapter_marker,"[""page_number""]",adequate,chapter_as_page_number
+T022,standard,number,chapter_marker,"[""page_number""]",adequate,chapter_as_page_number
+T023,heron,text,body_paragraph,"[""text""]",adequate,generic_or_compatible
+T023,heron101,text,body_paragraph,"[""caption""]",wrong,generic_or_compatible
+T023,basic,text,body_paragraph,"[""text""]",adequate,generic_or_compatible
+T023,standard,text,body_paragraph,"[""text""]",adequate,generic_or_compatible
+T025,heron,author,author_name,"[""text""]",coarse_usable,generic_or_compatible
+T025,heron101,author,author_name,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T025,basic,author,author_name,"[""text""]",coarse_usable,generic_or_compatible
+T025,standard,author,author_name,"[""text""]",coarse_usable,generic_or_compatible
+T026,heron,caption,figure_caption,"[""caption""]",adequate,generic_or_compatible
+T026,heron101,caption,figure_caption,"[""text""]",wrong,generic_or_compatible
+T026,basic,caption,figure_caption,"[""text""]",wrong,generic_or_compatible
+T026,standard,caption,figure_caption,"[""text""]",wrong,generic_or_compatible
+T027,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T027,heron101,heading,section_heading,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T027,basic,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T027,standard,heading,section_heading,"[""text""]",wrong,generic_or_compatible
+T028,heron,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T028,heron101,author,author_list,"[""section_header""]",wrong,generic_or_compatible
+T028,basic,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T028,standard,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T029,heron,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T029,heron101,heading,section_heading,"[""section_header""]",adequate,generic_or_compatible
+T029,basic,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T029,standard,heading,section_heading,"[""paragraph_title""]",adequate,generic_or_compatible
+T030,heron,heading,document_heading,"[""section_header"", ""title""]",adequate,generic_or_compatible
+T030,heron101,heading,document_heading,"[""section_header"", ""title""]",adequate,generic_or_compatible
+T030,basic,heading,document_heading,"[""doc_title""]",adequate,generic_or_compatible
+T030,standard,heading,document_heading,"[""doc_title""]",adequate,generic_or_compatible
+T032,heron,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T032,heron101,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T032,basic,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T032,standard,author,author_list,"[""text""]",coarse_usable,generic_or_compatible
+T033,heron,metadata,publication_date,"[""section_header"", ""text""]",contradictory,generic_or_compatible
+T033,heron101,metadata,publication_date,"[""section_header""]",wrong,generic_or_compatible
+T033,basic,metadata,publication_date,"[""text""]",coarse_usable,generic_or_compatible
+T033,standard,metadata,publication_date,"[""text""]",coarse_usable,generic_or_compatible
+T034,heron,author,affiliation,"[""footnote"", ""list_item""]",coarse_usable,generic_or_compatible
+T034,heron101,author,affiliation,"[""footnote""]",coarse_usable,generic_or_compatible
+T034,basic,author,affiliation,"[""text""]",coarse_usable,generic_or_compatible
+T034,standard,author,affiliation,"[""text""]",coarse_usable,generic_or_compatible
+T035,heron,caption,figure_caption,"[""caption""]",adequate,generic_or_compatible
+T035,heron101,caption,figure_caption,"[""caption""]",adequate,generic_or_compatible
+T035,basic,caption,figure_caption,"[""chart_caption""]",adequate,generic_or_compatible
+T035,standard,caption,figure_caption,"[""chart_caption""]",adequate,generic_or_compatible
+T036,heron,caption,table_caption,"[""caption""]",adequate,generic_or_compatible
+T036,heron101,caption,table_caption,"[""caption""]",adequate,generic_or_compatible
+T036,basic,caption,table_caption,"[""table_caption""]",adequate,generic_or_compatible
+T036,standard,caption,table_caption,"[""table_caption""]",adequate,generic_or_compatible
+T037,heron,caption,table_caption,"[""caption""]",adequate,generic_or_compatible
+T037,heron101,caption,table_caption,"[""caption""]",adequate,generic_or_compatible
+T037,basic,caption,table_caption,"[""table_caption""]",adequate,generic_or_compatible
+T037,standard,caption,table_caption,"[""table_caption""]",adequate,generic_or_compatible
+T038,heron,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T038,heron101,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T038,basic,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T038,standard,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T039,basic,visual,decorative_graphic,"[""image""]",adequate,generic_or_compatible
+T039,standard,visual,decorative_graphic,"[""image""]",adequate,generic_or_compatible
+T040,heron,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T040,heron101,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T040,basic,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T040,standard,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T041,heron,table,table_body,"[""table""]",adequate,generic_or_compatible
+T041,heron101,table,table_body,"[""table""]",adequate,generic_or_compatible
+T041,basic,table,table_body,"[""table""]",adequate,generic_or_compatible
+T041,standard,table,table_body,"[""table""]",adequate,generic_or_compatible
+T042,heron,table,table_body,"[""table""]",adequate,generic_or_compatible
+T042,heron101,table,table_body,"[""table""]",adequate,generic_or_compatible
+T042,basic,table,table_body,"[""table""]",adequate,generic_or_compatible
+T042,standard,table,table_body,"[""table""]",adequate,generic_or_compatible
+T043,heron,table,table_body,"[""table""]",adequate,generic_or_compatible
+T043,heron101,table,table_body,"[""table""]",adequate,generic_or_compatible
+T043,basic,table,table_body,"[""table""]",adequate,generic_or_compatible
+T043,standard,table,table_body,"[""table""]",adequate,generic_or_compatible
+T044,heron,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T044,heron101,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T044,basic,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T044,standard,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T045,heron,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T045,heron101,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T045,basic,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T045,standard,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T046,heron,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T046,heron101,equation,display_equation,"[""formula""]",adequate,generic_or_compatible
+T046,basic,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T046,standard,equation,display_equation,"[""equation""]",adequate,generic_or_compatible
+T047,heron,reference,bibliographic_entry,"[""list_item""]",coarse_usable,generic_or_compatible
+T047,heron101,reference,bibliographic_entry,"[""list_item""]",coarse_usable,generic_or_compatible
+T047,basic,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T047,standard,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T048,heron,reference,bibliographic_entry,"[""list_item""]",coarse_usable,generic_or_compatible
+T048,heron101,reference,bibliographic_entry,"[""text""]",coarse_usable,generic_or_compatible
+T048,basic,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T048,standard,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T049,heron,reference,bibliographic_entry,"[""list_item""]",coarse_usable,generic_or_compatible
+T049,heron101,reference,bibliographic_entry,"[""list_item""]",coarse_usable,generic_or_compatible
+T049,basic,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T049,standard,reference,bibliographic_entry,"[""ref_text""]",adequate,generic_or_compatible
+T050,heron,author,affiliation,"[""list_item""]",coarse_usable,generic_or_compatible
+T050,heron101,author,affiliation,"[""footnote"", ""list_item""]",coarse_usable,generic_or_compatible
+T050,basic,author,affiliation,"[""text""]",coarse_usable,generic_or_compatible
+T050,standard,author,affiliation,"[""text""]",coarse_usable,generic_or_compatible
+T051,heron,list,bullet_item,"[""list_item""]",adequate,generic_or_compatible
+T051,heron101,list,bullet_item,"[""list_item""]",adequate,generic_or_compatible
+T051,basic,list,bullet_item,"[""text""]",coarse_usable,generic_or_compatible
+T051,standard,list,bullet_item,"[""text""]",coarse_usable,generic_or_compatible
+T052,heron,reference,bibliographic_fragment,"[""list_item"", ""text""]",coarse_usable,generic_or_compatible
+T052,heron101,reference,bibliographic_fragment,"[""list_item""]",coarse_usable,generic_or_compatible
+T052,basic,reference,bibliographic_fragment,"[""ref_text""]",adequate,generic_or_compatible
+T052,standard,reference,bibliographic_fragment,"[""ref_text""]",adequate,generic_or_compatible
+T053,heron,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T053,heron101,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T053,basic,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T053,standard,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T054,heron,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T054,heron101,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T054,basic,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T054,standard,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T055,heron,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T055,heron101,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T055,basic,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T055,standard,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T056,heron,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T056,heron101,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T056,basic,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T056,standard,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T057,heron,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T057,heron101,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T057,basic,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T057,standard,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T058,heron,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T058,heron101,visual,logo,"[""picture""]",adequate,generic_or_compatible
+T058,basic,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T058,standard,visual,logo,"[""header""]",coarse_usable,generic_or_compatible
+T059,heron,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T059,heron101,visual,journal_cover,"[""picture""]",adequate,generic_or_compatible
+T059,basic,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T059,standard,visual,journal_cover,"[""header""]",coarse_usable,generic_or_compatible
+T060,basic,note,author_contact_note,"[""footer""]",coarse_usable,generic_or_compatible
+T060,standard,note,author_contact_note,"[""footer""]",coarse_usable,generic_or_compatible
+T061,basic,note,copyright_bibliographic_note,"[""footer""]",coarse_usable,generic_or_compatible
+T061,standard,note,copyright_bibliographic_note,"[""footer""]",coarse_usable,generic_or_compatible

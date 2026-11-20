@@ -1,0 +1,348 @@
+{
+  "status": "downloaded_verified_with_failures_closed",
+  "session": "bbx-7000c89813c1406c937e8a396496c281",
+  "remote_root": "/content/bbx-7000c89813c1406c937e8a396496c281",
+  "inventory": [
+    {
+      "name": "1.pdf",
+      "bytes": 50705515,
+      "sha256": "a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80",
+      "pages": 26
+    },
+    {
+      "name": "10.pdf",
+      "bytes": 144075,
+      "sha256": "87261b3f60e1f0aa62e37d357d419febf17c43f1beb0e3cccbfb0450c0d6b81b",
+      "pages": 9
+    },
+    {
+      "name": "11.pdf",
+      "bytes": 16382256,
+      "sha256": "b807cb5cace5892e88fa4d42556add46e403a9f1a632b36296342e8250826fde",
+      "pages": 21
+    },
+    {
+      "name": "12.pdf",
+      "bytes": 4874584,
+      "sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660",
+      "pages": 13
+    },
+    {
+      "name": "14.pdf",
+      "bytes": 2998149,
+      "sha256": "c456d6a6e32e397b65418be76ba53ec58d7ecfe880af0f0afdddbb505e464d52",
+      "pages": 68
+    },
+    {
+      "name": "15.pdf",
+      "bytes": 2209132,
+      "sha256": "7316a0858c49a13194fd9337995ea1c249661fa58acf569891c1294d6610c461",
+      "pages": 59
+    },
+    {
+      "name": "17.pdf",
+      "bytes": 2050847,
+      "sha256": "e77b377fb151c9c5d5b19b269f0c248148d1475a82af1f8dd1e73498c77bbef5",
+      "pages": 71
+    },
+    {
+      "name": "2.pdf",
+      "bytes": 3459054,
+      "sha256": "f4621f172d9857687da7b8ba88f691846fad5821900d9c5f39a951a0c0307727",
+      "pages": 12
+    },
+    {
+      "name": "3.pdf",
+      "bytes": 391487,
+      "sha256": "e38ad810e4d9deaf5902ccdda688da4ed586e2531bc0153efbedc89d3c77a727",
+      "pages": 4
+    },
+    {
+      "name": "4.pdf",
+      "bytes": 501270,
+      "sha256": "ec268ee6720e067d4d146335e834f85bd354346ef2fe0764e50444b73997608e",
+      "pages": 4
+    },
+    {
+      "name": "5.pdf",
+      "bytes": 2830388,
+      "sha256": "09ae42cc0fd9c939df8f416cdb5750e8f356a1fe315431ab6ef6211810f92af6",
+      "pages": 9
+    },
+    {
+      "name": "6.pdf",
+      "bytes": 3894699,
+      "sha256": "81dc7433ff7ab1e75cb148f184c3969f82ed9b014782fa36416a3188c7bfc539",
+      "pages": 26
+    },
+    {
+      "name": "7.pdf",
+      "bytes": 11637340,
+      "sha256": "390ddeed7b5d6b1c8c3e3892036b87e5600481ca3b560c80bf58ccbe7f9a82f5",
+      "pages": 14
+    },
+    {
+      "name": "8.pdf",
+      "bytes": 956328,
+      "sha256": "150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5",
+      "pages": 49
+    },
+    {
+      "name": "9.pdf",
+      "bytes": 6366963,
+      "sha256": "3e8ac0d09b0628f5c4467dc15e9eac47e01166f5c049834a243ea6fb8156b217",
+      "pages": 12
+    }
+  ],
+  "papers_dir": null,
+  "config_sha256": "5edffc35ac7856b80f90437c987a826492c2294e5008e7dbb7823c8fea4d66a6",
+  "code_sha256": "631d81bff3ecc4415fa7a7157638daad1b85629bb5857ef0627b25c97ec07b93",
+  "local_r2_checks": [
+    {
+      "id": "r2_head:1.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:52.490791+00:00"
+    },
+    {
+      "id": "r2_head:10.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:52.871834+00:00"
+    },
+    {
+      "id": "r2_head:11.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:53.249850+00:00"
+    },
+    {
+      "id": "r2_head:12.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:53.626912+00:00"
+    },
+    {
+      "id": "r2_head:14.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:53.992305+00:00"
+    },
+    {
+      "id": "r2_head:15.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:54.355493+00:00"
+    },
+    {
+      "id": "r2_head:17.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:54.707150+00:00"
+    },
+    {
+      "id": "r2_head:2.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:55.101196+00:00"
+    },
+    {
+      "id": "r2_head:3.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:55.485001+00:00"
+    },
+    {
+      "id": "r2_head:4.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:55.839909+00:00"
+    },
+    {
+      "id": "r2_head:5.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:56.201718+00:00"
+    },
+    {
+      "id": "r2_head:6.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:56.704500+00:00"
+    },
+    {
+      "id": "r2_head:7.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:57.053081+00:00"
+    },
+    {
+      "id": "r2_head:8.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:57.418161+00:00"
+    },
+    {
+      "id": "r2_head:9.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {
+        "http_status": 200
+      },
+      "timestamp_utc": "2026-11-01T01:57:57.767527+00:00"
+    },
+    {
+      "id": "r2_get:12.pdf",
+      "status": "PASS",
+      "reason": "",
+      "scope": "local",
+      "evidence": {},
+      "timestamp_utc": "2026-11-01T01:57:59.920883+00:00"
+    }
+  ],
+  "preparation": {
+    "status": "prepared"
+  },
+  "reviewed_transport_error": "CalledProcessError",
+  "preparation_continuation": "Reviewed same-session continuation; explicit success marker and env receipts verified.",
+  "smoke": {
+    "status": "complete",
+    "tools": [
+      {
+        "tool": "heron",
+        "status": "complete"
+      },
+      {
+        "tool": "heron101",
+        "status": "complete"
+      },
+      {
+        "tool": "basic",
+        "status": "complete"
+      },
+      {
+        "tool": "standard",
+        "status": "complete"
+      }
+    ]
+  },
+  "error": "ValueError",
+  "session_closed": true,
+  "collection_executed": true,
+  "all_papers_attempted": true,
+  "artifact_dir": "test_libs\\bounding_boxes\\results\\collection-20261101T015723Z",
+  "continuation_summary": {
+    "status": "all_papers_attempted_with_recorded_failures",
+    "tools": {
+      "heron": {
+        "papers_attempted": 15,
+        "papers_complete": 15,
+        "pages_complete": 397,
+        "failed_papers": []
+      },
+      "heron101": {
+        "papers_attempted": 15,
+        "papers_complete": 15,
+        "pages_complete": 397,
+        "failed_papers": []
+      },
+      "basic": {
+        "papers_attempted": 15,
+        "papers_complete": 4,
+        "pages_complete": 60,
+        "failed_papers": [
+          "10.pdf",
+          "11.pdf",
+          "12.pdf",
+          "14.pdf",
+          "15.pdf",
+          "17.pdf",
+          "2.pdf",
+          "5.pdf",
+          "7.pdf",
+          "8.pdf",
+          "9.pdf"
+        ]
+      },
+      "standard": {
+        "papers_attempted": 15,
+        "papers_complete": 4,
+        "pages_complete": 60,
+        "failed_papers": [
+          "10.pdf",
+          "11.pdf",
+          "12.pdf",
+          "14.pdf",
+          "15.pdf",
+          "17.pdf",
+          "2.pdf",
+          "5.pdf",
+          "7.pdf",
+          "8.pdf",
+          "9.pdf"
+        ]
+      }
+    },
+    "original_results_unchanged": true,
+    "same_session": true,
+    "retry_failed_papers": false,
+    "configuration_changed": false
+  }
+}

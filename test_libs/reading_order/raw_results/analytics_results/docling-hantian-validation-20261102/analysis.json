@@ -1,0 +1,479 @@
+{
+  "status": "PASS",
+  "docling": {
+    "predictions": 39,
+    "stable_cid_maps": 39,
+    "changed_permutations": 0,
+    "comparisons": 26,
+    "canonical_pages_changed_vs_old_contract": 3,
+    "conditions": [
+      {
+        "page_number": 1,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 2,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 3,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 4,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 5,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 6,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 7,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 8,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 9,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 10,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 11,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 12,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 13,
+        "condition": "permutation-1729",
+        "changed": false
+      },
+      {
+        "page_number": 1,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 2,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 3,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 4,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 5,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 6,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 7,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 8,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 9,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 10,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 11,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 12,
+        "condition": "permutation-1730",
+        "changed": false
+      },
+      {
+        "page_number": 13,
+        "condition": "permutation-1730",
+        "changed": false
+      }
+    ]
+  },
+  "hantian": {
+    "predictions": 52,
+    "decoder_replays_matching": 52,
+    "decoder_exact_ties": 0,
+    "changed_permutations": 26,
+    "fixed_logits_decoder_changes": 0,
+    "max_identical_input_logit_delta": 0.0,
+    "identical_control_orders": 13,
+    "permutation_conditions": [
+      {
+        "page_number": 1,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.79296875,
+        "mean_aligned_logit_delta": 1.8441582406335735,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 2,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.74609375,
+        "mean_aligned_logit_delta": 2.1305296875,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 3,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.494140625,
+        "mean_aligned_logit_delta": 2.1256694878472224,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 4,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.66015625,
+        "mean_aligned_logit_delta": 2.0999424913194447,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 5,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.23046875,
+        "mean_aligned_logit_delta": 2.271582609097633,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 6,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.03515625,
+        "mean_aligned_logit_delta": 2.2341172960069446,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 7,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.54296875,
+        "mean_aligned_logit_delta": 2.2213009982638887,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 8,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.931640625,
+        "mean_aligned_logit_delta": 2.209710743801653,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 9,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.4609375,
+        "mean_aligned_logit_delta": 2.482142857142857,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 10,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.0859375,
+        "mean_aligned_logit_delta": 2.579318576388889,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 11,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.484375,
+        "mean_aligned_logit_delta": 2.33484375,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 12,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.37353515625,
+        "mean_aligned_logit_delta": 2.445869382747934,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 13,
+        "condition": "permutation-1729",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.900390625,
+        "mean_aligned_logit_delta": 0.6813600825001477,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 1,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.98876953125,
+        "mean_aligned_logit_delta": 1.8830000428669411,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 2,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.3515625,
+        "mean_aligned_logit_delta": 2.104248828125,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 3,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.2177734375,
+        "mean_aligned_logit_delta": 2.132146267361111,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 4,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.09765625,
+        "mean_aligned_logit_delta": 1.9587391493055555,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 5,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.0546875,
+        "mean_aligned_logit_delta": 2.3358797152366866,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 6,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.12158203125,
+        "mean_aligned_logit_delta": 2.4219902886284723,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 7,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.853515625,
+        "mean_aligned_logit_delta": 2.2115049913194444,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 8,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.232421875,
+        "mean_aligned_logit_delta": 2.616434901213843,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 9,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.7470703125,
+        "mean_aligned_logit_delta": 2.561388911033163,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 10,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 6.5234375,
+        "mean_aligned_logit_delta": 2.5348668981481484,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 11,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 7.912109375,
+        "mean_aligned_logit_delta": 2.132333984375,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 12,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.3125,
+        "mean_aligned_logit_delta": 2.6329698799070247,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      },
+      {
+        "page_number": 13,
+        "condition": "permutation-1730",
+        "observed_order_changed": true,
+        "max_aligned_logit_delta": 8.8046875,
+        "mean_aligned_logit_delta": 0.6725307529499941,
+        "fixed_logits_decoder_order_changed": false,
+        "fixed_logits_exact_score_ties": 0
+      }
+    ],
+    "identical_input_controls": [
+      {
+        "page_number": 1,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 2,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 3,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 4,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 5,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 6,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 7,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 8,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 9,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 10,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 11,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 12,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      },
+      {
+        "page_number": 13,
+        "max_identical_input_logit_delta": 0.0,
+        "order_identical": true
+      }
+    ]
+  },
+  "input_references_unchanged": true,
+  "confirmation_executed": false,
+  "collection_executed": false,
+  "pdf_reads": 0,
+  "selection": "selection_pending",
+  "semantic_accuracy": "not_measured",
+  "session_closed": true,
+  "result_references": [
+    {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/code_results/docling-hantian-validation-20261102/canonical/manifest.json",
+      "sha256": "e54f3a56ff4c21e754eab21314c101c01d4784788918b2ba629e5c4b721e0ed7"
+    },
+    {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/code_results/docling-hantian-validation-20261102/permutation-1729/manifest.json",
+      "sha256": "ea5ecda6883f97a1552e79114e35be27afd0fb8fc68f239a31c4773358a7aa04"
+    },
+    {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/code_results/docling-hantian-validation-20261102/permutation-1730/manifest.json",
+      "sha256": "68d6e79667906d50292e82c9517b7734eafcb43cef17b3a3b7b926755beeca35"
+    },
+    {
+      "path": "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/code_results/docling-hantian-validation-20261102/hantian-repeat/manifest.json",
+      "sha256": "14216e7b7f34d57af6e2e84142a5ec2a21dceaa8220251fd47c74fe7f8fc83ed"
+    }
+  ]
+}

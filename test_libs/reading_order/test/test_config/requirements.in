@@ -1,0 +1,14 @@
+# Configuration candidate only. Promote only after the recorded A100 probes pass.
+# Torch wheels are selected from the official cu128 index in prepare_environment.py.
+pip==25.3
+torch==2.9.1+cu128
+torchvision==0.24.1+cu128
+transformers==5.22.1
+docling-slim[convert-core]==2.145.0
+python-doctr==1.1.0
+numpy==2.2.6
+scipy==1.16.3
+opencv-python==4.12.0.88
+pypdf==6.1.1
+psutil==7.1.2
+pytest==8.4.2

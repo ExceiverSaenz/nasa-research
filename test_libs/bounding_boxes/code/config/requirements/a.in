@@ -1,0 +1,10 @@
+# Candidate only; resolve a Linux CPython 3.11 hashed lock before preparation.
+torch @ https://download-r2.pytorch.org/whl/cu126/torch-2.7.1%2Bcu126-cp311-cp311-manylinux_2_28_x86_64.whl#sha256=e1a8465165708c2e2e90786ade8a3e1b1d01eca1f022792cd397caad9d8c21bc
+torchvision @ https://download-r2.pytorch.org/whl/cu126/torchvision-0.22.1%2Bcu126-cp311-cp311-manylinux_2_28_x86_64.whl#sha256=b49a0e0c10680e8ee8cb703227640a4b6376d5a285fe73b3254f304707cd8d2f
+transformers==5.10.1
+mineru[torch]==4.0.12
+Pillow==12.3.0
+psutil
+
+# MinerU 4.0.12 uses the single private_range native ABI (changed in DocVortex 0.6.8).
+docvortex==0.6.7

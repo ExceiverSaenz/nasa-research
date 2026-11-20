@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "check": "direct_bootstrap_no_model_no_document",
+  "elapsed_s": 2.385
+}

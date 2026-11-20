@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "report_sha256": "57bb2830d3aeceb08bb711dff07ef8cd10776c2c9fc50bd39f9a4ae9031f2ad1",
+  "evidence_sha256": "5c2645573b39fc8e1b8b493044f91a0a15613935456d7ec5bd922640e848d4b5",
+  "figures": 12,
+  "figure_files": 17,
+  "all_figures_under_docs_assets": true,
+  "visual_pages": 7,
+  "visual_orders": 42,
+  "unique_eligible_units": 138,
+  "source_hashes_verified": 34,
+  "prior_artifacts_unchanged": 12,
+  "pair_rows_checked": 15,
+  "cost_rows_checked": 6,
+  "code_hash_verified": true,
+  "models_executed": false,
+  "human_review": "pending",
+  "review_correction": "C03: docTR puts Results continuation before its heading; no claim of better section continuity"
+}

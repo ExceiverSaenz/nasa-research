@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "error_type": "TransportError",
+  "transport_failure": {
+    "phase": "register_comm",
+    "error_type": "ConnectionError"
+  },
+  "automatic_retry": false
+}

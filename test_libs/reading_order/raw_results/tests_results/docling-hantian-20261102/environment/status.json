@@ -1,0 +1,11 @@
+{
+  "status": "PREPARATION_UNRESPONSIVE",
+  "new_inferences": 0,
+  "source_data_transferred": false,
+  "phase": "validated-lock dependency sync",
+  "evidence": "Preparation log stopped after venv creation; read-only Contents API query returned ConnectionError. No ORDER_ENVIRONMENT_READY marker or environment receipt.",
+  "manual_recovery": "Close this owned session and prepare a fresh A100 with the same validated lock; preserve original logs.",
+  "session_closed": true,
+  "termination_marker": "Session terminated.",
+  "local_orphan_controllers_closed": true
+}

@@ -1,0 +1,12 @@
+{
+  "models": {
+    "hantian/layoutreader": "629be376d86fbab624ddc4020804a4e93b5515bc",
+    "PaddlePaddle/PP-DocLayoutV2_safetensors": "880e8971b88938518611c54fc0f59ad57849c9d4"
+  },
+  "repositories": {
+    "FreeOCR-AI/layoutreader": "3b46ee82cd02dcea94ee4064152e5f4de91e205e",
+    "Sanster/xy-cut": "3639c53b65f8d06927527ee5873fc8c21e647efa",
+    "home-still/xycut-plus-plus": "81d93f825108d314f6588e5828e09b89bf45b67c"
+  },
+  "xycut_plus_plus_status": "third-party candidate; configuration smoke does not establish fidelity to paper"
+}

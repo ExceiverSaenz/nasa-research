@@ -1,0 +1,128 @@
+{
+  "completed": 230,
+  "candidate": "hantian",
+  "child_status": null,
+  "last_responses": [
+    {
+      "request_id": "dd15b0466db64466a5c3e01b38ebe40c",
+      "response": {
+        "ordered_ids": [
+          "4899c4b5e70734cdc941b28d",
+          "cbbc43591d4f0ccc0e4a173c"
+        ],
+        "native": {
+          "ranks": [
+            1,
+            0
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.02451013800009605,
+          "peak_sampled_rss_bytes": 1573785600,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    },
+    {
+      "request_id": "4986d6cf6c1142ada214f89afc06a179",
+      "response": {
+        "ordered_ids": [
+          "f86ff88a311930160acb9dd8",
+          "4adbf006e34453752e1cf269",
+          "25fa188fe1d3d7e59a2e1615",
+          "19cc780352e8389f3672c825",
+          "61f541ec9afde916ef54d248"
+        ],
+        "native": {
+          "ranks": [
+            2,
+            0,
+            1,
+            3,
+            4
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.02442760000008093,
+          "peak_sampled_rss_bytes": 1573785600,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    },
+    {
+      "request_id": "351e61ab08da45a88ffe0a5c794279e3",
+      "response": {
+        "ordered_ids": [
+          "a417784be8973c8ef1f094e4",
+          "f3c5a25cf1d17cc34cb8b776",
+          "373492870c59a5c2c932080b",
+          "335cc97577cd942a69b75eac",
+          "2e49ea0c98db664a01be026c",
+          "0a694bf9ccfbba8c34b73041",
+          "aa2ad22bc7b82aaf74edfd68",
+          "950e584e0eafba72bba80e02",
+          "4b10f25ae639c0c91a0ab5f4",
+          "0c5c48caf01342036758a414",
+          "ed78e53d07db5d0aaca6baf5",
+          "56f7e6ec005a9d338e27c94d",
+          "c68d8b74f87c932b8b8d5574",
+          "e6ff71375d1e25182283cd09"
+        ],
+        "native": {
+          "ranks": [
+            4,
+            7,
+            11,
+            0,
+            8,
+            3,
+            12,
+            6,
+            9,
+            5,
+            1,
+            10,
+            13,
+            2
+          ]
+        },
+        "transformations": {
+          "coordinates": "0..1000 rounded",
+          "decoder": "published hantian parse_logits"
+        },
+        "costs": {
+          "adapter_total_s": 0.024715898000067682,
+          "peak_sampled_rss_bytes": 1573785600,
+          "peak_sampled_gpu_bytes": 1275068416,
+          "samples": 1,
+          "interval_s": 1,
+          "load_s": null,
+          "inference_s": null,
+          "decode_s": null,
+          "limitation": "sampled process-tree RSS may double-count shared pages; short peaks may be missed"
+        }
+      }
+    }
+  ],
+  "pending": []
+}

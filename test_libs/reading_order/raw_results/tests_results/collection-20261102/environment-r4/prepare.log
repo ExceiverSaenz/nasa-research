@@ -1,0 +1,22 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+
+Downloading cpython-3.11.16-linux-x86_64-gnu (download) (29.4MiB)
+ Downloaded cpython-3.11.16-linux-x86_64-gnu (download)
+Installed Python 3.11.16 in 1.13s
+ + cpython-3.11.16-linux-x86_64-gnu (python3.11)
+warning: `/root/.local/bin` is not on your PATH. To use installed Python executables, run `export PATH="/root/.local/bin:$PATH"` or `uv python update-shell`.
+
+
+warning: The `--system` flag has no effect, `uv venv` always ignores virtual environments when finding a Python interpreter; did you mean `--no-managed-python`?
+Using CPython 3.11.16
+Creating virtual environment with seed packages at: order-config-20261102/venv
+ + packaging==26.3
+ + pip==26.2.2
+ + setuptools==84.2.1
+ + wheel==0.48.0
+Activate with: source order-config-20261102/venv/bin/activate
+

@@ -1,0 +1,31 @@
+{
+  "original_manifest_verified": 2452,
+  "consumed_input_hashes": {
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\detections.jsonl": "98bafe4516c94891b0badcb14f82d5c57650abb6039b2e3ea5fe682ffc3edf53",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\agreement_edges.jsonl": "35a50a8007ba5a02b66291688cd2e3c1698e3d5e68165dd2b419254f815f86e2",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\agreement_components.jsonl": "c2203665d422d46e3628c942f79b8025a034f5a0a11859379f29e4434de55bbb",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\label_map.csv": "84aa9af66c219b4cd34076c4710ad28800b14f61158cbc30750328caea0e9bd0",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\page_inventory.csv": "779113e967e7352c80d6f9602dbe4238d9b795c48a1817aca3440890ae45b361",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\native_patterns.jsonl": "d004a60006d846dc64e74e91bb76c0434a3423b7460c1d9193d092544dc576d6",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\cost_by_stage.csv": "cc507c3667179bd7d6c7fdf6ad72f042c6b06f5240bbf3f39cf1d002b2bb512e",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\failures.csv": "6a369fd0952d57d4fed0fc2497556208ae9e41c13427fda5bfe0b0bc14e8de00",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\input_manifest.json": "c67aad5644c72630f87d698ab8a20530fb1c4988cab706aadfd59999cd897106",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\run.py": "34e0e544659ba6110d1f222a46c4f0b1075cdc0357dd6c839adfc98d6e1c72dd",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\metrics.py": "cafde66b049ad28c2b7cf9cdbc5e263fcb174fb589cc67c17c95ad99916c4f49",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\PROTOCOL.md": "5223e8b5afe9c7ed341a67fdc6005c60d897e1c45a3105d547006b8aa0fc90b0",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\history\\bounding-boxes-cleanup-20261101T050218\\preserved\\docs\\methodology\\analysis-plan.md": "5cbe6e841a0494e41785d433dba7049a12d80b56c342fb5ad03ecdaa93c407e7",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis_tools\\core.py": "fcc8ff45fa6b12180b7a70eb231064c2d27c07c825f9ec99c86b2de66ef98252",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\feedback_data\\session-v1\\feedback.json": "7913b852357f0b2c408af1ceb509bb6e36a76e70fb9529619a41696adae8e6ff"
+  },
+  "consumed_inputs_changed": {},
+  "feedback_changed_during_run": {},
+  "elapsed_seconds": 74.30382537841797,
+  "source": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2",
+  "protocol": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\deep_analysis\\PROTOCOL.md",
+  "invariants": {
+    "histogram_total": 35778,
+    "expected_positive_pairs": 35778,
+    "pages": 397,
+    "tool_page_outputs": 1588
+  }
+}

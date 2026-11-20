@@ -1,0 +1,41 @@
+{
+  "input_hashes": {
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_assessments.jsonl": "8690d11ccec4df0f5a2d4217f2c1c2c4dd9aed9f0066282fc8c9b579f239b373",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_confusion_counts.csv": "1c8d971b6811bd1798802a2fc38bfda8a5bda1b8795c66702e3bb615bbad801a",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_error_cases.jsonl": "0b7ea8c011cd352347fae4b968e11603b5e36063d5737669fc3101258145722e",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_reference_cases.jsonl": "01e6fec291fa3302a8075ebe7f609405570ab7cadf12d4d5629d0861a753252a",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_subtype_assessments.csv": "1f8b3c727016584446aee5e3728a833c2ec5857be64ac664125d6c9cd3a09cc4",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_target_summary.csv": "42f3775040773bfed4e4ba47a1ad287c7830a9fc2f94560cdde7693128224ba0",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\agent_tool_summary.csv": "14bde6121fde7cf8e9fa91e4494cf11d7298f0565fe41d3545f2db99ca9cf42b",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\audit_verification.json": "0a9369b6bf75f5c6204afd0daff2a5ad64f29c524b32bb4b71601000c3f99e9a",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\caption_text_verification.json": "fbd78479178aad655c6455c518a4079e82a3dd06d4480b9cc96cfd466f4c7992",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\feedback_snapshot.json": "f089c1b78afc0d23f7408736ab56f7b501e0019dadbf66fe5a4446c238b786ee",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\heading_asymmetric_costs.csv": "f34f32af7a0091796192d23dae9b693de06a447a6061ec0409e3ac19e3d985cb",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\heading_sample_rates.csv": "0c63b45ed73b4d4f5c53c63eff8db4dcaa927d6bc219b2831e6ce336b3832fca",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\native_caption_text.csv": "a938dd42e808c64d099c79e9438fbe1380f8154c777829267292f5eb98b98384",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\native_caption_text_summary.json": "d9032a2f5d3c272a95f8c93382d65231343ee6c2a22cc2df8e8e5f863519ebf4",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\native_score_alternatives.jsonl": "9203390c5ef08d99b917530d10243226d94ac12bfd44f8602c30221615cad0d0",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\prepare_verification.json": "0f26a620e62bdaecd6899fb949e132f63d86ae45e1e33fc149335c75a439fb43",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\profiles_verification.json": "bf8d70be8362233d73e9d5802e69b12a73f19b55a1327e2b7cae17c28a27416b",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\review_figures_verification.json": "3f4b132a338f49336c2418ec3ad9fa474ff151ba0a9f59b0241f3574292c07ea",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\same_box_target_conflicts.jsonl": "4943a8cfb2f3ed142b28c70adcf61aba8a685e15980d1e79dfabc23483fb8fd5",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\strict_same_box_target_alternatives.csv": "9b4d1cd14d58060f7007bb31ab3865deb6bd8390662645a4a0f0cd34e979b66c",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\subtypes_verification.json": "92163e253edc84c17bf63118f50784a07beff39db2d742a8c6f042434186c29b",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\target_census.csv": "cff210106cc24ecdabf1ff2edf445bccefab82a596edf5740af086db906539cd",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\target_correspondences.csv": "6a6e8b7e6fa503dc05070d8d9980fde7c95079a339b7cd4a6e2abde3d8df066d",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\target_pair_conditionals.csv": "44b56d8a93bdc4254d7d25943be372ab5933e3b1037ff275c3dda86035f3d718",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\target_patterns.csv": "910036f8c92dbbb6e6f85606501414c89bab37aacf4564168cf90158b1260f4e",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\target_profiles.csv": "8fecd9398f2fa79a76005754d3cdfcd6da0faf2fb6015698fec51ab6bf3843f5",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\visual_cases.jsonl": "099024116406525eec77ccfa9f2f2753f061938d647822fec4e88d9fc48589bb"
+  },
+  "image_hashes": {
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\viewer_source\\pages\\150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5\\28.png": "630457b7d946334c6b717b337d2d220e28cb6edbc6e23118b1b884d66623b804",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\viewer_source\\pages\\a56254c77fd86f0a4045c7eb14aea84595e931794100dcc0895eb7e346908c80\\0.png": "d3641cfceea3a97fa6f5ee7014930901dbe7def1880ec7b31e15da0e1a1615f8",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\viewer_source\\pages\\c456d6a6e32e397b65418be76ba53ec58d7ecfe880af0f0afdddbb505e464d52\\23.png": "b0c4e8784c46c64c8693239211ef025db15fcd637c0e270a93868996695be26b",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\viewer_source\\pages\\e77b377fb151c9c5d5b19b269f0c248148d1475a82af1f8dd1e73498c77bbef5\\25.png": "75b8e21168e1539f98393e00abf6596ca826db26c5ab99396b09a10a06a86c0b",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\results\\mineru-nativefix-20261101T034122Z\\viewer_source\\pages\\150377480fe857e266129aba2a352907d8084ad69e9af3a72be077c53f34a9d5\\5.png": "747b040949483ba1e451cfafb3d197d45ac6ca941446c4cc20526703a01f5203"
+  },
+  "code_hash": "5b35d690f5a66d1533270eb57b875be97eca1fc78aa0c2150f8aa110904976e4",
+  "unchanged": true,
+  "report_scope": "fixed_collection_narrative_review_required_for_other_inputs"
+}

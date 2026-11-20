@@ -1,0 +1,1771 @@
+{
+  "schema": "reading-order-sensitivity-attribution/1",
+  "status": "PASS",
+  "new_inferences": 0,
+  "pdf_reads": 0,
+  "inputs_copied": false,
+  "production_adapters_modified": false,
+  "references": [
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\code_results\\pilot-12-20261102\\manifest.json",
+      "sha256": "1d5a8969b26da1f9611b1fa21a5c4060fd033bb5884ec1664e63b621fbbb050d"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\code_results\\stability-12-recovery-20261102-comm\\permutation-1729\\manifest.json",
+      "sha256": "a237ff24658e3bdee36504bf8551a43d8ff03cc128f10def86033968e917e1fe"
+    },
+    {
+      "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\code_results\\stability-12-recovery-20261102-comm\\permutation-1730\\manifest.json",
+      "sha256": "6d765d8109676115a547b7640567d99c5ca5570c03d8a9d93b175e803e17e772"
+    }
+  ],
+  "sources": [
+    {
+      "key": "docling",
+      "version": "2.145.0",
+      "wheel_url": "https://files.pythonhosted.org/packages/4e/9f/6a56e93da350beb78781689c6ea407c55253d131365c017e13416da26fd4/docling_slim-2.145.0-py3-none-any.whl",
+      "wheel_sha256": "789d93be17066ddfc9b451681bdb87ab206593a597ad93aa7bd4d5dca27092d8",
+      "member": "docling/models/postprocessing/reading_order_rb.py",
+      "module_sha256": "4cc239329b72fa7443e2dfdc9beb50245b0cfa4b1de8cfa03bd2656b700136ed",
+      "lock_hash_verified": true,
+      "relevant_symbols": [
+        {
+          "name": "follows_maintext_order",
+          "line": 57,
+          "end_line": 58
+        },
+        {
+          "name": "follows_maintext_order",
+          "line": 76,
+          "end_line": 77
+        },
+        {
+          "name": "_init_l2r_map",
+          "line": 754,
+          "end_line": 782
+        },
+        {
+          "name": "_init_ud_maps",
+          "line": 806,
+          "end_line": 898
+        }
+      ]
+    },
+    {
+      "key": "bounding_box",
+      "version": "2.105.0",
+      "wheel_url": "https://files.pythonhosted.org/packages/c9/6b/4707c6082ae406cce567c45dd0625c401436af60d9acecc81a88f38aacf3/docling_core-2.105.0-py3-none-any.whl",
+      "wheel_sha256": "f5b270e23a9ae4b2cc028e43ad6ece31c3d6a9bebca382e41418ecf7e5f6e7ef",
+      "member": "docling_core/types/doc/base.py",
+      "module_sha256": "a9836ae38b966a78cd944d12afa1f25474dd536efa8eac6301f12c75aaf36fc2",
+      "lock_hash_verified": true,
+      "relevant_symbols": []
+    },
+    {
+      "key": "pp_model",
+      "version": "5.22.1",
+      "wheel_url": "https://files.pythonhosted.org/packages/75/75/47ebe0e2f1b04a180000e3a49ebdf4669dbab0c63489bcecf7855c26e4f4/transformers-5.22.1-py3-none-any.whl",
+      "wheel_sha256": "c940b4bf98de4f568723895f330ba1460a398bd83061b93b70238c3fe32e4389",
+      "member": "transformers/models/pp_doclayout_v2/modeling_pp_doclayout_v2.py",
+      "module_sha256": "bf0ea228975ca4bf8fd067e01be5d2d6d3057bfc41a69d065997fa77b185b679",
+      "lock_hash_verified": true,
+      "relevant_symbols": [
+        {
+          "name": "PPDocLayoutV2GlobalPointer",
+          "line": 54,
+          "end_line": 71
+        },
+        {
+          "name": "PPDocLayoutV2TextEmbeddings",
+          "line": 440,
+          "end_line": 553
+        }
+      ]
+    },
+    {
+      "key": "pp_decoder",
+      "version": "5.22.1",
+      "wheel_url": "https://files.pythonhosted.org/packages/75/75/47ebe0e2f1b04a180000e3a49ebdf4669dbab0c63489bcecf7855c26e4f4/transformers-5.22.1-py3-none-any.whl",
+      "wheel_sha256": "c940b4bf98de4f568723895f330ba1460a398bd83061b93b70238c3fe32e4389",
+      "member": "transformers/models/pp_doclayout_v2/image_processing_pp_doclayout_v2.py",
+      "module_sha256": "f1828b3a7b1a6949036a812bf68829a438bd9e78768e31f893e355c47ac39291",
+      "lock_hash_verified": true,
+      "relevant_symbols": [
+        {
+          "name": "_get_order_seqs",
+          "line": 91,
+          "end_line": 120
+        }
+      ]
+    },
+    {
+      "key": "hantian_model",
+      "version": "5.22.1",
+      "wheel_url": "https://files.pythonhosted.org/packages/75/75/47ebe0e2f1b04a180000e3a49ebdf4669dbab0c63489bcecf7855c26e4f4/transformers-5.22.1-py3-none-any.whl",
+      "wheel_sha256": "c940b4bf98de4f568723895f330ba1460a398bd83061b93b70238c3fe32e4389",
+      "member": "transformers/models/layoutlmv3/modeling_layoutlmv3.py",
+      "module_sha256": "81b53a50fb571e500075386d0cbdc4c1f88fc1942afe3837d237e27652c57115",
+      "lock_hash_verified": true,
+      "relevant_symbols": [
+        {
+          "name": "LayoutLMv3TextEmbeddings",
+          "line": 86,
+          "end_line": 199
+        }
+      ]
+    },
+    {
+      "key": "hantian_helper",
+      "url": "https://raw.githubusercontent.com/FreeOCR-AI/layoutreader/3b46ee82cd02dcea94ee4064152e5f4de91e205e/v3/helpers.py",
+      "module_sha256": "21550570d303177fa48a8f812318e9a479d64b77873eabef362848c367db2053",
+      "prepared_hash_verified": true,
+      "relevant_symbols": [
+        {
+          "name": "boxes2inputs",
+          "line": 66,
+          "end_line": 74
+        },
+        {
+          "name": "parse_logits",
+          "line": 89,
+          "end_line": 121
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "hantian": {
+      "native_checks": 39,
+      "changed_conditions": 26,
+      "comparisons": 26
+    },
+    "docling": {
+      "native_checks": 39,
+      "changed_conditions": 4,
+      "comparisons": 26
+    },
+    "pp_doclayout_v2": {
+      "native_checks": 39,
+      "changed_conditions": 1,
+      "comparisons": 26
+    }
+  },
+  "docling_saved_input_maps_verified": 39,
+  "docling_prior_changed_conditions": 11,
+  "pp_native_decoder_replays": 39,
+  "pp_fixed_pair_preference_replays": 26,
+  "conditions": [
+    {
+      "candidate_id": "hantian",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1729,
+      "entities": 27,
+      "changed": true,
+      "inverted_pairs": 176,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1729,
+      "entities": 25,
+      "changed": true,
+      "inverted_pairs": 175,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1729,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 63,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1729,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 34,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1729,
+      "entities": 13,
+      "changed": true,
+      "inverted_pairs": 32,
+      "evaluated_pairs": 78,
+      "input_index_changed": 13
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1729,
+      "entities": 12,
+      "changed": true,
+      "inverted_pairs": 36,
+      "evaluated_pairs": 66,
+      "input_index_changed": 9
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1729,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 55,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1729,
+      "entities": 11,
+      "changed": true,
+      "inverted_pairs": 22,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1729,
+      "entities": 14,
+      "changed": true,
+      "inverted_pairs": 50,
+      "evaluated_pairs": 91,
+      "input_index_changed": 13
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1729,
+      "entities": 9,
+      "changed": true,
+      "inverted_pairs": 16,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1729,
+      "entities": 10,
+      "changed": true,
+      "inverted_pairs": 26,
+      "evaluated_pairs": 45,
+      "input_index_changed": 8
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1729,
+      "entities": 11,
+      "changed": true,
+      "inverted_pairs": 24,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1729,
+      "entities": 46,
+      "changed": true,
+      "inverted_pairs": 492,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 44
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1729,
+      "entities": 27,
+      "changed": true,
+      "inverted_pairs": 7,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27,
+      "inverted_id_pairs": [
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "4bb6c452deb8087a951f11f5"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "d46f6bd11415ccf1daa82d00"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "74d052bea0ec0a983f56397f"
+          ],
+          "labels": [
+            "paragraph_title",
+            "paragraph_title"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "feca610fb4b6bb4c0aa202e8"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "20f43fce68d9e6ebd6c09f9a"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "12182141ae049e32fa7dd2a6"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "7916de669f037999d613f1fd"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        }
+      ],
+      "canonical_cid_prior": {
+        "horizontal": [
+          [
+            "6c111128e2de0ece3564d900",
+            "70cec33636fd2e0cf06ebfbf"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "6649f9dd816dc469b1ae9f6a",
+            "0869d11e77a9cfb546bdf05b"
+          ]
+        ]
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1729,
+      "entities": 25,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "22cbc145c0650ec73e312929",
+            "7ac71374fb72c8322bec5760"
+          ]
+        ]
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1729,
+      "entities": 13,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 78,
+      "input_index_changed": 13,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1729,
+      "entities": 12,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 66,
+      "input_index_changed": 9,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [
+          [
+            "58366873d715afc759395728",
+            "4460124a748e29bb9ca032cf"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [
+          [
+            "58366873d715afc759395728",
+            "4460124a748e29bb9ca032cf"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "3e2922a3d640013639c1b716",
+            "4bb6fbc105cac1cbeac504e0"
+          ]
+        ]
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1729,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "062b898d6f55b31737e31cb2",
+            "7c9d59f7afeb8c4dfe03dffa"
+          ]
+        ]
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1729,
+      "entities": 14,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 91,
+      "input_index_changed": 13,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1729,
+      "entities": 9,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1729,
+      "entities": 10,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 45,
+      "input_index_changed": 8,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1729,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1729,
+      "entities": 46,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 44,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1729,
+      "entities": 27,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27,
+      "max_pair_probability_delta": 0.10794520705276134,
+      "mean_pair_probability_delta": 0.000315830657543455,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1729,
+      "entities": 25,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25,
+      "max_pair_probability_delta": 8.952107222064847e-06,
+      "mean_pair_probability_delta": 3.376432934906748e-08,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 2.05613304160579e-12,
+      "mean_pair_probability_delta": 3.4697752041448324e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 1.3634316657623225e-12,
+      "mean_pair_probability_delta": 2.3897258641523296e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1729,
+      "entities": 13,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 78,
+      "input_index_changed": 13,
+      "max_pair_probability_delta": 0.22549645507467642,
+      "mean_pair_probability_delta": 0.00395530676277643,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1729,
+      "entities": 12,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 66,
+      "input_index_changed": 9,
+      "max_pair_probability_delta": 1.7377629514786133e-10,
+      "mean_pair_probability_delta": 2.936382687311806e-12,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1729,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 4.258441320390592e-11,
+      "mean_pair_probability_delta": 4.993489684390846e-13,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1729,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8,
+      "max_pair_probability_delta": 1.1475265182525618e-12,
+      "mean_pair_probability_delta": 2.3143501292076394e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1729,
+      "entities": 14,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 91,
+      "input_index_changed": 13,
+      "max_pair_probability_delta": 7.275291480368651e-12,
+      "mean_pair_probability_delta": 1.0552897469416074e-13,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1729,
+      "entities": 9,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9,
+      "max_pair_probability_delta": 2.309792961970711e-11,
+      "mean_pair_probability_delta": 1.1001024843308614e-12,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1729,
+      "entities": 10,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 45,
+      "input_index_changed": 8,
+      "max_pair_probability_delta": 7.991409149165437e-12,
+      "mean_pair_probability_delta": 2.0367853582083362e-13,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1729,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 8,
+      "max_pair_probability_delta": 1.2322546733089869e-06,
+      "mean_pair_probability_delta": 2.2404697150236577e-08,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1729,
+      "entities": 46,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 44,
+      "max_pair_probability_delta": 2.0136004473601795e-07,
+      "mean_pair_probability_delta": 3.8377304751212956e-10,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1730,
+      "entities": 27,
+      "changed": true,
+      "inverted_pairs": 201,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1730,
+      "entities": 25,
+      "changed": true,
+      "inverted_pairs": 144,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1730,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 49,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1730,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 52,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1730,
+      "entities": 13,
+      "changed": true,
+      "inverted_pairs": 44,
+      "evaluated_pairs": 78,
+      "input_index_changed": 12
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1730,
+      "entities": 12,
+      "changed": true,
+      "inverted_pairs": 34,
+      "evaluated_pairs": 66,
+      "input_index_changed": 11
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1730,
+      "entities": 15,
+      "changed": true,
+      "inverted_pairs": 68,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1730,
+      "entities": 11,
+      "changed": true,
+      "inverted_pairs": 35,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1730,
+      "entities": 14,
+      "changed": true,
+      "inverted_pairs": 44,
+      "evaluated_pairs": 91,
+      "input_index_changed": 14
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1730,
+      "entities": 9,
+      "changed": true,
+      "inverted_pairs": 15,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1730,
+      "entities": 10,
+      "changed": true,
+      "inverted_pairs": 19,
+      "evaluated_pairs": 45,
+      "input_index_changed": 10
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1730,
+      "entities": 11,
+      "changed": true,
+      "inverted_pairs": 32,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1730,
+      "entities": 46,
+      "changed": true,
+      "inverted_pairs": 456,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 46
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1730,
+      "entities": 27,
+      "changed": true,
+      "inverted_pairs": 7,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27,
+      "inverted_id_pairs": [
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "4bb6c452deb8087a951f11f5"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "d46f6bd11415ccf1daa82d00"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "74d052bea0ec0a983f56397f"
+          ],
+          "labels": [
+            "paragraph_title",
+            "paragraph_title"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "feca610fb4b6bb4c0aa202e8"
+          ],
+          "labels": [
+            "paragraph_title",
+            "text"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "20f43fce68d9e6ebd6c09f9a"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "12182141ae049e32fa7dd2a6"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        },
+        {
+          "ids": [
+            "70cec33636fd2e0cf06ebfbf",
+            "7916de669f037999d613f1fd"
+          ],
+          "labels": [
+            "paragraph_title",
+            "page_footnote"
+          ]
+        }
+      ],
+      "canonical_cid_prior": {
+        "horizontal": [
+          [
+            "6c111128e2de0ece3564d900",
+            "70cec33636fd2e0cf06ebfbf"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1730,
+      "entities": 25,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "af7ace841809885ec55b9607",
+            "a0a839202655a7b9b19e148a"
+          ]
+        ]
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "22cbc145c0650ec73e312929",
+            "7ac71374fb72c8322bec5760"
+          ]
+        ]
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1730,
+      "entities": 13,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 78,
+      "input_index_changed": 12,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1730,
+      "entities": 12,
+      "changed": true,
+      "inverted_pairs": 1,
+      "evaluated_pairs": 66,
+      "input_index_changed": 11,
+      "inverted_id_pairs": [
+        {
+          "ids": [
+            "4460124a748e29bb9ca032cf",
+            "6e82901482ba8829949dd176"
+          ],
+          "labels": [
+            "chart",
+            "chart"
+          ]
+        }
+      ],
+      "canonical_cid_prior": {
+        "horizontal": [
+          [
+            "58366873d715afc759395728",
+            "4460124a748e29bb9ca032cf"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [
+          [
+            "6e82901482ba8829949dd176",
+            "2e48d2a08cc266a513c93f96"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": [
+          [
+            "3e2922a3d640013639c1b716",
+            "4bb6fbc105cac1cbeac504e0"
+          ]
+        ]
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1730,
+      "entities": 11,
+      "changed": true,
+      "inverted_pairs": 4,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11,
+      "inverted_id_pairs": [
+        {
+          "ids": [
+            "39be739527ddc01b72c25a7a",
+            "c30017c72bb28a4b83cc93e5"
+          ],
+          "labels": [
+            "chart",
+            "chart"
+          ]
+        },
+        {
+          "ids": [
+            "6a0f3a7a0c5b19f767ef020e",
+            "c30017c72bb28a4b83cc93e5"
+          ],
+          "labels": [
+            "text",
+            "chart"
+          ]
+        },
+        {
+          "ids": [
+            "062b898d6f55b31737e31cb2",
+            "c30017c72bb28a4b83cc93e5"
+          ],
+          "labels": [
+            "text",
+            "chart"
+          ]
+        },
+        {
+          "ids": [
+            "7c9d59f7afeb8c4dfe03dffa",
+            "c30017c72bb28a4b83cc93e5"
+          ],
+          "labels": [
+            "text",
+            "chart"
+          ]
+        }
+      ],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [
+          [
+            "ea6836f6ea16dc355d4f7486",
+            "c30017c72bb28a4b83cc93e5"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1730,
+      "entities": 14,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 91,
+      "input_index_changed": 14,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1730,
+      "entities": 9,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [
+          [
+            "4172325feffd644a2a194569",
+            "6c57d74aa70f54956b1f252b"
+          ]
+        ],
+        "near_vertical": []
+      },
+      "cid_prior_changed": true
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1730,
+      "entities": 10,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 45,
+      "input_index_changed": 10,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1730,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1730,
+      "entities": 46,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 46,
+      "inverted_id_pairs": [],
+      "canonical_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "permuted_cid_prior": {
+        "horizontal": [],
+        "near_vertical": []
+      },
+      "cid_prior_changed": false
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 0,
+      "page_number": 1,
+      "seed": 1730,
+      "entities": 27,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 351,
+      "input_index_changed": 27,
+      "max_pair_probability_delta": 0.05029137393681138,
+      "mean_pair_probability_delta": 0.00014782699523860896,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 1,
+      "page_number": 2,
+      "seed": 1730,
+      "entities": 25,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 300,
+      "input_index_changed": 25,
+      "max_pair_probability_delta": 5.519096162977589e-06,
+      "mean_pair_probability_delta": 2.2058454456750483e-08,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 2,
+      "page_number": 3,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 2.006173005497658e-12,
+      "mean_pair_probability_delta": 3.5086541929619606e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 3,
+      "page_number": 4,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 1.0714574865272947e-12,
+      "mean_pair_probability_delta": 1.8781518843895945e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 4,
+      "page_number": 5,
+      "seed": 1730,
+      "entities": 13,
+      "changed": true,
+      "inverted_pairs": 1,
+      "evaluated_pairs": 78,
+      "input_index_changed": 12,
+      "max_pair_probability_delta": 0.42955894299707387,
+      "mean_pair_probability_delta": 0.008974714253042996,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": [
+        {
+          "ids": [
+            "60c4f745e6364988d74eeb22",
+            "eb0612d39cf995243660c13e"
+          ],
+          "labels": [
+            "text",
+            "chart"
+          ],
+          "canonical_pair_probability": 0.9999999987711361,
+          "permuted_pair_probability": 0.9999999723409988,
+          "canonical_votes": [
+            10.000000001183485,
+            10.537388333793665
+          ],
+          "permuted_votes": [
+            10.000000027619654,
+            9.837360622438283
+          ],
+          "canonical_input_positions": [
+            10,
+            7
+          ],
+          "permuted_input_positions": [
+            0,
+            3
+          ]
+        }
+      ],
+      "largest_vote_changes": [
+        {
+          "id": "60c4f745e6364988d74eeb22",
+          "label": "text",
+          "canonical_vote": 10.000000001183485,
+          "permuted_vote": 10.000000027619654,
+          "largest_incoming_score_changes": [
+            {
+              "other_id": "eb0612d39cf995243660c13e",
+              "other_label": "chart",
+              "canonical_score": 1.2288639949502984e-09,
+              "permuted_score": 2.7659001287255177e-08,
+              "delta": 2.643013729230488e-08
+            },
+            {
+              "other_id": "031291fc13d684a8d472161e",
+              "other_label": "text",
+              "canonical_score": 0.9999999999648304,
+              "permuted_score": 0.9999999999708746,
+              "delta": 6.044276190664277e-12
+            },
+            {
+              "other_id": "af4b9488906ba2d95b68c5dc",
+              "other_label": "text",
+              "canonical_score": 0.9999999999959637,
+              "permuted_score": 0.9999999999950051,
+              "delta": -9.585665594613602e-13
+            }
+          ]
+        },
+        {
+          "id": "eb0612d39cf995243660c13e",
+          "label": "chart",
+          "canonical_vote": 10.537388333793665,
+          "permuted_vote": 9.837360622438283,
+          "largest_incoming_score_changes": [
+            {
+              "other_id": "af4b9488906ba2d95b68c5dc",
+              "other_label": "text",
+              "canonical_score": 0.6615812888132477,
+              "permuted_score": 0.2320223458161739,
+              "delta": -0.42955894299707387
+            },
+            {
+              "other_id": "4479ff6ae1a9cde403cfff46",
+              "other_label": "paragraph_title",
+              "canonical_score": 0.9076833039004499,
+              "permuted_score": 0.7137949943125688,
+              "delta": -0.19388830958788117
+            },
+            {
+              "other_id": "031291fc13d684a8d472161e",
+              "other_label": "text",
+              "canonical_score": 0.9681239541134264,
+              "permuted_score": 0.8915438912911628,
+              "delta": -0.0765800628222636
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 5,
+      "page_number": 6,
+      "seed": 1730,
+      "entities": 12,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 66,
+      "input_index_changed": 11,
+      "max_pair_probability_delta": 6.447008987205832e-11,
+      "mean_pair_probability_delta": 1.3992469789268029e-12,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 6,
+      "page_number": 7,
+      "seed": 1730,
+      "entities": 15,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 105,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 2.6715484383620447e-10,
+      "mean_pair_probability_delta": 3.035823243898605e-12,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 7,
+      "page_number": 8,
+      "seed": 1730,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11,
+      "max_pair_probability_delta": 3.5136338283336954e-12,
+      "mean_pair_probability_delta": 6.678175226995838e-14,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 8,
+      "page_number": 9,
+      "seed": 1730,
+      "entities": 14,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 91,
+      "input_index_changed": 14,
+      "max_pair_probability_delta": 2.024536094324958e-11,
+      "mean_pair_probability_delta": 2.9176724142007794e-13,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 9,
+      "page_number": 10,
+      "seed": 1730,
+      "entities": 9,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 36,
+      "input_index_changed": 9,
+      "max_pair_probability_delta": 9.502226385466536e-11,
+      "mean_pair_probability_delta": 3.632847621286492e-12,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 10,
+      "page_number": 11,
+      "seed": 1730,
+      "entities": 10,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 45,
+      "input_index_changed": 10,
+      "max_pair_probability_delta": 3.5832995699095487e-12,
+      "mean_pair_probability_delta": 1.2142156163450705e-13,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 11,
+      "page_number": 12,
+      "seed": 1730,
+      "entities": 11,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 55,
+      "input_index_changed": 11,
+      "max_pair_probability_delta": 7.44128435592055e-07,
+      "mean_pair_probability_delta": 1.352974337309849e-08,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 12,
+      "page_number": 13,
+      "seed": 1730,
+      "entities": 46,
+      "changed": false,
+      "inverted_pairs": 0,
+      "evaluated_pairs": 1035,
+      "input_index_changed": 46,
+      "max_pair_probability_delta": 4.035703434768223e-07,
+      "mean_pair_probability_delta": 7.236923086187116e-10,
+      "fixed_pair_preferences_preserve_order": true,
+      "category_mapping_unchanged": true,
+      "changed_pair_details": []
+    }
+  ],
+  "limitations": [
+    "Hantian token logits were not saved: cannot split neural effects from upstream greedy-decoder tie handling.",
+    "Docling records final indices only: CID graph predicates can be inspected but original traversal/R-tree trace cannot be reconstructed completely without rerunning the predictor.",
+    "PP decoder replay uses CPU float64, not original CUDA float32 reduction order; all saved native ranks nevertheless match.",
+    "No repeated identical-input inference exists to isolate residual GPU numerical nondeterminism."
+  ]
+}

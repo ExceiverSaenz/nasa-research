@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "protocol": "file:",
+  "http_requests": 0,
+  "papers": 15,
+  "predictions": 2382,
+  "all_candidates_displayed": true,
+  "referenced_images_loaded": true,
+  "synthetic_reviews_save_reload_export_import": true,
+  "real_reviews_untouched": true,
+  "semantic_acceptance": false
+}

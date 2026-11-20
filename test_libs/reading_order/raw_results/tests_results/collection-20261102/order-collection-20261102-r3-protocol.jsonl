@@ -1,0 +1,30 @@
+{"event": "start", "time": 1793611949.5198731}
+{"event": "output", "elapsed_s": 2.854, "progress_messages": 0, "result_marker": false, "ready_marker": true, "output_type": "stream"}
+{"event": "return", "elapsed_s": 2.883}
+{"event": "start", "time": 1793611952.4109218}
+{"event": "output", "elapsed_s": 5.327, "progress_messages": 1, "result_marker": false, "ready_marker": false, "output_type": "stream"}
+{"event": "output", "elapsed_s": 10.294, "progress_messages": 1, "result_marker": false, "ready_marker": false, "output_type": "stream"}
+{"event": "output", "elapsed_s": 12.494, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 12.528}
+{"event": "start", "time": 1793611964.9765544}
+{"event": "output", "elapsed_s": 2.949, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 2.973}
+{"event": "start", "time": 1793611967.9856431}
+{"event": "output", "elapsed_s": 0.814, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 0.834}
+{"event": "start", "time": 1793611968.8465726}
+{"event": "output", "elapsed_s": 0.714, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 0.76}
+{"event": "start", "time": 1793611969.6354022}
+{"event": "output", "elapsed_s": 5.305, "progress_messages": 1, "result_marker": false, "ready_marker": false, "output_type": "stream"}
+{"event": "output", "elapsed_s": 42.525, "progress_messages": 1, "result_marker": false, "ready_marker": false, "output_type": "stream"}
+{"event": "output", "elapsed_s": 42.56, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 42.589}
+{"event": "start", "time": 1793612012.2493672}
+{"event": "output", "elapsed_s": 5.911, "progress_messages": 1, "result_marker": false, "ready_marker": false, "output_type": "stream"}
+{"event": "output", "elapsed_s": 10.196, "progress_messages": 0, "result_marker": true, "ready_marker": false, "output_type": "stream"}
+{"event": "return", "elapsed_s": 10.244}
+{"event": "start", "time": 1793612022.5997145}
+{"event": "error", "elapsed_s": 150.023, "error_type": "RuntimeError"}
+{"event": "start", "time": 1793612172.7730725}
+{"event": "return", "elapsed_s": 2.739}

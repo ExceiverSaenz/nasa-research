@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "contract": "mineru_top_level_block_ordinal/v1",
+  "pages": 13,
+  "eligible_entities": 223,
+  "presentation_permutations_checked": 39,
+  "primary_sha256_unchanged": "1d5a8969b26da1f9611b1fa21a5c4060fd033bb5884ec1664e63b621fbbb050d",
+  "original_references_hash_verified": true,
+  "new_inferences": 0,
+  "pdf_reads": 0,
+  "source_copies": false
+}

@@ -1,0 +1,9 @@
+{
+  "candidates": ["hantian", "docling", "xycut_plus_plus", "xycut", "pp_doclayout_v2", "doctr"],
+  "source_registry": "../../test/test_config/sources.json",
+  "validated_environment": "../../raw_results/tests_results/20261102T052716Z-config-7e26b3",
+  "profile": "order-modern",
+  "backend": "colab_cli",
+  "accelerator": "A100",
+  "selection": "12.pdf pilot selected by user; confirmation not selected or executed"
+}

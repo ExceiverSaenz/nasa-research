@@ -1,0 +1,1638 @@
+{
+  "audit_status": "PASS",
+  "requested_runs_complete": false,
+  "sources": [
+    {
+      "run_id": "pilot-12-20261102",
+      "manifest_sha256": "1d5a8969b26da1f9611b1fa21a5c4060fd033bb5884ec1664e63b621fbbb050d",
+      "predictions": 78
+    },
+    {
+      "run_id": "pilot-12-20261102-permutation-1729",
+      "manifest_sha256": "7123582868e59154fc809c0f8a2c78536b99fa7b5f4843775b8e2e80440f2783",
+      "predictions": 78
+    },
+    {
+      "run_id": "pilot-12-20261102-permutation-1730",
+      "manifest_sha256": "d6ec5aad6b56d8546df94abee7e71b43479b10c4ed0be00c725ee15746362268",
+      "predictions": 78
+    }
+  ],
+  "original_hashes_unchanged": true,
+  "metric_kind": "input_permutation_stability",
+  "scope_equivalence": "Identical frozen references, page, eligible IDs and route; only permutation_seed differs",
+  "summary": [
+    {
+      "candidate_id": "docling",
+      "expected_conditions": 26,
+      "compared_conditions": 7,
+      "failed_conditions": 19,
+      "identical_orders": 6,
+      "changed_orders": 1
+    },
+    {
+      "candidate_id": "doctr",
+      "expected_conditions": 26,
+      "compared_conditions": 0,
+      "failed_conditions": 26,
+      "identical_orders": 0,
+      "changed_orders": 0
+    },
+    {
+      "candidate_id": "hantian",
+      "expected_conditions": 26,
+      "compared_conditions": 13,
+      "failed_conditions": 13,
+      "identical_orders": 0,
+      "changed_orders": 13
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "expected_conditions": 26,
+      "compared_conditions": 0,
+      "failed_conditions": 26,
+      "identical_orders": 0,
+      "changed_orders": 0
+    },
+    {
+      "candidate_id": "xycut",
+      "expected_conditions": 26,
+      "compared_conditions": 0,
+      "failed_conditions": 26,
+      "identical_orders": 0,
+      "changed_orders": 0
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "expected_conditions": 26,
+      "compared_conditions": 0,
+      "failed_conditions": 26,
+      "identical_orders": 0,
+      "changed_orders": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "candidate_id": "hantian",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5014245014245015,
+      "successor_jaccard": 0.08333333333333333
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5833333333333334,
+      "successor_jaccard": 0.02127659574468085
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.6,
+      "successor_jaccard": 0.037037037037037035
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.3238095238095238,
+      "successor_jaccard": 0.12
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.41025641025641024,
+      "successor_jaccard": 0.043478260869565216
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5454545454545454,
+      "successor_jaccard": 0.0
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5238095238095238,
+      "successor_jaccard": 0.037037037037037035
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.4,
+      "successor_jaccard": 0.05263157894736842
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5494505494505495,
+      "successor_jaccard": 0.04
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.4444444444444444,
+      "successor_jaccard": 0.0
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.5777777777777777,
+      "successor_jaccard": 0.0
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.43636363636363634,
+      "successor_jaccard": 0.0
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.4753623188405797,
+      "successor_jaccard": 0.034482758620689655
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": false,
+      "precedence_disagreement": 0.019943019943019943,
+      "successor_jaccard": 0.7931034482758621
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "PASS",
+      "comparison_status": "comparable",
+      "identical_order": true,
+      "precedence_disagreement": 0.0,
+      "successor_jaccard": 1.0
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 0,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 1,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 2,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 3,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 4,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 5,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 6,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 7,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 8,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 9,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 10,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 11,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 12,
+      "seed": 1729,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "hantian",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "docling",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "xycut",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 0,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 1,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 2,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 3,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 4,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 5,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 6,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 7,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 8,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 9,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 10,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 11,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    },
+    {
+      "candidate_id": "doctr",
+      "page_idx": 12,
+      "seed": 1730,
+      "status": "FAIL",
+      "comparison_status": "not_comparable",
+      "identical_order": null,
+      "precedence_disagreement": null,
+      "successor_jaccard": null
+    }
+  ],
+  "selection": "selection_pending",
+  "semantic_accuracy": "not_measured"
+}

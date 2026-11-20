@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETE",
+  "authorization": "Only corrected Docling validation and Hantian/XY-Cut++ pending investigations; user explicitly deferred the 15-paper collection and confirmation.",
+  "tests_passed": 96,
+  "test_receipt": "offline-final/test-receipt.json",
+  "environment_receipt": "environment-r2/environment.json",
+  "results": "../../code_results/docling-hantian-validation-20261102/summary.json",
+  "analysis": "../../analytics_results/docling-hantian-validation-20261102/analysis.json",
+  "xycut_audit": "../../analytics_results/xycut-fidelity-20261102/audit.json",
+  "docling": {"valid":39,"permutation_comparisons":26,"changed_orders":0,"stable_cid_maps":39},
+  "hantian": {"valid":52,"decoder_replays_matched":52,"identical_input_controls":13,"identical_input_max_logit_delta":0.0,"fixed_logits_decoder_changes":0,"changed_input_permutations":26,"attribution":"neural output in tested conditions"},
+  "xycut_plus_plus": {"audit":"DIVERGES_FROM_PAPER","new_inferences":0,"automatic_replacement":false},
+  "source_copies":false,
+  "pdf_reads":0,
+  "old_results_unchanged":true,
+  "collection_executed":false,
+  "confirmation_executed":false,
+  "human_review":"deferred until the user can see all papers",
+  "session":"order-docling-hantian-20261102-r2",
+  "session_closed":true,
+  "first_preparation_attempt":"unresponsive before inference; records preserved, session closed, manually replaced with fresh A100 using the same validated lock",
+  "semantic_accuracy":"not_measured"
+}

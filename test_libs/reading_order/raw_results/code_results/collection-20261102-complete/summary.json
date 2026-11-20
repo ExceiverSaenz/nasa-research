@@ -1,0 +1,78 @@
+{
+  "status": "COMPLETE_WITH_FAILURES",
+  "papers": 15,
+  "pages": 397,
+  "expected": 2382,
+  "reused": 217,
+  "per_candidate": [
+    {
+      "candidate_id": "hantian",
+      "expected": 397,
+      "statuses": {
+        "PASS": 397,
+        "FAIL": 0,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 0
+      }
+    },
+    {
+      "candidate_id": "docling",
+      "expected": 397,
+      "statuses": {
+        "PASS": 76,
+        "FAIL": 1,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 320
+      }
+    },
+    {
+      "candidate_id": "xycut_plus_plus",
+      "expected": 397,
+      "statuses": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 397
+      }
+    },
+    {
+      "candidate_id": "xycut",
+      "expected": 397,
+      "statuses": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 397
+      }
+    },
+    {
+      "candidate_id": "pp_doclayout_v2",
+      "expected": 397,
+      "statuses": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 397
+      }
+    },
+    {
+      "candidate_id": "doctr",
+      "expected": 397,
+      "statuses": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNSUPPORTED": 0,
+        "NOT_RUN": 397
+      }
+    }
+  ],
+  "source_copies": false,
+  "source_hashes_verified": true,
+  "pdf_persistence": "memory_only",
+  "stability_permutations_executed": false,
+  "client_rotations": 13,
+  "cached_replies_recovered": 4,
+  "historical_cached_results": 1,
+  "bootstrap_retries": 0,
+  "selection": "selection_pending"
+}

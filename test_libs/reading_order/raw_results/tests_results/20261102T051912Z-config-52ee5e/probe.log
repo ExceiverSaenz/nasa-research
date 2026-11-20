@@ -1,0 +1,67 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+............F                                                            [100%]
+=================================== FAILURES ===================================
+______ test_imports_do_not_start_processes_open_network_or_read_datasets _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe0b3fe7d50>
+
+    def test_imports_do_not_start_processes_open_network_or_read_datasets(monkeypatch):
+        import socket
+        import subprocess
+        def forbidden(*args, **kwargs):
+            raise AssertionError('import attempted an external effect')
+        monkeypatch.setattr(socket, 'create_connection', forbidden)
+        monkeypatch.setattr(subprocess, 'run', forbidden)
+        monkeypatch.setattr(subprocess, 'Popen', forbidden)
+        monkeypatch.setattr(Path, 'read_bytes', forbidden)
+        monkeypatch.setattr(Path, 'read_text', forbidden)
+        monkeypatch.syspath_prepend(str(Path(__file__).parent))
+        for name in ('probe_environment', 'prepare_environment', 'run_config', 'inspect_host'):
+            spec = importlib.util.spec_from_file_location('inert_' + name, Path(__file__).with_name(name + '.py'))
+            module = importlib.util.module_from_spec(spec)
+>           spec.loader.exec_module(module)
+
+order-config-20261102/test_validation.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+<frozen importlib._bootstrap_external>:940: in exec_module
+    ???
+<frozen importlib._bootstrap>:241: in _call_with_frames_removed
+    ???
+order-config-20261102/run_config.py:26: in <module>
+    PROJECT = HERE.parents[3]
+              ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <PosixPath.parents>, idx = 3
+
+    def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            return tuple(self[i] for i in range(*idx.indices(len(self))))
+    
+        if idx >= len(self) or idx < -len(self):
+>           raise IndexError(idx)
+E           IndexError: 3
+
+/root/.local/share/uv/python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/pathlib.py:445: IndexError
+=========================== short test summary info ============================
+FAILED order-config-20261102/test_validation.py::test_imports_do_not_start_processes_open_network_or_read_datasets
+1 failed, 12 passed in 0.12s
+
+
+[0;31m---------------------------------------------------------------------------[0m[0;31mCalledProcessError[0m                        Traceback (most recent call last)[0;32m/tmp/ipykernel_1363/3375356658.py[0m in [0;36m<cell line: 0>[0;34m()[0m
+[1;32m      7[0m  [0mprint[0m[0;34m([0m[0mtests[0m[0;34m.[0m[0mstdout[0m[0;34m,[0m[0mflush[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      8[0m  [0mprint[0m[0;34m([0m[0mtests[0m[0;34m.[0m[0mstderr[0m[0;34m,[0m[0mflush[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 9[0;31m  [0mtests[0m[0;34m.[0m[0mcheck_returncode[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     10[0m  [0mresult[0m[0;34m=[0m[0msubprocess[0m[0;34m.[0m[0mrun[0m[0;34m([0m[0;34m[[0m[0mp[0m[0;34m,[0m[0;34m'-B'[0m[0;34m,[0m[0mroot[0m[0;34m+[0m[0;34m'/probe_environment.py'[0m[0;34m,[0m[0;34m'--root'[0m[0;34m,[0m[0mroot[0m[0;34m,[0m[0;34m'--run-id'[0m[0;34m,[0m[0;34m'20261102T051912Z-config-52ee5e'[0m[0;34m,[0m[0;34m'--r2-request'[0m[0;34m,[0m[0mroot[0m[0;34m+[0m[0;34m'/r2-request.json'[0m[0;34m][0m[0;34m,[0m[0mcapture_output[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m[0mtext[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     11[0m  [0mprint[0m[0;34m([0m[0mresult[0m[0;34m.[0m[0mstdout[0m[0;34m,[0m[0mflush[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/usr/lib/python3.13/subprocess.py[0m in [0;36mcheck_returncode[0;34m(self)[0m
+[1;32m    507[0m         [0;34m"""Raise CalledProcessError if the exit code is non-zero."""[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    508[0m         [0;32mif[0m [0mself[0m[0;34m.[0m[0mreturncode[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 509[0;31m             raise CalledProcessError(self.returncode, self.args, self.stdout,
+[0m[1;32m    510[0m                                      self.stderr)
+[1;32m    511[0m [0;34m[0m[0m
+[0;31mCalledProcessError[0m: Command '['/content/order-config-20261102/venv/bin/python', '-B', '-m', 'pytest', '/content/order-config-20261102/test_validation.py', '-q', '-p', 'no:cacheprovider']' returned non-zero exit status 1.

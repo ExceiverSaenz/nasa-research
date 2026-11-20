@@ -1,0 +1,23 @@
+F0 frozen; F1 verifying receipts, native files, PDFs and existing backgrounds.
+  verified heron
+  verified heron101
+  verified basic
+  verified standard
+F1 complete; F2 computing per-page agreements and descriptors.
+  analyzed 1.pdf (26 pages)
+  analyzed 10.pdf (9 pages)
+  analyzed 11.pdf (21 pages)
+  analyzed 12.pdf (13 pages)
+  analyzed 14.pdf (68 pages)
+  analyzed 15.pdf (59 pages)
+  analyzed 17.pdf (71 pages)
+  analyzed 2.pdf (12 pages)
+  analyzed 3.pdf (4 pages)
+  analyzed 4.pdf (4 pages)
+  analyzed 5.pdf (9 pages)
+  analyzed 6.pdf (26 pages)
+  analyzed 7.pdf (14 pages)
+  analyzed 8.pdf (49 pages)
+  analyzed 9.pdf (12 pages)
+F2 and review preparation complete; verifying protected inputs again.
+{"papers": 15, "pages": 397, "tool_page_outputs": 1588, "tools": {"heron": {"rows": 4889, "valid": 4889, "missing": 0, "invalid": 0}, "heron101": {"rows": 4777, "valid": 4777, "missing": 0, "invalid": 0}, "basic": {"rows": 12769, "valid": 4966, "missing": 7803, "invalid": 0}, "standard": {"rows": 12805, "valid": 4965, "missing": 7840, "invalid": 0}}, "positive_overlap_edges": 35778, "candidate_components": 24878, "geometry_candidate_rows": 2494, "human_reviewed_pages": 0, "automatic_semantic_errors": null, "semantic_error_count_meaning": "not_computed; zero_is_not_zero_errors", "native_pattern_totals": {"heron": {"parent_edges": 0, "dangling_parent_refs": 0, "visual_parent_nodes": 357, "visual_caption_parents": 0, "explicit_panel_nodes": 0, "list_item_nodes": 952, "list_groups_with_items": 0, "opaque_relation_fields": 0}, "heron101": {"parent_edges": 0, "dangling_parent_refs": 0, "visual_parent_nodes": 348, "visual_caption_parents": 0, "explicit_panel_nodes": 0, "list_item_nodes": 928, "list_groups_with_items": 0, "opaque_relation_fields": 0}, "basic": {"parent_edges": 8601, "dangling_parent_refs": 0, "visual_parent_nodes": 375, "visual_caption_parents": 251, "explicit_panel_nodes": 0, "list_item_nodes": 0, "list_groups_with_items": 0, "opaque_relation_fields": 0}, "standard": {"parent_edges": 8637, "dangling_parent_refs": 0, "visual_parent_nodes": 375, "visual_caption_parents": 251, "explicit_panel_nodes": 0, "list_item_nodes": 0, "list_groups_with_items": 0, "opaque_relation_fields": 0}}}

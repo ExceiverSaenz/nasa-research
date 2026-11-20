@@ -1,0 +1,178 @@
+{
+  "block_pairs": [
+    {
+      "tool_a": "heron",
+      "tool_b": "heron101",
+      "pages": 397,
+      "area_jaccard": 0.9731476448574214,
+      "equivalent_spatial_clusters": 4271,
+      "category_evaluable_clusters": 3631,
+      "category_equal_clusters": 3594,
+      "category_agreement": 0.9898099697053153,
+      "equivalent_box": 3726,
+      "split_merge_extent_or_redundancy": 154,
+      "complex_many_many": 109,
+      "no_strong_correspondence": 107,
+      "boundary_or_extent_difference": 213,
+      "granularity_candidate": 7,
+      "shape_1:1": 3939,
+      "shape_1:n": 66,
+      "shape_n:m": 109,
+      "shape_unmatched_a": 89,
+      "shape_n:1": 95,
+      "shape_unmatched_b": 18
+    },
+    {
+      "tool_a": "heron",
+      "tool_b": "basic",
+      "pages": 397,
+      "area_jaccard": 0.9106004606975747,
+      "equivalent_spatial_clusters": 2093,
+      "category_evaluable_clusters": 1502,
+      "category_equal_clusters": 1384,
+      "category_agreement": 0.9214380825565912,
+      "equivalent_box": 2052,
+      "boundary_or_extent_difference": 1649,
+      "granularity_candidate": 29,
+      "split_merge_extent_or_redundancy": 194,
+      "no_strong_correspondence": 343,
+      "complex_many_many": 37,
+      "shape_1:1": 3701,
+      "shape_1:n": 41,
+      "shape_n:1": 182,
+      "shape_unmatched_b": 38,
+      "shape_unmatched_a": 305,
+      "shape_n:m": 37
+    },
+    {
+      "tool_a": "heron",
+      "tool_b": "standard",
+      "pages": 397,
+      "area_jaccard": 0.9106001436622098,
+      "equivalent_spatial_clusters": 2093,
+      "category_evaluable_clusters": 1502,
+      "category_equal_clusters": 1384,
+      "category_agreement": 0.9214380825565912,
+      "equivalent_box": 2052,
+      "boundary_or_extent_difference": 1649,
+      "granularity_candidate": 29,
+      "split_merge_extent_or_redundancy": 194,
+      "no_strong_correspondence": 343,
+      "complex_many_many": 37,
+      "shape_1:1": 3701,
+      "shape_1:n": 41,
+      "shape_n:1": 182,
+      "shape_unmatched_b": 38,
+      "shape_unmatched_a": 305,
+      "shape_n:m": 37
+    },
+    {
+      "tool_a": "heron101",
+      "tool_b": "basic",
+      "pages": 397,
+      "area_jaccard": 0.9038434483494112,
+      "equivalent_spatial_clusters": 2047,
+      "category_evaluable_clusters": 1469,
+      "category_equal_clusters": 1365,
+      "category_agreement": 0.9292035398230089,
+      "equivalent_box": 2068,
+      "granularity_candidate": 29,
+      "boundary_or_extent_difference": 1628,
+      "split_merge_extent_or_redundancy": 151,
+      "no_strong_correspondence": 416,
+      "complex_many_many": 28,
+      "shape_1:1": 3696,
+      "shape_1:n": 41,
+      "shape_n:1": 139,
+      "shape_unmatched_b": 106,
+      "shape_unmatched_a": 310,
+      "shape_n:m": 28
+    },
+    {
+      "tool_a": "heron101",
+      "tool_b": "standard",
+      "pages": 397,
+      "area_jaccard": 0.903843148921996,
+      "equivalent_spatial_clusters": 2047,
+      "category_evaluable_clusters": 1469,
+      "category_equal_clusters": 1365,
+      "category_agreement": 0.9292035398230089,
+      "equivalent_box": 2068,
+      "granularity_candidate": 29,
+      "boundary_or_extent_difference": 1628,
+      "split_merge_extent_or_redundancy": 151,
+      "no_strong_correspondence": 416,
+      "complex_many_many": 28,
+      "shape_1:1": 3696,
+      "shape_1:n": 41,
+      "shape_n:1": 139,
+      "shape_unmatched_b": 106,
+      "shape_unmatched_a": 310,
+      "shape_n:m": 28
+    },
+    {
+      "tool_a": "basic",
+      "tool_b": "standard",
+      "pages": 397,
+      "area_jaccard": 0.9999929649614907,
+      "equivalent_spatial_clusters": 4168,
+      "category_evaluable_clusters": 2742,
+      "category_equal_clusters": 2742,
+      "category_agreement": 1.0,
+      "equivalent_box": 4162,
+      "complex_many_many": 3,
+      "shape_1:1": 4162,
+      "shape_n:m": 3
+    }
+  ],
+  "duplicates": [
+    {
+      "tool": "heron",
+      "records": 4889,
+      "unique_geometries": 4806,
+      "coincident_groups": 83,
+      "extra_coincident_records": 83
+    },
+    {
+      "tool": "heron101",
+      "records": 4777,
+      "unique_geometries": 4717,
+      "coincident_groups": 60,
+      "extra_coincident_records": 60
+    },
+    {
+      "tool": "basic",
+      "records": 4966,
+      "unique_geometries": 4529,
+      "coincident_groups": 437,
+      "extra_coincident_records": 437
+    },
+    {
+      "tool": "standard",
+      "records": 4965,
+      "unique_geometries": 4528,
+      "coincident_groups": 437,
+      "extra_coincident_records": 437
+    }
+  ],
+  "block_multi_tool_clusters": 6453,
+  "boundary_candidate_edges": 31,
+  "boundary_candidate_text_boxes": 20,
+  "priority_category_disagreements": {
+    "heading_vs_text": {
+      "clusters": 28,
+      "pages": 22,
+      "papers": 8
+    },
+    "caption_vs_text": {
+      "clusters": 3,
+      "pages": 3,
+      "papers": 3
+    },
+    "visual_vs_text": {
+      "clusters": 1,
+      "pages": 1,
+      "papers": 1
+    }
+  }
+}

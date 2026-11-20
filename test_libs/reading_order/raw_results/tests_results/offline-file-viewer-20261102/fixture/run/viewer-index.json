@@ -1,0 +1,32 @@
+{
+  "schema": "reading-order-viewer/1",
+  "run_id": "run",
+  "input_profile_id": "3b2dd2afc14d64bec651026a61ef74018a77e6f07c49efa71a7156efdd3680ec",
+  "documents": [
+    {
+      "paper_id": "12",
+      "pages": [
+        {
+          "page_idx": 0,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        },
+        {
+          "page_idx": 1,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        }
+      ],
+      "paper_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "exclusions": []
+    }
+  ],
+  "native_cross_page_support": false,
+  "assets": "existing_references_only"
+}

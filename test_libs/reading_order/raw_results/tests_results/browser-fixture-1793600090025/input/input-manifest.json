@@ -1,0 +1,32 @@
+{
+  "schema": "reading-order-input/1",
+  "source_root": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\browser-fixture-1793600090025\\source\\assembled\\basic",
+  "documents": [
+    {
+      "paper_id": "12",
+      "normalized_sha256": "e91c4197e5fef837285d8457184d955f2e785355a0622a1bf36181698a53409c",
+      "middle_sha256": "c82cf800e4cf19c8e4e87cd4db6c5070f46ccbb8aafbbb552f4a13a584837844",
+      "paper_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "pages": [
+        {
+          "page_idx": 0,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        },
+        {
+          "page_idx": 1,
+          "width": 600,
+          "height": 800,
+          "rotation": 0,
+          "pdf_width": 600,
+          "pdf_height": 800
+        }
+      ],
+      "exclusions": []
+    }
+  ],
+  "input_profile_id": "59e7d8ba46e09d55a1eb6882c9b5b3235fc46fe6606cd7d49a8964b159dba39f"
+}

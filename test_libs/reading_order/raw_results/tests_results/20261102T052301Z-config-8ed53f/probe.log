@@ -1,0 +1,25 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+...............                                                          [100%]
+15 passed in 0.09s
+
+
+{"check": "environment", "status": "PASS", "details": {"python": "3.11.16", "platform": "Linux-6.6.159+-x86_64-with-glibc2.39", "interpreter": "/content/order-config-20261102/venv/bin/python", "versions": {"torch": "2.9.1+cu128", "torchvision": "0.24.1+cu128", "transformers": "5.22.1", "docling-slim": "2.145.0", "docling-core": "2.105.0", "python-doctr": "1.1.0", "numpy": "2.2.6", "scipy": "1.16.3", "opencv-python": "4.12.0.88", "pypdf": "6.1.1", "psutil": "7.1.2", "huggingface-hub": "1.33.0", "safetensors": "0.8.0", "rtree": "1.4.1", "pytest": "8.4.2"}, "gpu_driver": "580.82.07"}, "elapsed_s": 8.51}
+{"check": "cuda", "status": "PASS", "details": {"device": "NVIDIA A100-SXM4-40GB", "cuda_runtime": "12.8", "vram_bytes": 42405855232, "capability": [8, 0]}, "elapsed_s": 0.547}
+{"check": "docling", "status": "PASS", "details": {"synthetic_ids": [1, 0], "pdf_or_detector_called": false}, "elapsed_s": 1.615}
+{"check": "doctr", "status": "PASS", "details": {"synthetic_indices": [1, 0], "ocr_called": false}, "elapsed_s": 1.96}
+{"check": "xycut", "status": "PASS", "details": {"synthetic_indices": [1, 0], "source_sha256": "638416ee0f600eb0fe3e1a1b7331ec16c332a52260c2640a49f1bb70786de36b"}, "elapsed_s": 0.002}
+{"check": "xycut_plus_plus", "status": "PASS", "details": {"synthetic_indices": [1, 0], "implementation": "home-still/xycut-plus-plus", "license": "GPL-3.0", "paper_fidelity": "unverified"}, "elapsed_s": 0.002}
+{"check": "hantian", "status": "PASS", "details": {"revision": "629be376d86fbab624ddc4020804a4e93b5515bc", "rank_count": 2, "checkpoint_sha256": "9df7c046b212c1892a649cbf98f2a521bbb32741e8cbc06f10ffd4247b53c451", "scope": "synthetic_two_boxes_only"}, "elapsed_s": 5.293}
+{"check": "pp_doclayout_v2", "status": "FAIL", "details": {"error_type": "ValueError"}, "elapsed_s": 0.38}
+{"check": "r2_pdf", "status": "PASS", "details": {"files": [{"sha256": "9cea2fa5ad94c6a31031c72a9c3f698d571c85c810af644304c3b9f0d306f660", "bytes": 4874584, "paper": "12.pdf", "pages": 13, "first_page_points": [595.276, 793.701], "rotation": 0}], "storage": "R2", "persistence": "memory_only"}, "elapsed_s": 0.396}
+ORDER_CONFIG_COMPLETED:20261102T052301Z-config-8ed53f
+
+
+Loading weights:   0%|          | 0/400 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 400/400 [00:00<00:00, 6366.82it/s]
+
+ORDER_CONFIG_DRIVER_COMPLETED

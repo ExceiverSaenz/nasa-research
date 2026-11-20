@@ -1,0 +1,25 @@
+{
+  "policy": "literal_only; cross_schema_candidates_partial_not_equivalences",
+  "source": "frozen analysis implementation and plan section 3.3",
+  "candidates": {
+    "title": "heading_candidate",
+    "section_header": "heading_candidate",
+    "doc_title": "heading_candidate",
+    "paragraph_title": "heading_candidate",
+    "caption": "caption_candidate",
+    "image_caption": "caption_candidate",
+    "chart_caption": "caption_candidate",
+    "table_caption": "caption_candidate",
+    "image": "visual_candidate",
+    "chart": "visual_candidate",
+    "picture": "visual_candidate",
+    "text": "text_general",
+    "equation": "equation_candidate",
+    "formula": "equation_candidate",
+    "equation_inline": "equation_candidate",
+    "table": "table_candidate",
+    "list_item": "list_item_candidate"
+  },
+  "default": "unmapped",
+  "correspondence_status": "partial; no semantic correctness inferred"
+}

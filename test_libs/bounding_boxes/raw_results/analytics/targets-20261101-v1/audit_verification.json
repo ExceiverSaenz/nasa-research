@@ -1,0 +1,31 @@
+{
+  "input_hashes": {
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\targets_analysis\\references.json": "bfff643a793550909456e0dffcda7998a0926d1501b27051ddc626c7421e6260",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\targets_analysis\\audit.py": "6d85945f79af3a06ffcdb2f4056eab9dd19caee9351f4ab797c0c24b8b999bab",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\targets_analysis\\targets.py": "05c0030cc058b387b3553d1af004f728370a717f612b884e6ff4e9c175688f9c",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\auto-20261101T080056Z-r2\\detections.jsonl": "98bafe4516c94891b0badcb14f82d5c57650abb6039b2e3ea5fe682ffc3edf53",
+    "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\bounding_boxes\\analysis\\targets-20261101-v1\\visual_cases.jsonl": "099024116406525eec77ccfa9f2f2753f061938d647822fec4e88d9fc48589bb"
+  },
+  "unchanged": true,
+  "visual_cases": 65,
+  "unique_scored_cases": 59,
+  "statistically_independent": false,
+  "reference_classes": {
+    "text": 4,
+    "heading": 19,
+    "caption": 5,
+    "author": 6,
+    "number": 1,
+    "metadata": 1,
+    "visual": 10,
+    "table": 3,
+    "equation": 3,
+    "reference": 4,
+    "list": 1,
+    "note": 2
+  },
+  "assessments": 260,
+  "eligible_assessments": 236,
+  "human_validation": false,
+  "source_truth": "assistant_visual_review_of_existing_raster"
+}

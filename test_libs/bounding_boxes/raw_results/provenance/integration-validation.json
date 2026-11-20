@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-11-01T01:09:14.036698+00:00",
+  "tests": 59,
+  "failures_or_errors": 0,
+  "skipped": 0,
+  "browser": "Existing Google Chrome; Playwright 1.58.0 under runtime/browser-deps",
+  "scope": "Local fixtures + mocked Colab workflow; no real inference",
+  "a100_session_started": false,
+  "collection_executed": false,
+  "remote_validation": "NOT_RUN",
+  "screenshot_reviewed": "runtime/test-artifacts/571fcc31520d4311b89a8cadee986a9b/viewer.png",
+  "sha256": {
+    "bbx/workflow.py": "d13362af059a3b94b4b60de33a4969368c6645efb57d43d9666da36e51055b21",
+    "bbx/remote.py": "f9c0ab8867a30dc0dde5572de8b44642834c9d97fba4a5ba7ee19e20c3c165ee",
+    "bbx/mineru_snapshot.py": "fcee0df269b9dad495f4caefd6ce2427909be2d53faaec338418a3102a868000",
+    "bbx/transport.py": "f7ca9ad77cfab840e27c21daf0e3c52ca7712e25ea8c2d4afdf021000f61f6d5",
+    "run.py": "6cf6e8581b6b77922709e8160abcc1a0493e7b1fb425381042e678bbab07ae2a",
+    "viewer/app.js": "1c67723c7129d2045c430b5e6ad8e5347b4fd4ff9846e7abc162e5c7ab99a28b",
+    "tool_manifests/uv-linux.json": "0e096a6b7dec9c16e8e67ec4c2b8579d4d40ec9155317d47551728350c647ea9",
+    "model_manifests/standard-vlm.json": "445c27122f557adc9f7f506cc519a4fbf9c4f3a4d626987fc246d0862998ef66",
+    "runtime/tests-with-browser.xml": "cdd7dc6778c7e59d522f9af85d7d60839ff51211a7ce753e1dfa366a3ccf324e"
+  }
+}

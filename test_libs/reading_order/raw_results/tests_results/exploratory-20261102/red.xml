@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="5" time="1.669" timestamp="2026-11-02T21:18:47.874611-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_analytics.test_exploratory" name="test_association_support_confidence_and_lift_use_consequent_baseline" time="0.534"><failure message="ModuleNotFoundError: No module named 'exploratory_analysis'">def test_association_support_confidence_and_lift_use_consequent_baseline():
+&gt;       from exploratory_analysis import association_counts
+E       ModuleNotFoundError: No module named 'exploratory_analysis'
+
+test_libs\reading_order\test\test_analytics\test_exploratory.py:7: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_exploratory" name="test_constant_iqr_flags_deviations_without_changing_input" time="0.004"><failure message="ModuleNotFoundError: No module named 'exploratory_analysis'">def test_constant_iqr_flags_deviations_without_changing_input():
+&gt;       from exploratory_analysis import upper_fence
+E       ModuleNotFoundError: No module named 'exploratory_analysis'
+
+test_libs\reading_order\test\test_analytics\test_exploratory.py:19: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_exploratory" name="test_leave_one_document_out_is_sensitivity_not_confidence_interval" time="0.005"><failure message="ModuleNotFoundError: No module named 'exploratory_analysis'">def test_leave_one_document_out_is_sensitivity_not_confidence_interval():
+&gt;       from exploratory_analysis import leave_one_out
+E       ModuleNotFoundError: No module named 'exploratory_analysis'
+
+test_libs\reading_order\test\test_analytics\test_exploratory.py:27: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_exploratory" name="test_average_linkage_uses_distances_not_rows_as_features" time="0.005"><failure message="ModuleNotFoundError: No module named 'exploratory_analysis'">def test_average_linkage_uses_distances_not_rows_as_features():
+&gt;       from exploratory_analysis import cluster_distances
+E       ModuleNotFoundError: No module named 'exploratory_analysis'
+
+test_libs\reading_order\test\test_analytics\test_exploratory.py:35: ModuleNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_analytics.test_exploratory" name="test_spearman_handles_constant_and_tied_inputs_without_p_values" time="0.004"><failure message="ModuleNotFoundError: No module named 'exploratory_analysis'">def test_spearman_handles_constant_and_tied_inputs_without_p_values():
+&gt;       from exploratory_analysis import rank_correlation
+E       ModuleNotFoundError: No module named 'exploratory_analysis'
+
+test_libs\reading_order\test\test_analytics\test_exploratory.py:46: ModuleNotFoundError</failure></testcase></testsuite></testsuites>

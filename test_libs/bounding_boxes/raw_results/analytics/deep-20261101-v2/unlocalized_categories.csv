@@ -1,0 +1,7 @@
+tool,label,level,count,spatial_evaluation
+basic,text,child,6766,not_localized_no_parent_bbox_imputation
+basic,equation_inline,inline,652,not_localized_no_parent_bbox_imputation
+standard,text,child,6710,not_localized_no_parent_bbox_imputation
+standard,equation_inline,inline,745,not_localized_no_parent_bbox_imputation
+basic,hyperlink,inline,385,not_localized_no_parent_bbox_imputation
+standard,hyperlink,inline,385,not_localized_no_parent_bbox_imputation

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="6" time="6.773" timestamp="2026-11-02T22:53:39.530251-07:00" hostname="BlackMaria"><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[test_libs/reading_order/raw_results/example.json]" time="2.570" /><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[C:\\old checkout\\test_libs\\reading_order\\raw_results\\example.json]" time="0.086" /><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_saved_references_follow_the_clone_not_the_original_machine[/mnt/c/old checkout/test_libs/reading_order/raw_results/example.json]" time="0.074" /><testcase classname="test_libs.reading_order.test.test_code.test_domain" name="test_rebased_reference_cannot_escape_the_project" time="0.020" /><testcase classname="test_libs.reading_order.test.test_code.test_offline_viewer" name="test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity[False]" time="0.279"><failure message="FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec0\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'">self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...l/test_libs/reading_order/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = True, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec0\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/green-tmp/test_viewer_reopens_after_chec0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E4D754AAD0&gt;
+legacy = False
+
+    @pytest.mark.parametrize('legacy', [False,True])
+    def test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity(tmp_path,monkeypatch,legacy):
+        import shutil
+        from reading_order import ingest
+        from reading_order.contracts import identity
+        from reading_order.viewer import build_viewer,ViewerData
+        old=tmp_path/'original';new=tmp_path/'relocated'
+        monkeypatch.setattr(ingest,'PROJECT_ROOT',old)
+        fixture=old/'test_libs/reading_order'
+        run=synthetic_run(fixture)
+        image=fixture/'source/viewer_source/pages'/('a'*64)/'0.png'
+&gt;       image.parent.mkdir(parents=True);image.write_bytes(b'background')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_code\test_offline_viewer.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:727: in mkdir
+    self.mkdir(mode, parents=False, exist_ok=exist_ok)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...l/test_libs/reading_order/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec0\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError</failure></testcase><testcase classname="test_libs.reading_order.test.test_code.test_offline_viewer" name="test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity[True]" time="0.094"><failure message="FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec1\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'">self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...l/test_libs/reading_order/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = True, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec1\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20261102/green-tmp/test_viewer_reopens_after_chec1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001E4D74B1650&gt;
+legacy = True
+
+    @pytest.mark.parametrize('legacy', [False,True])
+    def test_viewer_reopens_after_checkout_moves_without_changing_frozen_identity(tmp_path,monkeypatch,legacy):
+        import shutil
+        from reading_order import ingest
+        from reading_order.contracts import identity
+        from reading_order.viewer import build_viewer,ViewerData
+        old=tmp_path/'original';new=tmp_path/'relocated'
+        monkeypatch.setattr(ingest,'PROJECT_ROOT',old)
+        fixture=old/'test_libs/reading_order'
+        run=synthetic_run(fixture)
+        image=fixture/'source/viewer_source/pages'/('a'*64)/'0.png'
+&gt;       image.parent.mkdir(parents=True);image.write_bytes(b'background')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_code\test_offline_viewer.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:727: in mkdir
+    self.mkdir(mode, parents=False, exist_ok=exist_ok)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/portability-20...l/test_libs/reading_order/source/viewer_source/pages/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+mode = 511, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\portability-20261102\\green-tmp\\test_viewer_reopens_after_chec1\\original\\test_libs\\reading_order\\source\\viewer_source\\pages\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:722: FileNotFoundError</failure></testcase></testsuite></testsuites>

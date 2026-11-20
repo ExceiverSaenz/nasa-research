@@ -1,0 +1,9 @@
+wsl: Failed to start the systemd user session for 'exceiver'. See journalctl for more details.
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+{"python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]", "platform": "Linux-6.6.159+-x86_64-with-glibc2.39", "gpu": "NVIDIA A100-SXM4-40GB, 580.82.07, 40960 MiB", "uv": "/usr/local/bin/uv", "rustc": null, "cargo": null, "disk_free_bytes": 197858725888}
+ORDER_CONFIG_NO_PERSISTENT_PDF_OR_REQUEST
+ORDER_CONFIG_HOST_VERIFIED

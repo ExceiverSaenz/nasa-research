@@ -1,0 +1,53 @@
+{
+  "target": "x86_64-manylinux_2_39",
+  "python_target": "3.11",
+  "resolver": "uv 0.12.21",
+  "timestamp_utc": "2026-11-01T03:35:29.931187+00:00",
+  "installation_performed": false,
+  "remote_imports_tested": false,
+  "files": {
+    "requirements\\a.in": {
+      "bytes": 632,
+      "sha256": "13b101ab23c6be9bf0c76babba1b442bb9be11998769e31742732507395ca524"
+    },
+    "requirements\\a.lock": {
+      "bytes": 199736,
+      "sha256": "0928b270f9f59186fcf740d7675db3be20b96909a34c66f185cf35fbe5777bbd"
+    },
+    "requirements\\b.in": {
+      "bytes": 276,
+      "sha256": "efea73800c42ca37d72b96414ace017bcd21e1bfbd1633fb38de13e0d1fb8557"
+    },
+    "requirements\\b.lock": {
+      "bytes": 461736,
+      "sha256": "955fcd11f3deacaf20f126ccb7a3e7518b12007e4bccd7b6fecd44c8b8820c51"
+    },
+    "runtime\\reused-wheels\\jieba-0.42.1-py3-none-any.whl": {
+      "bytes": 19314509,
+      "sha256": "85b492b77ca63d22fafb41c71fe019d027de17349620e1ab41d0194803273a87"
+    }
+  },
+  "compatibility_correction": {
+    "reason": "MinerU 4.0.12 single private_range vs DocVortex >=0.6.8 plural private_ranges",
+    "changed_packages": {
+      "a": {
+        "docvortex": [
+          "0.6.9",
+          "0.6.7"
+        ]
+      },
+      "b": {
+        "docvortex": [
+          "0.6.9",
+          "0.6.7"
+        ]
+      }
+    },
+    "resolved_on": "WSL Linux x86_64; uv 0.12.21; target CPython 3.11/manylinux_2_39",
+    "installation_performed": false,
+    "a100_session_started": false,
+    "previous_receipt": "private-ranges-investigation/before/runtime/dependency-resolution.json",
+    "timestamp_utc": "2026-11-01T03:35:29.931187+00:00",
+    "resolution_only_no_target_environment_install": true
+  }
+}

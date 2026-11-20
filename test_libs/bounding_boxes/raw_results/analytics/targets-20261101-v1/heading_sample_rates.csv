@@ -1,0 +1,5 @@
+tool,sample_heading_reference,sample_heading_predicted,unambiguous_tp,possible_tp_including_conflicts,strict_precision_sample,strict_recall_sample,precision_with_conflicts_upper,recall_with_conflicts_upper,interpretation
+heron,19,24,10,19,0.4166666666666667,0.5263157894736842,0.7916666666666666,1.0,directed_agent_review_sample_not_population_precision
+heron101,19,22,8,17,0.36363636363636365,0.42105263157894735,0.7727272727272727,0.8947368421052632,directed_agent_review_sample_not_population_precision
+basic,19,9,9,9,1.0,0.47368421052631576,1.0,0.47368421052631576,directed_agent_review_sample_not_population_precision
+standard,19,9,9,9,1.0,0.47368421052631576,1.0,0.47368421052631576,directed_agent_review_sample_not_population_precision

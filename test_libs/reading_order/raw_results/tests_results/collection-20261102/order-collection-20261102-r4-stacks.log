@@ -1,0 +1,70 @@
+Timeout (0:00:30)!
+Thread 0x0000710cb30fe640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 249 in _send_ping
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x0000710cb38ff640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 122 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 106 in read
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 451 in initialize_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 601 in run_forever
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1279 in _run_websocket
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x0000710cbbc69740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 17 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1078 in execute_interactive
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/client.py", line 364 in execute_interactive
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/colab_cli/runtime.py", line 237 in execute_code
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/run_observed.py", line 26 in observed
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 87 in _run_code
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 209 in __call__
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 47 in __call__
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/colab_backend.py", line 24 in predict
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 88 in execute_collection
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 184 in main
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/run_observed.py", line 62 in <module>
+Timeout (0:00:30)!
+Thread 0x0000710cb30fe640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 359 in wait
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 655 in wait
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 249 in _send_ping
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x0000710cb38ff640 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/selectors.py", line 468 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 122 in select
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_dispatcher.py", line 106 in read
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 451 in initialize_socket
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/websocket/_app.py", line 601 in run_forever
+  File "/home/exceiver/.local/share/uv/tools/google-colab-cli/lib/python3.12/site-packages/jupyter_kernel_client/wsclient.py", line 1279 in _run_websocket
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1012 in run
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x0000710cbbc69740 (most recent call first):
+  File "<frozen posixpath>"Current thread 0x00007b9fa8540740 (most recent call first):
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 383 in _iterencode_dict
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 326 in _iterencode_list
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 406 in _iterencode_dict
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 326 in _iterencode_list
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 406 in _iterencode_dict
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 432 in _iterencode
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/encoder.py", line 202 in encode
+  File "/home/exceiver/.local/share/uv/python/cpython-3.12.15-linux-x86_64-gnu/lib/python3.12/json/__init__.py", line 238 in dumps
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/runner.py", line 34 in save
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/runner.py", line 58 in execute
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 130 in execute_collection
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/code/reading_order/collection.py", line 184 in main
+  File "/mnt/c/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/collection-20261102/run_observed.py", line 61 in <module>

@@ -1,0 +1,6 @@
+
+[colab] A new version of Colab CLI is available: 0.7.5 (current: 0.7.4)
+[colab] Run 'colab update' to update.
+[colab] To silence this check, set "enable_update_check": false in ~/.config/colab-cli/settings.json
+
+[mineru-cfg-5bc8da25f670] gpu-a100-s-ass1b0-1lr2uot5wora0 | Hardware: A100 | Shape: Standard | Variant: GPU

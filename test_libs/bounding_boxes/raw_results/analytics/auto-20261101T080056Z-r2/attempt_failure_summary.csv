@@ -1,0 +1,7 @@
+source_run_id,tool,expected,attempted,complete,failed,other_statuses,not_attempted,failure_fraction,docvortex,mineru,version_evidence,scope
+collection-20261101T015723Z,heron,15,15,15,0,0,0,0.0,,,,one_attempt_and_configuration_not_pooled
+collection-20261101T015723Z,heron101,15,15,15,0,0,0,0.0,,,,one_attempt_and_configuration_not_pooled
+mineru-nativefix-20261101T034122Z,basic,15,15,15,0,0,0,0.0,0.6.7,4.0.12,C:\Users\HP Victus\Desktop\nasa_research\test_libs\bounding_boxes\results\mineru-nativefix-20261101T034122Z\tool-provenance.json,one_attempt_and_configuration_not_pooled
+mineru-nativefix-20261101T034122Z,standard,15,15,15,0,0,0,0.0,0.6.7,4.0.12,C:\Users\HP Victus\Desktop\nasa_research\test_libs\bounding_boxes\results\mineru-nativefix-20261101T034122Z\tool-provenance.json,one_attempt_and_configuration_not_pooled
+collection-20261101T015723Z,basic,15,15,4,11,0,0,0.7333333333333333,0.6.9,4.0.12,C:\Users\HP Victus\Desktop\nasa_research\test_libs\bounding_boxes\results\collection-20261101T015723Z\download\provenance\runtime\environment-receipt.json,one_attempt_and_configuration_not_pooled
+collection-20261101T015723Z,standard,15,15,4,11,0,0,0.7333333333333333,0.6.9,4.0.12,C:\Users\HP Victus\Desktop\nasa_research\test_libs\bounding_boxes\results\collection-20261101T015723Z\download\provenance\runtime\environment-receipt.json,one_attempt_and_configuration_not_pooled

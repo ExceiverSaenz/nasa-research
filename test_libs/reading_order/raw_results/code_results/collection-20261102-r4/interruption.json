@@ -1,0 +1,13 @@
+{
+  "status": "INTERRUPTED_TRANSPORT",
+  "confirmed": 124,
+  "worker_completed_including_smoke": 130,
+  "pending": 0,
+  "smoke": 6,
+  "session_retained_for_recovery": true,
+  "no_completed_unacknowledged_prediction": true,
+  "recovery_reference": {
+    "path": "C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\collection-20261102\\pending-recovery.json",
+    "sha256": "73c7b72589707d84a0b2796c636084186452e9c6eb81f23485c305a4b77926db"
+  }
+}

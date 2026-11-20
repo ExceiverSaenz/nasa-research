@@ -1,0 +1,13 @@
+{
+  "expected_pages": 397,
+  "human_reviewed_pages": 0,
+  "agent_visually_reviewed_pages": 0,
+  "case_inventory_complete_pages": 0,
+  "semantic_metrics_status": "pending_not_zero",
+  "unknowns": [
+    "omissions_shared_by_all_tools",
+    "actual_titles_captions_body_inventory",
+    "crop_errors",
+    "semantic_relationship_correctness"
+  ]
+}

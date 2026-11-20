@@ -1,0 +1,43 @@
+............................F..................................          [100%]
+================================== FAILURES ===================================
+____ test_runner_retains_timeout_and_invalid_output_and_refuses_overwrite _____
+
+tmp_path = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/implementation-20261102/offline-stdin-fix/tmp/test_runner_retains_timeout_an0')
+
+    def test_runner_retains_timeout_and_invalid_output_and_refuses_overwrite(tmp_path):
+        Runner = api()
+        from reading_order.contracts import Block, InputDocument
+        blocks = [Block(x, 'f'*64, 0, 'text', [.1,y,.9,y+.1], None, '#/'+x) for x,y in [('a',.1),('b',.3)]]
+        doc = InputDocument('12', 'f'*64, [dict(page_idx=0,width=600,height=800,rotation=0)], blocks, {})
+        run = tmp_path/'run'
+>       report = Runner(FakeBackend()).execute([doc], {'input_profile_id':'fixed'}, run)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_libs\reading_order\test\test_code\test_execution.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+test_libs\reading_order\code\reading_order\runner.py:58: in execute
+    save()
+test_libs\reading_order\code\reading_order\runner.py:32: in save
+    temporary.replace(destination/'manifest.json')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/implementation-20261102/offline-stdin-fix/tmp/test_runner_retains_timeout_an0/run/manifest.tmp')
+target = WindowsPath('C:/Users/HP Victus/Desktop/nasa_research/test_libs/reading_order/raw_results/tests_results/implementation-20261102/offline-stdin-fix/tmp/test_runner_retains_timeout_an0/run/manifest.json')
+
+    def replace(self, target):
+        """
+        Rename this path to the target path, overwriting if that path exists.
+    
+        The target path may be absolute or relative. Relative paths are
+        interpreted relative to the current working directory, *not* the
+        directory of the Path object.
+    
+        Returns the new Path instance pointing to the target path.
+        """
+>       os.replace(self, target)
+E       PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\implementation-20261102\\offline-stdin-fix\\tmp\\test_runner_retains_timeout_an0\\run\\manifest.tmp' -> 'C:\\Users\\HP Victus\\Desktop\\nasa_research\\test_libs\\reading_order\\raw_results\\tests_results\\implementation-20261102\\offline-stdin-fix\\tmp\\test_runner_retains_timeout_an0\\run\\manifest.json'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:780: PermissionError
+=========================== short test summary info ===========================
+FAILED test_libs/reading_order/test/test_code/test_execution.py::test_runner_retains_timeout_and_invalid_output_and_refuses_overwrite
+1 failed, 62 passed in 2.59s
