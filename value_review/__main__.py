@@ -68,7 +68,9 @@ def main(argv=None):
             return 2
         server = uvicorn.Server(uvicorn.Config(create_app(config), host=args.host, port=args.port, workers=1,
                                                log_level='warning', access_log=False))
-        url = f'http://{"127.0.0.1" if args.host == "0.0.0.0" else args.host}:{args.port}/'   # noqa: S104 (a container; published on the host's 127.0.0.1)
+        # In a container the address to open is the one published on the host (VALUE_REVIEW_PUBLIC_PORT, set by compose).
+        public = os.environ.get('VALUE_REVIEW_PUBLIC_PORT') or args.port
+        url = f'http://{"127.0.0.1" if args.host == "0.0.0.0" else args.host}:{public}/'   # noqa: S104 (a container; published on the host's 127.0.0.1)
         print(f'Tensile Value Review on {url}  (Ctrl+C to stop)', flush=True)
         if not args.no_browser:
             def open_when_ready():

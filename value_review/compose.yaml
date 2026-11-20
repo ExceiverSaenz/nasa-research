@@ -4,6 +4,7 @@
 #   REVIEW_LLM_RESULTS  the LLM results (<paper>-pdf_with_feature_guide.json)   mounted read-only
 #   REVIEW_PDFS         the PDFs (<paper>.pdf)                                    mounted read-only
 #   REVIEW_DATA         your reviews: originals, drafts, versions, settings, page cache (kept between runs)
+#   REVIEW_NAME         your name, the author of your decisions (required)
 name: value-review
 
 services:
@@ -17,6 +18,20 @@ services:
       - "127.0.0.1:${REVIEW_PORT:-8766}:8766"   # this computer only; never published on the network
     volumes:
       - "${REVIEW_DATA:-./review-data}:/data"
-      - "${REVIEW_LLM_RESULTS:-../llm_baseline/results/gpt-6.1-sol-low-pdf-only}:/sources/results:ro"
-      - "${REVIEW_PDFS:-../papers/Tensile_Properties_of_Sub-sized_Specimens_papers}:/sources/pdfs:ro"
+      # The sources must exist. Linux engines stop on a wrong path; Docker Desktop creates an empty folder instead,
+      # and the container's log then says which variable to check (value_review/docker_check.py).
+      - type: bind
+        source: "${REVIEW_LLM_RESULTS:-../llm_baseline/results/gpt-6.1-sol-low-pdf-only}"
+        target: /sources/results
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: "${REVIEW_PDFS:-../papers/Tensile_Properties_of_Sub-sized_Specimens_papers}"
+        target: /sources/pdfs
+        read_only: true
+        bind: { create_host_path: false }
+    environment:
+      # your name, shown as the author of your decisions and versions (required; change it later in Settings if needed)
+      VALUE_REVIEW_REVIEWER: "${REVIEW_NAME:?Set REVIEW_NAME (your name) in value_review/.env}"
+      VALUE_REVIEW_PUBLIC_PORT: "${REVIEW_PORT:-8766}"   # the address printed in the log
     restart: unless-stopped

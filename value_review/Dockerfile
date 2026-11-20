@@ -27,6 +27,6 @@ USER reviewer
 EXPOSE 8766
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8766/api/v1/health', timeout=4)"
-# Load the papers of the mounted folders (quick when nothing changed; a paper that fails is reported, not fatal),
-# then serve. Settings can add more folder pairs mounted under /sources.
-CMD ["sh", "-c", "python -B -m value_review.ingest; exec python -B -m value_review --no-browser"]
+# Check the mounted folders (Docker Desktop creates an empty folder for a wrong path), load their papers (quick when
+# nothing changed; a paper that fails is reported, not fatal), then serve. Settings can add more pairs under /sources.
+CMD ["sh", "-c", "python -B -m value_review.docker_check; python -B -m value_review.ingest; exec python -B -m value_review --no-browser"]

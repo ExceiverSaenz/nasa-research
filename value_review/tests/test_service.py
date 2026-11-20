@@ -219,6 +219,13 @@ class SettingsAndHealth(Base):  # OP-10, OP-11
         self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **folders})   # folders left out: unchanged
         self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), {**new, **folders})
 
+    def test_reviewer_name_from_the_environment(self):  # each tester's container sets it; Settings wins
+        with mock.patch.dict('os.environ', {'VALUE_REVIEW_REVIEWER': '  Ana López  '}):
+            self.assertEqual(self.client.get('/api/v1/settings').json()['reviewer_name'], 'Ana López')
+            self.client.put('/api/v1/settings', json={'reviewer_name': 'Ana L.', 'keep_versions': 20, 'autosave_minutes': 5})
+            self.assertEqual(self.client.get('/api/v1/settings').json()['reviewer_name'], 'Ana L.')
+        self.assertEqual(AnnotationStore(Path(self.tmp.name) / 'empty').settings()['reviewer_name'], 'Expert reviewer')
+
     def test_invalid_settings_rejected(self):
         for bad in ({'reviewer_name': '', 'keep_versions': 20, 'autosave_minutes': 5},
                     {'reviewer_name': 'x', 'keep_versions': 0, 'autosave_minutes': 5},
