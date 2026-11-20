@@ -184,7 +184,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             port = parts.port
         except ValueError:
             port = -1
-        bad = parts.hostname not in LOCAL_HOSTS or (config.port is not None and port not in (None, config.port))
+        check_port = config.port is not None and config.bind in LOCAL_HOSTS
+        bad = parts.hostname not in LOCAL_HOSTS or (check_port and port not in (None, config.port))
         origin = request.headers.get('origin')
         if origin and origin != 'null':
             bad = bad or urlsplit(origin).hostname not in LOCAL_HOSTS

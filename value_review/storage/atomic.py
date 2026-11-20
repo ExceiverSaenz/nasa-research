@@ -128,9 +128,12 @@ class InstanceLock:
 
     def _owner_alive(self):
         try:
-            return pid_alive(int(self.path.read_text().strip()))
+            pid = int(self.path.read_text().strip())
         except (OSError, ValueError):
             return False
+        # Our own pid: left by an earlier run that had the same pid (a container restarted, where the process is
+        # usually pid 1 again). Whoever wrote it is gone, since this process is the one starting.
+        return pid != os.getpid() and pid_alive(pid)
 
     def release(self):
         if self._held:

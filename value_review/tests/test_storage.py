@@ -17,6 +17,19 @@ from value_review.storage.atomic import InstanceLock, StorageError, atomic_write
 from value_review.storage.files import AnnotationStore  # noqa: E402
 
 
+class OtherProcess:
+    """A real, running process other than this one: another instance holding the lock."""
+
+    def __enter__(self):
+        import subprocess
+        self.proc = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(60)'])
+        return self.proc.pid
+
+    def __exit__(self, *exc):
+        self.proc.kill()
+        self.proc.wait()
+
+
 class Crash(BaseException):
     """Stands for the process dying (not an OSError): nothing is cleaned up on the way out."""
 
@@ -246,10 +259,21 @@ class Lock(unittest.TestCase):
     def test_held_lock_refuses_a_second_instance_and_release_frees_it(self):
         with InstanceLock(self.path):
             self.assertEqual(self.path.read_text(), str(os.getpid()))
+        self.assertFalse(self.path.exists())
+        with OtherProcess() as pid:   # another instance, a live process, holds the lock
+            self.path.write_text(str(pid))
             with self.assertRaises(StorageError):
                 InstanceLock(self.path).acquire()
+        InstanceLock(self.path).acquire().release()   # its process is gone: taken over
+
+    def test_lock_left_with_our_own_pid_is_taken_over(self):
+        # a container restarted after a crash: the new process often has the same pid (1) as the one that left the lock
+        self.path.parent.mkdir(parents=True)
+        self.path.write_text(str(os.getpid()))
+        lock = InstanceLock(self.path).acquire()
+        self.assertEqual(self.path.read_text(), str(os.getpid()))
+        lock.release()
         self.assertFalse(self.path.exists())
-        InstanceLock(self.path).acquire().release()
 
     def test_stale_or_unreadable_lock_is_taken_over(self):
         for content in ('0', 'not a pid', ''):

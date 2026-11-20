@@ -15,12 +15,13 @@ from pathlib import Path
 
 DEFAULT_PORT = 8766
 PORT_VARIABLE = 'VALUE_REVIEW_PORT'
+HOST_VARIABLE = 'VALUE_REVIEW_HOST'
 HOST = '127.0.0.1'
 
 
-def port_is_free(port):
+def port_is_free(port, host=HOST):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
-        return probe.connect_ex((HOST, port)) != 0
+        return probe.connect_ex(('127.0.0.1' if host == '0.0.0.0' else host, port)) != 0   # noqa: S104 (only to probe the port)
 
 
 def clean_leftovers(data):
@@ -42,6 +43,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog='python -B -m value_review')
     parser.add_argument('--port', type=int, default=int(os.environ.get(PORT_VARIABLE, DEFAULT_PORT)))
     parser.add_argument('--no-browser', action='store_true')
+    parser.add_argument('--host', default=os.environ.get(HOST_VARIABLE, HOST),
+                        help='address to listen on (default 127.0.0.1; 0.0.0.0 inside a container, published on the host\'s 127.0.0.1 only)')
     parser.add_argument('--data', help='data folder holding originals/, annotations/ and cache/ (default value_review/)')
     args = parser.parse_args(argv)
 
@@ -51,7 +54,7 @@ def main(argv=None):
     from .storage import InstanceLock, StorageError
     from .storage.files import AnnotationStore
 
-    config = Config(port=args.port, **({'data': args.data} if args.data else {}))
+    config = Config(port=args.port, bind=args.host, **({'data': args.data} if args.data else {}))
     store = AnnotationStore(config.annotations)
     try:
         lock = InstanceLock(store.lock_path).acquire()
@@ -60,12 +63,12 @@ def main(argv=None):
         return 2
     try:
         clean_leftovers(config.data)
-        if not port_is_free(args.port):
+        if not port_is_free(args.port, args.host):
             print(f'Port {args.port} is in use. Close what uses it, or choose another with --port or {PORT_VARIABLE}.', file=sys.stderr)
             return 2
-        server = uvicorn.Server(uvicorn.Config(create_app(config), host=HOST, port=args.port, workers=1,
+        server = uvicorn.Server(uvicorn.Config(create_app(config), host=args.host, port=args.port, workers=1,
                                                log_level='warning', access_log=False))
-        url = f'http://{HOST}:{args.port}/'
+        url = f'http://{"127.0.0.1" if args.host == "0.0.0.0" else args.host}:{args.port}/'   # noqa: S104 (a container; published on the host's 127.0.0.1)
         print(f'Tensile Value Review on {url}  (Ctrl+C to stop)', flush=True)
         if not args.no_browser:
             def open_when_ready():

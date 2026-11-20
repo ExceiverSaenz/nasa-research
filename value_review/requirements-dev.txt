@@ -1,0 +1,4 @@
+# Tests (FastAPI's TestClient needs httpx) and the performance tools (psutil). Not needed to run the tool.
+-r requirements.txt
+httpx==0.28.1
+psutil==7.2.2

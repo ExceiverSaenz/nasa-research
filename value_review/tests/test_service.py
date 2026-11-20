@@ -48,6 +48,7 @@ def version_file(original, n, state, at):
 
 class Base(unittest.TestCase):
     PORT = None
+    BIND = '127.0.0.1'
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -61,7 +62,7 @@ class Base(unittest.TestCase):
         self.res.write_text(json.dumps(result(sha(self.pdf)), ensure_ascii=False), encoding='utf-8')
         ingest_run(self.run, self.pdfs, self.data / 'originals')
         self.original = json.loads((self.data / 'originals' / '7.json').read_text(encoding='utf-8'))
-        self.config = Config(data=self.data, run_dir=self.run, pdf_dir=self.pdfs, port=self.PORT)
+        self.config = Config(data=self.data, run_dir=self.run, pdf_dir=self.pdfs, port=self.PORT, bind=self.BIND)
         self.client = TestClient(create_app(self.config, web_dir=None), base_url='http://127.0.0.1')
         self.store = AnnotationStore(self.config.annotations)
 
@@ -278,17 +279,18 @@ class LocalOnly(Base):  # AC-20
             self.assertEqual(self.client.get('/api/v1/health', headers={'host': host}).status_code, 200, host)
 
     def test_second_instance_refused(self):
-        lock = InstanceLock(self.store.lock_path).acquire()
-        try:
+        from value_review.tests.test_storage import OtherProcess
+        self.store.lock_path.parent.mkdir(parents=True, exist_ok=True)
+        with OtherProcess() as pid:   # a running instance (another process) holds the data folder
+            self.store.lock_path.write_text(str(pid))
             with self.assertRaises(StorageError):
                 InstanceLock(self.store.lock_path).acquire()
             err = io.StringIO()
             with contextlib.redirect_stderr(err):
                 self.assertEqual(launch(['--no-browser', '--data', str(self.data), '--port', '8799']), 2)
             self.assertIn('already running', err.getvalue())
-        finally:
-            lock.release()
-        self.assertFalse(self.store.lock_path.exists())
+        self.assertTrue(self.store.lock_path.exists())   # never removed by the refused launch
+        self.store.lock_path.unlink()
 
     def test_port_in_use_refused_and_lock_released(self):
         (self.store.folder / 'drafts').mkdir(parents=True, exist_ok=True)
@@ -361,6 +363,21 @@ class EdgePaths(Base):
             import os
             os.environ.pop('VALUE_REVIEW_SOURCE_ROOT', None)
             self.assertEqual(vr_config.source_root(), Path(self.tmp.name) / 'nowhere')   # no sources found: the repository root
+
+
+
+class ContainerHost(Base):  # listening on 0.0.0.0 in a container, published by Docker under another port
+    PORT, BIND = 8766, '0.0.0.0'   # noqa: S104
+
+    def test_local_names_on_any_published_port(self):
+        for host in ('localhost:9000', '127.0.0.1:8766', 'localhost'):
+            self.assertEqual(self.client.get('/api/v1/health', headers={'host': host}).status_code, 200, host)
+
+    def test_other_hosts_and_origins_still_refused(self):
+        for headers in ({'host': 'evil.example:9000'}, {'host': '192.168.1.20:9000'},
+                        {'host': 'localhost:9000', 'origin': 'http://evil.example'}):
+            r = self.client.get('/api/v1/health', headers=headers)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (403, 'forbidden_host'), headers)
 
 
 @unittest.skipUnless(vr_config.default_run_dir().is_dir() and vr_config.default_pdf_dir().is_dir(),

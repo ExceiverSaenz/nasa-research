@@ -31,11 +31,13 @@ def data_root():
 
 
 def default_run_dir():
-    return source_root() / RUN_REL
+    """``VALUE_REVIEW_RUN_DIR`` if set (a container mounts the LLM results there), else under the source root."""
+    return Path(os.environ.get('VALUE_REVIEW_RUN_DIR') or source_root() / RUN_REL)
 
 
 def default_pdf_dir():
-    return source_root() / PDFS_REL
+    """``VALUE_REVIEW_PDF_DIR`` if set, else under the source root."""
+    return Path(os.environ.get('VALUE_REVIEW_PDF_DIR') or source_root() / PDFS_REL)
 
 
 def originals_dir(data=None):

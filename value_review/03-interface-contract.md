@@ -27,7 +27,7 @@
 | 428 | `precondition_required` | `If-Match` missing |
 | 500 | `storage_error`, `internal` | Write or unexpected failure; previous files stay intact |
 
-- **Security** · Bind to `127.0.0.1`. No CORS, no auth. File names come only from validated paper ids and version numbers.
+- **Security** · Bind to `127.0.0.1` (in a container, `0.0.0.0` published on the host's `127.0.0.1` only; ADR-009). No CORS, no auth. File names come only from validated paper ids and version numbers.
 - **Concurrency** · One process per data folder (lock file in `annotations/`). Requests that write take a per-paper lock. Two tabs are reconciled by the version number, not by locks.
 - **Rules checked on every state write (draft and submit)** · schema valid; every referenced observation, record, feature and evidence id exists in the original or in `added_*`; `rejected`/`unsure` have a non-empty trimmed note (BR-04); `corrected` has `value`; reviewer ids start with `u_` and are unique; an added record that a value still uses cannot be missing.
 

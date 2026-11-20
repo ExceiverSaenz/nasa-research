@@ -276,3 +276,49 @@ repository's data is never touched. Criterion: catch defects in real browser beh
 ### Verification
 
 `npm run e2e`: 15 tests pass. Each fix they protect was undone in turn, the app rebuilt, and the matching test failed.
+
+## ADR-009 · One container per reviewer
+
+**Status** · Accepted (with the user, 2026-11-19)
+**Date** · 2026-11-19
+**Reference** · AC-20 (local only, one instance); README "Run it with Docker"
+
+### Context
+
+The tool must be shareable with other reviewers and work the same on their computers. It was built for one person on one
+Windows machine: it listened on `127.0.0.1` only, checked that the Host port equals the server port, had no pinned
+dependencies, its instance lock trusted any live process id, and it had never run on Linux.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| One container per reviewer, published on the host's `127.0.0.1` | Same environment everywhere; local-only security model unchanged; data and sources stay on each computer | Each reviewer needs Docker; reviews are not shared automatically |
+| One shared server on the network | One place for every review | Needs accounts, authentication, per-user reviewer names and concurrent editing: a redesign, not packaging |
+| Python installation per reviewer | No Docker | Versions drift between computers; Windows-only details stay hidden |
+
+### Decision and rationale
+
+One container per reviewer. Criterion: shareable and reproducible without weakening the local-only model. Changes:
+- `--host` / `VALUE_REVIEW_HOST` (default `127.0.0.1`; `0.0.0.0` inside the container). The Host-port check applies only
+  on loopback; elsewhere only local host names and origins are accepted, so a Docker-published port works and a LAN
+  address or foreign origin is still refused (`test_service.ContainerHost`).
+- `VALUE_REVIEW_RUN_DIR` / `VALUE_REVIEW_PDF_DIR` for the default folders (the mounted `/sources/...`).
+- The instance lock treats a lock holding *its own* pid as left behind: in a restarted container the process is usually
+  pid 1 again, and the old lock would otherwise block every restart (`test_storage.test_lock_left_with_our_own_pid_is_taken_over`).
+- `requirements.txt` (runtime, pinned) and `requirements-dev.txt` (tests, measurements).
+- `Dockerfile` (a `test` stage runs the whole suite on Linux; the `app` stage runs as a non-root user with a health
+  check) and `compose.yaml` (sources mounted read-only, data in a host folder, port on `127.0.0.1` only).
+
+### Consequences
+
+- PDFs and LLM results are never in the image (size, and the papers' rights); each reviewer mounts their own.
+- Settings shows the container's paths (`/sources/...`); more runs are added as more mounts.
+- Image size about 243 MB (Python 3.13 slim plus pdfium and Pillow).
+
+### Verification
+
+`docker build --target test`: 167 tests on Linux, all passing (7 skipped: they need the real run). The app container on the
+real run: healthy, 14 papers and 2,581 values loaded on start, pages rendered from the read-only mount, a submit written
+to the host folder, Settings showing `/sources/results`; after `docker kill` (lock left with pid 1) and `docker start`,
+healthy again with the version kept.

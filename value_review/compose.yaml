@@ -1,0 +1,22 @@
+# One reviewer's Tensile Value Review (ADR-009). From the repository root:
+#   docker compose -f value_review/compose.yaml up --build      then open http://127.0.0.1:8766/
+# Folders on this computer (set them in value_review/.env, see .env.example, or in the shell):
+#   REVIEW_LLM_RESULTS  the LLM results (<paper>-pdf_with_feature_guide.json)   mounted read-only
+#   REVIEW_PDFS         the PDFs (<paper>.pdf)                                    mounted read-only
+#   REVIEW_DATA         your reviews: originals, drafts, versions, settings, page cache (kept between runs)
+name: value-review
+
+services:
+  review:
+    build:
+      context: ..
+      dockerfile: value_review/Dockerfile
+      target: app
+    image: value-review:local
+    ports:
+      - "127.0.0.1:${REVIEW_PORT:-8766}:8766"   # this computer only; never published on the network
+    volumes:
+      - "${REVIEW_DATA:-./review-data}:/data"
+      - "${REVIEW_LLM_RESULTS:-../llm_baseline/results/gpt-6.1-sol-low-pdf-only}:/sources/results:ro"
+      - "${REVIEW_PDFS:-../papers/Tensile_Properties_of_Sub-sized_Specimens_papers}:/sources/pdfs:ro"
+    restart: unless-stopped

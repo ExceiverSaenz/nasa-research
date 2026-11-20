@@ -6,7 +6,7 @@ The interface follows the canvas design [Extraction Review Tool](https://claude.
 
 ## Requirements
 
-- Windows 11, Python 3.13 with FastAPI, uvicorn, pydantic, jsonschema, pypdfium2 and Pillow (already installed in this environment); Node 24 only to rebuild the front end.
+- Windows 11 (or any system with Docker, see *Run it with Docker*), Python 3.13 with the pinned packages of `requirements.txt` (`pip install -r value_review/requirements.txt`; tests and measurements: `requirements-dev.txt`); Node 24 only to rebuild the front end.
 - The LLM run in `llm_baseline/results/gpt-6.1-sol-low-pdf-only/` and the PDFs in `papers/Tensile_Properties_of_Sub-sized_Specimens_papers/`. From a git worktree (under `.claude/worktrees/`) the tool finds them in the checkout above it; if they live elsewhere, set `VALUE_REVIEW_SOURCE_ROOT` or pick the folders in **Settings**.
 
 Run every command from the repository root.
@@ -32,6 +32,39 @@ Run every command from the repository root.
    The browser opens at `http://127.0.0.1:8766/`. Options: `--port N` (or `VALUE_REVIEW_PORT`), `--no-browser`, `--data DIR` to work on a copy of the data folder. Only one instance can run on a data folder. Stop it with Ctrl+C.
 
 The built front end in `value_review/web/` is committed, so Node is not needed to run the tool.
+
+## Run it with Docker (one container per reviewer)
+
+Each reviewer runs their own container on their own computer; it is not a shared server (ADR-009). Needs Docker
+Desktop (or Docker Engine) and the repository's `value_review/` folder; the PDFs and LLM results stay on your computer and
+are mounted read-only, never copied into the image.
+
+1. Copy `value_review/.env.example` to `value_review/.env` and set the three folders:
+
+   ```
+   REVIEW_LLM_RESULTS=C:/path/to/llm_results       # <paper>-pdf_with_feature_guide.json
+   REVIEW_PDFS=C:/path/to/pdfs                      # <paper>.pdf
+   REVIEW_DATA=./review-data                         # your reviews; keep this folder
+   ```
+
+2. From the repository root:
+
+   ```
+   docker compose -f value_review/compose.yaml up --build -d
+   ```
+
+   The build runs the whole test suite on Linux and stops if a test fails. On start the container loads the papers of the
+   mounted folders, then serves the tool.
+
+3. Open `http://127.0.0.1:8766/` (another port: `REVIEW_PORT=…` in `.env`). Stop with
+   `docker compose -f value_review/compose.yaml down`; your reviews stay in `REVIEW_DATA`.
+
+- In **Settings**, the folders of the default pair read `/sources/results` and `/sources/pdfs` (the paths inside the
+  container). To review another LLM run, mount it as an extra volume (for example `/sources/run-b`) in `compose.yaml` and
+  add a folder pair with those paths.
+- The port is published on `127.0.0.1` only: the tool has no accounts or passwords, so it must not be reachable from the
+  network. Do not change the mapping to `0.0.0.0` or a LAN address.
+- Health: `docker inspect -f '{{.State.Health.Status}}' value-review-review-1` (the image checks `/api/v1/health`).
 
 ## Using it
 
