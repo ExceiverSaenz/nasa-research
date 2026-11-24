@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Papers from './components/Papers.jsx';
 import Review from './components/Review.jsx';
+import SchemaEditor from './components/SchemaEditor.jsx';
+import SchemaList from './components/SchemaList.jsx';
 import { setSource } from './lib/api.js';
 import { parseRoute as parseHash, stepBack } from './lib/routes.js';
 
-// Hash routes (lib/routes.js): #/ Papers, #/source/<pair>/paper/<id> a review.
+// Hash routes (lib/routes.js): #/ Papers, #/source/<pair>/paper/<id> a review, #/schemas and #/schemas/<id> the Schema section.
 const parseRoute = () => parseHash(window.location.hash);
 
 // Each history entry the app reaches gets an increasing stamp in history.state, so a navigation that must be undone
@@ -51,5 +53,7 @@ export default function App() {
     setSource(route.source);   // the review's requests go to its pair; Papers sets the active one itself
     return <Review key={`${route.source}/${route.paper}`} paperId={route.paper} sourceId={route.source} guard={guard} />;
   }
+  if (route.view === 'schemas') return <SchemaList />;
+  if (route.view === 'schema') return <SchemaEditor key={route.schema} schemaId={route.schema} />;
   return <Papers />;
 }

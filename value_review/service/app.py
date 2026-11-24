@@ -1,4 +1,5 @@
-"""FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md)."""
+"""FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md) and the schema operations
+OP-S01 to OP-S12 (22-schema-interface-contract.md)."""
 import json
 import logging
 import os
@@ -19,11 +20,14 @@ from pydantic import BaseModel, ConfigDict, Field
 from .. import schemas
 from ..domain.materialize import counts as count_values, values as materialize
 from ..domain.rules import check_state, shape_problems
+from ..domain.schema_rules import check_name, check_schema, counts as schema_counts
 from ..domain.state import empty_state, progress, status_of
 from ..config import RESULT_SUFFIX
 from ..ingest import features, find_papers, ingest_run
+from ..ingest.seed_schema import SEED_ID, SEED_NAME, seed_content
 from ..storage import StorageError
 from ..storage.files import SETTINGS_DEFAULTS, AnnotationStore
+from ..storage.schemas import SCHEMA_ID, SchemaStore, empty_content
 from . import exports
 from .config import Config
 from .errors import ApiError, body, install
@@ -52,9 +56,41 @@ class Settings(BaseModel):
     reviewer_name: str = Field(min_length=1, max_length=80)
     keep_versions: int = Field(ge=1, le=100)
     autosave_minutes: int = Field(ge=1, le=60)
+    keep_schema_versions: int | None = Field(default=None, ge=1, le=200)   # OP-S12; left out = unchanged
     # The folder pairs (LLM results + their PDFs) and the one Papers shows. Left out = unchanged.
     sources: list[SourceIn] | None = Field(default=None, max_length=50)
     active_source: str | None = Field(default=None, max_length=40)
+
+
+class SchemaFrom(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    schema_id: str = Field(min_length=1, max_length=64)
+    version: int = Field(ge=1)
+
+
+class SchemaCreate(BaseModel):
+    """OP-S02: blank (name only), a copy of a saved version (``from``) or the content read by OP-S11."""
+    model_config = ConfigDict(extra='forbid', populate_by_name=True)
+    name: str = Field(max_length=500)
+    copy_of: SchemaFrom | None = Field(default=None, alias='from')
+    content: dict | None = None
+
+
+class SchemaDraftBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    base_version: int = Field(ge=0)
+    content: dict
+
+
+class SchemaVersionBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    content: dict
+    note: str = Field(default='', max_length=200)
+
+
+class SchemaRename(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    name: str = Field(max_length=500)
 
 
 class ActiveSource(BaseModel):
@@ -480,7 +516,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     @app.put(f'{API}/settings')
     def put_settings(values: Settings):
         current = settings_now()
-        new = {k: getattr(values, k) for k in SETTINGS_DEFAULTS}
+        new = {k: current[k] if getattr(values, k) is None else getattr(values, k) for k in SETTINGS_DEFAULTS}
         new['sources'] = current['sources'] if values.sources is None else check_sources(values.sources, current['sources'])
         ids = [s['id'] for s in new['sources']]
         wanted = values.active_source or current['active_source']
@@ -495,6 +531,244 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             raise ApiError(404, 'source_not_found', f'No folder pair {payload.source}')
         save({**{k: current[k] for k in (*SETTINGS_DEFAULTS, 'sources')}, 'active_source': payload.source})
         return settings_now()
+
+    # --- Schemas: OP-S01 to OP-S09 (22-schema-interface-contract.md; ADR-010) -----------------------
+    # Global to the data folder, not per folder pair (BR-S01). One lock per schema around every write.
+    schema_store = SchemaStore(config.annotations / 'schemas')
+    schema_locks: defaultdict[str, threading.Lock] = defaultdict(threading.Lock)
+    seed_lock = threading.Lock()
+    app.state.schemas = schema_store
+
+    def stamp():
+        return clock().replace('-', '').replace(':', '')
+
+    def seed_schemas():
+        """Make "Tensile properties" v1 once, when the schemas folder does not exist (BR-S10). It is built in a
+        temporary folder and moved into place, so a failure never leaves a half-made schemas folder."""
+        if schema_store.exists():
+            return
+        with seed_lock:
+            if schema_store.exists():
+                return
+            at = clock()
+            temp = SchemaStore(config.annotations / 'schemas.seeding')
+            meta = {'schema': 'value-review-schema-meta/1', 'schema_id': SEED_ID, 'name': SEED_NAME, 'created_at': at,
+                    'created_by': 'value_review', 'source': {'kind': 'seed'}}
+            version = {'schema': 'value-review-schema-version/1', 'schema_id': SEED_ID, 'n': 1, 'saved_at': at,
+                       'saved_by': 'value_review', 'note': 'Seeded from features.py', 'content': seed_content()}
+            try:
+                temp.write_meta(SEED_ID, meta)
+                temp.write_version(SEED_ID, version)
+                os.replace(temp.folder, schema_store.folder)
+            except (StorageError, OSError) as error:
+                raise ApiError(500, 'storage_error', f'Could not create the first schema: {error}') from None
+
+    def need_schema(sid):
+        """The schema's metadata, or 404 when it does not exist (or is in the trash)."""
+        meta = schema_store.read_meta(sid)[0] if SCHEMA_ID.fullmatch(sid) else None
+        if meta is None:
+            raise ApiError(404, 'schema_not_found', f'No schema {sid}')
+        return meta
+
+    def content_problems(content):
+        """400 when the content does not have the shape of schema-content.schema.json."""
+        problems = schemas.errors('schema-content', content)
+        if problems:
+            raise ApiError(400, 'invalid_request', 'The schema content does not match its JSON Schema',
+                           {'pointers': [{'pointer': '/content' + p, 'message': m} for p, m in problems[:10]]})
+
+    def clean_name(name, ref='/name'):
+        problems = check_name(name, ref)
+        if problems:
+            raise ApiError(422, 'rules_violation', 'The name cannot be used', {'items': problems})
+        return name.strip()
+
+    def schema_row(sid):
+        meta, problems = schema_store.read_meta(sid)
+        k, latest, _n, more = schema_store.current(sid)
+        draft, draft_problem = schema_store.read_draft(sid)
+        problems = [x for x in [problems, *more, draft_problem] if x]
+        content = (draft or latest or {}).get('content') or empty_content()
+        groups, fields = schema_counts(content)
+        newest = max([x for x in (draft, latest) if x], key=lambda x: x['saved_at'], default=None)
+        return {
+            'schema_id': sid, 'name': meta['name'], 'description': content['description'], 'groups': groups, 'fields': fields,
+            'version': k, 'status': 'new' if k == 0 else ('draft' if draft else 'saved'),
+            'modified_at': newest['saved_at'] if newest else meta['created_at'],
+            'modified_by': latest['saved_by'] if latest and newest is latest else meta['created_by'],
+            'problems': problems,
+        }
+
+    def schema_view(sid, response=None):
+        meta = need_schema(sid)
+        k, latest, _n, problems = schema_store.current(sid)
+        draft, draft_problem = schema_store.read_draft(sid)
+        if draft_problem:
+            problems.append(draft_problem)
+        if response is not None:
+            response.headers['ETag'] = _etag(k)
+        return {
+            'schema_id': sid, 'name': meta['name'], 'version': k,
+            'content': latest['content'] if latest else empty_content(),
+            'saved_at': latest['saved_at'] if latest else None, 'saved_by': latest['saved_by'] if latest else None,
+            'draft': {key: draft[key] for key in ('base_version', 'saved_at', 'content')} if draft else None,
+            'keep': settings_now()['keep_schema_versions'], 'problems': problems,
+        }
+
+    def write_draft(sid, base_version, content):
+        draft = {'schema': 'value-review-schema-draft/1', 'schema_id': sid, 'base_version': base_version,
+                 'saved_at': clock(), 'content': content}
+        try:
+            schema_store.write_draft(sid, draft)
+        except StorageError as error:
+            raise ApiError(500, 'storage_error', str(error)) from None
+        return draft
+
+    def read_schema_version(sid, n):
+        data, problem = schema_store.read_version(sid, n) if n >= 1 else (None, None)
+        if data is None:
+            raise ApiError(404, 'version_not_found', f'No version {n} of schema {sid}', {'problem': problem} if problem else None)
+        return data
+
+    @app.get(f'{API}/schemas')
+    def list_schemas():
+        seed_schemas()
+        rows = [schema_row(sid) for sid in schema_store.ids()]
+        return {'schemas': sorted(rows, key=lambda r: (r['name'].casefold(), r['schema_id']))}
+
+    @app.post(f'{API}/schemas', status_code=201)
+    def create_schema(payload: SchemaCreate, response: Response):
+        name = clean_name(payload.name)
+        if payload.copy_of is not None and payload.content is not None:
+            raise ApiError(400, 'invalid_request', 'Send either "from" or "content", not both')
+        seed_schemas()
+        source = {'kind': 'blank'}
+        content = empty_content()
+        if payload.copy_of is not None:
+            need_schema(payload.copy_of.schema_id)
+            content = read_schema_version(payload.copy_of.schema_id, payload.copy_of.version)['content']
+            source = {'kind': 'copy', 'schema_id': payload.copy_of.schema_id, 'version': payload.copy_of.version}
+        elif payload.content is not None:
+            content_problems(payload.content)
+            content, source = payload.content, {'kind': 'import'}
+        with seed_lock:   # two creates with the same name must not get the same id
+            sid = schema_store.new_id(name)
+            meta = {'schema': 'value-review-schema-meta/1', 'schema_id': sid, 'name': name, 'created_at': clock(),
+                    'created_by': settings_now()['reviewer_name'], 'source': source}
+            try:
+                schema_store.write_meta(sid, meta)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+            write_draft(sid, 0, content)
+        response.headers['Location'] = f'{API}/schemas/{sid}'
+        return schema_view(sid, response)
+
+    @app.get(f'{API}/schemas/{{sid}}')
+    def open_schema(sid: str, response: Response):
+        return schema_view(sid, response)
+
+    @app.patch(f'{API}/schemas/{{sid}}')
+    def rename_schema(sid: str, payload: SchemaRename):
+        name = clean_name(payload.name)
+        with schema_locks[sid]:
+            meta = need_schema(sid)
+            try:
+                schema_store.write_meta(sid, {**meta, 'name': name})
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        return {'schema_id': sid, 'name': name}
+
+    @app.delete(f'{API}/schemas/{{sid}}', status_code=204)
+    def delete_schema(sid: str):
+        with schema_locks[sid]:
+            need_schema(sid)
+            try:
+                schema_store.trash(sid, stamp())
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        return Response(status_code=204)
+
+    @app.put(f'{API}/schemas/{{sid}}/draft')
+    def put_schema_draft(sid: str, payload: SchemaDraftBody):
+        need_schema(sid)
+        content_problems(payload.content)
+        with schema_locks[sid]:
+            k = schema_store.current(sid)[0]
+            if payload.base_version != k:
+                raise ApiError(409, 'version_conflict', f'The schema is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
+            draft = write_draft(sid, k, payload.content)
+        return {'saved_at': draft['saved_at']}
+
+    @app.delete(f'{API}/schemas/{{sid}}/draft', status_code=204)
+    def delete_schema_draft(sid: str):
+        need_schema(sid)
+        with schema_locks[sid]:
+            try:
+                schema_store.delete_draft(sid)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        return Response(status_code=204)
+
+    def new_schema_version(sid, request, response, content_for):
+        """Shared by Save version and Restore. ``content_for(k)`` returns (content, note, check) under the lock."""
+        expected = if_match(request)
+        need_schema(sid)
+        with schema_locks[sid]:
+            k, _latest, n, _problems = schema_store.current(sid)
+            if expected != k:
+                raise ApiError(409, 'version_conflict', f'The schema is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
+            content, note, check = content_for(k)
+            content_problems(content)
+            broken = check_schema(content) if check else []
+            if broken:
+                raise ApiError(422, 'rules_violation', 'The schema breaks a rule', {'items': broken})
+            settings = settings_now()
+            version = {'schema': 'value-review-schema-version/1', 'schema_id': sid, 'n': n, 'saved_at': clock(),
+                       'saved_by': settings['reviewer_name'], 'note': note, 'content': content}
+            problems = schemas.errors('schema-version', version)
+            if problems:   # a bug, not a client error: never write an invalid version
+                raise RuntimeError(f'schema version would not validate: {problems[:3]}')
+            try:
+                schema_store.write_version(sid, version)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+            for step in (lambda: schema_store.prune(sid, settings['keep_schema_versions']), lambda: schema_store.delete_draft(sid)):
+                try:
+                    step()
+                except StorageError as error:
+                    log.warning('after writing v%s of schema %s: %s', n, sid, error)
+        response.headers['ETag'] = _etag(n)
+        response.headers['Location'] = f'{API}/schemas/{sid}/versions/{n}'
+        return {'n': n, 'saved_at': version['saved_at'], 'saved_by': version['saved_by'], 'note': note}
+
+    @app.post(f'{API}/schemas/{{sid}}/versions', status_code=201)
+    def save_schema_version(sid: str, payload: SchemaVersionBody, request: Request, response: Response):
+        return new_schema_version(sid, request, response, lambda _k: (payload.content, payload.note.strip(), True))
+
+    @app.get(f'{API}/schemas/{{sid}}/versions')
+    def list_schema_versions(sid: str):
+        need_schema(sid)
+        out, problems = [], []
+        for n in schema_store.version_numbers(sid):
+            data, problem = schema_store.read_version(sid, n)
+            if data is None:
+                problems.append(problem)
+                continue
+            groups, fields = schema_counts(data['content'])
+            out.append({'n': n, 'saved_at': data['saved_at'], 'saved_by': data['saved_by'], 'note': data['note'],
+                        'groups': groups, 'fields': fields})
+        return {'versions': out, 'keep': settings_now()['keep_schema_versions'], 'problems': problems}
+
+    @app.get(f'{API}/schemas/{{sid}}/versions/{{n}}')
+    def get_schema_version(sid: str, n: int):
+        need_schema(sid)
+        return read_schema_version(sid, n)
+
+    @app.post(f'{API}/schemas/{{sid}}/versions/{{n}}/restore', status_code=201)
+    def restore_schema_version(sid: str, n: int, request: Request, response: Response):
+        def content_for(_k):
+            return read_schema_version(sid, n)['content'], f'Restored from v{n}', False
+        return new_schema_version(sid, request, response, content_for)
 
     # --- OP-12: load the papers of a folder pair -------------------------------------
     @route('POST', '/ingest')

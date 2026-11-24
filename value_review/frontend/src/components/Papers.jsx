@@ -3,6 +3,7 @@ import { api, setSource } from '../lib/api.js';
 import { reviewHash } from '../lib/routes.js';
 import VersionHistory from './VersionHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
+import AppHeader from './AppHeader.jsx';
 import useMedia, { COMPACT } from './useMedia.js';
 
 const STATUS = { not_started: 'Not started', in_progress: 'In progress', done: 'Done' };
@@ -72,16 +73,7 @@ export default function Papers() {
 
   return (
     <div>
-      <header className="app-header">
-        <div className="brand" aria-hidden="true">TD</div>
-        <div className="head-title"><span className="crumbs">Tensile Data Review</span></div>
-        <button type="button" className="icon-btn gear-btn" aria-label="Settings" title="Settings" onClick={() => setSettingsOpen(true)}>
-          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="3" />
-            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
-          </svg>
-        </button>
-      </header>
+      <AppHeader section="review" onSettings={() => setSettingsOpen(true)} />
       <main className="papers">
         <div className="papers-head">
           <div>

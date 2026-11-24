@@ -1,0 +1,193 @@
+// Editing a schema's content (20-schema-specification.md, 22-schema-interface-contract.md). Pure functions: each
+// returns a new content and never changes the one it gets. Ids are minted here and never reused (BR-S02).
+
+export const FORMAT = 'value-review-schema/1';
+export const TYPES = [['number', 'Number'], ['category', 'Category'], ['text', 'Text'], ['calculated', 'Calculated']];
+export const TYPE_LABEL = Object.fromEntries(TYPES);
+
+export const emptyContent = () => ({ schema: FORMAT, description: '', groups: [] });
+
+export const blankField = (fieldId, name) => ({
+  field_id: fieldId, name, description: '', type: 'text', unit: '', allowed: [], multiple: false, formula: '', inputs: [], family: null,
+});
+
+// Same comparison as the service (domain/schema_rules.py): case and repeated spaces do not count.
+export const sameName = (name) => name.split(/\s+/).filter(Boolean).join(' ').toLowerCase();
+
+export const signature = (content) => JSON.stringify(content);
+
+export function counts(content) {
+  return { groups: content.groups.length, fields: content.groups.reduce((a, g) => a + g.fields.length, 0) };
+}
+
+// Every id a content uses, to mint new ones above them.
+export function idsOf(...contents) {
+  const out = new Set();
+  for (const c of contents) {
+    if (!c) continue;
+    for (const g of c.groups) {
+      out.add(g.group_id);
+      for (const f of g.fields) out.add(f.field_id);
+    }
+  }
+  return out;
+}
+
+// The next "<prefix>_<n>" above every id already known (from the content, the draft and the versions loaded).
+export function nextId(prefix, known) {
+  let max = 0;
+  const re = new RegExp(`^${prefix}_(\\d+)$`);
+  for (const id of known) {
+    const m = re.exec(id);
+    if (m) max = Math.max(max, Number(m[1]));
+  }
+  return `${prefix}_${max + 1}`;
+}
+
+// A name that no item of the list has yet: "Field", "Field 2", … (and "Yield strength (copy)" for duplicates).
+export function freeName(base, taken) {
+  const used = new Set([...taken].map(sameName));
+  if (!used.has(sameName(base))) return base;
+  for (let k = 2; ; k += 1) if (!used.has(sameName(`${base} ${k}`))) return `${base} ${k}`;
+}
+
+export function findField(content, fieldId) {
+  for (let gi = 0; gi < content.groups.length; gi += 1) {
+    const fi = content.groups[gi].fields.findIndex((f) => f.field_id === fieldId);
+    if (fi >= 0) return { gi, fi, group: content.groups[gi], field: content.groups[gi].fields[fi] };
+  }
+  return null;
+}
+
+const mapGroups = (content, fn) => ({ ...content, groups: content.groups.map(fn) });
+
+export function addGroup(content, groupId, name) {
+  return { ...content, groups: [...content.groups, { group_id: groupId, name, fields: [] }] };
+}
+
+export function renameGroup(content, groupId, name) {
+  return mapGroups(content, (g) => (g.group_id === groupId ? { ...g, name } : g));
+}
+
+export function removeGroup(content, groupId) {
+  return { ...content, groups: content.groups.filter((g) => g.group_id !== groupId) };
+}
+
+export function moveGroup(content, groupId, step) {
+  const i = content.groups.findIndex((g) => g.group_id === groupId);
+  const j = i + step;
+  if (i < 0 || j < 0 || j >= content.groups.length) return content;
+  const groups = [...content.groups];
+  [groups[i], groups[j]] = [groups[j], groups[i]];
+  return { ...content, groups };
+}
+
+export function addField(content, groupId, field) {
+  return mapGroups(content, (g) => (g.group_id === groupId ? { ...g, fields: [...g.fields, field] } : g));
+}
+
+// A change of type clears what only the old type uses, so a saved field never breaks BR-S04.
+export function updateField(content, fieldId, patch) {
+  return mapGroups(content, (g) => ({
+    ...g,
+    fields: g.fields.map((f) => {
+      if (f.field_id !== fieldId) return f;
+      const next = { ...f, ...patch };
+      if (next.type !== 'number') next.unit = '';
+      if (next.type !== 'category') { next.allowed = []; next.multiple = false; }
+      if (next.type !== 'calculated') { next.formula = ''; next.inputs = []; }
+      return next;
+    }),
+  }));
+}
+
+export function removeField(content, fieldId) {
+  const content2 = mapGroups(content, (g) => ({ ...g, fields: g.fields.filter((f) => f.field_id !== fieldId) }));
+  return content2;
+}
+
+export function duplicateField(content, fieldId, newId) {
+  const at = findField(content, fieldId);
+  if (!at) return content;
+  const copy = { ...at.field, field_id: newId, name: freeName(`${at.field.name} (copy)`, at.group.fields.map((f) => f.name)), family: null };
+  return mapGroups(content, (g, gi) => (gi === at.gi ? { ...g, fields: [...g.fields.slice(0, at.fi + 1), copy, ...g.fields.slice(at.fi + 1)] } : g));
+}
+
+// Move a field to a group at a position (another group too). The id never changes (BR-S02).
+export function moveFieldTo(content, fieldId, groupId, index) {
+  const at = findField(content, fieldId);
+  if (!at) return content;
+  const without = mapGroups(content, (g, gi) => (gi === at.gi ? { ...g, fields: g.fields.filter((f) => f.field_id !== fieldId) } : g));
+  return mapGroups(without, (g) => {
+    if (g.group_id !== groupId) return g;
+    const k = Math.max(0, Math.min(index, g.fields.length));
+    return { ...g, fields: [...g.fields.slice(0, k), at.field, ...g.fields.slice(k)] };
+  });
+}
+
+// Up or down by one place; past the edge of its group it goes to the end of the group above or the start of the one
+// below, so the buttons alone can bring a field anywhere (AC-S15).
+export function moveField(content, fieldId, step) {
+  const at = findField(content, fieldId);
+  if (!at) return content;
+  const target = at.fi + step;
+  if (target >= 0 && target < at.group.fields.length) return moveFieldTo(content, fieldId, at.group.group_id, target);
+  const other = content.groups[at.gi + step];
+  if (!other) return content;
+  return moveFieldTo(content, fieldId, other.group_id, step < 0 ? other.fields.length : 0);
+}
+
+// The item a rule problem (a JSON pointer such as /groups/0/fields/1/name) points to.
+export function targetOf(content, ref) {
+  const m = /^\/groups\/(\d+)(?:\/fields\/(\d+))?(?:\/([a-z_]+))?/.exec(ref || '');
+  if (!m) return null;
+  const group = content.groups[Number(m[1])];
+  if (!group) return null;
+  const field = m[2] !== undefined ? group.fields[Number(m[2])] : null;
+  return { groupId: group.group_id, fieldId: field ? field.field_id : null, key: m[3] || null };
+}
+
+export const RULE_TEXT = {
+  empty_name: 'Type a name.',
+  too_long: 'The name is too long (120 characters at most).',
+  duplicate_name: 'Another one in the same group has this name.',
+  duplicate_id: 'Two items share an internal id.',
+  bad_id: 'The internal id is not valid.',
+  unit_not_allowed: 'Only a Number has a unit.',
+  allowed_not_allowed: 'Only a Category has allowed values.',
+  inputs_not_allowed: 'Only a Calculated field reads other fields.',
+  formula_required: 'Write the formula.',
+  unknown_input: 'The formula reads a field that is no longer in the schema.',
+  self_reference: 'The formula cannot read its own field.',
+};
+
+// The rule problems of a failed Save version, as {groupId or fieldId: [messages]} for the editor.
+export function problemsByItem(content, items) {
+  const out = {};
+  for (const { ref, rule } of items || []) {
+    const t = targetOf(content, ref);
+    const key = t ? (t.fieldId || t.groupId) : 'schema';
+    (out[key] = out[key] || []).push(RULE_TEXT[rule] || rule);
+  }
+  return out;
+}
+
+// The line the model will read for a field (canvas: "What the model will read").
+export function modelText(field) {
+  const parts = [`${field.name}${field.type === 'number' && field.unit ? ` (${field.unit})` : ''}`];
+  if (field.description) parts.push(field.description);
+  if (field.type === 'category' && field.allowed.length) {
+    parts.push(`${field.multiple ? 'One or several of' : 'One of'}: ${field.allowed.join(', ')}. Another value may be reported if none fits.`);
+  }
+  if (field.type === 'calculated') parts.push(`Calculated from ${field.formula || 'a formula'}; not read from the paper.`);
+  return parts.join(' — ');
+}
+
+// "Saved · v1 · 54 fields in 4 groups", "Draft · changes since v1" or "New · not saved".
+export function statusLine(version, dirtyOrDraft, content) {
+  const { groups, fields } = counts(content);
+  const size = `${fields} ${fields === 1 ? 'field' : 'fields'} in ${groups} ${groups === 1 ? 'group' : 'groups'}`;
+  if (version === 0) return `New · not saved · ${size}`;
+  if (dirtyOrDraft) return `Draft · changes since v${version} · ${size}`;
+  return `Saved · v${version} · ${size}`;
+}

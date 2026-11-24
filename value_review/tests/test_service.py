@@ -214,10 +214,11 @@ class SettingsAndHealth(Base):  # OP-10, OP-11
     def test_defaults_and_update(self):
         folders = {'sources': [{'id': 'default', 'name': 'run', 'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}],
                    'active_source': 'default'}
-        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5, **folders})
+        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5, 'keep_schema_versions': 20, **folders})
         new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_minutes': 10}
-        self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **folders})   # folders left out: unchanged
-        self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), {**new, **folders})
+        kept = {'keep_schema_versions': 20}   # left out: unchanged (OP-S12)
+        self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **kept, **folders})   # folders left out: unchanged
+        self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), {**new, **kept, **folders})
 
     def test_invalid_settings_rejected(self):
         for bad in ({'reviewer_name': '', 'keep_versions': 20, 'autosave_minutes': 5},
