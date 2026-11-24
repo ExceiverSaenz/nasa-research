@@ -140,6 +140,9 @@ class SchemasApi(Base):
         self.assertEqual(family, [sym for _, sym in features.ELEMENTS])
         self.assertTrue(all(f['type'] == 'text' and f['unit'] == '' for g in v1['content']['groups'] for f in g['fields']))
 
+    def test_seed_without_opening_the_list(self):   # a link straight to the seeded schema
+        self.assertEqual(self.client.get(f'{API}/tensile-properties').json()['version'], 1)
+
     def test_seed_runs_once(self):   # BR-S10: deleting the seed does not bring it back
         self.client.get(API)
         self.assertEqual(self.client.delete(f'{API}/tensile-properties').status_code, 204)

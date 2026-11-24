@@ -151,3 +151,20 @@ test('export a version as .xlsx, import it as a new schema, and fill a draft fro
   const yieldField = draft.groups.flatMap((g) => g.fields).find((f) => f.name === 'Yield strength');
   expect(yieldField.field_id).toBe('f_1');   // the id it had before the file
 });
+
+test('drag a field before another, into another group, and a group above another (AC-S07)', async ({ page, server }) => {
+  await page.setViewportSize({ width: 1440, height: 3200 });   // every group on screen: a drag cannot scroll the list
+  await page.goto('/#/schemas/tensile-properties');
+  const handle = (kind, id) => page.locator(`[data-drag="${kind}:${id}"]`);
+  const row = (id) => handle('field', id).locator('..');
+  await handle('field', 'total_elongation').dragTo(row('yield_strength'));            // before Yield strength
+  await handle('field', 'width').dragTo(handle('group', 'g_test').locator('..'));     // to the end of the test group
+  await handle('group', 'g_test').dragTo(handle('group', 'g_material').locator('..')); // the test group first
+  await page.getByRole('button', { name: /Save version/ }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Saved · v2' })).toBeVisible();
+  const v2 = (await server.api('/schemas/tensile-properties/versions/2')).content;
+  expect(v2.groups.map((g) => g.group_id)).toEqual(['g_test', 'g_material', 'g_treatment', 'g_specimen']);
+  expect(v2.groups[0].fields.map((f) => f.field_id)).toEqual(
+    ['test_temperature', 'strain_rate', 'total_elongation', 'yield_strength', 'ultimate_tensile_strength', 'uniform_elongation', 'width']);
+  expect(v2.groups[3].fields.map((f) => f.field_id)).not.toContain('width');
+});

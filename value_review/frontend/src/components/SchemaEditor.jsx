@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../lib/api.js';
 import {
   TYPES, TYPE_LABEL, addField, adoptIds, addGroup, blankField, duplicateField, findField, freeName, idsOf, modelText, moveField,
-  moveFieldTo, moveGroup, nextId, problemsByItem, removeField, removeGroup, renameGroup, signature, statusLine, updateField,
+  moveFieldBefore, moveFieldTo, moveGroup, moveGroupBefore, nextId, problemsByItem, removeField, removeGroup, renameGroup, signature, statusLine, updateField,
 } from '../lib/schema.js';
 import { SCHEMAS_HASH } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
@@ -28,6 +28,8 @@ export default function SchemaEditor({ schemaId }) {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
   const [more, setMore] = useState(false);
+  const [drag, setDrag] = useState(null);           // {kind: 'field' | 'group', id} while dragging
+  const [over, setOver] = useState(null);           // the row the drag is over
   const [busy, setBusy] = useState(false);
   const known = useRef(new Set());                  // every id seen, so new ids are never reused
   const savedSig = useRef('');                      // what the server holds as the draft (or the version)
@@ -126,6 +128,33 @@ export default function SchemaEditor({ schemaId }) {
   const selGroup = selected && selected.kind === 'group' ? content.groups.find((g) => g.group_id === selected.id) : null;
   const pill = { saved: 'All changes saved', pending: 'Unsaved changes', saving: 'Saving…', error: 'Not saved' }[saveState];
 
+  // Dragging by the handle (AC-S07); the arrow buttons do the same from the keyboard (AC-S15).
+  // A field dropped on a field goes just before it; on a group's header, to the end of that group.
+  // A group dropped on another group's header goes just before it.
+  const startDrag = (e, kind, id) => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', `${kind}:${id}`);
+    setDrag({ kind, id });
+  };
+  const endDrag = () => { setDrag(null); setOver(null); };
+  const dropTarget = (id, kind) => ({
+    onDragOver: (e) => {
+      if (!drag || drag.id === id || (drag.kind === 'group' && kind === 'field')) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (over !== id) setOver(id);
+    },
+    onDragLeave: () => { if (over === id) setOver(null); },
+    onDrop: (e) => {
+      e.preventDefault();
+      if (!drag || drag.id === id) return endDrag();
+      if (drag.kind === 'group') change(moveGroupBefore(content, drag.id, id));
+      else if (kind === 'field') change(moveFieldBefore(content, drag.id, id));
+      else change(moveFieldTo(content, drag.id, id, Number.MAX_SAFE_INTEGER));
+      return endDrag();
+    },
+  });
+
   const newGroup = () => {
     const id = mint('g');
     change(addGroup(content, id, freeName('New group', content.groups.map((g) => g.name))));
@@ -179,7 +208,10 @@ export default function SchemaEditor({ schemaId }) {
             {content.groups.length === 0 && <div className="empty">No groups yet. Add a group, then its fields.</div>}
             {content.groups.map((g, gi) => (
               <div key={g.group_id} role="group" aria-label={g.name}>
-                <div className={`group-head${problems[g.group_id] ? ' has-error' : ''}`} aria-current={selected && selected.id === g.group_id ? 'true' : undefined}>
+                <div className={`group-head${problems[g.group_id] ? ' has-error' : ''}${over === g.group_id ? ' drop-here' : ''}`}
+                  aria-current={selected && selected.id === g.group_id ? 'true' : undefined} {...dropTarget(g.group_id, 'group')}>
+                  <span className="drag-handle" draggable="true" title="Drag to move the group" aria-hidden="true" data-drag={`group:${g.group_id}`}
+                    onDragStart={(e) => startDrag(e, 'group', g.group_id)} onDragEnd={endDrag}>⋮⋮</span>
                   <button type="button" className="pick" onClick={() => setSelected({ kind: 'group', id: g.group_id })}>
                     {g.name || <i>Unnamed group</i>} <span className="muted"> · {g.fields.length}</span></button>
                   <button type="button" className="mini-btn" aria-label={`Move ${g.name} up`} disabled={gi === 0} onClick={() => change(moveGroup(content, g.group_id, -1))}>↑</button>
@@ -190,7 +222,10 @@ export default function SchemaEditor({ schemaId }) {
                   const first = gi === 0 && fi === 0;
                   const last = gi === content.groups.length - 1 && fi === g.fields.length - 1;
                   return (
-                    <div key={f.field_id} className={`field-row${problems[f.field_id] ? ' has-error' : ''}`} aria-current={selected && selected.id === f.field_id ? 'true' : undefined}>
+                    <div key={f.field_id} className={`field-row${problems[f.field_id] ? ' has-error' : ''}${over === f.field_id ? ' drop-here' : ''}`}
+                      aria-current={selected && selected.id === f.field_id ? 'true' : undefined} {...dropTarget(f.field_id, 'field')}>
+                      <span className="drag-handle" draggable="true" title="Drag to move the field" aria-hidden="true" data-drag={`field:${f.field_id}`}
+                        onDragStart={(e) => startDrag(e, 'field', f.field_id)} onDragEnd={endDrag}>⋮⋮</span>
                       <button type="button" className="pick" onClick={() => setSelected({ kind: 'field', id: f.field_id })}>
                         <span>{f.name || <i>Unnamed field</i>}{!f.description && <span className="dot" title="No description yet" style={{ background: 'var(--check)', marginLeft: 8 }} />}</span>
                         <span className="muted">{TYPE_LABEL[f.type]}{f.type === 'number' && f.unit ? ` · ${f.unit}` : ''}{f.family ? ` · ${f.family.name}` : ''}</span>

@@ -2,8 +2,8 @@
 
 > Paths are relative to the repository root (`nasa_research`). Files marked *(proposed)* do not exist yet. Line numbers
 > were read on `main` at `c1c414b` (2026-11-23). Steps 1 to 4 of the plan (store, rules, API OP-S01 to OP-S09 and the
-> list and editor screens), the version history in the client (step 6) and the .xlsx template (step 8) are implemented;
-> dragging to reorder is not yet.
+> list and editor screens), dragging to reorder (step 5), the version history in the client (step 6) and the .xlsx
+> template (step 8) are implemented.
 
 **Reference** · [20-schema-specification.md](20-schema-specification.md) · contract
 [22-schema-interface-contract.md](22-schema-interface-contract.md) · front-end design: canvas
@@ -34,7 +34,7 @@
 | `value_review/frontend/src/lib/schema.js` + `schema.test.js` | Pure editing functions: add, rename, duplicate, delete, move field (within and across groups), move group, mint ids, client-side mirror of the rules, compare, the text the model reads. |
 | `value_review/frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`, `SchemaHistory.jsx`, `ImportDialog.jsx` | The screens of the canvas artboard `Schema.dc.html`. |
 | `value_review/tests/test_service.py` `Base` (line 49), `SettingsAndHealth` (line 213); `test_versions.py`; `test_storage.py`; `test_sources.py` | Fixtures and test style. New: `tests/test_schemas.py` (rules, store, API) and `tests/test_schema_xlsx.py` (round trip, reading, rejections, OP-S10, OP-S11). |
-| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem, reordering, the version history (compare, restore) and the .xlsx export, import and fill; `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
+| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem, reordering with the buttons and by dragging, the version history (compare, restore) and the .xlsx export, import and fill; `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
 | `llm_baseline/extraction_prompt.md` "Feature guide" (line 29) | Section headings used as the seed's group names (BR-S10). Read only. |
 
 ## Conventions and constraints

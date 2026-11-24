@@ -145,3 +145,15 @@ test('filling a draft keeps the ids of fields with the same names (BR-S02)', asy
   const got = adoptIds(imported, current, known);
   assert.equal(layout(got), 'g_1:f_1,f_8 g_3:');
 });
+
+test('dragging: a field before another, a group before another (AC-S07)', async () => {
+  const { moveFieldBefore, moveGroupBefore } = await import('./schema.js');
+  const c = base();   // g_1: f_1, f_2; g_2: f_3
+  assert.equal(layout(moveFieldBefore(c, 'f_2', 'f_1')), 'g_1:f_2,f_1 g_2:f_3');
+  assert.equal(layout(moveFieldBefore(c, 'f_1', 'f_3')), 'g_1:f_2 g_2:f_1,f_3');
+  assert.equal(layout(moveFieldBefore(c, 'f_3', 'f_2')), 'g_1:f_1,f_3,f_2 g_2:');
+  assert.equal(moveFieldBefore(c, 'f_1', 'f_1'), c);
+  assert.equal(layout(moveGroupBefore(c, 'g_2', 'g_1')), 'g_2:f_3 g_1:f_1,f_2');
+  assert.equal(layout(moveGroupBefore(c, 'g_1', null)), 'g_2:f_3 g_1:f_1,f_2');
+  assert.equal(moveGroupBefore(c, 'g_1', 'g_1'), c);
+});

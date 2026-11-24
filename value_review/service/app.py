@@ -572,7 +572,9 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 raise ApiError(500, 'storage_error', f'Could not create the first schema: {error}') from None
 
     def need_schema(sid):
-        """The schema's metadata, or 404 when it does not exist (or is in the trash)."""
+        """The schema's metadata, or 404 when it does not exist (or is in the trash). A link to the seeded schema
+        works on a data folder where the list was never opened."""
+        seed_schemas()
         meta = schema_store.read_meta(sid)[0] if SCHEMA_ID.fullmatch(sid) else None
         if meta is None:
             raise ApiError(404, 'schema_not_found', f'No schema {sid}')

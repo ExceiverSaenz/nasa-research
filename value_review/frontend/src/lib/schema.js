@@ -281,3 +281,23 @@ export function fileToBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+
+// Dragging (AC-S07): put a group just before another one (or at the end with beforeId null).
+export function moveGroupBefore(content, groupId, beforeId) {
+  const moving = content.groups.find((g) => g.group_id === groupId);
+  if (!moving || groupId === beforeId) return content;
+  const rest = content.groups.filter((g) => g.group_id !== groupId);
+  const k = beforeId ? rest.findIndex((g) => g.group_id === beforeId) : rest.length;
+  if (k < 0) return content;
+  return { ...content, groups: [...rest.slice(0, k), moving, ...rest.slice(k)] };
+}
+
+// Dragging a field onto another field puts it just before that field, in that field's group.
+export function moveFieldBefore(content, fieldId, beforeId) {
+  if (fieldId === beforeId) return content;
+  const target = findField(content, beforeId);
+  if (!target) return content;
+  const at = findField(content, fieldId);
+  const sameGroupEarlier = at && at.group.group_id === target.group.group_id && at.fi < target.fi;
+  return moveFieldTo(content, fieldId, target.group.group_id, sameGroupEarlier ? target.fi - 1 : target.fi);
+}
