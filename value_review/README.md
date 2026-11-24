@@ -35,13 +35,16 @@ The built front end in `value_review/web/` is committed, so Node is not needed t
 
 ## Run it with Docker (one container per reviewer)
 
+Testers: follow [TESTER-GUIDE.md](TESTER-GUIDE.md), a step-by-step guide.
+
 Each reviewer runs their own container on their own computer; it is not a shared server (ADR-009). Needs Docker
 Desktop (or Docker Engine) and the repository's `value_review/` folder; the PDFs and LLM results stay on your computer and
 are mounted read-only, never copied into the image.
 
-1. Copy `value_review/.env.example` to `value_review/.env` and set the three folders:
+1. Copy `value_review/.env.example` to `value_review/.env` and set your name and the three folders:
 
    ```
+   REVIEW_NAME=Your Name                            # required: the author of your decisions
    REVIEW_LLM_RESULTS=C:/path/to/llm_results       # <paper>-pdf_with_feature_guide.json
    REVIEW_PDFS=C:/path/to/pdfs                      # <paper>.pdf
    REVIEW_DATA=./review-data                         # your reviews; keep this folder

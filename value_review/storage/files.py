@@ -4,6 +4,7 @@ Reading, settings, draft writes, version writes and pruning.
 A file that cannot be read (malformed JSON, wrong schema) is reported, never repaired or deleted.
 """
 import json
+import os
 import re
 import threading
 from pathlib import Path
@@ -169,9 +170,13 @@ class AnnotationStore:
         return stored if isinstance(stored, dict) else {}
 
     def settings(self):
-        """Reviewer settings over the defaults (the folder pairs are read by the service)."""
+        """Reviewer settings over the defaults (the folder pairs are read by the service). The default reviewer name
+        comes from ``VALUE_REVIEW_REVIEWER`` when set (each tester's container sets it); a name saved in Settings wins."""
         stored = self.stored_settings()
         out = dict(SETTINGS_DEFAULTS)
+        name = os.environ.get('VALUE_REVIEW_REVIEWER', '').strip()
+        if name:
+            out['reviewer_name'] = name[:80]
         out.update({k: v for k, v in stored.items() if k in out})
         return out
 
