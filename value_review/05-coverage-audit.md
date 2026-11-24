@@ -169,12 +169,24 @@ python -B -m value_review --data <a copy of value_review>
 ## Schema section (added 2026-11-24)
 
 Maps the criteria and rules of [20-schema-specification.md](20-schema-specification.md) to their evidence. Run on
-2026-11-24 from the worktree with `VALUE_REVIEW_SOURCE_ROOT` set: **211 Python tests**, **53 client tests**, **33 browser
-tests**, ruff clean. The Schema part adds 44 Python tests (`test_schemas.py`, `test_schema_xlsx.py`), 14 client tests
-(`schema.test.js`) and 8 browser tests (7 in `e2e/schemas.spec.js`, 1 in `e2e/tablet.spec.js`). Abbreviations:
+2026-11-24 from the worktree with `VALUE_REVIEW_SOURCE_ROOT` set: **223 Python tests**, **53 client tests**, **41 browser
+tests**, ruff clean. The Schema part adds 55 Python tests (`test_schemas.py`, `test_schema_xlsx.py`), 14 client tests
+(`schema.test.js`) and 16 browser tests (15 in `e2e/schemas.spec.js`, 1 in `e2e/tablet.spec.js`). Abbreviations:
 `schemas` = `test_schemas.py`, `xlsx` = `test_schema_xlsx.py`, `schema.js` = `schema.test.js`, `e2e` = `e2e/schemas.spec.js`.
-**No hand check in a browser was made for this section yet**; the browser tests run the real built front end against a
-real service.
+The browser tests run the real built front end against a real service.
+
+- **Measured coverage** · Python lines 99.5 % of the schema code (583 of 586; standard library `trace`, following the
+  worker threads that run the routes, over `test_schemas.py` and `test_schema_xlsx.py`): `domain/schema_rules.py` and
+  `ingest/seed_schema.py` 100 %, `storage/schemas.py` 123/124, `schema_xlsx.py` 201/202, the schema block of
+  `service/app.py` 170/171. The three lines left run only in a race (a version file deleted between listing and
+  pruning; a second seed waiting on the lock) or on an empty Descriptions sheet.
+- **Hand check in the browser** (2026-11-24, built-in browser, the e2e data set) at 1440 × 900 and 834 × 1112: list,
+  editor of the seeded schema (54 fields), detail panel, ⋯ menu. It found one problem, now fixed: the Details panel did
+  not follow the list, so a field picked far down showed its details off screen (about 2,000 px below at 834). The panel
+  is now sticky (at the top on wide screens, at the bottom edge under 1024 px, like Review's footer), and e2e "the
+  details of a field far down the list are on screen" checks it at both widths. Dragging could not be done by hand
+  there (the pane's synthetic mouse does not start a native drag), so e2e "drag over a long list…" does it at both
+  sizes with a real drag, scrolling with the wheel during the drag.
 
 | AC | Automated evidence | Status |
 |---|---|---|
@@ -182,18 +194,18 @@ real service.
 | AC-S02 New blank schema | schemas `test_create_blank_then_save_v1`; e2e "create a schema…" | Covered |
 | AC-S03 Save v1 | schemas `test_create_blank_then_save_v1` (file valid, draft deleted, reviewer name); e2e "create a schema…" | Covered |
 | AC-S04 Rule problem | schemas `test_rules_violation_writes_nothing`, `Rules.test_names`; schema.js "rule problems point…"; e2e "a rule problem…" | Covered |
-| AC-S05 Stale If-Match | schemas `test_stale_or_missing_if_match` (409, 428, draft kept) | Covered in the service; the client's message is not tested |
+| AC-S05 Stale If-Match | schemas `test_stale_or_missing_if_match` (409, 428, draft kept); e2e "another tab saved first…" (the message on autosave and on Save version, Reload, nothing written) | Covered |
 | AC-S06 Rename keeps the id | schemas `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js "renaming keeps the id", "compare matches fields by id"; e2e "version history…" | Covered |
-| AC-S07 Reorder | schemas `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js moves and dragging; e2e buttons and "drag a field…" | Covered |
+| AC-S07 Reorder | schemas `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js moves and dragging; e2e buttons, "drag a field…" and "drag over a long list…" (1440 × 900 and 834 × 1112) | Covered |
 | AC-S08 Restore | schemas `test_versions_and_restore`; e2e "version history…" | Covered |
 | AC-S09 Keep N | schemas `test_keep_schema_versions`, `Store.test_prune_keeps_the_newest` | Covered |
 | AC-S10 .xlsx round trip | xlsx `RoundTrip.*`, `Api.test_export_then_import_as_a_new_schema`; e2e "export a version as .xlsx…" | Covered |
 | AC-S11 Rejected files | xlsx `Rejected.*`, `Api.test_rejected_files_create_nothing`; e2e (a plain-text file) | Covered |
 | AC-S12 Deleted formula input | schemas `test_calculated_with_a_deleted_input`, `Rules.test_type_rules` | Covered |
-| AC-S13 Delete to trash | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken` | Covered in the service; the list's dialog is not tested in a browser |
+| AC-S13 Delete to trash | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken`, `Store.test_trash_twice_in_the_same_second`; e2e "delete a schema from the list…" (dialog, row gone, folder in `.trash/`) | Covered |
 | AC-S14 Draft after reload | schemas `test_create_blank_then_save_v1`; e2e "the draft is kept…" | Covered |
-| AC-S15 Keyboard, 44 px | schema.js "the up and down buttons…"; e2e buttons-only test; tablet "the Schema list and editor fit…" | Partial: no full keyboard-only pass |
-| AC-S16 Leaving saves the draft | Code only (the editor saves on leaving and on `pagehide`) | Not tested |
+| AC-S15 Keyboard, 44 px | schema.js "the up and down buttons…"; e2e "the whole first workflow with the keyboard only" (create, groups, field, rename, move with the arrows, save, history and Escape) and the buttons-only test; tablet "the Schema list and editor fit…"; hand check at 834 | Covered |
+| AC-S16 Leaving saves the draft | e2e "leaving the editor right after a change…" (leaves well within the autosave delay; the draft on the server has the change) | Covered (leaving inside the app; closing the tab relies on `pagehide` with `keepalive`, not tested) |
 
 | BR | Evidence |
 |---|---|
@@ -205,10 +217,15 @@ real service.
 | BR-S06 Keep N, restore deletes nothing | schemas `test_keep_schema_versions`, `test_versions_and_restore` |
 | BR-S07 Deletion only from the next version | schemas `test_deleted_field_stays_in_earlier_versions` |
 | BR-S08 Template | xlsx `Reading.*`, `RoundTrip.test_the_layout_is_the_fixed_template` |
-| BR-S09 Trash, ids not reused | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken` |
+| BR-S09 Trash, ids not reused | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken`, `Store.test_trash_twice_in_the_same_second` |
 | BR-S10 Seed | schemas `test_seed_from_features` (ids, order, family, no invented types) |
 | BR-S11 Modified by | schemas `test_create_blank_then_save_v1` (`saved_by` is the reviewer name) |
 
-Gaps to close: a hand check in the browser at 1440 and 834 px (AC-S15, and dragging over a long list, which the browser
-test does in a tall window); a test for leaving the editor with a pending autosave (AC-S16); the client's message on a
-version conflict (AC-S05); Python coverage measured with `trace`, like the rest of this audit.
+Other evidence added with the coverage pass: schemas `test_discard_the_draft` (Discard changes, OP-S04 DELETE),
+`test_an_unreadable_draft_is_reported_not_fatal`, `test_storage_failures_on_create_rename_delete_and_discard`,
+`Store.test_disk_errors_become_storage_errors`, `Rules.test_ids` (`bad_id`); xlsx `test_too_large`,
+`test_descriptions_without_their_columns`, `test_another_sheet_name_is_read_with_a_warning`,
+`test_description_rows_without_a_group_are_ignored`, `Api.test_values_longer_than_the_schema_allows`.
+
+Remaining gap: closing the browser tab within the autosave delay (AC-S16 through `pagehide`) is not tested; a browser
+test cannot observe a request sent while its page closes.

@@ -56,6 +56,8 @@ class Rules(unittest.TestCase):   # BR-S03, BR-S04
     def test_ids(self):
         c = content(group('g_1', 'A', field('f_1', 'x'), field('f_1', 'y')), group('f_1', 'B'))
         self.assertEqual([p['rule'] for p in check_schema(c)], ['duplicate_id', 'duplicate_id'])
+        bad = content(group('g_1', 'A', field('Yield Strength', 'x')))
+        self.assertEqual(check_schema(bad), [{'ref': '/groups/0/fields/0/field_id', 'rule': 'bad_id'}])
 
     def test_type_rules(self):
         c = content(group('g_1', 'A',
@@ -112,6 +114,30 @@ class Store(unittest.TestCase):   # BR-S05, BR-S06, BR-S09
         self.assertFalse(self.store.schema_dir('sic').exists())
         self.assertTrue((self.store.folder / '.trash' / 'sic.20261123T100000Z' / 'versions' / 'v1.json').exists())
         self.assertEqual(self.store.new_id('SiC'), 'sic-2')
+
+    def test_trash_twice_in_the_same_second(self):
+        for _ in range(2):
+            self.store.write_version('sic', self.version(1))
+            self.store.trash('sic', '20261123T100000Z')
+        self.assertEqual(sorted(p.name for p in (self.store.folder / '.trash').iterdir()),
+                         ['sic.20261123T100000Z', 'sic.20261123T100000Z-2'])
+
+    def test_no_folder_yet(self):
+        self.assertEqual((self.store.exists(), self.store.ids()), (False, []))
+
+    def test_disk_errors_become_storage_errors(self):
+        self.store.write_version('a', self.version(1))
+        self.store.write_version('a', self.version(2))
+        self.store.write_draft('a', {'schema': 'value-review-schema-draft/1', 'schema_id': 'a', 'base_version': 2,
+                                     'saved_at': '2026-11-23T10:00:00Z', 'content': ONE})
+        denied = PermissionError(13, 'Access is denied')
+        with mock.patch.object(Path, 'unlink', side_effect=denied):
+            for call in (lambda: self.store.delete_draft('a'), lambda: self.store.prune('a', 1)):
+                with self.assertRaises(StorageError):
+                    call()
+        with mock.patch('value_review.storage.schemas.os.replace', side_effect=denied), self.assertRaises(StorageError):
+            self.store.trash('a', '20261123T100000Z')
+        self.assertEqual((self.store.version_numbers('a'), self.store.draft_path('a').exists()), ([2, 1], True))
 
 
 class SchemasApi(Base):
@@ -304,6 +330,41 @@ class SchemasApi(Base):
         self.assertTrue((trashed[0] / 'versions' / 'v1.json').exists())
         self.assertEqual(self.client.get(f'{API}/sic-composites').status_code, 404)
         self.assertEqual(self.create().json()['schema_id'], 'sic-composites-2')
+
+    def test_discard_the_draft(self):   # OP-S04: Discard changes
+        self.create()
+        self.save('sic-composites', ONE, 0)
+        self.client.put(f'{API}/sic-composites/draft', json={'base_version': 1, 'content': content()})
+        self.assertIsNotNone(self.client.get(f'{API}/sic-composites').json()['draft'])
+        self.assertEqual(self.client.delete(f'{API}/sic-composites/draft').status_code, 204)
+        view = self.client.get(f'{API}/sic-composites').json()
+        self.assertEqual((view['draft'], view['content'], view['version']), (None, ONE, 1))
+        self.assertEqual(self.client.delete(f'{API}/sic-composites/draft').status_code, 204)   # nothing left: still fine
+        self.assertEqual(self.client.delete(f'{API}/nope/draft').status_code, 404)
+
+    def test_an_unreadable_draft_is_reported_not_fatal(self):
+        self.create()
+        self.save('sic-composites', ONE, 0)
+        (self.folder / 'sic-composites' / 'draft.json').write_text('{', encoding='utf-8')
+        r = self.client.get(f'{API}/sic-composites')
+        self.assertEqual((r.status_code, r.json()['draft'], r.json()['content'], len(r.json()['problems'])), (200, None, ONE, 1))
+
+    def test_storage_failures_on_create_rename_delete_and_discard(self):
+        self.create()
+        fail = StorageError('disk full')
+        with mock.patch('value_review.storage.schemas.SchemaStore.write_meta', side_effect=fail):
+            calls = [self.client.post(API, json={'name': 'Other'}),
+                     self.client.patch(f'{API}/sic-composites', json={'name': 'Renamed'})]
+        with mock.patch('value_review.storage.schemas.SchemaStore.write_draft', side_effect=fail):
+            calls.append(self.client.put(f'{API}/sic-composites/draft', json={'base_version': 0, 'content': ONE}))
+        with mock.patch('value_review.storage.schemas.SchemaStore.delete_draft', side_effect=fail):
+            calls.append(self.client.delete(f'{API}/sic-composites/draft'))
+        with mock.patch('value_review.storage.schemas.SchemaStore.trash', side_effect=fail):
+            calls.append(self.client.delete(f'{API}/sic-composites'))
+        self.assertEqual([(r.status_code, r.json()['error']['code']) for r in calls], [(500, 'storage_error')] * 5)
+        rows = self.client.get(API).json()['schemas']
+        self.assertEqual([(s['schema_id'], s['name']) for s in rows if s['schema_id'] != 'tensile-properties'],
+                         [('sic-composites', 'SiC composites')])
 
     def test_unknown_schema(self):
         for r in (self.client.get(f'{API}/nope'), self.client.get(f'{API}/Bad%20Id'), self.client.delete(f'{API}/nope'),

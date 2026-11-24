@@ -234,6 +234,8 @@ kbd { font-family: var(--mono); font-size: 12px; font-weight: 500; padding: 0 5p
 .danger-text { color: var(--reject) !important; }
 .schema-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr); gap: 20px; align-items: start; }
 .schema-layout > .panel { overflow: visible; }
+/* The details follow the list: a field picked far down shows its details at once */
+.schema-layout > aside.panel { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: auto; }
 .group-head { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--sel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--navy-dark); font-weight: 600; }
 .field-row { display: flex; align-items: center; gap: 6px; padding: 2px 12px 2px 16px; border-bottom: 1px solid var(--line-3); min-height: 48px; }
 .group-head[aria-current=true], .field-row[aria-current=true] { outline: 2px solid var(--navy); outline-offset: -2px; }
@@ -253,6 +255,7 @@ kbd { font-family: var(--mono); font-size: 12px; font-weight: 500; padding: 0 5p
 .inputs-list legend { font-size: 12px; color: var(--ink-3); padding: 0 4px; }
 @media (max-width: 1023px) {
   .schema-layout { grid-template-columns: 1fr; }
+  .schema-layout > aside.panel { top: auto; bottom: 0; z-index: 5; max-height: 45vh; box-shadow: 0 -4px 16px rgba(7, 27, 63, 0.12); }
   .mini-btn { width: 44px; height: 44px; }
   .app-nav a { padding: 0 10px; }
   a.brand { width: 44px; height: 44px; }

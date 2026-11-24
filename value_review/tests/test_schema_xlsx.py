@@ -94,6 +94,17 @@ class Reading(unittest.TestCase):   # BR-S08
         got, _, warnings = parse_xlsx(data, 'x.xlsx')
         self.assertEqual((got['groups'][0]['fields'][0]['unit'], [w['problem'] for w in warnings]), ('', ['unit_dropped']))
 
+    def test_another_sheet_name_is_read_with_a_warning(self):
+        got, _, warnings = parse_xlsx(workbook([['', 'G'], ['Reference', 'A']], sheet='Sheet1'), 'x.xlsx')
+        self.assertEqual(([f['name'] for f in got['groups'][0]['fields']], [w['problem'] for w in warnings]), (['A'], ['sheet_name']))
+
+    def test_description_rows_without_a_group_are_ignored(self):
+        data = workbook([['', 'G'], ['Reference', 'A']],
+                        descriptions=[['Group', 'Field', 'Description'], [None, 'A', 'lost'], [None, None, None], ['G', 'A', 'kept']])
+        got, _, warnings = parse_xlsx(data, 'x.xlsx')
+        self.assertEqual(got['groups'][0]['fields'][0]['description'], 'kept')
+        self.assertEqual([(w['cell'], w['problem']) for w in warnings], [('A2', 'no_group')])
+
 
 class Rejected(unittest.TestCase):   # AC-S11
     def problems(self, data, name='x.xlsx'):
@@ -111,6 +122,13 @@ class Rejected(unittest.TestCase):   # AC-S11
     def test_bad_headers(self):
         data = workbook([['', None, 'G'], ['Reference', 'A', None, 'B']])
         self.assertEqual(self.problems(data), [('Schema', 'B1', 'no_group'), ('Schema', 'C2', 'empty_field')])
+
+    def test_too_large(self):
+        self.assertEqual(self.problems(b'x' * (5 * 1024 * 1024 + 1)), [(None, None, 'too_large')])
+
+    def test_descriptions_without_their_columns(self):
+        data = workbook([['', 'G'], ['Reference', 'A']], descriptions=[['Name', 'Text'], ['A', 'x']])
+        self.assertEqual(self.problems(data), [('Descriptions', 'A1', 'bad_descriptions')])
 
     def test_duplicate_names_in_a_group(self):
         data = workbook([['', 'G', None], ['Reference', 'Width (mm)', 'width (in)']])
@@ -145,6 +163,12 @@ class Api(Base):   # OP-S10, OP-S11
         r = self.client.post('/api/v1/schemas/import', json={'filename': 'x.xlsx', 'data_base64': '***'})
         self.assertEqual(r.status_code, 400)
         self.assertEqual(self.client.get('/api/v1/schemas').json(), before)
+
+    def test_values_longer_than_the_schema_allows(self):
+        data = workbook([['', 'G'], ['Reference', 'A' * 121]])
+        r = self.client.post('/api/v1/schemas/import', json={'filename': 'x.xlsx', 'data_base64': base64.b64encode(data).decode()})
+        self.assertEqual((r.status_code, r.json()['error']['code'], r.json()['error']['details']['problems'][0]['problem']),
+                         (422, 'invalid_template', 'too_long'))
 
     def test_export_of_an_unknown_version(self):
         self.client.get('/api/v1/schemas')
