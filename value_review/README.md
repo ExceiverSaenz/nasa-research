@@ -1,8 +1,8 @@
 # Tensile Value Review
 
-A local tool for an expert to check the tensile values an LLM extracted from papers. Each value is shown next to the PDF page it came from; the reviewer accepts, corrects, rejects or marks it as unsure, fixes records and evidence boxes, and submits a reviewed, versioned copy of the paper. The model's output is never changed.
+A local tool for an expert to define the features an LLM must extract from papers (**Schema**) and to check the tensile values it extracted (**Review**). Each value is shown next to the PDF page it came from; the reviewer accepts, corrects, rejects or marks it as unsure, fixes records and evidence boxes, and submits a reviewed, versioned copy of the paper. The model's output is never changed.
 
-The interface follows the canvas design [Extraction Review Tool](https://claude.ai/artifact/RkuaEejuysoNsSLvEM7w4f). Design and rationale: [specification](01-specification.md) · [repository context](02-repository-context.md) · [interface contract](03-interface-contract.md) · [decisions](04-architecture-decision-record.md) · [coverage audit](05-coverage-audit.md).
+The interface follows the canvas design [Extraction Review Tool](https://claude.ai/artifact/RkuaEejuysoNsSLvEM7w4f). Design and rationale: [specification](01-specification.md) · [repository context](02-repository-context.md) · [interface contract](03-interface-contract.md) · [decisions](04-architecture-decision-record.md) · [coverage audit](05-coverage-audit.md). The Schema section: [specification](20-schema-specification.md) · [repository context](21-schema-repository-context.md) · [interface contract](22-schema-interface-contract.md) · ADR-010 to ADR-012.
 
 ## Requirements
 
@@ -73,7 +73,11 @@ are mounted read-only, never copied into the image.
 - **Save draft** keeps your work for later (also automatically every 5 minutes and when the tab closes). **Finish paper** shows a summary and **Submit paper** saves a new version. The 20 most recent versions are kept per paper.
 - **Start over from model output** (⋯ in the review) clears the working copy and the draft; versions stay.
 - **Keyboard** (desktop): S · D · F reject, unsure, accept; J · K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; **?** shows every shortcut. On a tablet (under 1024 px wide) the review shows a list screen and a detail screen.
-- **Settings** (gear at the top of Papers): the **folder pairs**, each a named **data folder** (LLM results, `<paper>-pdf_with_feature_guide.json`) with its **papers folder** (PDFs); the reviewer name, the versions kept (1–100) and the autosave interval. Each pair is reviewed on its own, with its own drafts and versions; when there are two or more, the **LLM results** selector on Papers chooses the one shown. Saving a new pair or new folders loads their papers; papers already loaded are never changed or removed, and show as *Source changed* or *Source not found* (read-only) when their file differs or is missing. Removing a pair keeps its reviews on disk. *Load papers again* picks up files added later.
+- **Schema** (top bar): the list of schemas, and an editor for each. A first schema, "Tensile properties", is made from the extraction guide's features the first time; it does not change Review, which still reads its columns from `ingest/features.py` (ADR-012).
+  - **+ New schema** starts blank, from a copy of a saved schema, or from an **.xlsx template** (the empty one can be downloaded there). The ⋯ menu of a row renames, opens the version history, duplicates, exports the latest version as .xlsx, or deletes (the folder goes to a trash folder; nothing is erased).
+  - In the editor, add groups and fields. A field has a name and, if you want, a description and a type (Number with a unit, Category with allowed values, Text, Calculated with a formula), and shows the line the model will read. Reorder by dragging the ⋮⋮ handle or with the arrows. Every change is saved as a draft on the server a moment later; **Save version** makes the next version after checking that names are filled in and unique in their group. The ⋯ menu fills the draft from an .xlsx template (fields with the same names keep their identity) or exports the current version.
+  - **Version history**: view a version, compare it with the current one (a renamed field shows as one change), restore it as a new version. The 20 most recent are kept per schema (Settings).
+- **Settings** (gear at the top of Papers and Schema): the **folder pairs**, each a named **data folder** (LLM results, `<paper>-pdf_with_feature_guide.json`) with its **papers folder** (PDFs); the reviewer name, the versions kept per paper (1–100) and per schema (1–200), and the autosave interval. Each pair is reviewed on its own, with its own drafts and versions; when there are two or more, the **LLM results** selector on Papers chooses the one shown. Saving a new pair or new folders loads their papers; papers already loaded are never changed or removed, and show as *Source changed* or *Source not found* (read-only) when their file differs or is missing. Removing a pair keeps its reviews on disk. *Load papers again* picks up files added later.
 
 ## Data
 
@@ -85,10 +89,12 @@ Under `value_review/` (or the `--data` folder):
 | `annotations/drafts/<n>.draft.json` | At most one draft per paper | Save draft, autosave |
 | `annotations/versions/<n>/v<k>.json` | Submitted and restored versions, never changed | Submit, Restore |
 | `annotations/settings.json` | Settings | Settings |
+| `annotations/schemas/<id>/` | One schema: `schema.json` (its name), `draft.json`, `versions/v<k>.json` (never changed) | Schema |
+| `annotations/schemas/.trash/` | Deleted schemas, kept whole | Delete schema |
 | `cache/pages/` | Rendered page images; safe to delete | The service |
 | `sources/<id>/…` | The same `originals/`, `annotations/` and `cache/` for every folder pair but the first | Settings, the service |
 
-Exports: `GET /api/v1/papers/<n>/versions/<k>/export.json` (the model's fields plus a `review` per value), `…/export.csv` (one row per value), and `GET /api/v1/export/latest.zip` (latest version of every paper plus `summary.csv`).
+Schemas: `GET /api/v1/schemas/<id>/versions/<k>/export.xlsx` (the fixed template) and `GET /api/v1/schemas/template.xlsx` (empty). Exports: `GET /api/v1/papers/<n>/versions/<k>/export.json` (the model's fields plus a `review` per value), `…/export.csv` (one row per value), and `GET /api/v1/export/latest.zip` (latest version of every paper plus `summary.csv`).
 
 ## Development
 
@@ -107,4 +113,4 @@ npm run dev      # http://localhost:5174, proxies /api to the running service
 npm run build    # writes value_review/web/
 ```
 
-`npm ci --offline` installs the locked packages from the local npm cache (the same versions as `parsing_validator/frontend`). Code layout: `ingest/` (originals), `domain/` (rules, needs-a-check, materialized values), `storage/` (atomic files), `service/` (FastAPI app, page images, exports), `schemas/` (JSON Schemas of the contract), `frontend/` (React).
+`npm ci --offline` installs the locked packages from the local npm cache (the same versions as `parsing_validator/frontend`). Code layout: `ingest/` (originals), `domain/` (rules, needs-a-check, materialized values), `storage/` (atomic files), `service/` (FastAPI app, page images, exports), `schemas/` (JSON Schemas of the contract), `schema_xlsx.py` (the schema template), `frontend/` (React).

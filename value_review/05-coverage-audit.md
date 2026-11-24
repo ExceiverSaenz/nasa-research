@@ -165,3 +165,50 @@ python -B -m unittest discover -s value_review/tests -p "test_*.py"
 cd value_review/frontend && npm ci --offline && npm test && npm run build
 python -B -m value_review --data <a copy of value_review>
 ```
+
+## Schema section (added 2026-11-24)
+
+Maps the criteria and rules of [20-schema-specification.md](20-schema-specification.md) to their evidence. Run on
+2026-11-24 from the worktree with `VALUE_REVIEW_SOURCE_ROOT` set: **211 Python tests**, **53 client tests**, **33 browser
+tests**, ruff clean. The Schema part adds 44 Python tests (`test_schemas.py`, `test_schema_xlsx.py`), 14 client tests
+(`schema.test.js`) and 8 browser tests (7 in `e2e/schemas.spec.js`, 1 in `e2e/tablet.spec.js`). Abbreviations:
+`schemas` = `test_schemas.py`, `xlsx` = `test_schema_xlsx.py`, `schema.js` = `schema.test.js`, `e2e` = `e2e/schemas.spec.js`.
+**No hand check in a browser was made for this section yet**; the browser tests run the real built front end against a
+real service.
+
+| AC | Automated evidence | Status |
+|---|---|---|
+| AC-S01 Seeded schema | schemas `test_seed_from_features`, `test_seed_without_opening_the_list`, `test_seed_runs_once`, `test_seed_failure_leaves_no_folder`; e2e (the row is checked in every test) | Covered |
+| AC-S02 New blank schema | schemas `test_create_blank_then_save_v1`; e2e "create a schema…" | Covered |
+| AC-S03 Save v1 | schemas `test_create_blank_then_save_v1` (file valid, draft deleted, reviewer name); e2e "create a schema…" | Covered |
+| AC-S04 Rule problem | schemas `test_rules_violation_writes_nothing`, `Rules.test_names`; schema.js "rule problems point…"; e2e "a rule problem…" | Covered |
+| AC-S05 Stale If-Match | schemas `test_stale_or_missing_if_match` (409, 428, draft kept) | Covered in the service; the client's message is not tested |
+| AC-S06 Rename keeps the id | schemas `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js "renaming keeps the id", "compare matches fields by id"; e2e "version history…" | Covered |
+| AC-S07 Reorder | schemas `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js moves and dragging; e2e buttons and "drag a field…" | Covered |
+| AC-S08 Restore | schemas `test_versions_and_restore`; e2e "version history…" | Covered |
+| AC-S09 Keep N | schemas `test_keep_schema_versions`, `Store.test_prune_keeps_the_newest` | Covered |
+| AC-S10 .xlsx round trip | xlsx `RoundTrip.*`, `Api.test_export_then_import_as_a_new_schema`; e2e "export a version as .xlsx…" | Covered |
+| AC-S11 Rejected files | xlsx `Rejected.*`, `Api.test_rejected_files_create_nothing`; e2e (a plain-text file) | Covered |
+| AC-S12 Deleted formula input | schemas `test_calculated_with_a_deleted_input`, `Rules.test_type_rules` | Covered |
+| AC-S13 Delete to trash | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken` | Covered in the service; the list's dialog is not tested in a browser |
+| AC-S14 Draft after reload | schemas `test_create_blank_then_save_v1`; e2e "the draft is kept…" | Covered |
+| AC-S15 Keyboard, 44 px | schema.js "the up and down buttons…"; e2e buttons-only test; tablet "the Schema list and editor fit…" | Partial: no full keyboard-only pass |
+| AC-S16 Leaving saves the draft | Code only (the editor saves on leaving and on `pagehide`) | Not tested |
+
+| BR | Evidence |
+|---|---|
+| BR-S01 Global, no folder pair | Routes are global (`/api/v1/schemas`); schemas `test_review_is_unchanged` |
+| BR-S02 Stable ids | schemas `Rules.test_ids`, `test_rename_keeps_the_id_and_reorder_keeps_ids`; schema.js ids and "filling a draft keeps the ids…"; e2e fill test |
+| BR-S03 Names | schemas `Rules.test_names`, `test_same_field_name_in_two_groups_is_allowed`, `test_names_of_schemas` |
+| BR-S04 Types | schemas `Rules.test_type_rules`, `test_category_and_calculated_are_fine_when_complete`; schema.js "a change of type clears…" |
+| BR-S05 Draft, If-Match, numbers | schemas `Store.test_numbers_are_never_reused_and_versions_never_replaced`, `test_stale_or_missing_if_match`, `test_keep_schema_versions` (the number after pruning) |
+| BR-S06 Keep N, restore deletes nothing | schemas `test_keep_schema_versions`, `test_versions_and_restore` |
+| BR-S07 Deletion only from the next version | schemas `test_deleted_field_stays_in_earlier_versions` |
+| BR-S08 Template | xlsx `Reading.*`, `RoundTrip.test_the_layout_is_the_fixed_template` |
+| BR-S09 Trash, ids not reused | schemas `test_delete_moves_to_trash`, `Store.test_trash_keeps_the_id_taken` |
+| BR-S10 Seed | schemas `test_seed_from_features` (ids, order, family, no invented types) |
+| BR-S11 Modified by | schemas `test_create_blank_then_save_v1` (`saved_by` is the reviewer name) |
+
+Gaps to close: a hand check in the browser at 1440 and 834 px (AC-S15, and dragging over a long list, which the browser
+test does in a tall window); a test for leaving the editor with a pending autosave (AC-S16); the client's message on a
+version conflict (AC-S05); Python coverage measured with `trace`, like the rest of this audit.
