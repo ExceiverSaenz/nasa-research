@@ -1,5 +1,6 @@
 // The Schema section (20-schema-specification.md): the first workflow end to end, the draft surviving a reload,
 // rule problems shown on the field, and reordering with the buttons only.
+import fs from 'node:fs';
 import { test, expect } from './fixtures.js';
 
 const newSchema = async (page, name) => {
@@ -110,4 +111,43 @@ test('version history: compare by id, restore as a new version (AC-S06, AC-S08)'
   await page.getByRole('button', { name: 'More actions for History test' }).click();
   await page.getByRole('menuitem', { name: 'Version history' }).click();
   await expect(page.getByRole('dialog', { name: 'Version history' }).getByRole('row')).toHaveCount(4);
+});
+
+test('export a version as .xlsx, import it as a new schema, and fill a draft from it (AC-S10, AC-S11)', async ({ page, server }) => {
+  await page.goto('/#/schemas');
+  await page.getByRole('button', { name: 'More actions for Tensile properties' }).click();
+  const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('menuitem', { name: 'Export as .xlsx template' }).click()]);
+  expect(download.suggestedFilename()).toBe('tensile-properties-v1.xlsx');
+  const file = { name: 'tensile.xlsx', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', buffer: fs.readFileSync(await download.path()) };
+
+  await page.getByRole('button', { name: '+ New schema' }).click();
+  await page.getByRole('button', { name: 'import an .xlsx template' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Import a schema' });
+  await dialog.getByLabel('File (.xlsx)').setInputFiles({ name: 'not-a-template.xlsx', mimeType: 'application/octet-stream', buffer: Buffer.from('plain text') });
+  await expect(dialog.getByRole('alert')).toContainText('This file cannot be imported');
+  await dialog.getByLabel('File (.xlsx)').setInputFiles(file);
+  await expect(dialog.getByRole('status')).toContainText('4 groups, 54 fields, 1 family.');
+  await dialog.getByRole('textbox', { name: 'Name' }).fill('Tensile copy');
+  await dialog.getByRole('button', { name: 'Create schema' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Tensile copy' })).toBeVisible();
+  await expect(page.getByRole('status').filter({ hasText: 'New · not saved · 54 fields in 4 groups' })).toBeVisible();
+
+  // fill a schema that has its own fields: one with the same name keeps its id
+  await newSchema(page, 'Fill test');
+  await page.getByRole('button', { name: '+ Group' }).click();
+  const details = page.getByRole('complementary', { name: 'Details' });
+  await details.getByRole('textbox', { name: 'Name' }).fill('Tensile test conditions and results');
+  await page.getByRole('group', { name: 'Tensile test conditions and results' }).getByRole('button', { name: '+ Field' }).click();
+  await details.getByRole('textbox', { name: 'Name' }).fill('Yield strength');
+  await expect(page.getByText('All changes saved')).toBeVisible();
+  await page.getByRole('button', { name: 'More actions' }).click();
+  await page.getByRole('menuitem', { name: 'Fill from an .xlsx template' }).click();
+  const fill = page.getByRole('dialog', { name: 'Fill this schema from a file' });
+  await fill.getByLabel('File (.xlsx)').setInputFiles(file);
+  await fill.getByRole('button', { name: 'Replace the draft' }).click();
+  await expect(page.getByRole('status').filter({ hasText: '54 fields in 4 groups' })).toBeVisible();
+  await expect(page.getByText('All changes saved')).toBeVisible();
+  const draft = (await server.api('/schemas/fill-test')).draft.content;
+  const yieldField = draft.groups.flatMap((g) => g.fields).find((f) => f.name === 'Yield strength');
+  expect(yieldField.field_id).toBe('f_1');   // the id it had before the file
 });

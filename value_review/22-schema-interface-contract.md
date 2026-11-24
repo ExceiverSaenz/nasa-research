@@ -249,8 +249,9 @@ saved).
   attachment; filename="<id>-v<n>.xlsx"` (template: `schema-template.xlsx`).
 - **Format (normative, BR-S08)** · Sheet 1 "Schema": A1 empty, A2 "Reference"; from column B, row 1 the group name over
   each of its fields (merged cells), row 2 the field name with the unit in parentheses ("Yield strength (MPa)"), in
-  schema order. Sheet "Descriptions": columns Group, Field, Description, Type, Allowed values (separated by "; "),
-  Multiple (yes/no), Formula. The template has the header cells only.
+  schema order. Sheet "Descriptions": columns Group, Field, Unit, Description, Type, Allowed values (separated by "; "),
+  Multiple (yes/no), Formula, Family, Member; a group without fields has a row with an empty Field. A header in row 2 that
+  matches a Descriptions row exactly is the field's name (so "Aspect ratio (L/W)" is not read as a unit). The template has the header cells only.
 - **Postcondition** · None.
 
 ### Errors
@@ -266,11 +267,11 @@ saved).
 
 | Input | Type or format | Required | Validation or default |
 |---|---|---|---|
-| `filename` | string ≤ 255 | Yes | Shown in messages and in the version note |
+| `filename` | string ≤ 255 | Yes | Must end in `.xlsx`; shown in messages |
 | `data_base64` | base64 string | Yes | Decoded size ≤ 5 MB |
 
 ### Successful result and effects
-- **Output** · 200 `{content, summary: {groups, fields, families}, warnings: [{sheet, cell, problem}]}`. Nothing is
+- **Output** · 200 `{content, summary: {groups, fields, families}, warnings: [{sheet, cell, problem, message}]}`. Nothing is
   stored: the client then calls OP-S02 with `content` (new schema) or OP-S04 (fill the current draft).
 - **Rules (BR-S08)** · Group names from row 1 (a merged or repeated name covers its columns; an empty cell continues the
   group on its left); field names and units from row 2 (`Name (unit)`); field type `number` when a unit is given, else

@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from '../lib/api.js';
 import {
-  TYPES, TYPE_LABEL, addField, addGroup, blankField, duplicateField, findField, freeName, idsOf, modelText, moveField,
+  TYPES, TYPE_LABEL, addField, adoptIds, addGroup, blankField, duplicateField, findField, freeName, idsOf, modelText, moveField,
   moveFieldTo, moveGroup, nextId, problemsByItem, removeField, removeGroup, renameGroup, signature, statusLine, updateField,
 } from '../lib/schema.js';
 import { SCHEMAS_HASH } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
 import { Dialog } from './Dialogs.jsx';
+import ImportDialog from './ImportDialog.jsx';
 import SchemaHistory from './SchemaHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 
@@ -25,6 +26,8 @@ export default function SchemaEditor({ schemaId }) {
   const [confirm, setConfirm] = useState(null);     // group to delete
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [more, setMore] = useState(false);
   const [busy, setBusy] = useState(false);
   const known = useRef(new Set());                  // every id seen, so new ids are never reused
   const savedSig = useRef('');                      // what the server holds as the draft (or the version)
@@ -148,6 +151,16 @@ export default function SchemaEditor({ schemaId }) {
             <button type="button" className="btn big" onClick={async () => { await flush(); setHistoryOpen(true); }} disabled={busy || view.version === 0}
               title={view.version === 0 ? 'No versions yet' : undefined}>Version history</button>
             {view.version > 0 && differs && <button type="button" className="btn big" onClick={discard} disabled={busy}>Discard changes</button>}
+            <span style={{ position: 'relative' }}>
+              <button type="button" className="btn big" aria-haspopup="menu" aria-expanded={more} aria-label="More actions" onClick={() => setMore(!more)}>⋯</button>
+              {more && (
+                <div className="menu" role="menu" aria-label="More actions" style={{ right: 0, top: 52 }}>
+                  <button type="button" role="menuitem" onClick={() => { setMore(false); setImportOpen(true); }}>Fill from an .xlsx template</button>
+                  {view.version > 0 && <a role="menuitem" className="menu-link" href={api.schemaExportUrl(schemaId, view.version)} onClick={() => setMore(false)}>Export v{view.version} as .xlsx</a>}
+                  <a role="menuitem" className="menu-link" href={api.schemaTemplateUrl()} onClick={() => setMore(false)}>Download the empty template</a>
+                </div>
+              )}
+            </span>
             <button type="button" className="btn big primary" onClick={saveVersion} disabled={busy || (view.version > 0 && !differs)}>
               Save version {view.version + 1 > 1 ? `v${view.version + 1}` : 'v1'}</button>
           </div>
@@ -213,6 +226,10 @@ export default function SchemaEditor({ schemaId }) {
           onOk={() => { change(removeGroup(content, confirm.group_id)); setConfirm(null); setSelected(null); }}
           intro={`Its ${confirm.fields.length} ${confirm.fields.length === 1 ? 'field goes' : 'fields go'} with it in the next version. Earlier versions keep them.`} />
       )}
+      {importOpen && <ImportDialog mode="fill" onCancel={() => setImportOpen(false)}
+        onFill={(imported) => { const next = adoptIds(imported, content, known.current); idsOf(next).forEach((id) => known.current.add(id));
+          change(next); setImportOpen(false); setSelected(null);
+          setBanner({ tone: 'ok', text: 'The draft now holds the file. Check it, then save a version.' }); }} />}
       {historyOpen && <SchemaHistory schema={view} hasDraft={differs} onClose={() => setHistoryOpen(false)}
         onRestored={(n) => { load().then(() => setBanner({ tone: 'ok', text: `Restored as v${n}.` })); }} />}
       {settingsOpen && <SettingsDialog onClose={() => setSettingsOpen(false)} onLoaded={() => {}} />}

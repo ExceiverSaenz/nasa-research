@@ -1,5 +1,7 @@
 """FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md) and the schema operations
 OP-S01 to OP-S12 (22-schema-interface-contract.md)."""
+import base64
+import binascii
 import json
 import logging
 import os
@@ -17,7 +19,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
-from .. import schemas
+from .. import schema_xlsx, schemas
 from ..domain.materialize import counts as count_values, values as materialize
 from ..domain.rules import check_state, shape_problems
 from ..domain.schema_rules import check_name, check_schema, counts as schema_counts
@@ -86,6 +88,12 @@ class SchemaVersionBody(BaseModel):
     model_config = ConfigDict(extra='forbid')
     content: dict
     note: str = Field(default='', max_length=200)
+
+
+class SchemaImport(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    filename: str = Field(min_length=1, max_length=255)
+    data_base64: str = Field(min_length=1, max_length=7_200_000)   # 5 MB once decoded
 
 
 class SchemaRename(BaseModel):
@@ -635,6 +643,33 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         seed_schemas()
         rows = [schema_row(sid) for sid in schema_store.ids()]
         return {'schemas': sorted(rows, key=lambda r: (r['name'].casefold(), r['schema_id']))}
+
+    XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
+    @app.get(f'{API}/schemas/template.xlsx')
+    def schema_template():   # OP-S10, registered before /schemas/{sid}
+        return attachment(schema_xlsx.export_xlsx(), XLSX, 'schema-template.xlsx')
+
+    @app.post(f'{API}/schemas/import')
+    def import_schema(payload: SchemaImport):   # OP-S11: nothing is stored
+        try:
+            data = base64.b64decode(payload.data_base64, validate=True)
+        except (binascii.Error, ValueError):
+            raise ApiError(400, 'invalid_request', 'data_base64 is not valid base64') from None
+        try:
+            content, summary, warnings = schema_xlsx.parse_xlsx(data, payload.filename)
+        except schema_xlsx.TemplateProblems as error:
+            raise ApiError(422, 'invalid_template', str(error), {'problems': error.problems}) from None
+        problems = schemas.errors('schema-content', content)
+        if problems:   # names or lists longer than the schema allows
+            raise ApiError(422, 'invalid_template', 'The file has values the schema cannot hold',
+                           {'problems': [{'sheet': None, 'cell': None, 'problem': 'too_long', 'message': f'{p}: {m}'} for p, m in problems[:10]]})
+        return {'content': content, 'summary': summary, 'warnings': warnings}
+
+    @app.get(f'{API}/schemas/{{sid}}/versions/{{n}}/export.xlsx')
+    def export_schema_version(sid: str, n: int):   # OP-S10
+        need_schema(sid)
+        return attachment(schema_xlsx.export_xlsx(read_schema_version(sid, n)['content']), XLSX, f'{sid}-v{n}.xlsx')
 
     @app.post(f'{API}/schemas', status_code=201)
     def create_schema(payload: SchemaCreate, response: Response):

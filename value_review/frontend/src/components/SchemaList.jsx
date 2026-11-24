@@ -3,6 +3,7 @@ import { api } from '../lib/api.js';
 import { schemaHash } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
 import { Dialog } from './Dialogs.jsx';
+import ImportDialog from './ImportDialog.jsx';
 import SchemaHistory from './SchemaHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 
@@ -82,6 +83,8 @@ export default function SchemaList() {
                               onClick={() => { setMenu(null); setDialog({ kind: 'history', row: r }); }}>Version history</button>
                             <button type="button" role="menuitem" disabled={!r.version}
                               onClick={() => { setMenu(null); setDialog({ kind: 'new', copyOf: r }); }}>Duplicate</button>
+                            {r.version > 0 && <a role="menuitem" className="menu-link" href={api.schemaExportUrl(r.schema_id, r.version)}
+                              onClick={() => setMenu(null)}>Export as .xlsx template</a>}
                             <button type="button" role="menuitem" className="danger-text" onClick={() => { setMenu(null); setDialog({ kind: 'delete', row: r }); }}>Delete schema</button>
                           </div>
                         )}
@@ -96,7 +99,10 @@ export default function SchemaList() {
         )}
         {!rows && !error && <p className="muted">Loading schemas…</p>}
       </main>
-      {dialog && dialog.kind === 'new' && <NewSchemaDialog rows={rows || []} copyOf={dialog.copyOf} onCancel={() => setDialog(null)} />}
+      {dialog && dialog.kind === 'new' && <NewSchemaDialog rows={rows || []} copyOf={dialog.copyOf} onCancel={() => setDialog(null)}
+        onImport={() => setDialog({ kind: 'import' })} />}
+      {dialog && dialog.kind === 'import' && <ImportDialog mode="new" onCancel={() => setDialog(null)}
+        onCreate={async (name, content) => { const made = await api.createSchema({ name, content }); window.location.hash = schemaHash(made.schema_id); }} />}
       {dialog && dialog.kind === 'rename' && <RenameDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
       {dialog && dialog.kind === 'delete' && <DeleteDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
       {dialog && dialog.kind === 'history' && <SchemaHistory schema={dialog.row} hasDraft={dialog.row.status === 'draft'}
@@ -108,7 +114,7 @@ export default function SchemaList() {
 
 const nameMessage = (e) => (e.code === 'rules_violation' ? 'Type a name of 120 characters at most.' : e.message);
 
-function NewSchemaDialog({ rows, copyOf, onCancel }) {
+function NewSchemaDialog({ rows, copyOf, onCancel, onImport }) {
   const saved = rows.filter((r) => r.version > 0);
   const [name, setName] = useState(copyOf ? `${copyOf.name} (copy)` : '');
   const [start, setStart] = useState(copyOf ? 'copy' : 'blank');
@@ -135,6 +141,10 @@ function NewSchemaDialog({ rows, copyOf, onCancel }) {
           <button type="button" role="radio" aria-checked={start === 'copy'} aria-pressed={start === 'copy'} disabled={!saved.length}
             onClick={() => setStart('copy')}>Copy a saved schema</button>
         </div>
+      )}
+      {!copyOf && (
+        <p className="muted" style={{ margin: '12px 0 0' }}>Or <button type="button" className="btn link" style={{ padding: 0, height: 'auto' }} onClick={onImport}>import an .xlsx template</button>
+          {' '}(<a href={api.schemaTemplateUrl()}>download the empty template</a>).</p>
       )}
       {start === 'copy' && !copyOf && (
         <label className="field" style={{ marginTop: 12 }}>Schema to copy (its latest version)

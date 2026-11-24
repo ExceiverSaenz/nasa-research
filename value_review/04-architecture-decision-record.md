@@ -394,14 +394,15 @@ and a pinned line in `requirements.txt`. The service has no file-upload code, an
 
 ### Decision and rationale
 
-openpyxl on the backend, in one module (`value_review/schema_xlsx.py`, proposed), with uploads sent as base64 inside JSON
+openpyxl on the backend, in one module (`value_review/schema_xlsx.py`), with uploads sent as base64 inside JSON
 (at most 5 MB decoded). Criterion: a robust import of files that people edit in Excel, with a single new dependency
 that is already in use elsewhere in the repository (`llm_baseline/run_extraction.py`).
 
 ### Consequences
 
 - `requirements.txt` gains `openpyxl==3.1.5` and `et-xmlfile==2.0.0`; the Docker image and README follow.
-- Uploaded workbooks are opened with `read_only=True, data_only=True`; formulas are read as text and never evaluated;
+- Uploaded workbooks are opened with `data_only=True` (the full reader, which merged group cells need; files are at most 5 MB);
+  formulas are read as their cached text and never evaluated;
   macros are never run (an .xlsm is rejected as not the template).
 - The same module writes the template, so import and export cannot drift apart.
 

@@ -2,7 +2,8 @@
 
 > Paths are relative to the repository root (`nasa_research`). Files marked *(proposed)* do not exist yet. Line numbers
 > were read on `main` at `c1c414b` (2026-11-23). Steps 1 to 4 of the plan (store, rules, API OP-S01 to OP-S09 and the
-> list and editor screens) and the version history in the client (step 6) are implemented; .xlsx and dragging are not yet.
+> list and editor screens), the version history in the client (step 6) and the .xlsx template (step 8) are implemented;
+> dragging to reorder is not yet.
 
 **Reference** · [20-schema-specification.md](20-schema-specification.md) · contract
 [22-schema-interface-contract.md](22-schema-interface-contract.md) · front-end design: canvas
@@ -20,7 +21,7 @@
 | `value_review/storage/atomic.py` `atomic_write_bytes`, `StorageError` | Reuse unchanged for every schema file, including the move to trash. |
 | `value_review/storage/schemas.py` | `SchemaStore(folder)`: list, create, read, draft, `write_version`, `prune`, `trash`; folder `annotations/schemas/`. |
 | `value_review/domain/schema_rules.py` | `check_schema(content) -> [{ref, rule}]` (BR-S03, BR-S04); pure, unit-tested. |
-| `value_review/schema_xlsx.py` *(proposed)* | `export_xlsx(name, content) -> bytes`, `parse_xlsx(data) -> (content, summary, warnings)` raising a problem list (BR-S08, ADR-011). |
+| `value_review/schema_xlsx.py` | `export_xlsx(name, content) -> bytes`, `parse_xlsx(data) -> (content, summary, warnings)` raising a problem list (BR-S08, ADR-011). |
 | `value_review/ingest/seed_schema.py` | Builds the seeded "Tensile properties" content from `features.FEATURES` and `features.ELEMENTS` (BR-S10). `features.py` itself is not changed. |
 | `value_review/schemas/__init__.py` `NAMES` | `schema-content`, `schema-version`, `schema-draft` and `schema-meta` are registered, so `errors(name, instance)` validates the new files. |
 | `value_review/service/sources.py` `slug` (line 19), `new_id` (line 24) | Id minting to reuse for schema ids (`sic-composites`, `sic-composites-2`), with the trash ids counted as taken. |
@@ -31,9 +32,9 @@
 | `value_review/frontend/src/components/VersionHistory.jsx`, `src/lib/versions.js` `compareVersions` | Pattern followed by `SchemaHistory.jsx`; its differ is `compareSchemas` in `src/lib/schema.js`, matching by `field_id` and `group_id`. |
 | `value_review/frontend/src/components/SettingsDialog.jsx` | Add "Schema versions kept"; field errors come from `details.fields`. |
 | `value_review/frontend/src/lib/schema.js` + `schema.test.js` | Pure editing functions: add, rename, duplicate, delete, move field (within and across groups), move group, mint ids, client-side mirror of the rules, compare, the text the model reads. |
-| `value_review/frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`, `SchemaHistory.jsx`; `ImportDialog.jsx` *(proposed)* | The screens of the canvas artboard `Schema.dc.html`. |
-| `value_review/tests/test_service.py` `Base` (line 49), `SettingsAndHealth` (line 213); `test_versions.py`; `test_storage.py`; `test_sources.py` | Fixtures and test style. New: `tests/test_schemas.py` (rules, store, API); `tests/test_schema_xlsx.py` *(proposed)*. |
-| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem, reordering and the version history (compare, restore); `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
+| `value_review/frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`, `SchemaHistory.jsx`, `ImportDialog.jsx` | The screens of the canvas artboard `Schema.dc.html`. |
+| `value_review/tests/test_service.py` `Base` (line 49), `SettingsAndHealth` (line 213); `test_versions.py`; `test_storage.py`; `test_sources.py` | Fixtures and test style. New: `tests/test_schemas.py` (rules, store, API) and `tests/test_schema_xlsx.py` (round trip, reading, rejections, OP-S10, OP-S11). |
+| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem, reordering, the version history (compare, restore) and the .xlsx export, import and fill; `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
 | `llm_baseline/extraction_prompt.md` "Feature guide" (line 29) | Section headings used as the seed's group names (BR-S10). Read only. |
 
 ## Conventions and constraints
@@ -48,7 +49,7 @@
 - Client logic lives in pure functions with `node:test`; components stay thin. `value_review/web/` is the committed build
   and must be rebuilt.
 - Local only and one container per reviewer (ADR-009): no outbound requests, no fonts or scripts from the network.
-- Static checks: `ruff.toml` (pyflakes, bugbear, bandit). openpyxl reads uploads with `read_only=True, data_only=True`.
+- Static checks: `ruff.toml` (pyflakes, bugbear, bandit). openpyxl reads uploads with `data_only=True`: formulas are never evaluated.
 
 ## Verification
 
@@ -64,8 +65,8 @@
 
 ## Environment setup
 
-- Python 3.13 with `value_review/requirements.txt` (pinned) plus **`openpyxl==3.1.5` and `et-xmlfile==2.0.0`** *(to add,
-  ADR-011; both are installed on the development machine)*; `requirements-dev.txt` for tests (httpx, psutil).
+- Python 3.13 with `value_review/requirements.txt` (pinned; it now includes `openpyxl==3.1.5` and `et-xmlfile==2.0.0`,
+  ADR-011); `requirements-dev.txt` for tests (httpx, psutil).
 - Node with the npm cache used by `npm ci --offline`; Microsoft Edge for Playwright (ADR-008).
 - Schemas are stored under the data folder (`--data` or `VALUE_REVIEW_DATA`): `annotations/schemas/`. A test or a hand
   check should use a temporary copy, never the reviewer's data folder.

@@ -251,3 +251,33 @@ export function compareSchemas(older, newer) {
   }
   return rows;
 }
+
+// Filling the current draft from an imported file: groups and fields with the same names keep their ids, so their
+// history continues; the others get new ids above every id known (BR-S02).
+export function adoptIds(imported, current, known) {
+  const used = new Set(known);
+  const mint = (prefix) => { const id = nextId(prefix, used); used.add(id); return id; };
+  const groups = new Map(current.groups.map((g) => [sameName(g.name), g]));
+  return {
+    ...imported,
+    groups: imported.groups.map((g) => {
+      const old = groups.get(sameName(g.name));
+      const fields = old ? new Map(old.fields.map((f) => [sameName(f.name), f])) : new Map();
+      return {
+        ...g,
+        group_id: old ? old.group_id : mint('g'),
+        fields: g.fields.map((f) => ({ ...f, field_id: fields.has(sameName(f.name)) ? fields.get(sameName(f.name)).field_id : mint('f') })),
+      };
+    }),
+  };
+}
+
+// A File as base64, for OP-S11 (no multipart upload, ADR-011).
+export function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',', 2)[1] || '');
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}

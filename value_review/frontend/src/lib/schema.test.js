@@ -133,3 +133,15 @@ test('compare reports order once per group, and deletions', async () => {
   ]);
   assert.deepEqual(compareSchemas(v1, removeGroup(v1, 'g_2')).map((r) => r.what), ['Group deleted']);
 });
+
+test('filling a draft keeps the ids of fields with the same names (BR-S02)', async () => {
+  const { adoptIds } = await import('./schema.js');
+  const current = base();   // G1: A f_1, B f_2; G2: C f_3
+  let imported = addGroup(emptyContent(), 'g1', 'g1');
+  imported = addField(imported, 'g1', blankField('a', 'a'));
+  imported = addField(imported, 'g1', blankField('new_one', 'New one'));
+  imported = addGroup(imported, 'extra', 'Extra');
+  const known = new Set([...idsOf(current), 'f_7']);
+  const got = adoptIds(imported, current, known);
+  assert.equal(layout(got), 'g_1:f_1,f_8 g_3:');
+});

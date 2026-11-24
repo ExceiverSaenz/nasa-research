@@ -71,6 +71,9 @@ export const api = {
     (await request(`/schemas/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { content, note }, headers: { 'If-Match': `"${version}"` } })).data,
   schemaVersions: async (id) => (await request(`/schemas/${encodeURIComponent(id)}/versions`)).data,
   schemaVersion: async (id, n) => (await request(`/schemas/${encodeURIComponent(id)}/versions/${n}`)).data,
+  importSchema: async (filename, dataBase64) => (await request('/schemas/import', { method: 'POST', body: { filename, data_base64: dataBase64 } })).data,
+  schemaTemplateUrl: () => `${BASE}/schemas/template.xlsx`,
+  schemaExportUrl: (id, n) => `${BASE}/schemas/${encodeURIComponent(id)}/versions/${n}/export.xlsx`,
   restoreSchemaVersion: async (id, n, current) =>
     (await request(`/schemas/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
 };
