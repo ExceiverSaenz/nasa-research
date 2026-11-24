@@ -98,3 +98,38 @@ test('the text the model reads, and the status line', () => {
   assert.equal(statusLine(2, false, c), 'Saved · v2 · 3 fields in 2 groups');
   assert.equal(statusLine(2, true, c), 'Draft · changes since v2 · 3 fields in 2 groups');
 });
+
+test('compare matches fields by id: a rename is one change (AC-S06)', async () => {
+  const { compareSchemas } = await import('./schema.js');
+  const v1 = base();
+  let v2 = updateField(v1, 'f_1', { name: 'Yield stress', type: 'number', unit: 'MPa' });
+  v2 = moveFieldTo(v2, 'f_2', 'g_2', 0);
+  v2 = addField(v2, 'g_2', blankField('f_4', 'D'));
+  v2 = renameGroup(v2, 'g_2', 'Results');
+  v2 = addGroup(v2, 'g_3', 'Extra');
+  const rows = compareSchemas(v1, v2).map((r) => [r.item, r.what, r.before, r.after]);
+  assert.deepEqual(rows, [
+    ['Results', 'Group name', 'G2', 'Results'],
+    ['Extra', 'Group added', '—', '0 fields'],
+    ['Yield stress', 'Name', 'A', 'Yield stress'],
+    ['Yield stress', 'Type', 'Text', 'Number'],
+    ['Yield stress', 'Unit', '—', 'MPa'],
+    ['B', 'Group', 'G1', 'Results'],
+    ['D', 'Field added', '—', 'in Results'],
+  ]);
+  assert.deepEqual(compareSchemas(v1, v1), []);
+});
+
+test('compare reports order once per group, and deletions', async () => {
+  const { compareSchemas } = await import('./schema.js');
+  const v1 = base();
+  let v2 = moveField(v1, 'f_2', -1);   // B before A
+  v2 = moveGroup(v2, 'g_2', -1);
+  v2 = removeField(v2, 'f_3');
+  assert.deepEqual(compareSchemas(v1, v2).map((r) => [r.item, r.what, r.before, r.after]), [
+    ['Groups', 'Order', 'G1, G2', 'G2, G1'],
+    ['G1', 'Order of fields', 'A, B', 'B, A'],
+    ['C', 'Field deleted', 'in G2', '—'],
+  ]);
+  assert.deepEqual(compareSchemas(v1, removeGroup(v1, 'g_2')).map((r) => r.what), ['Group deleted']);
+});

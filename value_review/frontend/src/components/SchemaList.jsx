@@ -3,6 +3,7 @@ import { api } from '../lib/api.js';
 import { schemaHash } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
 import { Dialog } from './Dialogs.jsx';
+import SchemaHistory from './SchemaHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 
 const STATUS = { saved: ['Saved', 'st-accepted'], draft: ['Draft', 'st-corrected'], new: ['New · not saved', 'st-unsure'] };
@@ -78,6 +79,8 @@ export default function SchemaList() {
                             <a role="menuitem" className="menu-link" href={schemaHash(r.schema_id)}>Open</a>
                             <button type="button" role="menuitem" onClick={() => { setMenu(null); setDialog({ kind: 'rename', row: r }); }}>Rename</button>
                             <button type="button" role="menuitem" disabled={!r.version}
+                              onClick={() => { setMenu(null); setDialog({ kind: 'history', row: r }); }}>Version history</button>
+                            <button type="button" role="menuitem" disabled={!r.version}
                               onClick={() => { setMenu(null); setDialog({ kind: 'new', copyOf: r }); }}>Duplicate</button>
                             <button type="button" role="menuitem" className="danger-text" onClick={() => { setMenu(null); setDialog({ kind: 'delete', row: r }); }}>Delete schema</button>
                           </div>
@@ -96,6 +99,8 @@ export default function SchemaList() {
       {dialog && dialog.kind === 'new' && <NewSchemaDialog rows={rows || []} copyOf={dialog.copyOf} onCancel={() => setDialog(null)} />}
       {dialog && dialog.kind === 'rename' && <RenameDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
       {dialog && dialog.kind === 'delete' && <DeleteDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
+      {dialog && dialog.kind === 'history' && <SchemaHistory schema={dialog.row} hasDraft={dialog.row.status === 'draft'}
+        onClose={() => setDialog(null)} onRestored={reload} />}
       {settingsOpen && <SettingsDialog onClose={() => setSettingsOpen(false)} onLoaded={() => {}} />}
     </div>
   );

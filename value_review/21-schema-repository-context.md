@@ -2,7 +2,7 @@
 
 > Paths are relative to the repository root (`nasa_research`). Files marked *(proposed)* do not exist yet. Line numbers
 > were read on `main` at `c1c414b` (2026-11-23). Steps 1 to 4 of the plan (store, rules, API OP-S01 to OP-S09 and the
-> list and editor screens) are implemented; version history in the client, .xlsx and the type details are not yet.
+> list and editor screens) and the version history in the client (step 6) are implemented; .xlsx and dragging are not yet.
 
 **Reference** · [20-schema-specification.md](20-schema-specification.md) · contract
 [22-schema-interface-contract.md](22-schema-interface-contract.md) · front-end design: canvas
@@ -28,12 +28,12 @@
 | `value_review/frontend/src/lib/api.js` (`request`, `ApiError`, `submit`, `restore`) | Add the schema calls; send `If-Match` by hand as `submit` and `restore` do. |
 | `value_review/frontend/src/components/Papers.jsx` header, `Review.jsx` `Header` | Papers now uses the shared `src/components/AppHeader.jsx` (TD link to `#/`, sections Schema and Review, gear); Review keeps its own header. |
 | `value_review/frontend/src/components/Dialogs.jsx` `Dialog` (line 33, not exported) | Export it and reuse it for New schema, Rename, Delete and Import. |
-| `value_review/frontend/src/components/VersionHistory.jsx`, `src/lib/versions.js` `compareVersions` | Pattern for `SchemaHistory` *(proposed)*; the schema differ matches by `field_id` and `group_id` instead of `observation_id`. |
+| `value_review/frontend/src/components/VersionHistory.jsx`, `src/lib/versions.js` `compareVersions` | Pattern followed by `SchemaHistory.jsx`; its differ is `compareSchemas` in `src/lib/schema.js`, matching by `field_id` and `group_id`. |
 | `value_review/frontend/src/components/SettingsDialog.jsx` | Add "Schema versions kept"; field errors come from `details.fields`. |
 | `value_review/frontend/src/lib/schema.js` + `schema.test.js` | Pure editing functions: add, rename, duplicate, delete, move field (within and across groups), move group, mint ids, client-side mirror of the rules, compare, the text the model reads. |
-| `value_review/frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`; `SchemaHistory.jsx`, `ImportDialog.jsx` *(proposed)* | The screens of the canvas artboard `Schema.dc.html`. |
+| `value_review/frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`, `SchemaHistory.jsx`; `ImportDialog.jsx` *(proposed)* | The screens of the canvas artboard `Schema.dc.html`. |
 | `value_review/tests/test_service.py` `Base` (line 49), `SettingsAndHealth` (line 213); `test_versions.py`; `test_storage.py`; `test_sources.py` | Fixtures and test style. New: `tests/test_schemas.py` (rules, store, API); `tests/test_schema_xlsx.py` *(proposed)*. |
-| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem and reordering; `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
+| `value_review/frontend/e2e/fixtures.js`, `e2e/*.spec.js`, `tests/e2e_server.py` | Playwright browser tests (ADR-008): a fresh service per test. `e2e/schemas.spec.js` covers the first workflow, the draft after a reload, a rule problem, reordering and the version history (compare, restore); `e2e/tablet.spec.js` checks the Schema screens at 834 px. |
 | `llm_baseline/extraction_prompt.md` "Feature guide" (line 29) | Section headings used as the seed's group names (BR-S10). Read only. |
 
 ## Conventions and constraints

@@ -7,6 +7,7 @@ import {
 import { SCHEMAS_HASH } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
 import { Dialog } from './Dialogs.jsx';
+import SchemaHistory from './SchemaHistory.jsx';
 import SettingsDialog from './SettingsDialog.jsx';
 
 const AUTOSAVE_MS = 800;
@@ -23,6 +24,7 @@ export default function SchemaEditor({ schemaId }) {
   const [problems, setProblems] = useState({});     // item id -> messages, from a failed Save version
   const [confirm, setConfirm] = useState(null);     // group to delete
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const known = useRef(new Set());                  // every id seen, so new ids are never reused
   const savedSig = useRef('');                      // what the server holds as the draft (or the version)
@@ -143,6 +145,8 @@ export default function SchemaEditor({ schemaId }) {
             <p className="lead" role="status">{statusLine(view.version, differs, content)} · <span className="muted">{pill}</span></p>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <button type="button" className="btn big" onClick={async () => { await flush(); setHistoryOpen(true); }} disabled={busy || view.version === 0}
+              title={view.version === 0 ? 'No versions yet' : undefined}>Version history</button>
             {view.version > 0 && differs && <button type="button" className="btn big" onClick={discard} disabled={busy}>Discard changes</button>}
             <button type="button" className="btn big primary" onClick={saveVersion} disabled={busy || (view.version > 0 && !differs)}>
               Save version {view.version + 1 > 1 ? `v${view.version + 1}` : 'v1'}</button>
@@ -209,6 +213,8 @@ export default function SchemaEditor({ schemaId }) {
           onOk={() => { change(removeGroup(content, confirm.group_id)); setConfirm(null); setSelected(null); }}
           intro={`Its ${confirm.fields.length} ${confirm.fields.length === 1 ? 'field goes' : 'fields go'} with it in the next version. Earlier versions keep them.`} />
       )}
+      {historyOpen && <SchemaHistory schema={view} hasDraft={differs} onClose={() => setHistoryOpen(false)}
+        onRestored={(n) => { load().then(() => setBanner({ tone: 'ok', text: `Restored as v${n}.` })); }} />}
       {settingsOpen && <SettingsDialog onClose={() => setSettingsOpen(false)} onLoaded={() => {}} />}
     </div>
   );

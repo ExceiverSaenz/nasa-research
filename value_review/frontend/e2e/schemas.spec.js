@@ -71,3 +71,43 @@ test('fields move across groups with the buttons alone (AC-S07, AC-S15)', async 
   const v1 = await server.api('/schemas/order-test/versions/1');
   expect(v1.content.groups.map((g) => [g.name, g.fields.map((f) => f.name)])).toEqual([['New group 2', ['New field']], ['New group', []]]);
 });
+
+test('version history: compare by id, restore as a new version (AC-S06, AC-S08)', async ({ page, server }) => {
+  await newSchema(page, 'History test');
+  await page.getByRole('button', { name: '+ Group' }).click();
+  await page.getByRole('group', { name: 'New group' }).getByRole('button', { name: '+ Field' }).click();
+  const details = page.getByRole('complementary', { name: 'Details' });
+  await details.getByRole('textbox', { name: 'Name' }).fill('Yield strength');
+  await page.getByRole('button', { name: /Save version/ }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Saved · v1' })).toBeVisible();
+  await page.getByRole('button', { name: /^Yield strength/ }).click();
+  await details.getByRole('textbox', { name: 'Name' }).fill('Yield stress');
+  await page.getByRole('button', { name: /Save version/ }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Saved · v2' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Version history' }).click();
+  const dialog = page.getByRole('dialog', { name: 'Version history' });
+  await dialog.getByRole('button', { name: 'Actions for v1' }).click();
+  await dialog.getByRole('menuitem', { name: 'Compare with current' }).click();
+  const rows = dialog.getByRole('row');
+  await expect(rows).toHaveCount(2);   // header + one renamed field, not a removal and an addition
+  await expect(rows.nth(1)).toContainText('Name');
+  await expect(rows.nth(1)).toContainText('Yield strength');
+  await expect(rows.nth(1)).toContainText('Yield stress');
+
+  await dialog.getByRole('button', { name: '‹ All versions' }).click();
+  await dialog.getByRole('button', { name: 'Actions for v1' }).click();
+  await dialog.getByRole('menuitem', { name: 'Restore' }).click();
+  await dialog.getByRole('alertdialog').getByRole('button', { name: 'Restore' }).click();
+  await expect(dialog.getByRole('status')).toHaveText('v1 restored as v3.');
+  await dialog.getByRole('button', { name: 'Close' }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Saved · v3' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Yield strength/ })).toBeVisible();
+  const listed = await server.api('/schemas/history-test/versions');
+  expect(listed.versions.map((v) => [v.n, v.note])).toEqual([[3, 'Restored from v1'], [2, ''], [1, '']]);
+
+  await page.getByRole('link', { name: 'Schemas' }).first().click();   // also from the list's row menu
+  await page.getByRole('button', { name: 'More actions for History test' }).click();
+  await page.getByRole('menuitem', { name: 'Version history' }).click();
+  await expect(page.getByRole('dialog', { name: 'Version history' }).getByRole('row')).toHaveCount(4);
+});

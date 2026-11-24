@@ -191,3 +191,63 @@ export function statusLine(version, dirtyOrDraft, content) {
   if (dirtyOrDraft) return `Draft · changes since v${version} · ${size}`;
   return `Saved · v${version} · ${size}`;
 }
+
+// Differences between two versions, matched by id (BR-S02): a renamed field is one change, not a removal and an
+// addition. Rows are {id, item, what, before, after}; positions are reported as one "order" row per group, so adding
+// a field does not show every field after it as moved.
+const show = {
+  type: (v) => TYPE_LABEL[v] || v,
+  allowed: (v) => (v.length ? v.join(', ') : '—'),
+  multiple: (v) => (v ? 'Several values' : 'One value'),
+  text: (v) => (v === '' || v === null || v === undefined ? '—' : String(v)),
+};
+const FIELD_KEYS = [['name', 'Name', show.text], ['description', 'Description', show.text], ['type', 'Type', show.type],
+  ['unit', 'Unit', show.text], ['allowed', 'Allowed values', show.allowed], ['multiple', 'Values', show.multiple],
+  ['formula', 'Formula', show.text]];
+
+export function compareSchemas(older, newer) {
+  const rows = [];
+  const index = (content) => {
+    const groups = new Map(content.groups.map((g) => [g.group_id, g]));
+    const fields = new Map();
+    for (const g of content.groups) for (const f of g.fields) fields.set(f.field_id, { f, g });
+    return { groups, fields };
+  };
+  const a = index(older), b = index(newer);
+  const name = (map, id) => (map.fields.get(id) ? map.fields.get(id).f.name : id);
+  const sameOrder = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
+
+  const commonGroups = (c, other) => c.groups.map((g) => g.group_id).filter((id) => other.groups.has(id));
+  if (!sameOrder(commonGroups(older, b), commonGroups(newer, a))) {
+    rows.push({ id: 'groups-order', item: 'Groups', what: 'Order',
+      before: commonGroups(older, b).map((id) => a.groups.get(id).name).join(', '), after: commonGroups(newer, a).map((id) => b.groups.get(id).name).join(', ') });
+  }
+  for (const g of newer.groups) {
+    const old = a.groups.get(g.group_id);
+    if (!old) { rows.push({ id: `g+${g.group_id}`, item: g.name, what: 'Group added', before: '—', after: `${g.fields.length} fields` }); continue; }
+    if (old.name !== g.name) rows.push({ id: `g~${g.group_id}`, item: g.name, what: 'Group name', before: old.name, after: g.name });
+    const inBoth = (list, other) => list.map((f) => f.field_id).filter((id) => other.fields.has(id) && other.fields.get(id).g.group_id === g.group_id);
+    const before = inBoth(old.fields, b), after = inBoth(g.fields, a);
+    if (!sameOrder(before, after)) {
+      rows.push({ id: `o${g.group_id}`, item: g.name, what: 'Order of fields', before: before.map((id) => name(a, id)).join(', '), after: after.map((id) => name(b, id)).join(', ') });
+    }
+  }
+  for (const g of older.groups) {
+    if (!b.groups.has(g.group_id)) rows.push({ id: `g-${g.group_id}`, item: g.name, what: 'Group deleted', before: `${g.fields.length} fields`, after: '—' });
+  }
+  for (const [id, { f, g }] of b.fields) {
+    const old = a.fields.get(id);
+    if (!old) { rows.push({ id: `f+${id}`, item: f.name, what: 'Field added', before: '—', after: `in ${g.name}` }); continue; }
+    if (old.g.group_id !== g.group_id) rows.push({ id: `f>${id}`, item: f.name, what: 'Group', before: old.g.name, after: g.name });
+    for (const [key, label, fmt] of FIELD_KEYS) {
+      const x = fmt(old.f[key]), y = fmt(f[key]);
+      if (x !== y) rows.push({ id: `f~${id}~${key}`, item: f.name, what: label, before: x, after: y });
+    }
+    const inputs = (m, list) => (list.length ? list.map((i) => name(m, i)).join(', ') : '—');
+    if (inputs(a, old.f.inputs) !== inputs(b, f.inputs)) rows.push({ id: `f~${id}~inputs`, item: f.name, what: 'Reads', before: inputs(a, old.f.inputs), after: inputs(b, f.inputs) });
+  }
+  for (const [id, { f, g }] of a.fields) {
+    if (!b.fields.has(id) && b.groups.has(g.group_id)) rows.push({ id: `f-${id}`, item: f.name, what: 'Field deleted', before: `in ${g.name}`, after: '—' });
+  }
+  return rows;
+}
