@@ -278,3 +278,23 @@ passing.
 
 Gaps: two browsers saving Settings at the same moment (last write wins, as before; System prompts use If-Match); the
 Extraction values are stored but no run reads them yet (PEND-07).
+
+## API keys and models (added 2026-11-26)
+
+[50-models-keys-specification.md](50-models-keys-specification.md). Every test runs against `tests/fake_provider.py`;
+no real key is used.
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-K01 No keys | keys `test_no_keys` | Covered |
+| AC-K02 A working key | keys `test_a_working_key_is_saved_and_never_returned`, `test_how_each_provider_gets_the_key`; e2e "first workflow…" | Covered |
+| AC-K03 A rejected key | keys `test_a_rejected_key_is_not_saved`; e2e "a key the provider refuses…" | Covered |
+| AC-K04 Unreachable or slow | keys `test_an_unreachable_or_slow_provider` | Covered |
+| AC-K05 Defaults | keys `test_defaults_per_provider`, `test_editing` | Covered |
+| AC-K06, AC-K07 Models follow the keys | keys `test_models_follow_the_keys`; e2e "first workflow…" | Covered |
+| AC-K08 Own server | keys `test_own_server`; e2e "own server…" | Covered |
+| AC-K09 Owner-only file | keys `test_owner_only_file` (Linux only: runs in the Docker test stage, skipped on Windows) | Covered on Linux |
+| AC-K10 The page | e2e "first workflow…" (second browser; the key not in the page) | Covered |
+
+Gaps: the real providers are not called by any test (by hand only, with the user's own key); on Windows the file's
+permissions are those of the user profile folder.

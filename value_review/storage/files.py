@@ -23,7 +23,9 @@ _EMPTY_STATE = {'schema': 'value-review-state/1', 'decisions': {}, 'column_moves
 SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'username': 'expert.reviewer', 'initials': '',
                      'autosave_seconds': 60, 'csv_delimiter': ',', 'csv_encoding': 'utf8bom',
                      'keep_versions': 20, 'keep_schema_versions': 20, 'keep_rule_versions': 20,
-                     'extraction': {'parallel': 3, 'retries': 2, 'minutes': 10, 'warn_usd': 5}}
+                     'extraction': {'parallel': 3, 'retries': 2, 'minutes': 10, 'warn_usd': 5},
+                     # OP-K06 (52-models-keys-interface-contract.md): written by PUT /models, not by PUT /settings
+                     'models_enabled': [], 'default_model': None, 'manual_models': []}
 
 
 def autosave_from_minutes(minutes):

@@ -26,6 +26,9 @@
         "warn_usd": { "type": "number", "minimum": 0, "maximum": 100000 }
       }
     },
+    "models_enabled": { "type": "array", "maxItems": 500, "items": { "type": "string", "pattern": "^(anthropic|openai|google|server):.{1,200}$" }, "description": "Models a run can choose (OP-K06)." },
+    "default_model": { "type": ["string", "null"], "maxLength": 210 },
+    "manual_models": { "type": "array", "maxItems": 50, "items": { "type": "string", "minLength": 1, "maxLength": 200 }, "description": "Own-server models added by name." },
     "sources": { "type": "array", "maxItems": 50, "description": "Folder pairs (ADR-014); checked by the service, see 03-interface-contract.md OP-10." },
     "active_source": { "type": "string", "maxLength": 40 }
   }

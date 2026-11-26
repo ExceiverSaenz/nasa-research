@@ -1,0 +1,11 @@
+{
+ "about": "Models the tool knows by name, with list prices in US dollars per million tokens (ADR-022). Prices are the providers' first-party rates as of the date below; edit this file when they change. A model a key lists that is not here is still shown, without a cost. The cost per paper is an estimate: tokens_per_paper input and output tokens at these prices.",
+ "prices_as_of": "2026-11-03",
+ "tokens_per_paper": {"input": 60000, "output": 4000},
+ "models": [
+  {"provider": "anthropic", "model": "claude-opus-5-5", "name": "Claude Opus 5.5", "note": "Most accurate for most work", "usd_per_mtok": {"input": 4.00, "output": 20.00}},
+  {"provider": "anthropic", "model": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5", "note": "Balanced", "usd_per_mtok": {"input": 2.00, "output": 10.00}},
+  {"provider": "anthropic", "model": "claude-haiku-5-5", "name": "Claude Haiku 5.5", "note": "Fastest and cheapest", "usd_per_mtok": {"input": 0.10, "output": 0.50}},
+  {"provider": "anthropic", "model": "claude-fable-5-2", "name": "Claude Fable 5.2", "note": "Most capable, highest cost", "usd_per_mtok": {"input": 8.00, "output": 40.00}}
+ ]
+}

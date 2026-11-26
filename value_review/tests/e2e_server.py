@@ -9,6 +9,7 @@ Nothing outside ``--root`` is read or written; the caller deletes the folder.
 """
 import argparse
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -17,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from value_review.__main__ import main as launch  # noqa: E402
 from value_review.ingest import ingest_run  # noqa: E402
+from value_review.tests.fake_provider import FakeProvider  # noqa: E402
 from value_review.tests.test_ingest import make_pdf, result, sha  # noqa: E402
 
 RESULT = '-pdf_with_feature_guide.json'
@@ -56,6 +58,11 @@ def main(argv=None):
     parser.add_argument('--port', type=int, required=True)
     args = parser.parse_args(argv)
     data = build(args.root)
+    # A local fake of the model providers (fake_provider.py): no request leaves the machine. Its address is written
+    # next to the data so a browser test can type the own-server URL.
+    fake = FakeProvider()
+    os.environ.update(fake.env())
+    (Path(args.root) / 'fake-provider.txt').write_text(fake.url, encoding='utf-8')
     return launch(['--no-browser', '--data', str(data), '--port', str(args.port)])
 
 

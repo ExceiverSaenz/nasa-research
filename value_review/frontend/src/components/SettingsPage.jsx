@@ -4,7 +4,7 @@ import { loadSettings, refreshProfile } from './useProfile.js';
 import { api } from '../lib/api.js';
 import { initialsOf } from '../lib/prefs.js';
 import { settingsHash } from '../lib/routes.js';
-import { KEYS, KINDS, MODELS, PROVIDERS, WORKSPACE } from '../data/sampleSettings.js';
+import { KINDS, PROVIDERS, WORKSPACE } from '../data/sampleSettings.js';
 
 const TABS = [['profile', 'Profile'], ['workspace', 'Workspace'], ['models', 'Models and API keys'], ['system-prompt', 'System prompt'],
   ['extraction', 'Extraction'], ['review', 'Review and export']];
@@ -27,21 +27,23 @@ const fromSettings = (s) => ({
 
 // The Settings page (canvas Settings.dc.html, ADR-017): six tabs, each with its own Save. Profile, Extraction and
 // Review and export are stored by the service (ADR-018, 42-settings-interface-contract.md); each Save sends only its
-// tab's fields. The System prompts and their versions too (ADR-019). Sample (ADR-013): workspace, API keys, models.
+// tab's fields. The System prompts and their versions too (ADR-019); API keys and models (ADR-020 to ADR-022): a key is
+// tested by the service before it is saved and only its last 4 characters come back. Sample (ADR-013): workspace.
 export default function SettingsPage({ tab = 'profile' }) {
   const [server, setServer] = useState(null);
   const [f, setF] = useState(null);
   const [saved, setSaved] = useState(null);
   const [toast, setToast] = useState('');
   const [error, setError] = useState('');
-  // sample state (in memory)
-  const [keys, setKeys] = useState(KEYS);
-  const [add, setAdd] = useState(null);
+  // API keys and models (service)
+  const [keys, setKeys] = useState(null);       // [{id, provider, name, last4, url, monthly_limit_usd, spent_usd, default, tested_at}]
+  const [models, setModels] = useState(null);   // [{id, provider, name, note, usd_per_paper, available, enabled, default, source}]
+  const [add, setAdd] = useState(null);         // the key form: {provider, keyId, name, key, url, cap}
+  const [addErr, setAddErr] = useState('');
   const [confirm, setConfirm] = useState('');
-  const [enabled, setEnabled] = useState({ sonnet: true, opus: true, haiku: false });
-  const [def, setDef] = useState('sonnet');
-  const [customModels, setCustomModels] = useState([]);
+  const [keyBusy, setKeyBusy] = useState(false);
   const [newModel, setNewModel] = useState('');
+  const loadKeys = () => Promise.all([api.keys(), api.models()]).then(([k, m]) => { setKeys(k); setModels(m.models); });
   // System prompts (service)
   const [sys, setSys] = useState({ ext: null, norm: null });          // {cur, versions} of each kind
   const [sysKind, setSysKind] = useState('ext');
@@ -58,6 +60,7 @@ export default function SettingsPage({ tab = 'profile' }) {
     document.title = 'Settings · Tensile Data Review';
     loadSettings().then((s) => s || api.settings()).then((s) => { const v = fromSettings(s); setServer(s); setF(v); setSaved(v); }).catch((e) => setError(e.message));
     Promise.all(['ext', 'norm'].map((k) => loadSys(k))).catch((e) => setError(e.message));
+    loadKeys().catch((e) => setError(e.message));
   }, []);
   const pick = (t) => { setToast(''); window.location.hash = settingsHash(t); };
   const set = (k, v) => setF((x) => ({ ...x, [k]: v }));
@@ -118,38 +121,52 @@ export default function SettingsPage({ tab = 'profile' }) {
   );
   const saveBtn = (disabled, onClick, label = 'Save') => <button type="button" className="st-save" disabled={disabled} onClick={onClick}>{label}</button>;
 
-  // keys and models (sample)
-  const hasKey = (prov, ks = keys) => ks.some((k) => k.provider === prov);
-  const allModels = MODELS.concat(customModels);
-  const saveKey = () => {
-    const a = add, pv = PROVIDERS.find((p) => p.id === a.provider), last = a.key.trim().slice(-4), cap = Number(a.cap) > 0 ? Number(a.cap) : 0;
-    if (a.keyId) setKeys((ks) => ks.map((k) => (k.id === a.keyId ? { ...k, name: a.name.trim() || k.name, last, cap, url: a.url.trim() || k.url, tested: 'Tested just now' } : k)));
-    else {
-      const n = keys.filter((k) => k.provider === a.provider).length;
-      setKeys((ks) => ks.concat([{ id: `k${Date.now()}`, provider: a.provider, name: a.name.trim() || `${pv.name} key ${n + 1}`, last, tested: 'Tested just now', cap, used: 0, isDefault: n === 0, url: a.url.trim() }]));
-    }
-    setAdd(null);
-    setToast(a.provider === 'server' ? 'Server key saved and tested. It listed no models: add one by its name below.' : `${pv.name} key saved and tested. Tick its models below to use them.`);
+  // keys and models (service, OP-K01 to OP-K06)
+  const keysOf = (prov) => (keys || []).filter((k) => k.provider === prov);
+  const hasKey = (prov) => keysOf(prov).length > 0;
+  const testedText = (iso) => (Date.now() - new Date(iso).getTime() < 60000 ? 'Tested just now' : `Tested ${dateOf(iso)}`);
+  const keyCall = (call, done) => {
+    setKeyBusy(true); setError(''); setToast('');
+    return call().then((v) => loadKeys().then(() => done(v))).catch((e) => setError(e.message)).finally(() => setKeyBusy(false));
   };
-  const removeKey = (id) => {
-    const gone = keys.find((k) => k.id === id);
-    let ks = keys.filter((k) => k.id !== id);
-    if (gone.isDefault) { const first = ks.findIndex((k) => k.provider === gone.provider); if (first >= 0) ks = ks.map((k, i) => (i === first ? { ...k, isDefault: true } : k)); }
-    const en = { ...enabled };
-    if (!hasKey(gone.provider, ks)) allModels.filter((m) => m.provider === gone.provider).forEach((m) => { en[m.id] = false; });
-    const ok = (mid) => { const m = allModels.find((y) => y.id === mid); return m && en[mid] && hasKey(m.provider, ks); };
-    if (!ok(def)) { const nx = allModels.find((m) => ok(m.id)); setDef(nx ? nx.id : ''); }
-    setKeys(ks); setEnabled(en); setConfirm('');
-    setToast(hasKey(gone.provider, ks) ? 'Key removed.' : 'Key removed. Its models are no longer available in Extraction.');
+  const saveKey = () => {
+    const a = add, pv = PROVIDERS.find((p) => p.id === a.provider), cap = Number(a.cap);
+    const body = { name: a.name.trim(), monthly_limit_usd: a.cap.trim() !== '' && cap > 0 ? cap : null,
+      ...(a.key.trim() ? { key: a.key.trim() } : {}), ...(a.provider === 'server' ? { url: a.url.trim() } : {}) };
+    setKeyBusy(true); setAddErr(''); setToast('');
+    (a.keyId ? api.editKey(a.keyId, body) : api.addKey({ provider: a.provider, ...body }))
+      .then((k) => loadKeys().then(() => {
+        setAdd(null);
+        setToast(a.provider === 'server' && !k.models_found ? 'Server key saved and tested. It listed no models: add one by its name below.' : `${pv.name} key saved and tested. Tick its models below to use them.`);
+      }))
+      .catch((e) => setAddErr(e.message))
+      .finally(() => setKeyBusy(false));
+  };
+  const removeKey = (k) => {
+    const still = keysOf(k.provider).length > 1;
+    keyCall(() => api.removeKey(k.id), () => { setConfirm(''); setToast(still ? 'Key removed.' : 'Key removed. Its models are no longer available in Extraction.'); });
+  };
+  const enabledIds = () => (models || []).filter((m) => m.enabled).map((m) => m.id);
+  const defaultId = () => { const d = (models || []).find((m) => m.default); return d ? d.id : null; };
+  const manualNames = () => (models || []).filter((m) => m.source === 'manual').map((m) => m.id.slice('server:'.length));
+  const putModels = (enabled, def, manual, done) => {
+    setError(''); setToast('');
+    const before = models;   // shown at once, put back if the service refuses
+    setModels((ms) => ms.map((m) => ({ ...m, enabled: enabled.includes(m.id), default: m.id === def })));
+    api.saveModels({ enabled, default: def, ...(manual ? { manual } : {}) }).then((r) => { setModels(r.models); if (done) done(); })
+      .catch((e) => { setModels(before); setError(e.message); });
   };
   const toggleModel = (id) => {
-    const en = { ...enabled, [id]: !enabled[id] };
-    let d = def;
-    if (!en[id] && d === id) { const nx = allModels.find((m) => en[m.id] && hasKey(m.provider)); d = nx ? nx.id : ''; }
-    if (en[id] && !d) d = id;
-    setEnabled(en); setDef(d);
+    const on = enabledIds(), was = on.includes(id), en = was ? on.filter((x) => x !== id) : on.concat([id]);
+    let d = defaultId();
+    if (was && d === id) d = en[0] || null;
+    if (!was && !d) d = id;
+    putModels(en, d);
   };
-
+  const addModel = () => {
+    const n = newModel.trim(), id = `server:${n}`;
+    putModels(enabledIds().concat([id]), defaultId() || id, manualNames().concat([n]), () => { setNewModel(''); setToast('Model added.'); });
+  };
   // System prompts (service, OP-T02): a save or a restore is a new version; a stale one is refused (409)
   const sysData = sys[sysKind], sysCur = sysData && sysData.cur, sysList = sysData ? sysData.versions : [];
   const sysTxt = sysTexts[sysKind], sysDirty = !!sysCur && sysTxt !== sysCur.text, sysOff = !sysDirty || !sysTxt.trim() || sysBusy;
@@ -245,14 +262,15 @@ export default function SettingsPage({ tab = 'profile' }) {
         {tab === 'models' && <>
           <section aria-label="API keys" className="st-card">
             <div className="st-pad" style={{ borderBottom: '1px solid #E3E8EF', display: 'block' }}>
-              <h2 className="st-h2">API keys <SampleBadge /></h2>
+              <h2 className="st-h2">API keys</h2>
               <span className="st-muted">A key lets Extraction call a provider’s models. Keys are stored only on this computer and are never shown again after saving. A provider can have several keys; one is the default.</span>
             </div>
-            {PROVIDERS.map((p) => {
+            {!keys && <p className="c-note" style={{ padding: '16px 24px' }}>Loading the keys…</p>}
+            {keys && PROVIDERS.map((p) => {
               const a = add && add.provider === p.id ? add : null;
-              const ks = keys.filter((k) => k.provider === p.id);
+              const ks = keysOf(p.id);
               const needUrl = p.id === 'server';
-              const keyOk = a && a.key.trim().length >= 8;
+              const keyOk = a && (a.keyId ? a.key.trim() === '' || a.key.trim().length >= 8 : a.key.trim().length >= 8);
               const urlOk = !needUrl || (a && /^https?:\/\/\S+/.test(a.url.trim()));
               const urlMsg = a && needUrl && a.url.trim() && !urlOk ? 'The URL must start with http:// or https://.' : '';
               const setA = (k, v) => setAdd((x) => ({ ...x, [k]: v }));
@@ -261,33 +279,33 @@ export default function SettingsPage({ tab = 'profile' }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
                     <div style={{ flex: '1 1 240px', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
                       <span style={{ fontWeight: 600, fontSize: 16, color: '#071B3F' }}>{p.name}</span><span style={{ fontSize: 13, color: '#4A5568' }}>{p.hint}</span></div>
-                    {!a && <button type="button" className="st-outline" onClick={() => setAdd({ provider: p.id, keyId: '', name: '', key: '', url: '', cap: '' })}>{ks.length ? 'Add another key' : 'Add key'}</button>}
+                    {!a && <button type="button" className="st-outline" onClick={() => { setAddErr(''); setAdd({ provider: p.id, keyId: '', name: '', key: '', url: '', cap: '' }); }}>{ks.length ? 'Add another key' : 'Add key'}</button>}
                   </div>
                   {ks.map((k) => {
-                    const pct = k.cap ? Math.min(100, Math.round((k.used / k.cap) * 100)) : 0;
+                    const pct = k.monthly_limit_usd ? Math.min(100, Math.round((k.spent_usd / k.monthly_limit_usd) * 100)) : 0;
                     return (
-                      <div key={k.id} style={{ border: '1px solid #E3E8EF', borderRadius: 6, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      <div key={k.id} role="group" aria-label={k.name} style={{ border: '1px solid #E3E8EF', borderRadius: 6, padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                           <div style={{ flex: '1 1 220px', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600 }}>{k.name}{k.isDefault && <span className="st-tag">Default</span>}</span>
-                            <span className="c-mono c-ell" style={{ fontSize: 13, color: '#4A5568' }}>Key ending in {k.last}{k.url ? ` · ${k.url}` : ''}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600 }}>{k.name}{k.default && <span className="st-tag">Default</span>}</span>
+                            <span className="c-mono c-ell" style={{ fontSize: 13, color: '#4A5568' }}>Key ending in {k.last4}{k.url ? ` · ${k.url}` : ''}</span>
                           </div>
                           <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#17703A' }}><span aria-hidden="true" className="c-dot" style={{ background: '#17703A' }} />Connected</span>
                           {confirm !== k.id ? <>
-                            {!k.isDefault && <button type="button" className="st-linkbtn" onClick={() => { setKeys((x) => x.map((y) => (y.provider === k.provider ? { ...y, isDefault: y.id === k.id } : y))); setToast(`“${k.name}” is now the default ${p.name} key.`); }}>Make default</button>}
-                            <button type="button" className="st-plain" onClick={() => { setKeys((x) => x.map((y) => (y.id === k.id ? { ...y, tested: 'Tested just now' } : y))); setToast(`“${k.name}” works.`); }}>Test</button>
-                            <button type="button" className="st-plain" onClick={() => setAdd({ provider: p.id, keyId: k.id, name: k.name, key: '', url: k.url || '', cap: k.cap ? String(k.cap) : '' })}>Edit</button>
+                            {!k.default && <button type="button" className="st-linkbtn" disabled={keyBusy} onClick={() => keyCall(() => api.editKey(k.id, { default: true }), () => setToast(`“${k.name}” is now the default ${p.name} key.`))}>Make default</button>}
+                            <button type="button" className="st-plain" disabled={keyBusy} onClick={() => keyCall(() => api.testKey(k.id), () => setToast(`“${k.name}” works.`))}>Test</button>
+                            <button type="button" className="st-plain" onClick={() => { setAddErr(''); setAdd({ provider: p.id, keyId: k.id, name: k.name, key: '', url: k.url || '', cap: k.monthly_limit_usd ? String(k.monthly_limit_usd) : '' }); }}>Edit</button>
                             <button type="button" className="st-plain" style={{ color: '#B42318' }} onClick={() => setConfirm(k.id)}>Remove</button>
                           </> : <>
                             <span style={{ color: '#B42318' }}>Remove this key?</span>
-                            <button type="button" className="st-plain" style={{ background: '#B42318', borderColor: '#B42318', color: '#FFFFFF', fontWeight: 600 }} onClick={() => removeKey(k.id)}>Remove</button>
+                            <button type="button" className="st-plain" disabled={keyBusy} style={{ background: '#B42318', borderColor: '#B42318', color: '#FFFFFF', fontWeight: 600 }} onClick={() => removeKey(k)}>Remove</button>
                             <button type="button" className="st-plain" onClick={() => setConfirm('')}>Keep</button>
                           </>}
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: 13, color: '#3B4557' }}>{k.cap ? `$${k.used.toFixed(2)} of $${k.cap} this month` : `$${k.used.toFixed(2)} this month · no limit`}</span>
-                          {!!k.cap && <span aria-hidden="true" style={{ flex: '0 1 160px', width: 160, height: 6, borderRadius: 3, background: '#E3E8EF', overflow: 'hidden' }}><span style={{ display: 'block', height: 6, width: `${pct}%`, background: pct >= 80 ? '#B7791F' : '#0B3D91' }} /></span>}
-                          <span style={{ fontSize: 13, color: '#4A5568' }}>{k.tested}</span>
+                          <span style={{ fontSize: 13, color: '#3B4557' }}>{k.monthly_limit_usd ? `$${k.spent_usd.toFixed(2)} of $${k.monthly_limit_usd} this month` : `$${k.spent_usd.toFixed(2)} this month · no limit`} · counted from the first run</span>
+                          {!!k.monthly_limit_usd && <span aria-hidden="true" style={{ flex: '0 1 160px', width: 160, height: 6, borderRadius: 3, background: '#E3E8EF', overflow: 'hidden' }}><span style={{ display: 'block', height: 6, width: `${pct}%`, background: pct >= 80 ? '#B7791F' : '#0B3D91' }} /></span>}
+                          <span style={{ fontSize: 13, color: '#4A5568' }}>{testedText(k.tested_at)}</span>
                         </div>
                       </div>
                     );
@@ -297,20 +315,21 @@ export default function SettingsPage({ tab = 'profile' }) {
                       <span style={{ fontWeight: 600, color: '#071B3F' }}>{a.keyId ? 'Edit the key' : `New ${p.name} key`}</span>
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                         <div className="st-field" style={{ flex: '1 1 200px', minWidth: 0, gap: 4 }}><label htmlFor={`kn-${p.id}`} className="st-small">Name</label>
-                          <input id={`kn-${p.id}`} className="st-input" value={a.name} onChange={(e) => setA('name', e.target.value)} placeholder="For example: Lab account" /></div>
+                          <input id={`kn-${p.id}`} className="st-input" maxLength={80} value={a.name} onChange={(e) => setA('name', e.target.value)} placeholder="For example: Lab account" /></div>
                         {needUrl && <div className="st-field" style={{ flex: '2 1 260px', minWidth: 0, gap: 4 }}><label htmlFor={`ku-${p.id}`} className="st-small">Server URL</label>
                           <input id={`ku-${p.id}`} className="st-input c-mono" value={a.url} onChange={(e) => setA('url', e.target.value)} placeholder="https://" /></div>}
                       </div>
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                         <div className="st-field" style={{ flex: '2 1 280px', minWidth: 0, gap: 4 }}><label htmlFor={`kk-${p.id}`} className="st-small">Key</label>
-                          <input id={`kk-${p.id}`} type="password" autoComplete="off" className="st-input c-mono" value={a.key} onChange={(e) => setA('key', e.target.value)} placeholder="Paste the key" /></div>
+                          <input id={`kk-${p.id}`} type="password" autoComplete="off" className="st-input c-mono" value={a.key} onChange={(e) => setA('key', e.target.value)} placeholder={a.keyId ? 'Leave empty to keep the current key' : 'Paste the key'} /></div>
                         <div className="st-field" style={{ flex: '1 1 160px', minWidth: 0, gap: 4 }}><label htmlFor={`kc-${p.id}`} className="st-small">Monthly limit ($, optional)</label>
                           <input id={`kc-${p.id}`} type="number" min="0" className="st-input" value={a.cap} onChange={(e) => setA('cap', e.target.value)} placeholder="No limit" /></div>
                       </div>
                       <span style={{ fontSize: 13, color: '#4A5568' }}>When the key reaches its limit, runs that use it are blocked until next month or until you raise it.</span>
                       {urlMsg && <span style={{ fontSize: 13, color: '#B42318' }}>{urlMsg}</span>}
+                      {addErr && <span role="alert" style={{ fontSize: 13, color: '#B42318' }}>{addErr}</span>}
                       <div style={{ display: 'flex', gap: 8 }}>
-                        {saveBtn(!(keyOk && urlOk), saveKey, 'Save and test')}
+                        {saveBtn(!(keyOk && urlOk) || keyBusy, saveKey, keyBusy ? 'Testing…' : 'Save and test')}
                         <button type="button" className="st-plain" style={{ height: 44 }} onClick={() => setAdd(null)}>Cancel</button>
                       </div>
                     </div>
@@ -321,19 +340,20 @@ export default function SettingsPage({ tab = 'profile' }) {
           </section>
           <section aria-label="Models" className="st-card">
             <div className="st-pad" style={{ borderBottom: '1px solid #E3E8EF', display: 'block' }}>
-              <h2 className="st-h2">Models for Extraction <SampleBadge /></h2>
+              <h2 className="st-h2">Models for Extraction</h2>
               <span className="st-muted">The models you tick are the ones a run can choose in its Setup. A model needs a working key from its provider. The default is what a new run starts with.</span>
             </div>
             <div className="st-mgrid st-mhead"><span>Use</span><span>Model</span><span>Provider</span><span>About per paper</span><span>Default</span></div>
-            {allModels.map((m) => {
-              const has = hasKey(m.provider), on = !!enabled[m.id] && has, pn = PROVIDERS.find((p) => p.id === m.provider).name;
+            {(models || []).map((m) => {
+              const pn = PROVIDERS.find((p) => p.id === m.provider).name;
+              const why = hasKey(m.provider) ? `${m.note} · not listed by your ${pn} key` : `${m.note} · needs a ${pn} key`;
               return (
-                <div key={m.id} className="st-mgrid" style={{ minHeight: 52, alignItems: 'center', borderBottom: '1px solid #EEF1F5', opacity: has ? 1 : 0.55 }}>
-                  <input type="checkbox" aria-label={`Use ${m.name}`} checked={on} disabled={!has} onChange={() => toggleModel(m.id)} style={{ width: 18, height: 18, accentColor: '#0B3D91' }} />
-                  <span style={{ display: 'flex', flexDirection: 'column' }}><span style={{ fontWeight: 500 }}>{m.name}</span><span style={{ fontSize: 12, color: '#4A5568' }}>{has ? m.note : `${m.note} · needs a ${pn} key`}</span></span>
+                <div key={m.id} className="st-mgrid" style={{ minHeight: 52, alignItems: 'center', borderBottom: '1px solid #EEF1F5', opacity: m.available ? 1 : 0.55 }}>
+                  <input type="checkbox" aria-label={`Use ${m.name}`} checked={m.enabled} disabled={!m.available} onChange={() => toggleModel(m.id)} style={{ width: 18, height: 18, accentColor: '#0B3D91' }} />
+                  <span style={{ display: 'flex', flexDirection: 'column' }}><span style={{ fontWeight: 500 }}>{m.name}</span><span style={{ fontSize: 12, color: '#4A5568' }}>{m.available ? m.note : why}</span></span>
                   <span>{pn}</span>
-                  <span className="c-mono">{m.usd == null ? '—' : `$${m.usd.toFixed(2)}`}</span>
-                  <span><input type="radio" name="dm" aria-label={`Default model ${m.name}`} checked={def === m.id && on} disabled={!on} onChange={() => setDef(m.id)} style={{ width: 18, height: 18, accentColor: '#0B3D91' }} /></span>
+                  <span className="c-mono">{m.usd_per_paper == null ? '—' : `$${m.usd_per_paper.toFixed(2)}`}</span>
+                  <span><input type="radio" name="dm" aria-label={`Default model ${m.name}`} checked={m.default} disabled={!m.enabled} onChange={() => putModels(enabledIds(), m.id)} style={{ width: 18, height: 18, accentColor: '#0B3D91' }} /></span>
                 </div>
               );
             })}
@@ -342,12 +362,8 @@ export default function SettingsPage({ tab = 'profile' }) {
                 <span className="st-muted">Own server: the models it lists are read when you test the key. If it lists none, add the model by its name.</span>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <label htmlFor="nm" className="sr-only">Model name</label>
-                  <input id="nm" className="st-input c-mono" style={{ flex: '1 1 260px', minWidth: 0 }} value={newModel} onChange={(e) => setNewModel(e.target.value)} placeholder="Model name, as the server expects it" />
-                  <button type="button" className="st-outline" style={{ height: 44 }} disabled={!newModel.trim()} onClick={() => {
-                    const n = newModel.trim(), id = `c:${n}`;
-                    setCustomModels((x) => x.concat([{ id, name: n, note: 'Added by hand', provider: 'server', usd: null }]));
-                    setEnabled((x) => ({ ...x, [id]: true })); if (!def) setDef(id); setNewModel(''); setToast('Model added.');
-                  }}>Add model</button>
+                  <input id="nm" className="st-input c-mono" maxLength={200} style={{ flex: '1 1 260px', minWidth: 0 }} value={newModel} onChange={(e) => setNewModel(e.target.value)} placeholder="Model name, as the server expects it" />
+                  <button type="button" className="st-outline" style={{ height: 44 }} disabled={!newModel.trim()} onClick={addModel}>Add model</button>
                 </div>
               </div>
             )}

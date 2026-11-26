@@ -85,4 +85,13 @@ export const api = {
     (await request(`/system-prompts/${kind}/versions`, { method: 'POST', body: { text, note }, headers: { 'If-Match': `"${current}"` } })).data,
   restoreSystemPrompt: async (kind, n, current) =>
     (await request(`/system-prompts/${kind}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+
+  // API keys and models (52-models-keys-interface-contract.md): a key is sent once and never comes back, only its last 4.
+  keys: async () => (await request('/keys')).data,
+  addKey: async (body) => (await request('/keys', { method: 'POST', body })).data,
+  editKey: async (id, body) => (await request(`/keys/${encodeURIComponent(id)}`, { method: 'PATCH', body })).data,
+  testKey: async (id) => (await request(`/keys/${encodeURIComponent(id)}/test`, { method: 'POST' })).data,
+  removeKey: async (id) => { await request(`/keys/${encodeURIComponent(id)}`, { method: 'DELETE' }); },
+  models: async () => (await request('/models')).data,
+  saveModels: async (body) => (await request('/models', { method: 'PUT', body })).data,
 };
