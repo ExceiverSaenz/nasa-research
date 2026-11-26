@@ -1,30 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { api } from '../lib/api.js';
 import { fileToBase64 } from '../lib/schema.js';
+import { SchemaDialog } from './SchemaList.jsx';
 
-const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const where = (p) => [p.sheet, p.cell].filter(Boolean).join(' ');
 
-// Import a schema from the .xlsx template (OP-S11): read the file, show what it holds and what to check, then either
-// create a new schema (mode "new") or replace the current draft ("fill"). Nothing is stored until the last button.
+// Import a spreadsheet (canvas Schema.dc.html, "Import a spreadsheet"; OP-S11): read the file, say what it holds and
+// what to check, then create a new schema (mode "new", named after the file) or replace the current draft ("fill").
+// Nothing is stored until the last button. The type proposals of the canvas need the backend (PEND-15).
 export default function ImportDialog({ mode, onCancel, onCreate, onFill }) {
   const [file, setFile] = useState(null);
   const [read, setRead] = useState(null);       // {content, summary, warnings}
   const [problems, setProblems] = useState([]);
   const [error, setError] = useState('');
-  const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape' && !busy) onCancel(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [busy, onCancel]);
+  const [template, setTemplate] = useState(false);
 
   const pick = async (f) => {
     setFile(f); setRead(null); setProblems([]); setError('');
     if (!f) return;
-    setName(f.name.replace(/\.[^.]+$/, ''));
     setBusy(true);
     try {
       setRead(await api.importSchema(f.name, await fileToBase64(f)));
@@ -33,56 +27,57 @@ export default function ImportDialog({ mode, onCancel, onCreate, onFill }) {
       else setError(e.message);
     } finally { setBusy(false); }
   };
-
-  const ok = async (e) => {
-    e.preventDefault();
+  const ok = async () => {
     if (!read) return;
-    if (mode === 'new' && !name.trim()) { setError('Type a name.'); return; }
     setBusy(true);
     try {
-      if (mode === 'new') await onCreate(name.trim(), read.content);
+      if (mode === 'new') await onCreate((file ? file.name.replace(/\.[^.]+$/, '') : '').slice(0, 120) || 'Imported schema', read.content);
       else onFill(read.content);
-    } catch (err) { setError(err.code === 'rules_violation' ? 'Type a name of 120 characters at most.' : err.message); setBusy(false); }
+    } catch (err) { setError(err.message); setBusy(false); }
   };
-
   const s = read && read.summary;
+  const label = mode === 'new' ? 'Create schema' : 'Fill this schema';
+
   return (
-    <div className="backdrop">
-      <form className="modal" role="dialog" aria-modal="true" aria-labelledby="im-t" style={{ width: 600 }} onSubmit={ok}>
-        <div className="modal-head"><h2 id="im-t" style={{ fontSize: 20 }}>{mode === 'new' ? 'Import a schema' : 'Fill this schema from a file'}</h2>
-          <p className="muted" style={{ fontSize: 14, margin: '6px 0 0' }}>Only the schema template (.xlsx) is accepted: groups in row 1, field names with the unit in
-            parentheses in row 2, “Reference” in A2, and an optional “Descriptions” sheet. <a href={api.schemaTemplateUrl()}>Download the empty template</a>.</p></div>
-        <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <label className="field">File (.xlsx)
-            <input type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              onChange={(e) => pick(e.target.files[0] || null)} disabled={busy} />
-          </label>
-          {busy && !read && file && <span className="muted" role="status">Reading {file.name}…</span>}
-          {problems.length > 0 && (
-            <div className="banner error" role="alert" style={{ flexDirection: 'column', alignItems: 'flex-start', padding: '10px 14px' }}>
-              <b>This file cannot be imported. Nothing was changed.</b>
-              <ul style={{ margin: 0, paddingLeft: 18 }}>{problems.map((p, i) => <li key={i}>{where(p) && <b>{where(p)}: </b>}{p.message}</li>)}</ul>
-            </div>
-          )}
-          {s && (
-            <div className="model-text" role="status">
-              <b>{plural(s.groups, 'group', 'groups')}, {plural(s.fields, 'field', 'fields')}{s.families ? `, ${plural(s.families, 'family', 'families')}` : ''}.</b>
-              {read.warnings.length > 0
-                ? <ul style={{ margin: 0, paddingLeft: 18 }}>{read.warnings.map((w, i) => <li key={i}>{where(w) && <b>{where(w)}: </b>}{w.message}</li>)}</ul>
-                : <span>Nothing to check.</span>}
-              {mode === 'fill' && <span>The draft is replaced by the file. Fields with the same names keep their history; save a version when it looks right.</span>}
-            </div>
-          )}
-          {s && mode === 'new' && (
-            <label className="field">Name<input value={name} maxLength={120} onChange={(e) => { setName(e.target.value); setError(''); }} /></label>
-          )}
-          {error && <span className="error-text" role="alert">{error}</span>}
+    <SchemaDialog title="Import a spreadsheet" onClose={() => { if (!busy) onCancel(); }}
+      foot={<>
+        <button type="button" className="st-plain" style={{ height: 44, padding: '0 16px' }} onClick={onCancel} disabled={busy && !!read}>Cancel</button>
+        <button type="button" className="st-save" disabled={!read || busy} onClick={ok}>{label}</button>
+      </>}>
+      <div style={{ padding: '0 24px 16px', display: 'flex', flexDirection: 'column', gap: 14, overflowY: 'auto' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 4, background: '#F7F9FC', border: '1px solid #D5DBE5', borderRadius: 6, padding: '10px 14px' }}>
+          <span style={{ fontWeight: 600 }}>Standard format (.xlsx)</span>
+          <span style={{ color: '#3B4557' }}>Sheet 1: row 1 has the groups, row 2 the field names with their unit in parentheses, and column A is Reference. One row per specimen or test condition.</span>
+          <span style={{ color: '#3B4557' }}>Optional: a sheet named “Descriptions” (field in column A, description in column B), and data rows.</span>
+          <a href={api.schemaTemplateUrl()} onClick={() => setTemplate(true)} style={{ alignSelf: 'flex-start', minHeight: 36, display: 'inline-flex', alignItems: 'center', fontSize: 14 }}>
+            {template ? 'Template downloaded ✓' : 'Download the standard template'}</a>
         </div>
-        <div className="modal-foot" style={{ justifyContent: 'flex-end' }}>
-          <button type="button" className="btn big" onClick={onCancel} disabled={busy && !!read}>Cancel</button>
-          <button type="submit" className="btn big primary" disabled={!read || busy}>{mode === 'new' ? 'Create schema' : 'Replace the draft'}</button>
-        </div>
-      </form>
-    </div>
+        <label className="st-field" style={{ fontSize: 14 }}><span style={{ fontWeight: 600 }}>File (.xlsx)</span>
+          <input type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => pick(e.target.files[0] || null)} disabled={busy} />
+        </label>
+        {busy && !read && file && <span role="status" style={{ color: '#4A5568' }}>Reading {file.name}…</span>}
+        {s && (
+          <div role="status" style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <span><b>{s.fields} {s.fields === 1 ? 'field' : 'fields'}</b> in <b>{s.groups} {s.groups === 1 ? 'group' : 'groups'}</b>. Reference (column A) is added automatically.</span>
+            {s.families > 0 && <span style={{ color: '#3B4557' }}>{s.families === 1 ? 'One family' : `${s.families} families`} of elements recognised.</span>}
+            {mode === 'fill' && <span style={{ color: '#3B4557' }}>The draft is replaced by the file. Fields with the same names keep their history; save a version when it looks right.</span>}
+          </div>
+        )}
+        {s && read.warnings.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, background: '#FFF3D6', border: '1px solid #E8C766', borderRadius: 6, padding: '10px 14px' }}>
+            <span style={{ fontWeight: 600, color: '#6B4A00' }}>{read.warnings.length} {read.warnings.length === 1 ? 'thing' : 'things'} to check</span>
+            {read.warnings.map((w, i) => <span key={i} style={{ color: '#4F3700' }}>{where(w) && <b>{where(w)}: </b>}{w.message}</span>)}
+          </div>
+        )}
+        {problems.length > 0 && (
+          <div role="alert" style={{ display: 'flex', flexDirection: 'column', gap: 6, background: '#FBE3E1', border: '1px solid #E7A7A2', borderRadius: 6, padding: '10px 14px' }}>
+            <span style={{ fontWeight: 600, color: '#8A1C15' }}>This file does not follow the standard format</span>
+            {problems.map((p, i) => <span key={i} style={{ color: '#6B1A14' }}>{where(p) && <b>{where(p)}: </b>}{p.message}</span>)}
+            <span style={{ color: '#6B1A14' }}>Download the template, move your data into it, and import it again.</span>
+          </div>
+        )}
+        {error && <span className="error-text" role="alert">{error}</span>}
+      </div>
+    </SchemaDialog>
   );
 }

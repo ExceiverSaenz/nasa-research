@@ -4,7 +4,7 @@ import { test, expect, dragOnPage } from './fixtures.js';
 const near = (got, want) => got.every((v, i) => Math.abs(v - want[i]) < 0.02);
 
 test('add, redraw, delete and restore highlights', async ({ page, server }) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await expect(page.locator('[aria-current="true"]').first()).toContainText('710 ± 25');
   const draft = async () => {
     await page.keyboard.press('Control+s');
@@ -13,7 +13,7 @@ test('add, redraw, delete and restore highlights', async ({ page, server }) => {
   };
 
   await page.getByRole('button', { name: '+ Add highlight' }).click();
-  await expect(page.getByText('Drag on the page. Esc cancels.')).toBeVisible();
+  await expect(page.getByText(/^Drag on the page to draw/)).toBeVisible();
   await dragOnPage(page, 0.1, 0.45, 0.3, 0.5);   // within the part of the page in view (it scrolls to the value's box)
   let boxes = await draft();
   expect(boxes.added).toHaveLength(1);
@@ -26,7 +26,8 @@ test('add, redraw, delete and restore highlights', async ({ page, server }) => {
   await dragOnPage(page, 0.5, 0.4, 0.6, 0.42);
   boxes = await draft();
   expect(near(boxes.redrawn.e1.bbox, [0.5, 0.4, 0.6, 0.42])).toBe(true);
-  await expect(page.getByRole('region', { name: 'Value detail' })).toContainText('redrawn by you');
+  await page.locator('.sheet').getByRole('button', { name: /The value/ }).click();
+  await expect(tools.getByRole('button', { name: 'Undo redraw' })).toBeVisible();   // the board's mark of a redrawn box
 
   // delete it, then restore it
   await page.locator('.sheet').getByRole('button', { name: /The value/ }).click();
@@ -34,17 +35,17 @@ test('add, redraw, delete and restore highlights', async ({ page, server }) => {
   boxes = await draft();
   expect(boxes.removed).toEqual(['e1']);
   await expect(page.locator('.sheet').getByRole('button', { name: /The value/ })).toHaveCount(0);
-  await tools.getByRole('button', { name: 'Restore removed (1)' }).click();
+  await tools.getByRole('button', { name: 'Restore removed' }).click();
   boxes = await draft();
   expect(boxes.removed).toEqual([]);
   await expect(page.locator('.sheet').getByRole('button', { name: /The value/ })).toHaveCount(1);
 });
 
 test('Escape cancels drawing and nothing is added', async ({ page, server }) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await page.getByRole('button', { name: '+ Add highlight' }).click();
   await page.keyboard.press('Escape');
-  await expect(page.getByText('Drag on the page. Esc cancels.')).toHaveCount(0);
+  await expect(page.getByText(/^Drag on the page to draw/)).toHaveCount(0);
   await expect(page.locator('header')).not.toContainText('Unsaved changes');
   expect((await server.api('/papers/7')).draft).toBeNull();
 });

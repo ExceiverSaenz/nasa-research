@@ -48,15 +48,22 @@ test('tone: ok when all is loaded, error stays error after a later warning', () 
   assert.deepEqual(loadReport([]), { lines: [], tone: 'ok' });
 });
 
-test('routes: review of a pair, of the active pair, and everything else is Papers', () => {
-  assert.deepEqual(parseRoute('#/source/model-b/paper/7'), { view: 'review', source: 'model-b', paper: '7' });
-  assert.deepEqual(parseRoute('#/paper/12'), { view: 'review', source: null, paper: '12' });
+test('routes: the canvas sections, old review links, and everything else is the list of extractions', () => {
+  assert.deepEqual(parseRoute('#/review'), { view: 'runs' });
+  assert.deepEqual(parseRoute('#/review/model-b'), { view: 'papers', source: 'model-b' });
+  assert.deepEqual(parseRoute('#/review/model-b/paper/7'), { view: 'review', source: 'model-b', paper: '7' });
+  assert.deepEqual(parseRoute('#/source/model-b/paper/7'), { view: 'review', source: 'model-b', paper: '7', legacy: true });
+  assert.deepEqual(parseRoute('#/paper/12'), { view: 'review', source: null, paper: '12', legacy: true });
+  assert.deepEqual(parseRoute('#/extraction/r1'), { view: 'extraction', run: 'r1' });
+  assert.deepEqual(parseRoute('#/normalize/r1/validate'), { view: 'normalize', run: 'r1', step: 'validate' });
+  assert.deepEqual(parseRoute('#/normalize/r1'), { view: 'normalize', run: 'r1', step: 'rules' });
+  assert.deepEqual(parseRoute('#/settings'), { view: 'settings', tab: 'profile' });
+  assert.deepEqual(parseRoute('#/settings/system-prompt'), { view: 'settings', tab: 'system-prompt' });
   for (const hash of ['', '#/', '#/paper/', '#/paper/12345', '#/paper/7/x', '#/source/Model-B/paper/7', '#/source/-b/paper/7',
-    `#/source/${'a'.repeat(41)}/paper/7`, '#/source//paper/7', undefined]) {
-    assert.deepEqual(parseRoute(hash), { view: 'papers' }, String(hash));
+    `#/source/${'a'.repeat(41)}/paper/7`, '#/source//paper/7', '#/settings/nope', '#/normalize/r1/x', undefined]) {
+    assert.deepEqual(parseRoute(hash), { view: 'runs' }, String(hash));
   }
-  assert.equal(reviewHash('model-b', '7'), '#/source/model-b/paper/7');
-  assert.equal(reviewHash(null, '7'), '#/paper/7');
+  assert.equal(reviewHash('model-b', '7'), '#/review/model-b/paper/7');
   assert.deepEqual(parseRoute(reviewHash('a-1', '3')), { view: 'review', source: 'a-1', paper: '3' });
 });
 

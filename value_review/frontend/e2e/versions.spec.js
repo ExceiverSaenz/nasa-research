@@ -6,12 +6,12 @@ async function submit(page) {
   await page.getByRole('button', { name: 'Finish paper' }).click();
   const summary = page.getByRole('dialog', { name: /summary/ });
   await summary.getByRole('button', { name: 'Submit paper' }).click();
-  await expect(summary).toContainText(/Submitted as v\d+/);
+  await expect(summary).toContainText('Submitted. Your edits were saved as a new version.');
   await summary.getByRole('button', { name: 'Back to review' }).click();
 }
 
 test('compare a different version, then restore it as a new version', async ({ page, server }) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
   await page.keyboard.press('f');            // v1: o1 accepted
   await submit(page);
@@ -27,17 +27,15 @@ test('compare a different version, then restore it as a new version', async ({ p
   const history = page.getByRole('dialog', { name: 'Version history' });
   await history.getByRole('button', { name: 'Actions for v1' }).click();
   await page.getByRole('menuitem', { name: 'Compare with current' }).click();
-  await expect(history).toContainText('v1 compared with the current version, v2');
-  const diff = history.locator('table tbody tr');
-  await expect(diff).toHaveCount(1);
-  await expect(diff.first()).toContainText('Yield strength');
-  await expect(diff.first()).toContainText(/Accepted/);
-  await expect(diff.first()).toContainText(/Rejected/);
+  await expect(history).toContainText('v1 compared with current (v2)');
+  await expect(history).toContainText('Yield strength');
+  await expect(history).toContainText(/Accepted/);
+  await expect(history).toContainText(/Rejected/);
 
   await history.getByRole('button', { name: '‹ All versions' }).click();
   await history.getByRole('button', { name: 'Actions for v1' }).click();
   await page.getByRole('menuitem', { name: 'Restore' }).click();
-  const confirm = history.getByRole('alertdialog', { name: 'Restore v1' });
+  const confirm = history.getByRole('alertdialog', { name: 'Restore version' });
   await expect(confirm).toContainText('saved as a new version, v3');
   await confirm.getByRole('button', { name: 'Restore' }).click();
   await expect(history).toContainText('v3 (current)');
@@ -48,7 +46,7 @@ test('compare a different version, then restore it as a new version', async ({ p
 });
 
 test('start over clears the working copy and the draft, and keeps the versions', async ({ page, server }) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
   await page.keyboard.press('f');
   await submit(page);
@@ -60,7 +58,7 @@ test('start over clears the working copy and the draft, and keeps the versions',
   await page.getByRole('button', { name: 'More actions' }).filter({ visible: true }).first().click();
   await page.getByRole('menuitem', { name: 'Start over from model output' }).click();
   const ask = page.getByRole('alertdialog', { name: 'Start over from the model output?' });
-  await expect(ask).toContainText('v1 stays in the version history');
+  await expect(ask).toContainText('This cannot be undone.');
   await ask.getByRole('button', { name: 'Yes, start over' }).click();
   await expect.poll(() => progress(page)).toBe('0');
   expect((await server.api('/papers/7')).draft).toBeNull();

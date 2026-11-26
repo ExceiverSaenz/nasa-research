@@ -157,3 +157,16 @@ test('dragging: a field before another, a group before another (AC-S07)', async 
   assert.equal(layout(moveGroupBefore(c, 'g_1', null)), 'g_2:f_3 g_1:f_1,f_2');
   assert.equal(moveGroupBefore(c, 'g_1', 'g_1'), c);
 });
+
+test('the version history compares fields by id, as the canvas shows it', async () => {
+  const { compareFields } = await import('./schema.js');
+  const f = (field_id, name, extra = {}) => ({ field_id, name, description: '', type: 'text', unit: '', allowed: [], multiple: false, formula: '', inputs: [], family: null, ...extra });
+  const older = { schema: 'value-review-schema/1', description: '', groups: [{ group_id: 'g1', name: 'Tensile', fields: [f('a', 'Yield'), f('b', 'Width')] }] };
+  const newer = { schema: 'value-review-schema/1', description: '', groups: [{ group_id: 'g1', name: 'Tensile', fields: [f('a', 'Yield stress', { type: 'number', unit: 'MPa' }), f('c', 'UTS')] }] };
+  assert.deepEqual(compareFields(older, newer), [
+    { kind: 'Added', name: 'UTS', detail: 'Tensile · Text' },
+    { kind: 'Removed', name: 'Width', detail: 'Tensile · Text' },
+    { kind: 'Changed', name: 'Yield stress', detail: 'name Yield → Yield stress · type Text → Number · unit none → MPa' },
+  ]);
+  assert.deepEqual(compareFields(older, older), []);
+});

@@ -2,178 +2,206 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
 import { schemaHash } from '../lib/routes.js';
 import AppHeader from './AppHeader.jsx';
-import { Dialog } from './Dialogs.jsx';
 import ImportDialog from './ImportDialog.jsx';
 import SchemaHistory from './SchemaHistory.jsx';
-import SettingsDialog from './SettingsDialog.jsx';
 
-const STATUS = { saved: ['Saved', 'st-accepted'], draft: ['Draft', 'st-corrected'], new: ['New · not saved', 'st-unsure'] };
-const shortDate = (iso) => (iso ? new Date(iso).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
+const COLS = 'minmax(220px, 2fr) 70px 70px 150px 140px 110px 44px';
+const DOT = { Saved: '#17703A', Draft: '#B7791F', Empty: '#9AA3B2' };
+const when = (iso) => (iso ? new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
+export const statusOf = (r) => (!r.fields ? 'Empty' : r.status === 'saved' ? 'Saved' : 'Draft');
+export const RENAME_KEY = 'vr-rename';   // the editor opens with the name in edit mode (canvas: Rename from the list)
 
-// The list of schemas (canvas Schema.dc.html, "list"): OP-S01, with New, Rename, Duplicate and Delete (OP-S02, S08, S09).
+// The content of a schema to copy: its latest version, or its draft when it has none.
+async function copyBody(row, name) {
+  if (row.version) return { name, from: { schema_id: row.schema_id, version: row.version } };
+  const view = await api.schema(row.schema_id);
+  return { name, content: view.draft ? view.draft.content : view.content };
+}
+
+// The list of schemas (canvas Schema.dc.html, "list"): OP-S01, with New (blank, copy, import), Rename, Version history,
+// Duplicate, Export and Delete (OP-S02, S08, S09, S10).
 export default function SchemaList() {
   const [rows, setRows] = useState(null);
   const [error, setError] = useState('');
-  const [q, setQ] = useState('');
+  const [toast, setToast] = useState('');
+  const [lq, setLq] = useState('');
+  const [filter, setFilter] = useState('all');
   const [menu, setMenu] = useState(null);       // schema id whose row menu is open
-  const [dialog, setDialog] = useState(null);   // {kind: 'new' | 'rename' | 'delete', row}
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [dialog, setDialog] = useState(null);   // {kind: 'new' | 'copy' | 'import' | 'delete' | 'history', row}
 
   const reload = () => api.schemas().then((r) => { setRows(r); setError(''); }).catch((e) => setError(e.message));
   useEffect(() => {
     document.title = 'Schemas · Tensile Data Review';
     reload();
-    const close = (e) => { if (e.key === 'Escape') setMenu(null); };
+    const close = (e) => { if (e.key === 'Escape') { setMenu(null); } };
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
   }, []);
 
+  const all = rows || [];
   const shown = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return (rows || []).filter((r) => !needle || `${r.name} ${r.description}`.toLowerCase().includes(needle));
-  }, [rows, q]);
+    const needle = lq.trim().toLowerCase();
+    return all.filter((r) => (filter === 'all' || statusOf(r).toLowerCase() === filter) && (!needle || r.name.toLowerCase().includes(needle)));
+  }, [rows, lq, filter]);
+  const count = (k) => all.filter((r) => statusOf(r) === k).length;
+  const open = (id) => { window.location.hash = schemaHash(id); };
+  const run = async (fn) => { setError(''); try { await fn(); } catch (e) { setError(e.message); } };
+
+  const duplicate = (r) => run(async () => { setMenu(null); await api.createSchema(await copyBody(r, `${r.name} (copy)`)); setToast('Duplicated. The copy is a separate schema.'); reload(); });
+  const actions = (r) => [
+    { label: 'Open', run: () => open(r.schema_id) },
+    { label: 'Rename', run: () => { try { window.sessionStorage.setItem(RENAME_KEY, r.schema_id); } catch (e) { /* ok */ } open(r.schema_id); } },
+    { label: 'Version history', off: !r.version, run: () => { setMenu(null); setDialog({ kind: 'history', row: r }); } },
+    { label: 'Duplicate', off: !r.fields, run: () => duplicate(r) },
+    { label: 'Export as .xlsx template', off: !r.fields || !r.version, href: r.version ? api.schemaExportUrl(r.schema_id, r.version) : null,
+      run: () => { setMenu(null); setToast(`Exported “${r.name}.xlsx” in the standard format, with a “Descriptions” sheet.`); } },
+    { label: 'Delete schema', danger: true, sep: true, run: () => { setMenu(null); setDialog({ kind: 'delete', row: r }); } },
+  ];
 
   return (
     <div>
-      <AppHeader section="schema" onSettings={() => setSettingsOpen(true)} />
-      <main className="papers schema-page">
-        <div className="papers-head">
-          <div>
-            <h1>Schemas</h1>
-            <p className="lead">What the model must look for in the papers: groups of fields, each with a name and, if you want,
-              a description, type, unit or allowed values. A schema does not depend on any results or papers.</p>
+      <AppHeader section="schema" />
+      <main className="c-page wide">
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px 16px', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 360px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <h1 className="c-h1" style={{ lineHeight: 1.25 }}>Schemas</h1>
+            <p className="c-lead">Each schema lists the data you expect to find in the papers. Open one to edit its groups and fields.</p>
           </div>
-          <button type="button" className="btn big primary" onClick={() => setDialog({ kind: 'new' })}>+ New schema</button>
+          <button type="button" className="st-save" onClick={() => setDialog({ kind: 'new' })}>+ New schema</button>
         </div>
-        {error && <div className="banner error" role="alert">{error}</div>}
-        {rows && (
-          <section className="table-card" aria-label="Schemas">
-            <div className="toolbar">
-              <label className="sr-only" htmlFor="sq">Search schemas</label>
-              <input id="sq" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or description" />
+        {toast && <div role="status" className="st-toast"><span style={{ flex: '1 1 0' }}>{toast}</span><button type="button" className="st-toast-x" onClick={() => setToast('')}>Close</button></div>}
+        {error && <div className="c-error" role="alert">{error}</div>}
+        <section aria-label="Schemas" className="c-card" style={{ minHeight: 400, overflow: 'visible' }}>
+          <div className="c-toolbar">
+            <label htmlFor="lq" className="sr-only">Search schemas</label>
+            <input id="lq" type="search" className="c-search" style={{ flex: '1 1 200px' }} value={lq} onChange={(e) => setLq(e.target.value)} placeholder="Search by schema name" />
+            <div role="group" aria-label="Show" className="c-chips">
+              {[['all', `All ${all.length}`], ['draft', `Draft ${count('Draft')}`], ['saved', `Saved ${count('Saved')}`]].map(([k, label]) => (
+                <button key={k} type="button" className="c-chip" aria-pressed={filter === k} onClick={() => setFilter(k)}>{label}</button>
+              ))}
             </div>
-            <div className="scroll-x">
-              <table className="grid schema-grid">
-                <thead><tr>
-                  <th scope="col">Name</th><th scope="col">Fields</th><th scope="col">Version</th>
-                  <th scope="col">Modified</th><th scope="col">Modified by</th><th scope="col">Status</th><th scope="col"><span className="sr-only">Actions</span></th>
-                </tr></thead>
-                <tbody>
-                  {shown.map((r) => (
-                    <tr key={r.schema_id}>
-                      <td className="title-cell">
-                        <a href={schemaHash(r.schema_id)}>{r.name}</a>
-                        {r.description && <span className="muted schema-desc">{r.description}</span>}
-                        {r.problems.length > 0 && <span className="chip st-rejected" style={{ marginLeft: 8 }} title={r.problems.join('\n')}>Unreadable file</span>}
-                      </td>
-                      <td className="mono">{r.fields}<span className="muted"> in {r.groups}</span></td>
-                      <td className="mono">{r.version ? `v${r.version}` : '—'}</td>
-                      <td>{shortDate(r.modified_at)}</td>
-                      <td>{r.modified_by}</td>
-                      <td><span className={`chip ${STATUS[r.status][1]}`}>{STATUS[r.status][0]}</span></td>
-                      <td style={{ position: 'relative', width: 52 }}>
-                        <button type="button" className="icon-btn" style={{ width: 44, height: 44, border: 0, background: 'transparent' }}
-                          aria-haspopup="menu" aria-expanded={menu === r.schema_id} aria-label={`More actions for ${r.name}`}
-                          onClick={() => setMenu(menu === r.schema_id ? null : r.schema_id)}>⋯</button>
-                        {menu === r.schema_id && (
-                          <div className="menu" role="menu" aria-label={`Actions for ${r.name}`} style={{ right: 0, top: 46 }}>
-                            <a role="menuitem" className="menu-link" href={schemaHash(r.schema_id)}>Open</a>
-                            <button type="button" role="menuitem" onClick={() => { setMenu(null); setDialog({ kind: 'rename', row: r }); }}>Rename</button>
-                            <button type="button" role="menuitem" disabled={!r.version}
-                              onClick={() => { setMenu(null); setDialog({ kind: 'history', row: r }); }}>Version history</button>
-                            <button type="button" role="menuitem" disabled={!r.version}
-                              onClick={() => { setMenu(null); setDialog({ kind: 'new', copyOf: r }); }}>Duplicate</button>
-                            {r.version > 0 && <a role="menuitem" className="menu-link" href={api.schemaExportUrl(r.schema_id, r.version)}
-                              onClick={() => setMenu(null)}>Export as .xlsx template</a>}
-                            <button type="button" role="menuitem" className="danger-text" onClick={() => { setMenu(null); setDialog({ kind: 'delete', row: r }); }}>Delete schema</button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                  {shown.length === 0 && <tr><td colSpan={7} className="empty">{rows.length ? 'No schemas match this search.' : 'No schemas yet. Create one with + New schema.'}</td></tr>}
-                </tbody>
-              </table>
+          </div>
+          <div className="c-scroll"><div style={{ minWidth: 900 }}>
+            <div className="c-grid-head" style={{ gridTemplateColumns: COLS, padding: '10px 12px 10px 20px' }}>
+              <span>Schema</span><span>Fields</span><span>Version</span><span>Modified</span><span>Modified by</span><span>Status</span><span />
             </div>
-          </section>
-        )}
-        {!rows && !error && <p className="muted">Loading schemas…</p>}
+            {!rows && !error && <div className="c-empty">Loading schemas…</div>}
+            {shown.map((r) => {
+              const st = statusOf(r);
+              return (
+                <div key={r.schema_id} role="row" aria-label={r.name} className="c-row sc-row" style={{ gridTemplateColumns: COLS, padding: '0 12px 0 20px', minHeight: 56, borderBottomColor: '#E3E8EF' }}>
+                  <button type="button" className="sc-rowbtn" onClick={() => open(r.schema_id)}>
+                    <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                      <span className="c-ell" style={{ fontWeight: 500, color: '#0B3D91' }}>{r.name}</span>
+                      <span className="c-ell" style={{ fontSize: 12, color: '#4A5568' }} title={r.problems.length ? r.problems.join('\n') : undefined}>{r.description.trim() || 'No description'}</span>
+                    </span>
+                    <span className="c-mono">{r.fields}</span>
+                    <span className="c-mono">{r.version ? `v${r.version}` : '—'}</span>
+                    <span style={{ color: '#3B4557' }}>{r.version ? when(r.modified_at) : '—'}</span>
+                    <span className="c-ell" style={{ color: '#3B4557' }}>{r.version ? r.modified_by : '—'}</span>
+                    <span className="c-status" style={{ color: '#101828' }}><span aria-hidden="true" className="c-dot" style={{ background: DOT[st] }} />{st}</span>
+                  </button>
+                  <div style={{ position: 'relative', gridColumn: 7 }}>
+                    <button type="button" className="c-dots" style={{ width: 44, height: 44 }} aria-haspopup="menu" aria-expanded={menu === r.schema_id} aria-label={`Actions for ${r.name}`}
+                      onClick={() => setMenu(menu === r.schema_id ? null : r.schema_id)}>⋯</button>
+                    {menu === r.schema_id && <>
+                      <div className="c-menu-veil" onClick={() => setMenu(null)} />
+                      <div role="menu" aria-label="Schema actions" className="c-menu" style={{ right: 0, top: '100%' }}>
+                        {actions(r).map((a) => (
+                          <React.Fragment key={a.label}>
+                            {a.sep && <div className="c-msep" />}
+                            {a.href && !a.off
+                              ? <a role="menuitem" className="c-mitem" style={{ minHeight: 44, padding: '0 14px' }} href={a.href} onClick={a.run}>{a.label}</a>
+                              : <button type="button" role="menuitem" className={`c-mitem${a.danger ? ' danger' : ''}`} style={{ minHeight: 44, padding: '0 14px' }} disabled={!!a.off} onClick={a.run}>{a.label}</button>}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </>}
+                  </div>
+                </div>
+              );
+            })}
+            {rows && shown.length === 0 && <div className="c-empty">{all.length ? 'No schemas match this search.' : 'No schemas yet. Create one with New schema.'}</div>}
+          </div></div>
+        </section>
       </main>
-      {dialog && dialog.kind === 'new' && <NewSchemaDialog rows={rows || []} copyOf={dialog.copyOf} onCancel={() => setDialog(null)}
-        onImport={() => setDialog({ kind: 'import' })} />}
+
+      {dialog && dialog.kind === 'new' && (
+        <SchemaDialog title="New schema" onClose={() => setDialog(null)}>
+          <div style={{ padding: '0 24px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <button type="button" className="sc-opt" onClick={() => run(async () => { const made = await api.createSchema({ name: 'Untitled schema' }); open(made.schema_id); })}>
+              <b>Start blank</b><span style={{ color: '#4A5568' }}>Add groups and fields yourself.</span></button>
+            <button type="button" className="sc-opt" disabled={!all.length} onClick={() => setDialog({ kind: 'copy', from: all[0] && all[0].schema_id })}>
+              <b>Copy a schema</b><span style={{ color: '#4A5568' }}>Start from one you already made.</span></button>
+            <button type="button" className="sc-opt" onClick={() => setDialog({ kind: 'import' })}>
+              <b>Import a spreadsheet</b><span style={{ color: '#4A5568' }}>Read an .xlsx that follows the standard format.</span></button>
+          </div>
+        </SchemaDialog>
+      )}
+      {dialog && dialog.kind === 'copy' && (() => {
+        const src = all.find((r) => r.schema_id === dialog.from);
+        return (
+          <SchemaDialog title="Copy a schema" onClose={() => setDialog(null)}
+            foot={<>
+              <button type="button" className="st-plain" style={{ height: 44, padding: '0 16px' }} onClick={() => setDialog(null)}>Cancel</button>
+              <button type="button" className="st-save" disabled={!src} onClick={() => run(async () => {
+                const made = await api.createSchema(await copyBody(src, `${src.name} (copy)`)); open(made.schema_id);
+              })}>Copy {src ? src.fields : 0} fields</button>
+            </>}>
+            <div style={{ padding: '0 24px 16px', display: 'flex', flexDirection: 'column', gap: 8, overflowY: 'auto' }}>
+              <div role="radiogroup" aria-label="Schema to copy" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {all.map((r) => {
+                  const on = r.schema_id === dialog.from;
+                  return (
+                    <button key={r.schema_id} type="button" role="radio" aria-checked={on} className="sc-radio" onClick={() => setDialog({ ...dialog, from: r.schema_id })}
+                      style={on ? { border: '1px solid #0B3D91', background: '#F2F6FC' } : { border: '1px solid #C6CEDB', background: '#FFFFFF' }}>
+                      <span aria-hidden="true" style={{ flex: 'none', width: 10, height: 10, borderRadius: '50%', background: on ? '#0B3D91' : '#C6CEDB' }} />
+                      <span style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column' }}><b>{r.name}</b>
+                        <span style={{ fontSize: 13, color: '#4A5568' }}>{r.fields} fields in {r.groups} groups · {r.version ? `v${r.version}` : 'not saved'}</span></span>
+                    </button>
+                  );
+                })}
+              </div>
+              <span style={{ fontSize: 13, color: '#4A5568' }}>The copy is separate: changing it never changes the original.</span>
+            </div>
+          </SchemaDialog>
+        );
+      })()}
       {dialog && dialog.kind === 'import' && <ImportDialog mode="new" onCancel={() => setDialog(null)}
-        onCreate={async (name, content) => { const made = await api.createSchema({ name, content }); window.location.hash = schemaHash(made.schema_id); }} />}
-      {dialog && dialog.kind === 'rename' && <RenameDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
-      {dialog && dialog.kind === 'delete' && <DeleteDialog row={dialog.row} onCancel={() => setDialog(null)} onDone={() => { setDialog(null); reload(); }} />}
+        onCreate={async (name, content) => { const made = await api.createSchema({ name, content }); open(made.schema_id); }} />}
+      {dialog && dialog.kind === 'delete' && (
+        <SchemaDialog title="Delete schema" onClose={() => setDialog(null)}
+          foot={<>
+            <button type="button" className="st-plain" style={{ height: 44, padding: '0 16px' }} onClick={() => setDialog(null)}>Cancel</button>
+            <button type="button" className="st-save" style={{ background: '#B42318', borderColor: '#B42318' }}
+              onClick={() => run(async () => { await api.deleteSchema(dialog.row.schema_id); setDialog(null); reload(); })}>Delete schema</button>
+          </>}>
+          <div style={{ padding: '0 24px 16px' }}><span>Delete “{dialog.row.name}”? Its saved versions go too. This cannot be undone.</span></div>
+        </SchemaDialog>
+      )}
       {dialog && dialog.kind === 'history' && <SchemaHistory schema={dialog.row} hasDraft={dialog.row.status === 'draft'}
         onClose={() => setDialog(null)} onRestored={reload} />}
-      {settingsOpen && <SettingsDialog onClose={() => setSettingsOpen(false)} onLoaded={() => {}} />}
     </div>
   );
 }
 
-const nameMessage = (e) => (e.code === 'rules_violation' ? 'Type a name of 120 characters at most.' : e.message);
-
-function NewSchemaDialog({ rows, copyOf, onCancel, onImport }) {
-  const saved = rows.filter((r) => r.version > 0);
-  const [name, setName] = useState(copyOf ? `${copyOf.name} (copy)` : '');
-  const [start, setStart] = useState(copyOf ? 'copy' : 'blank');
-  const [from, setFrom] = useState(copyOf ? copyOf.schema_id : (saved[0] ? saved[0].schema_id : ''));
-  const [error, setError] = useState('');
-  const ok = async () => {
-    if (!name.trim()) { setError('Type a name.'); return; }
-    const source = saved.find((r) => r.schema_id === from);
-    try {
-      const made = await api.createSchema(start === 'copy' && source
-        ? { name, from: { schema_id: source.schema_id, version: source.version } } : { name });
-      window.location.hash = schemaHash(made.schema_id);
-    } catch (e) { setError(nameMessage(e)); }
-  };
+// The dialog frame of the Schema board: title, ×, body and an optional footer.
+export function SchemaDialog({ title, width = 560, onClose, children, foot }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
   return (
-    <Dialog id="ns-t" title={copyOf ? 'Duplicate schema' : 'New schema'} okLabel="Create schema" onCancel={onCancel} onOk={ok} error={error}
-      intro="It opens as a draft. Nothing is a version until you save one.">
-      <label className="field">Name
-        <input value={name} onChange={(e) => { setName(e.target.value); setError(''); }} autoFocus maxLength={120} />
-      </label>
-      {!copyOf && (
-        <div role="radiogroup" aria-label="Start from" className="seg" style={{ marginTop: 12 }}>
-          <button type="button" role="radio" aria-checked={start === 'blank'} aria-pressed={start === 'blank'} onClick={() => setStart('blank')}>Blank</button>
-          <button type="button" role="radio" aria-checked={start === 'copy'} aria-pressed={start === 'copy'} disabled={!saved.length}
-            onClick={() => setStart('copy')}>Copy a saved schema</button>
+    <div className="c-veil" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div role="dialog" aria-modal="true" aria-labelledby="dg-t" className="c-dialog" style={{ width, maxHeight: 860 }}>
+        <div className="c-dialog-head">
+          <h2 id="dg-t">{title}</h2>
+          <button type="button" className="c-x" style={{ width: 44, height: 44, margin: '-6px -10px 0 0' }} aria-label="Close" onClick={onClose}>×</button>
         </div>
-      )}
-      {!copyOf && (
-        <p className="muted" style={{ margin: '12px 0 0' }}>Or <button type="button" className="btn link" style={{ padding: 0, height: 'auto' }} onClick={onImport}>import an .xlsx template</button>
-          {' '}(<a href={api.schemaTemplateUrl()}>download the empty template</a>).</p>
-      )}
-      {start === 'copy' && !copyOf && (
-        <label className="field" style={{ marginTop: 12 }}>Schema to copy (its latest version)
-          <select value={from} onChange={(e) => setFrom(e.target.value)}>
-            {saved.map((r) => <option key={r.schema_id} value={r.schema_id}>{r.name} · v{r.version}</option>)}
-          </select>
-        </label>
-      )}
-    </Dialog>
-  );
-}
-
-function RenameDialog({ row, onCancel, onDone }) {
-  const [name, setName] = useState(row.name);
-  const [error, setError] = useState('');
-  const ok = () => api.renameSchema(row.schema_id, name).then(onDone).catch((e) => setError(nameMessage(e)));
-  return (
-    <Dialog id="rn-t" title="Rename schema" okLabel="Rename" onCancel={onCancel} onOk={ok} error={error}
-      intro="Only the name changes. No version is made and nothing else is touched.">
-      <label className="field">Name<input value={name} onChange={(e) => { setName(e.target.value); setError(''); }} autoFocus maxLength={120} /></label>
-    </Dialog>
-  );
-}
-
-function DeleteDialog({ row, onCancel, onDone }) {
-  const [error, setError] = useState('');
-  const ok = () => api.deleteSchema(row.schema_id).then(onDone).catch((e) => setError(e.message));
-  return (
-    <Dialog id="dl-t" title={`Delete “${row.name}”?`} okLabel="Delete schema" danger onCancel={onCancel} onOk={ok} error={error}
-      intro="It leaves the list. Its folder, with every version and the draft, is moved to the trash folder of the data folder; nothing is erased." />
+        {children}
+        {foot && <div style={{ padding: '12px 24px', borderTop: '1px solid #E3E8EF', display: 'flex', gap: 10, justifyContent: 'flex-end', flexWrap: 'wrap' }}>{foot}</div>}
+      </div>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-/* Tokens from the canvas design (Extraction Review Tool). No web fonts: the tool makes no outbound requests. */
+/* Tokens from the canvas design (Extraction Review Tool). Fonts are bundled (ADR-016): no outbound requests. */
 :root {
   --navy: #0B3D91; --navy-dark: #071B3F; --ink: #101828; --ink-2: #3B4557; --ink-3: #4A5568;
   --line: #D5DBE5; --line-2: #C6CEDB; --line-3: #E3E8EF; --line-4: #EEF1F5;

@@ -41,6 +41,7 @@ async function request(path, { method = 'GET', body, headers = {}, keepalive = f
 
 export const api = {
   papers: async () => (await request(`${P()}/papers`)).data,
+  papersOf: async (pair) => (await request(`/sources/${encodeURIComponent(pair)}/papers`)).data,
   paper: async (id) => (await request(`${P()}/papers/${encodeURIComponent(id)}`)).data,
   settings: async () => (await request('/settings')).data,
   setActiveSource: async (id) => (await request('/active-source', { method: 'PUT', body: { source: id } })).data,

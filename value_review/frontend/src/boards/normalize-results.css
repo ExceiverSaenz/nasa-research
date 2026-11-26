@@ -1,0 +1,7 @@
+body{margin:0;background:#EEF1F5}
+a{color:#0B3D91}a:hover{color:#071B3F}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #0B3D91;outline-offset:2px;box-shadow:0 0 0 5px #FFFFFF}
+.vrow:hover{background:#F2F6FC}
+.fitem:hover{background:#F2F6FC}
+.tab:hover{background:rgba(255,255,255,0.08)}

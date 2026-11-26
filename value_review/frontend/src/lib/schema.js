@@ -301,3 +301,33 @@ export function moveFieldBefore(content, fieldId, beforeId) {
   const sameGroupEarlier = at && at.group.group_id === target.group.group_id && at.fi < target.fi;
   return moveFieldTo(content, fieldId, target.group.group_id, sameGroupEarlier ? target.fi - 1 : target.fi);
 }
+
+// The comparison of the canvas version history: one row per field, matched by id (a rename is one change).
+// {kind: 'Added' | 'Removed' | 'Changed', name, detail}, added first, then removed, then changed, in schema order.
+const TYPE_TEXT = { number: 'Number', category: 'Category', text: 'Text', calculated: 'Calculated' };
+export function compareFields(older, newer) {
+  const index = (c) => {
+    const m = new Map();
+    for (const g of c.groups) for (const f of g.fields) m.set(f.field_id, { f, g });
+    return m;
+  };
+  const a = index(older), b = index(newer);
+  const rows = [];
+  for (const [id, { f, g }] of b) if (!a.has(id)) rows.push({ kind: 'Added', name: f.name, detail: `${g.name} · ${TYPE_TEXT[f.type]}` });
+  for (const [id, { f, g }] of a) if (!b.has(id)) rows.push({ kind: 'Removed', name: f.name, detail: `${g.name} · ${TYPE_TEXT[f.type]}` });
+  for (const [id, { f, g }] of b) {
+    const o = a.get(id);
+    if (!o) continue;
+    const ch = [];
+    if (o.f.name !== f.name) ch.push(`name ${o.f.name} → ${f.name}`);
+    if (o.g.name !== g.name) ch.push(`group ${o.g.name} → ${g.name}`);
+    if (o.f.type !== f.type) ch.push(`type ${TYPE_TEXT[o.f.type]} → ${TYPE_TEXT[f.type]}`);
+    if ((o.f.unit || '') !== (f.unit || '')) ch.push(`unit ${o.f.unit || 'none'} → ${f.unit || 'none'}`);
+    if ((o.f.description || '') !== (f.description || '')) ch.push('description changed');
+    if (o.f.allowed.join('|') !== f.allowed.join('|')) ch.push(`allowed values ${o.f.allowed.length} → ${f.allowed.length}`);
+    if (!!o.f.multiple !== !!f.multiple) ch.push('category options changed');
+    if (o.f.formula !== f.formula || o.f.inputs.join('|') !== f.inputs.join('|')) ch.push('formula changed');
+    if (ch.length) rows.push({ kind: 'Changed', name: f.name, detail: ch.join(' · ') });
+  }
+  return rows;
+}

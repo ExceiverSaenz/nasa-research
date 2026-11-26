@@ -1,0 +1,199 @@
+<div style="position: relative; min-height: 1180px; background: #EEF1F5; color: #101828; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45">
+
+<div style="background: #071B3F; color: #FFFFFF; display: flex; align-items: center; gap: 16px; padding: 0 32px; min-height: 60px; flex-wrap: wrap">
+<a href="Main.dc.html" aria-label="Back to papers" style="width: 34px; height: 34px; border-radius: 50%; background: #0B3D91; border: 2px solid #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #FFFFFF; text-decoration: none">TD</a>
+<div style="font-weight: 600; letter-spacing: 0.08em; font-size: 14px">TENSILE DATA REVIEW</div>
+<nav aria-label="Sections" style="display: flex; align-self: stretch; margin-left: 16px">
+<a href="Schema.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Schema</a>
+<a href="Extraction.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Extraction</a>
+<a href="Main.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Review</a>
+<a href="Normalize-Rules.dc.html" aria-current="page" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #FFFFFF; text-decoration: none; font-weight: 600; border-bottom: 3px solid #FFFFFF">Normalize</a>
+</nav>
+<div style="flex: 1 1 0"></div>
+<a href="Settings.dc.html" aria-label="Settings" title="Settings" class="tab" style="display: flex; align-items: center; align-self: stretch; width: 44px; justify-content: center; padding: 0; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: #E6EEFB; color: #071B3F; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px">ER</span>
+<span>Expert reviewer</span>
+</div>
+</div>
+
+<div style="max-width: 1376px; margin: 0 auto; padding: 32px 32px 48px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: #4A5568">
+<a href="Normalize-Rules.dc.html" style="display: inline-flex; align-items: center; min-height: 32px; color: #0B3D91; text-decoration: underline">Normalize</a>
+<span aria-hidden="true">›</span>
+<span aria-current="page">{{runName}}</span>
+</nav>
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{runName}}</h1>
+<p style="margin: 0; color: #4A5568; max-width: 900px">{{runSummary}}</p>
+</div>
+
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<nav aria-label="Normalize steps" style="display: flex; gap: 4px; background: #E3E8EF; padding: 4px; border-radius: 8px">
+<a href="Normalize-Rules.dc.html" onClick="{{goRules}}" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; color: #3B4557; text-decoration: none">Rules</a>
+<a href="Normalize-Validate.dc.html" onClick="{{goValidate}}" aria-current="page" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; background: #FFFFFF; color: #071B3F; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(7,27,63,0.12)">Validate<span style="margin-left: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #E6EEFB; border-radius: 10px; padding: 1px 7px; color: #071B3F">{{pendingAll}}</span></a>
+<a href="Normalize-Results.dc.html" onClick="{{goResults}}" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; color: #3B4557; text-decoration: none">Results</a>
+</nav>
+<div style="flex: 1 1 0"></div>
+<span style="font-size: 13px; color: #4A5568">Keys: F accept · D unsure · S reject · E correct · J / K next, previous · {{autosaveText}}</span>
+</div>
+
+<sc-if value="{{emptyRun}}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; max-width: 760px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Nothing to normalize yet</h2>
+<span style="color: #3B4557">Normalization starts from reviewed values. No paper of this extraction has a submitted version, so there is nothing to validate.</span>
+<div><a href="Main.dc.html" onClick="{{goReview}}" style="display: inline-flex; align-items: center; height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Go to Review</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasData}}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 6px; background: #DDF3E4; color: #0F5A2C; font-weight: 600">
+<span style="flex: 1 1 0">{{toast}}</span>
+<sc-if value="{{canUndo}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{undo}}" style="height: 36px; padding: 0 14px; border: 1px solid #0F5A2C; border-radius: 6px; background: #FFFFFF; color: #0F5A2C; font: inherit; font-size: 14px; font-weight: 600">Undo</button></sc-if>
+</div>
+</sc-if>
+
+<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap">
+
+<nav aria-label="Features to validate" style="flex: 1 1 250px; max-width: 300px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
+<div style="padding: 12px 16px; border-bottom: 1px solid #E3E8EF; font-weight: 600">Features with results</div>
+<sc-for list="{{features}}" as="f" hint-placeholder-count="6">
+<a href="{{f.href}}" aria-current="{{f.current}}" class="fitem" style="display: flex; flex-direction: column; gap: 6px; padding: 10px 16px; border-bottom: 1px solid #EEF1F5; text-decoration: none; color: #101828; {{f.look}}">
+<span style="display: flex; align-items: baseline; gap: 8px"><span style="flex: 1 1 0; font-weight: {{f.weight}}">{{f.label}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568">{{f.unit}}</span></span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="flex: 1 1 0; height: 4px; border-radius: 2px; background: #E3E8EF; overflow: hidden"><span style="display: block; height: 4px; background: {{f.bar}}; width: {{f.pct}}%"></span></span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568">{{f.done}}/{{f.total}}</span></span>
+<span style="font-size: 12px; color: {{f.noteColor}}">{{f.note}}</span>
+</a>
+</sc-for>
+<div style="padding: 12px 16px; font-size: 13px; color: #4A5568">Features with a ready rule that has not run yet: Ultimate tensile strength, Gauge length, Width, Irradiation temperature, Treatment category. Run them from Rules.</div>
+</nav>
+
+<section aria-labelledby="ft" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
+<div style="padding: 16px 20px 12px; border-bottom: 1px solid #E3E8EF; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
+<h2 id="ft" style="margin: 0; font-size: 22px; font-weight: 600; color: #071B3F">Yield strength</h2>
+<span style="font-family: 'IBM Plex Mono', monospace; color: #3B4557">→ MPa</span>
+<span style="font-size: 13px; color: #4A5568">rule v2 · Sonnet · System prompt v2 · 64 reviewed values from papers 1, 2, 5 and 9</span>
+<a href="Normalize-Rules.dc.html" onClick="{{goRules}}" style="margin-left: auto; font-size: 14px">Edit rule</a>
+</div>
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: 1 1 0; height: 6px; border-radius: 3px; background: #E3E8EF; overflow: hidden"><span style="display: block; height: 6px; background: #0B3D91; width: {{featPct}}%"></span></span>
+<span style="font-size: 13px; color: #3B4557">{{featDone}} of 64 validated</span>
+</div>
+<div role="group" aria-label="Show" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{c.look}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="overflow-x: auto">
+<div style="min-width: 600px">
+<div style="display: grid; grid-template-columns: 52px minmax(120px, 1fr) minmax(120px, 1fr) 18px minmax(140px, 1.1fr) 104px; gap: 12px; padding: 8px 20px; border-bottom: 1px solid #E3E8EF; font-size: 13px; color: #3B4557; font-weight: 600">
+<span>Paper</span><span>Record</span><span>Reviewed value</span><span></span><span>Normalized</span><span>Status</span>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: #F7F9FC; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<span style="display: flex; flex-direction: column; flex: 1 1 220px; min-width: 0">
+<span style="font-weight: 600">{{g.name}} <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 12px; color: #4A5568">· {{g.total}} values · {{g.done}} validated</span></span>
+<span style="font-size: 13px; color: #4A5568">Rule: {{g.action}}</span>
+</span>
+<sc-if value="{{g.canBulk}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{g.bulk}}" style="height: 36px; padding: 0 12px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600">Accept {{g.pending}} pending</button>
+</sc-if>
+</div>
+<sc-for list="{{g.rows}}" as="v" hint-placeholder-count="3">
+<button type="button" onClick="{{v.pick}}" aria-pressed="{{v.selStr}}" class="vrow" style="width: 100%; display: grid; grid-template-columns: 52px minmax(120px, 1fr) minmax(120px, 1fr) 18px minmax(140px, 1.1fr) 104px; gap: 12px; padding: 6px 20px; min-height: 44px; border: 0; border-bottom: 1px solid #EEF1F5; align-items: center; text-align: left; font: inherit; font-size: 14px; color: #101828; {{v.rowLook}}">
+<span style="font-family: 'IBM Plex Mono', monospace; color: #4A5568">{{v.paper}}</span>
+<span style="color: #3B4557; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{v.record}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace">{{v.raw}}</span>
+<span aria-hidden="true" style="color: #8A94A6">→</span>
+<span style="display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; color: #071B3F">{{v.out}}<sc-if value="{{v.flag}}" hint-placeholder-val="{{ false }}"><span title="The model flagged this value" style="font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600; color: #6B4A00; background: #FFF3D6; border-radius: 4px; padding: 0 6px">check</span></sc-if></span>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #3B4557"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{v.dot}}"></span>{{v.status}}</span>
+</button>
+</sc-for>
+<sc-if value="{{g.hasMore}}" hint-placeholder-val="{{ false }}"><div style="padding: 8px 20px; border-bottom: 1px solid #EEF1F5; font-size: 13px; color: #4A5568">{{g.more}}</div></sc-if>
+</sc-for>
+<sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><div style="padding: 24px 20px; color: #4A5568">No values in this view.</div></sc-if>
+</div>
+</div>
+<p style="margin: 0; padding: 12px 20px; font-size: 13px; color: #4A5568; border-top: 1px solid #E3E8EF">Sample data for this prototype. Each group shows a few of its values.</p>
+</section>
+
+<aside aria-labelledby="dt" style="flex: 1 1 340px; max-width: 400px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; display: flex; flex-direction: column">
+<div style="padding: 16px 20px 12px; border-bottom: 1px solid #E3E8EF; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #4A5568; font-weight: 600">Paper {{cur.paper}} · {{cur.group}}</span>
+<h2 id="dt" style="margin: 0; font-size: 18px; font-weight: 600; color: #071B3F">{{cur.record}}</h2>
+<span style="font-size: 13px; color: #4A5568">{{cur.paperTitle}}</span>
+</div>
+
+<div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; font-weight: 600; color: #3B4557">Reviewed value</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #101828">{{cur.raw}}</span>
+<span style="font-size: 12px; color: #4A5568">From v2 of paper {{cur.paper}}, accepted in review. It is never changed here.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 600; color: #3B4557">Model's result</span>
+<sc-if value="{{notEditing}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{cur.fields}}" as="x" hint-placeholder-count="4">
+<div style="border: 1px solid #E3E8EF; border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; {{x.look}}">
+<span style="font-size: 12px; color: #4A5568">{{x.label}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; color: #071B3F">{{x.value}}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{editing}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #4A5568">Value<input value="{{draft}}" onInput="{{onDraft}}" style="height: 40px; box-sizing: border-box; border: 1px solid #0B3D91; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #101828"></label>
+<label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #4A5568">Unit<input value="MPa" readOnly style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4A5568; background: #F7F9FC"></label>
+</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end">
+<button type="button" onClick="{{cancelEdit}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>
+<button type="button" onClick="{{saveEdit}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Save correction</button>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; background: #F7F9FC; border: 1px solid #E3E8EF; border-radius: 6px; padding: 10px 12px">
+<span style="font-size: 13px; font-weight: 600; color: #3B4557">Model's note</span>
+<span>{{cur.note}}</span>
+<span style="font-size: 12px; color: #4A5568">Case: {{cur.group}} → {{cur.action}}</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B4557" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>
+<span style="flex: 1 1 0; font-size: 13px; color: #3B4557">Evidence: {{cur.evidence}}</span>
+<a href="Review.dc.html" style="font-size: 14px">Show on page</a>
+</div>
+
+<sc-if value="{{asking}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px; border: 1px solid #B42318; background: #FEF3F2; border-radius: 6px; padding: 10px 12px">
+<span style="font-weight: 600; color: #8A1C15">Why is the result wrong? (required)</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{reasons}}" as="r" hint-placeholder-count="4">
+<button type="button" onClick="{{r.pick}}" style="min-height: 36px; padding: 4px 10px; border: 1px solid #C6CEDB; border-radius: 18px; background: #FFFFFF; color: #101828; font: inherit; font-size: 13px; text-align: left">{{r.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 12px; color: #6B1A14">If the rule itself is wrong for this case, <a href="Normalize-Rules.dc.html" onClick="{{goRules}}">change the rule</a>: every value it normalized is then marked Outdated and normalized again.</span>
+</div>
+</sc-if>
+
+<div style="display: flex; gap: 8px; flex-wrap: wrap; border-top: 1px solid #E3E8EF; padding-top: 14px">
+<button type="button" onClick="{{reject}}" style="flex: 1 1 0; min-width: 76px; height: 44px; border: 1px solid #B42318; border-radius: 6px; background: #FFFFFF; color: #B42318; font: inherit; font-size: 14px; font-weight: 600">Reject <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; opacity: 0.8">S</span></button>
+<button type="button" onClick="{{unsure}}" style="flex: 1 1 0; min-width: 76px; height: 44px; border: 1px solid #B7791F; border-radius: 6px; background: #FFFFFF; color: #6B4A00; font: inherit; font-size: 14px; font-weight: 600">Unsure <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; opacity: 0.8">D</span></button>
+<button type="button" onClick="{{edit}}" style="flex: 1 1 0; min-width: 76px; height: 44px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px; font-weight: 600">Correct <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; opacity: 0.8">E</span></button>
+<button type="button" onClick="{{accept}}" style="flex: 1 1 0; min-width: 76px; height: 44px; border: 1px solid #17703A; border-radius: 6px; background: #17703A; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Accept <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; opacity: 0.8">F</span></button>
+</div>
+<span style="font-size: 12px; color: #4A5568">Current status: {{cur.status}}{{cur.reasonText}}{{cur.by}}</span>
+</div>
+</aside>
+
+</div>
+</sc-if>
+</div>
+</div>
