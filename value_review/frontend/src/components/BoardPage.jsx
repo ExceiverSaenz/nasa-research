@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AppHeader, { SampleBadge } from './AppHeader.jsx';
-import useProfile from './useProfile.js';
+import { useSettings } from './useProfile.js';
 import DcBoard from '../dc/DcBoard.jsx';
-import { readPrefs } from '../lib/prefs.js';
+import { profileOf } from '../lib/prefs.js';
 import extractionHtml from '../boards/extraction.html?raw';
 import extractionCss from '../boards/extraction.css?raw';
 import Extraction from '../boards/extraction.logic.js';
@@ -30,10 +30,10 @@ const BOARDS = {
 };
 
 // The boards read the canvas's own settings key (display name, autosave, CSV); it mirrors the app's settings.
-function mirrorSettings(display) {
-  const p = readPrefs();
+function mirrorSettings(display, s) {
+  const p = s || { autosave_seconds: 60, csv_delimiter: ',', csv_encoding: 'utf8bom' };
   try {
-    window.localStorage.setItem('tdr-settings', JSON.stringify({ display, autosave: String(p.autosave_seconds), delim: p.csv.delim, enc: p.csv.enc }));
+    window.localStorage.setItem('tdr-settings', JSON.stringify({ display, autosave: String(p.autosave_seconds), delim: p.csv_delimiter, enc: p.csv_encoding }));
   } catch (e) { /* private window: the boards use their defaults */ }
 }
 
@@ -41,9 +41,10 @@ function mirrorSettings(display) {
 // board itself. The board starts again from its sample data each time the page opens.
 export default function BoardPage({ board, section }) {
   const b = BOARDS[board];
-  const profile = useProfile();
+  const settings = useSettings();
+  const profile = profileOf(settings);
   const [round, setRound] = useState(0);   // the section's own tab starts the board again, at its list (canvas)
-  mirrorSettings(profile.display);
+  mirrorSettings(profile.display, settings);
   const navigate = (hash) => {
     if (window.location.hash === hash || (hash === '#/normalize' && board === 'rules')) {
       try { window.localStorage.removeItem('tdr-norm'); } catch (e) { /* ok */ }
@@ -55,7 +56,7 @@ export default function BoardPage({ board, section }) {
     <div>
       <AppHeader section={section} onNavigate={navigate} />
       <div className="board-note"><SampleBadge /><span>This section has no backend yet: what you do here is not saved.</span></div>
-      <DcBoard key={`${board}-${round}`} template={b.html} css={b.css} Logic={b.Logic} links={LINKS} />
+      <DcBoard key={`${board}-${round}-${settings ? 'set' : 'default'}`} template={b.html} css={b.css} Logic={b.Logic} links={LINKS} />
     </div>
   );
 }

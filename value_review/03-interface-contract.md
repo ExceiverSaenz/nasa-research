@@ -37,7 +37,7 @@
 - `annotations/drafts/<n>.draft.json` · [`draft.schema.json`](schemas/draft.schema.json). At most one per paper; overwritten on each draft save; deleted on submit, restore and start over.
 - `annotations/versions/<n>/v<k>.json` · [`version.schema.json`](schemas/version.schema.json). Written once; deleted only by pruning (BR-03).
 - No index file: the paper list and the current version are computed from the version files on each request (at most 20 small files per paper). The **current version** is the newest readable version file; a **new version number** is one past every `v<k>.json` present, readable or not, so numbers are never reused (BR-03).
-- `annotations/settings.json` · `{reviewer_name, keep_versions, autosave_minutes, sources, active_source}`. Settings saved before folder pairs existed hold `run_dir`/`pdf_dir`; they are read as the `default` pair.
+- `annotations/settings.json` · `{reviewer_name, keep_versions, sources, active_source}` and the fields of OP-T01 ([42-settings-interface-contract.md](42-settings-interface-contract.md)); older files hold `autosave_minutes`. Settings saved before folder pairs existed hold `run_dir`/`pdf_dir`; they are read as the `default` pair.
 - **Per pair** · The pair `default` uses the data folder's own `originals/`, `annotations/drafts/`, `annotations/versions/` and `cache/` (the paths above); any other pair uses the same layout under `sources/<id>/`. Removing a pair from Settings never deletes its folder.
 
 ## OP-01 · List papers
@@ -84,7 +84,7 @@
 - **Postcondition** · The draft file holds exactly this state, the trigger, `saved_at` and `ui` when sent; it replaces any previous draft. No version is created (BR-02). A failed submit leaves the draft as it was.
 - **Errors** · 400 `invalid_request` (body, schema, unknown `trigger` or `ui` key); 404 `paper_not_found`; 409 `version_conflict` with `details.current` when a newer version exists (the client offers to reload); 422 `rules_violation` (ids, boxes; not BR-04); 422 `source_changed`. Nothing is written on error.
 - **Retries** · Repeating the same PUT gives the same file content (except `saved_at`).
-- **Client behavior (AC-09, AC-10)** · The client saves with `manual` (Save draft, or Save draft and leave), `auto` (every `autosave_minutes` while the working copy differs from the last saved draft or version) and `pagehide` (`fetch` with `keepalive`). On open, a draft whose `base_version` equals the version is offered (Continue / Discard); a stale one can only be discarded. Leaving the review with unsaved changes asks Stay / Leave without saving / Save draft and leave; closing the tab triggers the browser's own warning.
+- **Client behavior (AC-09, AC-10)** · The client saves with `manual` (Save draft, or Save draft and leave), `auto` (every `autosave_seconds`, unless 0, while the working copy differs from the last saved draft or version) and `pagehide` (`fetch` with `keepalive`). On open, a draft whose `base_version` equals the version is offered (Continue / Discard); a stale one can only be discarded. Leaving the review with unsaved changes asks Stay / Leave without saving / Save draft and leave; closing the tab triggers the browser's own warning.
 
 ## OP-05 · Submit a version
 
@@ -150,14 +150,14 @@
 
 | Input | Type | Required | Validation or default |
 |---|---|---|---|
-| `reviewer_name` | string 1–80 | Yes | default `"Expert reviewer"` |
-| `keep_versions` | integer | Yes | 1–100, default 20; lowering it prunes on the next version write, not immediately |
-| `autosave_minutes` | integer | Yes | 1–60, default 5 |
+| `reviewer_name` | string 1–80 | No | default `"Expert reviewer"`. Left out = unchanged |
+| `keep_versions` | integer | No | 1–200, default 20; lowering it prunes on the next version write, not immediately |
+| The fields of OP-T01 | | No | [42-settings-interface-contract.md](42-settings-interface-contract.md) (2026-11-26): username, initials, `autosave_seconds` (replaces `autosave_minutes`), CSV, limits, extraction |
 | `sources` | list of 1–50 `{id?, name, run_dir, pdf_dir}` | No | The folder pairs. Left out = unchanged. `id` names an existing pair (unknown or repeated → 400); a pair without `id` is new and gets an id made from its name (lowercase, `-`), never one in use or with a folder under `sources/`. `name` 1–80, unique ignoring case. `run_dir`: the LLM results, must exist and hold at least one `<paper>-pdf_with_feature_guide.json`; `pdf_dir`: must exist and hold at least one `.pdf`. Folders are checked only for new pairs and changed folders. Default: one pair `default`, named after the results folder, with the source root's `llm_baseline/results/gpt-6.1-sol-low-pdf-only` and `papers/Tensile_Properties_of_Sub-sized_Specimens_papers` |
 | `active_source` | pair id | No | The pair Papers shows. Left out, or not in `sources` = unchanged, else the first pair |
 
 - Folder strings are cleaned (surrounding quotes and spaces removed, `~` expanded) before they are checked and stored.
-- **Output** · `200` the stored settings (`GET` always returns all five keys).
+- **Output** · `200` the stored settings (`GET` always returns every key).
 - **Errors** · 400 `invalid_request` (types, ranges, unknown keys or ids); 422 `invalid_folder` with `details.fields` giving a message per field, keyed `sources.<i>.name|run_dir|pdf_dir`, or `sources` when the list is empty. Nothing is saved on error.
 - **Effect** · Source checks (BR-09), page images and ingest use the stored folders from the next request on. The client loads the papers of new pairs and changed folders right after saving them (OP-12).
 - **Active pair** · `PUT /active-source {"source": id}` → `200` the settings; 404 `source_not_found`. Papers' selector (shown when there are two or more pairs) uses it.
@@ -178,7 +178,7 @@
 
 - Routes: `#/` Papers of the active pair; `#/source/<pair>/paper/<n>` the review of a paper of that pair (`#/paper/<n>`, from before pairs, opens the active pair's paper).
 - The client keeps the working copy in memory, sends it whole on draft and submit, and never sends partial patches.
-- Autosave: every `autosave_minutes` the client calls OP-04 with `trigger: auto` only when the state differs from the last saved or submitted one; on `pagehide` it sends `trigger: pagehide` with `fetch(…, {keepalive: true})`.
+- Autosave: every `autosave_seconds` (none when 0) the client calls OP-04 with `trigger: auto` only when the state differs from the last saved or submitted one; on `pagehide` it sends `trigger: pagehide` with `fetch(…, {keepalive: true})`.
 - Layouts and keys (AC-19): below 1024 px wide the review shows a list screen and a detail screen (sticky decision bar, full-screen PDF), and Papers shows cards; touch targets are at least 44 px. On desktop the keyboard shortcuts of `frontend/src/lib/shortcuts.js` apply (S/D/F reject, unsure, accept; J/K next, previous; Ctrl+Z undo the last decision; Ctrl+S save draft; ? the full list), matched by physical key and off while typing in a field or with a dialog open.
 - Bulk accept (BR-10, AC-17) is client state: it sets `accepted` on the pending values of the current list (scope and filters), after a confirmation that says how many have a "Check this" warning. Undo removes exactly the decisions it made (accepted, stamped with the bulk's time) and is offered until the next decision. Both reach the server only through the next draft or submit.
 

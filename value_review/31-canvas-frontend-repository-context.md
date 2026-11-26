@@ -9,7 +9,7 @@
 | `frontend/src/main.jsx`, `frontend/src/App.jsx` | Fonts and styles loaded; hash routes and the unsaved-changes guard; old review links redirected (AC-F15) |
 | `frontend/src/lib/routes.js` | `#/review`, `#/review/<pair>`, `#/review/<pair>/paper/<id>`, `#/schemas…`, `#/extraction…`, `#/normalize…`, `#/settings/<tab>` |
 | `frontend/src/canvas.css` | Canvas tokens and the classes of every rebuilt screen (top bar, pages, cards, Review, tablet, Settings, Schema) |
-| `frontend/src/components/AppHeader.jsx`, `useProfile.js`, `lib/prefs.js` | Top bar, profile, browser-held settings (ADR-015) |
+| `frontend/src/components/AppHeader.jsx`, `useProfile.js`, `lib/prefs.js` | Top bar, profile, the service's settings shared by the pages (ADR-018) |
 | `frontend/src/data/review.js`, `lib/reviewView.js` | Folder pairs as extractions (ADR-014), papers of one, runs that have a paper |
 | `frontend/src/components/ReviewRuns.jsx`, `Papers.jsx`, `PapersTablet.jsx`, `VersionHistory.jsx` | Review list, papers of one extraction (desktop and tablet), version history |
 | `frontend/src/components/Review.jsx`, `ValuesPanel.jsx`, `ReviewTabletList.jsx`, `PageViewer.jsx`, `DetailPanel.jsx`, `Dialogs.jsx`, `SummaryModal.jsx`, `lib/textDiff.js` | The review of a paper, desktop and tablet |

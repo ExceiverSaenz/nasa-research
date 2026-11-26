@@ -1,10 +1,10 @@
 // Canvas front end (30-canvas-frontend-specification.md): browser settings and the Review view models.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { autosaveText, cleanPrefs, initialsOf, PREF_DEFAULTS, profileOf, serverAutosaveMinutes } from './prefs.js';
+import { autosaveText, cleanPrefs, importPatch, initialsOf, PREF_DEFAULTS, profileOf, SERVER_DEFAULTS } from './prefs.js';
 import { chipCounts, extractionRow, papersText, paperRow, runSummary, shownPapers, tiles } from './reviewView.js';
 
-test('browser settings keep only known values of the right kind (ADR-015)', () => {
+test('older browser settings keep only known values of the right kind (ADR-015)', () => {
   assert.deepEqual(cleanPrefs(null), PREF_DEFAULTS);
   const got = cleanPrefs({ initials: 'e.r.x9z', autosave_seconds: 45, csv: { delim: ';', enc: 'latin1' }, keep_rule_versions: 500,
     extraction: { parallel: 4, retries: 9, minutes: 10, warn_usd: 2.5 }, extra: 1 });
@@ -17,18 +17,31 @@ test('browser settings keep only known values of the right kind (ADR-015)', () =
   assert.equal(cleanPrefs({ autosave_seconds: 0 }).autosave_seconds, 0);
 });
 
-test('profile: the server name, the browser initials or those of the name', () => {
+test('profile: all from the service, initials from the name when none are saved', () => {
   assert.equal(initialsOf('Expert reviewer'), 'ER');
   assert.equal(initialsOf('  maría  de la  paz '), 'MD');
   assert.equal(initialsOf(''), '?');
-  assert.deepEqual(profileOf({ reviewer_name: 'Ana López' }, { ...PREF_DEFAULTS }), { display: 'Ana López', initials: 'AL', username: 'expert.reviewer' });
-  assert.equal(profileOf({ reviewer_name: 'Ana López' }, { ...PREF_DEFAULTS, initials: 'XYZ' }).initials, 'XYZ');
-  assert.equal(profileOf(null, null).display, 'Expert reviewer');
+  assert.deepEqual(profileOf({ reviewer_name: 'Ana López', initials: '' }), { display: 'Ana López', initials: 'AL', username: 'expert.reviewer' });
+  assert.deepEqual(profileOf({ reviewer_name: 'Ana López', initials: 'XYZ', username: 'ana' }), { display: 'Ana López', initials: 'XYZ', username: 'ana' });
+  assert.equal(profileOf(null).display, 'Expert reviewer');
 });
 
-test('autosave: the text Review shows, and what the server can hold', () => {
+test('autosave: the text Review shows', () => {
   assert.deepEqual([0, 30, 60, 300].map(autosaveText), ['Autosave off', 'Autosave every 30 s', 'Autosave every minute', 'Autosave every 5 minutes']);
-  assert.deepEqual([0, 30, 60, 300].map(serverAutosaveMinutes), [null, null, 1, 5]);
+});
+
+test('older browser settings are sent once: values changed here, where the service has its default (AC-T11)', () => {
+  const server = { reviewer_name: 'R', keep_schema_versions: 20, ...SERVER_DEFAULTS };
+  assert.deepEqual(importPatch(null, server), {});
+  assert.deepEqual(importPatch({ ...PREF_DEFAULTS }, server), {});
+  const old = { username: 'ana.lopez', initials: 'al', autosave_seconds: 0, csv: { delim: ';', enc: 'utf8' }, keep_rule_versions: 50,
+    keep_paper_versions: 150, extraction: { parallel: 4, retries: 1, minutes: 20, warn_usd: 2.5 } };
+  assert.deepEqual(importPatch(old, server), { username: 'ana.lopez', initials: 'AL', autosave_seconds: 0, csv_delimiter: ';',
+    csv_encoding: 'utf8', keep_rule_versions: 50, keep_versions: 150, extraction: { parallel: 4, retries: 1, minutes: 20, warn_usd: 2.5 } });
+  const changed = { ...server, autosave_seconds: 300, csv_delimiter: 'tab' };   // the service wins
+  assert.deepEqual(Object.keys(importPatch(old, changed)).includes('autosave_seconds'), false);
+  assert.deepEqual(Object.keys(importPatch(old, changed)).includes('csv_delimiter'), false);
+  assert.equal('username' in importPatch({ username: 'Ana López' }, server), false);   // not a username the service takes
 });
 
 const P = (paper, status, reviewed, total, extra = {}) => ({ paper: String(paper), title: `Paper ${paper}`, status, reviewed, total,

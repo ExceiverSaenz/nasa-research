@@ -85,10 +85,19 @@ def export_json(original, version):
             'records': records, 'evidence': evidence, 'observations': observations}
 
 
-def export_csv(version):
-    """UTF-8 with BOM, RFC 4180 quoting, one row per value in the version's order."""
+DELIMITERS = {',': ',', ';': ';', 'tab': '\t'}
+
+
+def _text(text, encoding):
+    """The CSV bytes: UTF-8, with a BOM unless ``encoding`` is "utf8" (OP-T03)."""
+    return (text if encoding == 'utf8' else '﻿' + text).encode('utf-8')
+
+
+def export_csv(version, delimiter=',', encoding='utf8bom'):
+    """RFC 4180 quoting with the stored separator, one row per value in the version's order; UTF-8 with a BOM by
+    default (OP-T03 of 42-settings-interface-contract.md)."""
     buf = io.StringIO()
-    writer = csv.writer(buf, lineterminator='\r\n')
+    writer = csv.writer(buf, delimiter=DELIMITERS[delimiter], lineterminator='\r\n')
     writer.writerow(CSV_COLUMNS)
     for r in version['values']:
         writer.writerow([cell(x) for x in (
@@ -96,25 +105,26 @@ def export_csv(version):
             '; '.join(r['record_ids']), features.label(r['feature_id']), r['feature_id'],
             r['value'], r['unit'], r['original_value'], r['original_unit'],
             r['status'], r['note'], r['by'], r['at'], r['origin'], 'yes' if r['needs_check'] else 'no')])
-    return ('﻿' + buf.getvalue()).encode('utf-8')
+    return _text(buf.getvalue(), encoding)
 
 
-def latest_zip(items):
-    """``items``: [(original, version)] for papers with a version. Latest JSON and CSV of each, plus summary.csv."""
+def latest_zip(items, delimiter=',', encoding='utf8bom'):
+    """``items``: [(original, version)] for papers with a version. Latest JSON and CSV of each, plus summary.csv;
+    every CSV uses the stored separator and encoding."""
     buf = io.BytesIO()
     summary = io.StringIO()
-    writer = csv.writer(summary, lineterminator='\r\n')
+    writer = csv.writer(summary, delimiter=DELIMITERS[delimiter], lineterminator='\r\n')
     writer.writerow(['paper', 'version', 'at', 'by', 'total', 'pending', 'accepted', 'corrected', 'rejected', 'unsure',
                      'added_values', 'added_records', 'edited_records'])
     with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as z:
         for original, version in items:
             stem = f"paper-{version['paper']}-v{version['n']}"
             z.writestr(f'{stem}.json', json.dumps(export_json(original, version), ensure_ascii=False, indent=1))
-            z.writestr(f'{stem}.csv', export_csv(version))
+            z.writestr(f'{stem}.csv', export_csv(version, delimiter, encoding))
             c = version['counts']
             writer.writerow([cell(x) for x in (
                 version['paper'], version['n'], version['at'], version['by'], c['total'], c['pending'],
                 c['accepted'], c['corrected'], c['rejected'], c['unsure'], c['added_values'],
                 c['added_records'], c['edited_records'])])
-        z.writestr('summary.csv', '﻿' + summary.getvalue())
+        z.writestr('summary.csv', _text(summary.getvalue(), encoding))
     return buf.getvalue()

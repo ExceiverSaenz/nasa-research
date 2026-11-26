@@ -34,8 +34,8 @@ says so.
 - **BR-F03** · The canvas data rules stay true: the model output is never edited; Save draft only keeps work; Submit
   makes a version; reviews of different extractions never mix; restoring makes a new version; reject and unsure need a
   reason.
-- **BR-F04** · Settings the service stores are saved on the service; the others are saved in the browser under one key
-  and are the same for every page in that browser. Service values win when both exist.
+- **BR-F04** · Settings are saved on the service (ADR-018, [40-settings-specification.md](40-settings-specification.md));
+  values an older version kept in the browser are sent once. Service values win when both exist.
 - **BR-F05** · A folder pair is shown as one extraction; its id is the pair id, so links keep working.
 - **BR-F06** · A control whose data the service cannot store is drawn, disabled, with "Pending: needs the backend".
 - **BR-F07** · Unsaved work is never lost on navigation: leaving a dirty review asks first or saves a draft; the schema
@@ -56,8 +56,8 @@ says so.
 | AC-F08 | Schema list and editor | Use the board's controls | Chips, row buttons, tiles, preview, search, collapsible groups, inline group names, details with "More options", the dark "What the model will read"; draft, versions and .xlsx unchanged on the service |
 | AC-F09 | Extraction | List → a run → Setup, Prompt, Test, Launch | The board's steps and dialogs on sample data; the page says so; no request writes to the service |
 | AC-F10 | Normalize | Rules → Validate → Results → Download CSV | The board's behaviour on sample data; the CSV uses the browser's separator and encoding; no request writes to the service |
-| AC-F11 | Settings, Profile | Change the display name and save | Saved on the service as the reviewer name; the header updates; initials saved in the browser |
-| AC-F12 | Settings, Review and export | Autosave Off, separator ";", save | Saved in the browser; Review shows "Autosave off"; ranges are checked ("Between 1 and 200.") |
+| AC-F11 | Settings, Profile | Change the display name and save | Saved on the service as the reviewer name, with username and initials; the header updates |
+| AC-F12 | Settings, Review and export | Autosave Off, separator ";", save | Saved on the service; Review shows "Autosave off"; downloads use ";"; ranges are checked ("Between 1 and 200.") |
 | AC-F13 | A dirty review or schema | Go to another section | The review asks first; the schema draft is saved |
 | AC-F14 | Keyboard only | Each section's first workflow | Possible without a mouse, with visible focus |
 | AC-F15 | An old link `#/source/<pair>/paper/<id>` or `#/paper/<id>` | Open it | The same paper opens at `#/review/<pair>/paper/<id>` |
