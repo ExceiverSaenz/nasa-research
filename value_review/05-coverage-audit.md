@@ -229,3 +229,32 @@ Other evidence added with the coverage pass: schemas `test_discard_the_draft` (D
 
 Remaining gap: closing the browser tab within the autosave delay (AC-S16 through `pagehide`) is not tested; a browser
 test cannot observe a request sent while its page closes.
+
+## Canvas front end (added 2026-11-26)
+
+Maps [30-canvas-frontend-specification.md](30-canvas-frontend-specification.md) to its evidence. Run on 2026-11-26 from
+the worktree with `VALUE_REVIEW_SOURCE_ROOT` set: **61 client tests**, **45 browser tests**, the Python suite and ruff
+unchanged and passing. Abbreviations: `canvas` = `src/lib/canvas.test.js`, `schema.js` = `src/lib/schema.test.js`;
+browser specs by file name. A hand check in the built-in browser was made at 1440 px (Review list, papers, review of a
+paper, Schema editor, Extraction, Normalize) and at 834 × 1112 (papers and review on a tablet).
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-F01 Shell, fonts | papers "IBM Plex … served by the app"; every spec checks the section tab | Covered |
+| AC-F02 Pairs as extractions | papers "Review lists the folder pairs…"; canvas "a folder pair as an extraction" | Covered |
+| AC-F03 Papers of one | papers "an extraction opens its papers…"; canvas "papers of one extraction…" | Covered |
+| AC-F04 Review header, bands, left panel | review, versions, editing (labels and flows); hand check | Covered (the panel's memory is checked by hand) |
+| AC-F05 Decisions | review "keyboard…", "a reason left…"; editing | Covered |
+| AC-F06 Summary, next paper | review "submit, download and the version history" | Covered |
+| AC-F07 Tablet | tablet "Papers and the review screens fit…"; hand check at 834 | Covered |
+| AC-F08 Schema | schemas.spec (17 tests); schema.js "the version history compares fields by id…" | Covered |
+| AC-F09 Extraction on sample data | boards "Extraction: list, a run, its four steps…" | Covered |
+| AC-F10 Normalize on sample data | boards "Normalize: an extraction through Rules, Validate and Results…" | Covered |
+| AC-F11 Profile | settings "profile: the display name goes to the server…" | Covered |
+| AC-F12 Review and export | settings "review and export…" | Covered |
+| AC-F13 Leaving with unsaved work | review "leaving with unsaved changes…"; schemas "leaving the editor…" | Covered |
+| AC-F14 Keyboard | review keyboard test; schemas "the whole first workflow with the keyboard only" | Covered (Extraction and Normalize boards: by hand only) |
+| AC-F15 Old links | papers "each extraction keeps its own papers and links; old links still open the paper" | Covered |
+
+Gaps: the boards' inner interactions (assistant, launch, rule editor, validation keys) are the canvas prototype's and
+are not tested one by one; the pending register lists what waits for the backend.

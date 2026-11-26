@@ -3,7 +3,7 @@
 import { test, expect, progress, selected } from './fixtures.js';
 
 const openPaper = async (page) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
 };
 const BY = 'Expert reviewer';
@@ -27,7 +27,7 @@ test('shortcuts: ?, J/K, reject needs a reason, undo, accept moves on, typing is
   await expect(selected(page)).toHaveText(first);
 
   await page.keyboard.press('s');
-  await expect(page.getByText('Add a reason first: pick one below or type it.')).toBeVisible();
+  await expect(page.getByText('A reason is required to reject a value.')).toBeVisible();
   expect(await progress(page)).toBe('0');
   await page.getByRole('button', { name: 'The value is wrong' }).click();
   await page.keyboard.press('s');
@@ -57,7 +57,8 @@ test('a reason left from a reject is not kept when the value is accepted', async
   await page.getByRole('button', { name: 'It belongs to another record' }).click();
   await page.keyboard.press('s');
   await expect.poll(() => progress(page)).toBe('1');
-  await page.keyboard.press('f');   // the rejected value is still selected: change it to accepted
+  await page.keyboard.press('k');   // the reject moved on to the next value: go back to it
+  await page.keyboard.press('f');   // change it to accepted
   await page.keyboard.press('Control+s');
   await expect(page.locator('header')).toContainText('Draft saved');
   const decisions = Object.values((await server.api('/papers/7')).draft.state.decisions);
@@ -65,7 +66,7 @@ test('a reason left from a reject is not kept when the value is accepted', async
 });
 
 test('leaving with unsaved changes: in-app question, Back keeps asking, the browser prompt', async ({ page }) => {
-  await page.goto('/#/');
+  await page.goto('/#/review/default');
   await page.getByRole('link', { name: 'Sub-size specimens of FeCrAl' }).click();
   await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
   await page.keyboard.press('f');
@@ -75,17 +76,17 @@ test('leaving with unsaved changes: in-app question, Back keeps asking, the brow
   await expect(leave).toBeVisible();
   await expect(leave.getByRole('button', { name: 'Stay' })).toBeFocused();
   await leave.getByRole('button', { name: 'Stay' }).click();
-  await expect(page).toHaveURL(/#\/source\/default\/paper\/7$/);
+  await expect(page).toHaveURL(/#\/review\/default\/paper\/7$/);
 
   for (let i = 0; i < 3; i++) {   // the history is never rewritten: Back asks every time
     await page.goBack();
     await expect(leave).toBeVisible();
     await leave.getByRole('button', { name: 'Stay' }).click();
-    await expect(page).toHaveURL(/#\/source\/default\/paper\/7$/);
+    await expect(page).toHaveURL(/#\/review\/default\/paper\/7$/);
   }
   await page.goBack();
   await leave.getByRole('button', { name: 'Leave without saving' }).click();
-  await expect(page.getByRole('heading', { name: 'Papers to review' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Model A' })).toBeVisible();
 
   // the browser's own prompt when the tab is closed with unsaved changes
   await page.getByRole('link', { name: 'Sub-size specimens of FeCrAl' }).click();
@@ -106,7 +107,7 @@ test('a saved draft must be continued or discarded before anything changes', asy
     body: JSON.stringify({ base_version: 0, trigger: 'manual', state }) });
   await openPaper(page);
   const offer = page.getByRole('region', { name: 'Saved draft' });
-  await expect(offer).toContainText('until then nothing can be changed');
+  await expect(offer).toContainText('You have a saved draft from');
   for (const key of ['f', 's', 'd', 'Control+z']) await page.keyboard.press(key);
   expect(await progress(page)).toBe('0');
   await expect(page.getByRole('button', { name: 'Save draft' })).toBeDisabled();
@@ -145,15 +146,14 @@ test('submit, download and the version history', async ({ page, server }) => {
   await page.getByRole('button', { name: 'Finish paper' }).click();
   const summary = page.getByRole('dialog', { name: /summary/ });
   await summary.getByRole('button', { name: 'Submit paper' }).click();
-  await expect(summary).toContainText('Submitted as v1');
-  const [download] = await Promise.all([page.waitForEvent('download'), summary.getByRole('link', { name: 'Download CSV' }).click()]);
-  expect(download.suggestedFilename()).toBe('paper-7-v1.csv');
-  const csv = await (await import('node:fs')).promises.readFile(await download.path(), 'utf-8');
+  await expect(summary).toContainText('Submitted. Your edits were saved as a new version.');
+  await expect(summary.getByRole('button', { name: 'Open next paper: Paper 8 ›' })).toBeVisible();
+  const csv = await (await fetch(`${server.url}api/v1/sources/default/papers/7/versions/1/export.csv`)).text();
   expect(csv).toMatch(/,o1,.*,accepted,/);
   expect((await server.api('/papers/7/versions')).map((v) => v.n)).toEqual([1]);
 
   await summary.getByRole('link', { name: 'Back to papers' }).click();
-  await expect(page.locator('table.grid tbody tr').first()).toContainText('v1');
+  await expect(page.locator('main .c-card .c-row').first()).toContainText('Expert reviewer');
   await page.getByRole('button', { name: 'More actions for paper 7' }).click();
   await page.getByRole('menuitem', { name: 'Version history' }).click();
   const history = page.getByRole('dialog', { name: 'Version history' });

@@ -1,9 +1,9 @@
 // Editing (AC-03, AC-14): correct a value, move it to another column or record, add, edit and remove records, and add
 // a value the model missed. Paper 7 of "Model A": record SS-J holds o1 = 710 ± 25 MPa (yield strength).
-import { test, expect, dragOnPage } from './fixtures.js';
+import { test, expect, dragOnPage, pickScope, scopeButton } from './fixtures.js';
 
 const openPaper = async (page) => {
-  await page.goto('/#/source/default/paper/7');
+  await page.goto('/#/review/default/paper/7');
   await expect(page.getByRole('button', { name: 'Finish paper' })).toBeVisible();
   await expect(page.locator('[aria-current="true"]').first()).toContainText('710 ± 25');
 };
@@ -21,8 +21,9 @@ test('correct a value; the model value is kept alongside', async ({ page, server
   await expect(value).toBeFocused();
   await value.fill('710 ± 26');
   await detail(page).getByRole('button', { name: 'Save correction' }).click();
-  await expect(detail(page)).toContainText('The model read 710 ± 25 MPa');
+  await page.keyboard.press('k');   // a decision moves on to the next value to review; go back
   await expect(page.locator('[aria-current="true"]').first()).toContainText('710 ± 26');
+  await expect(detail(page)).toContainText('Corrected');
   const state = await saveDraft(page, server);
   expect(state.decisions.o1).toMatchObject({ verdict: 'corrected', value: '710 ± 26', unit: 'MPa' });
 });
@@ -43,34 +44,37 @@ test('add, edit and remove a record; edit a model record', async ({ page, server
   const menu = page.getByRole('button', { name: 'Record actions' });
   await menu.click();
   await page.getByRole('menuitem', { name: 'New record' }).click();
-  const dialog = page.getByRole('dialog', { name: 'New record' });
+  const dialog = page.getByRole('dialog', { name: 'Add a record' });
   await expect(dialog.getByRole('textbox', { name: 'Name' })).toBeFocused();
   await dialog.getByRole('textbox', { name: 'Name' }).fill('SS-J-2');
   await dialog.getByRole('textbox', { name: 'Conditions (optional)' }).fill('FeCrAl, 300 °C');
   await dialog.getByRole('button', { name: 'Add record' }).click();
   await expect(dialog).toHaveCount(0);
-  await expect(page.locator('#scope-pick option:checked')).toHaveText(/SS-J-2/);
+  await expect(scopeButton(page)).toHaveText(/SS-J-2/);
 
   await menu.click();
   await page.getByRole('menuitem', { name: 'Edit record' }).click();
   const edit = page.getByRole('dialog', { name: 'Edit record' });
   await edit.getByRole('textbox', { name: 'Name' }).fill('SS-J');   // a name already in use
-  await edit.getByRole('button', { name: 'Save record' }).click();
-  await expect(edit.getByRole('alert')).toHaveText('Another record already has this name.');
+  await edit.getByRole('button', { name: 'Save changes' }).click();
+  await expect(edit.getByRole('alert')).toHaveText('A record with this name already exists.');
   await edit.getByRole('textbox', { name: 'Name' }).fill('SS-J-3');
-  await edit.getByRole('button', { name: 'Save record' }).click();
+  await edit.getByRole('button', { name: 'Save changes' }).click();
   let state = await saveDraft(page, server);
   expect(state.added_records.map((r) => [r.label, r.summary])).toEqual([['SS-J-3', 'FeCrAl, 300 °C']]);
 
   await menu.click();
   await page.getByRole('menuitem', { name: 'Remove record' }).click();
-  await expect(page.locator('#scope-pick option', { hasText: 'SS-J-3' })).toHaveCount(0);
+  await expect(scopeButton(page)).not.toHaveText(/SS-J-3/);
+  await scopeButton(page).click();
+  await expect(page.getByRole('option', { name: /SS-J-3/ })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Close', exact: true }).click();
 
-  await page.locator('#scope-pick').selectOption('r1');   // a record the model found: its edit keeps the original
+  await pickScope(page, 'r1');   // a record the model found: its edit keeps the original
   await menu.click();
   await page.getByRole('menuitem', { name: 'Edit record' }).click();
   await page.getByRole('dialog', { name: 'Edit record' }).getByRole('textbox', { name: 'Name' }).fill('SS-J (FeCrAl)');
-  await page.getByRole('dialog', { name: 'Edit record' }).getByRole('button', { name: 'Save record' }).click();
+  await page.getByRole('dialog', { name: 'Edit record' }).getByRole('button', { name: 'Save changes' }).click();
   state = await saveDraft(page, server);
   expect(state.added_records).toEqual([]);
   expect(state.record_edits.r1.label).toBe('SS-J (FeCrAl)');
@@ -82,11 +86,11 @@ test('add a value the model missed, mark it on the page, then remove it', async 
   const dialog = page.getByRole('dialog', { name: 'Add a value' });
   await dialog.getByRole('combobox', { name: 'Column' }).selectOption({ label: 'Gauge length' });
   await dialog.getByRole('button', { name: 'Add value' }).click();
-  await expect(dialog.getByRole('alert')).toHaveText('Type the value as the paper gives it.');
+  await expect(dialog.getByRole('alert')).toHaveText('Type the value.');
   await dialog.getByRole('textbox', { name: 'Value' }).fill('12.5');
   await dialog.getByRole('textbox', { name: 'Unit' }).fill('mm');
   await dialog.getByRole('button', { name: 'Add value' }).click();
-  await expect(page.getByText('Drag on the page. Esc cancels.')).toBeVisible();
+  await expect(page.getByText(/^Drag on the page to draw/)).toBeVisible();
   await dragOnPage(page, 0.2, 0.5, 0.35, 0.55);
   await expect(detail(page)).toContainText('Added by you');
   await expect(page.locator('[aria-current="true"]').first()).toContainText('12.5 mm');

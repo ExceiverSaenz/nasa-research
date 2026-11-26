@@ -455,3 +455,155 @@ AC-S01 (seed equals `features.py` ids and order); the existing Review tests stil
 
 Reconsider when Extraction is built: each run then records `schema_id` and the version it used, and Review and ingest
 read the run's schema version instead of `features.py`.
+
+## ADR-013 · Screens without a backend run the canvas boards on sample data
+
+**Status** · Accepted (option chosen by the user on 2026-11-25)
+**Date** · 2026-11-25
+**Reference** · BR-F02, AC-F09, AC-F10; [32-canvas-frontend-interface-contract.md](32-canvas-frontend-interface-contract.md)
+
+### Context
+
+Extraction, Normalize and most of Settings have no backend, but the front end must be finished and faithful to the
+canvas now, and connect to a backend later without being redrawn. Extraction and Normalize alone are about 150 KB of
+board markup and logic.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Run the canvas boards themselves (template, styles, logic) with a small runtime, on their sample data, labelled | Exactly the canvas, by construction; little new code; every interaction works | The boards' code is prototype code; it is replaced screen by screen when the backend lands |
+| Rewrite each board in React on sample adapters | Code in the app's style | Weeks of work, and every rewrite can drift from the canvas |
+| Draw the screens empty, or leave the sections out | No sample data to explain | Nothing to use or judge; not faithful |
+
+### Decision and rationale
+
+Copy the Extraction and Normalize boards into `frontend/src/boards/` and run them with `frontend/src/dc/DcBoard.jsx`
+(bindings `{{path}}`, `<sc-if>`, `<sc-for>`, a `DCLogic` base with `setState` and `renderVals`). The app's top bar
+replaces the board's; links between boards become app routes; every such page shows "Sample data · backend pending".
+Settings draws its sample parts (keys, models, System prompts) in React on `data/sampleSettings.js`. Criterion:
+fidelity with the least new code.
+
+### Consequences
+
+- The boards' scripts were checked: they use only `localStorage` (hand-offs between boards) and build a CSV in the
+  browser; no network.
+- Nothing done on these screens is saved; a reload starts from the sample.
+- The pending register (PEND-01 to PEND-18) lists what each backend must provide.
+
+### Verification
+
+`e2e/boards.spec.js`: every step opens, no request other than `GET` reaches the service, no console error.
+
+### Review
+
+When a backend lands for a section, replace its board by React screens reading the service, and delete the board copy.
+
+## ADR-014 · Folder pairs are shown as extractions
+
+**Status** · Accepted (option chosen by the user on 2026-11-25)
+**Date** · 2026-11-25
+**Reference** · BR-F05, AC-F02, AC-F03, AC-F15
+
+### Context
+
+The canvas organises Review by extraction runs of a workspace; the app's real data is folder pairs (LLM results and
+PDFs), and the service has no runs.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Each folder pair is a row of the list of extractions, with real counts; unknown metadata shows "—" | Real data in the canvas layout; no backend change | Schema, model and date are missing until runs exist |
+| The same, keeping the old folder-pair editor in Settings | Pairs editable in the app | Not on the canvas |
+| Only the canvas's sample runs | Faithful look | The real reviews are not reachable |
+
+### Decision and rationale
+
+Pairs as extractions; routes `#/review`, `#/review/<pair>`, `#/review/<pair>/paper/<id>`; old links redirect. Pairs are
+edited in `annotations/settings.json` until the Workspace backend exists.
+
+### Consequences
+
+- The Settings dialog (folder pairs, "Load papers again") is removed; ingest stays on the service (PEND-17).
+- "Results from" lists the pairs that have the paper, with "Reviewed here" or "No review yet".
+
+### Verification
+
+`e2e/papers.spec.js` (list, papers of a pair, old links).
+
+## ADR-015 · Settings the service cannot hold stay in the browser
+
+**Status** · Accepted (option chosen by the user on 2026-11-25)
+**Date** · 2026-11-25
+**Reference** · BR-F04, AC-F11, AC-F12
+
+### Context
+
+The canvas Settings has values the service does not store (initials, username, autosave off or 30 s, CSV, rule
+versions, limits above 100, Extraction settings).
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Keep them in the browser under one versioned key; the service keeps what it can | Everything works now | Values differ per browser |
+| Draw them read only | One source of truth | The settings do nothing |
+
+### Decision and rationale
+
+One key, `vr-settings`, cleaned on every read (`lib/prefs.js`); service values win; the boards get a mirror in their own
+key `tdr-settings`.
+
+### Consequences
+
+- PEND-09 to PEND-12: each value moves to the service when it can hold it.
+
+### Verification
+
+`e2e/settings.spec.js`; `canvas.test.js` (cleaning, profile, autosave text).
+
+## ADR-016 · IBM Plex fonts served by the app
+
+**Status** · Accepted (install approved by the user on 2026-11-25)
+**Date** · 2026-11-25
+**Reference** · AC-F01
+
+### Context
+
+The canvas uses IBM Plex Sans and Mono from Google Fonts; the tool makes no outbound request.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| `@fontsource/ibm-plex-sans` and `@fontsource/ibm-plex-mono` 5.3.0 (OFL), latin, the weights the canvas uses | Exact fonts, bundled, pinned | About 120 KB in `web/` |
+| Copy the font files by hand | No package | Unversioned files to keep |
+| System fonts | Nothing to add | Not the canvas |
+
+### Decision and rationale
+
+The two packages, pinned, imported in `main.jsx` (Sans 400–700, Mono 400–500).
+
+### Verification
+
+`e2e/papers.spec.js`: the fonts load and no request leaves localhost.
+
+## ADR-017 · Settings is a page
+
+**Status** · Accepted
+**Date** · 2026-11-25
+**Reference** · AC-F11, AC-F12; canvas board Settings
+
+### Context
+
+The canvas Settings is a page with six tabs and a Save per tab; the app had a dialog.
+
+### Decision and rationale
+
+`#/settings/<tab>` (`profile`, `workspace`, `models`, `system-prompt`, `extraction`, `review`); the gear of the top bar
+opens it; the dialog is removed.
+
+### Verification
+
+`e2e/settings.spec.js`.

@@ -1,14 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { api } from '../lib/api.js';
-import { TYPE_LABEL, compareSchemas, counts } from '../lib/schema.js';
+import { compareFields } from '../lib/schema.js';
+import { SchemaDialog } from './SchemaList.jsx';
 
-const WHEN = new Intl.DateTimeFormat([], { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-const when = (iso) => WHEN.format(new Date(iso));
-const size = (g, f) => `${f} ${f === 1 ? 'field' : 'fields'} in ${g} ${g === 1 ? 'group' : 'groups'}`;
+const when = (iso) => new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const TYPE_TEXT = { number: 'Number', category: 'Category', text: 'Text', calculated: 'Calculated' };
+const describe = (f) => {
+  if (f.type === 'number') return f.unit || '—';
+  if (f.type === 'category') return `${f.allowed.length} values${f.multiple ? ', several allowed' : ''}`;
+  if (f.type === 'calculated') return f.formula || '—';
+  return '—';
+};
+const LOOK = { Added: { background: '#DDF3E4', color: '#0F5A2C' }, Removed: { background: '#FBE3E1', color: '#8A1C15' }, Changed: { background: '#FFF3D6', color: '#4F3700' } };
+const CELL = { padding: '6px 8px', borderBottom: '1px solid #EEF1F5', overflowWrap: 'anywhere' };
+const HEAD = { padding: '6px 8px', borderBottom: '1px solid #E3E8EF', color: '#3B4557', fontWeight: 600 };
+const ROW = '80px 1fr 150px 44px';
 
 // Version history of one schema (canvas Schema.dc.html, "Version history"): view a version, compare it with the
-// current one by field id, restore it as a new version. OP-S06, OP-S07; AC-S06, AC-S08, BR-S06.
-export default function SchemaHistory({ schema, hasDraft, onClose, onRestored }) {
+// current schema by field id, restore it as a new version. OP-S06, OP-S07; AC-S06, AC-S08, BR-S06.
+export default function SchemaHistory({ schema, onClose, onRestored }) {
   const [data, setData] = useState(null);       // {versions, keep}
   const [menu, setMenu] = useState(null);       // version whose menu is open
   const [asking, setAsking] = useState(null);   // version awaiting the restore confirmation
@@ -19,25 +29,18 @@ export default function SchemaHistory({ schema, hasDraft, onClose, onRestored })
   const load = useCallback(() => api.schemaVersions(schema.schema_id).then(setData)
     .catch((e) => setMessage({ text: e.message, tone: 'error' })), [schema.schema_id]);
   useEffect(() => { load(); }, [load]);
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') { if (detail) setDetail(null); else onClose(); } };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [detail, onClose]);
 
   const list = data ? data.versions : null;
   const current = list && list.length ? list[0].n : 0;
   const fail = (e) => setMessage({ text: e.message, tone: 'error' });
-
   const view = (n) => {
     setMenu(null);
-    api.schemaVersion(schema.schema_id, n)
-      .then((v) => setDetail({ mode: 'view', n, title: `v${n} · ${when(v.saved_at)} · ${v.saved_by}`, content: v.content })).catch(fail);
+    api.schemaVersion(schema.schema_id, n).then((v) => setDetail({ mode: 'view', n, title: `v${n} · ${when(v.saved_at)}`, content: v.content })).catch(fail);
   };
   const compare = (n) => {
     setMenu(null);
-    Promise.all([api.schemaVersion(schema.schema_id, n), api.schemaVersion(schema.schema_id, current)])
-      .then(([old, cur]) => setDetail({ mode: 'compare', n, title: `v${n} compared with the current version, v${current}`, rows: compareSchemas(old.content, cur.content) }))
+    Promise.all([api.schemaVersion(schema.schema_id, n), api.schema(schema.schema_id)])
+      .then(([old, cur]) => setDetail({ mode: 'compare', n, title: `v${n} compared with the current schema`, rows: compareFields(old.content, cur.draft ? cur.draft.content : cur.content) }))
       .catch(fail);
   };
   const restore = async (n) => {
@@ -54,101 +57,81 @@ export default function SchemaHistory({ schema, hasDraft, onClose, onRestored })
       load();
     } finally { setBusy(false); }
   };
+  const close = () => { if (detail) setDetail(null); else if (!busy) onClose(); };
 
   return (
-    <div className="backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget && !busy) onClose(); }}>
-      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="sh-t" style={{ width: 760 }}>
-        <div className="modal-head row-between" style={{ alignItems: 'flex-start' }}>
-          <div style={{ minWidth: 0 }}>
-            <h2 id="sh-t" style={{ fontSize: 20 }}>Version history</h2>
-            <p className="muted" style={{ fontSize: 14, margin: '2px 0 0' }}>{schema.name}</p>
+    <SchemaDialog title="Version history" width={720} onClose={close}>
+      {message && <div role="status" className="c-toast" style={message.tone === 'ok' ? undefined : { background: '#FBE3E1', color: '#8A1C15' }}>{message.text}</div>}
+      {!detail && (
+        <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', borderTop: '1px solid #E3E8EF' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: ROW, gap: 12, padding: '8px 24px', borderBottom: '1px solid #E3E8EF', fontSize: 14, color: '#3B4557', fontWeight: 600 }}>
+            <span>Version</span><span>Saved</span><span>Saved by</span><span />
           </div>
-          <button type="button" className="icon-btn" style={{ border: 0, flex: 'none' }} aria-label="Close" onClick={onClose}>×</button>
-        </div>
-        {message && <div className={`banner ${message.tone === 'ok' ? 'ok' : 'error'}`} role="status">{message.text}</div>}
-        <div className="modal-body" style={{ paddingTop: 8 }}>
-          {!detail && list && list.length === 0 && <p className="muted">No versions yet. A version is made each time you use Save version.</p>}
-          {!detail && list && list.length > 0 && (
-            <table className="grid" style={{ minWidth: 0 }}>
-              <thead><tr><th scope="col">Version</th><th scope="col">Saved</th><th scope="col">By</th><th scope="col"><span className="sr-only">Actions</span></th></tr></thead>
-              <tbody>
-                {list.map((v) => (
-                  <React.Fragment key={v.n}>
-                    <tr>
-                      <td className="mono">v{v.n}{v.n === current && <span className="muted"> (current)</span>}</td>
-                      <td>{when(v.saved_at)}<div className="muted">{[v.note, size(v.groups, v.fields)].filter(Boolean).join(' · ')}</div></td>
-                      <td>{v.saved_by}</td>
-                      <td style={{ position: 'relative', textAlign: 'right' }}>
-                        <button type="button" className="icon-btn" style={{ width: 44, height: 44, border: 0 }} aria-haspopup="menu" aria-expanded={menu === v.n}
-                          aria-label={`Actions for v${v.n}`} onClick={() => { setMenu(menu === v.n ? null : v.n); setAsking(null); }}>⋯</button>
-                        {menu === v.n && (
-                          <div className="menu" role="menu" aria-label={`Actions for v${v.n}`} style={{ right: 0, top: 46, textAlign: 'left' }}>
-                            <button type="button" role="menuitem" onClick={() => view(v.n)}>View</button>
-                            {v.n !== current && <button type="button" role="menuitem" onClick={() => compare(v.n)}>Compare with current</button>}
-                            {v.n !== current && <button type="button" role="menuitem" onClick={() => { setMenu(null); setAsking(v.n); }}>Restore</button>}
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                    {asking === v.n && (
-                      <tr><td colSpan={4}>
-                        <div role="alertdialog" aria-label={`Restore v${v.n}`} style={{ background: 'var(--sel)', borderRadius: 6, padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                          <span>Restore v{v.n}? Its content is saved as a new version, v{Math.max(...list.map((x) => x.n)) + 1}. No version is deleted{list.length >= data.keep ? `, except the oldest beyond the ${data.keep} kept` : ''}.
-                            {hasDraft ? ' The draft with your unsaved changes is discarded.' : ''}</span>
-                          <span style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-                            <button type="button" className="btn" onClick={() => setAsking(null)} disabled={busy}>Cancel</button>
-                            <button type="button" className="btn primary" onClick={() => restore(v.n)} disabled={busy}>{busy ? 'Restoring…' : 'Restore'}</button>
-                          </span>
-                        </div>
-                      </td></tr>
-                    )}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          )}
-          {detail && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-                <button type="button" className="btn link" onClick={() => setDetail(null)}>‹ All versions</button>
-                <b>{detail.title}</b>
+          {list && list.length === 0 && <div className="c-empty">No versions yet. A version is made each time you use Save version.</div>}
+          {(list || []).map((v) => (
+            <div key={v.n} role="row" aria-label={`v${v.n}`} style={{ borderBottom: '1px solid #EEF1F5' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: ROW, gap: 12, padding: '6px 24px', minHeight: 52, alignItems: 'center', fontSize: 14 }}>
+                <span className="c-mono">v{v.n}</span>
+                <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}><span>{when(v.saved_at)}{v.n === current ? ' · current' : ''}</span>
+                  <span style={{ fontSize: 12, color: '#4A5568' }}>{v.note || 'Saved'} · {v.fields} fields in {v.groups} groups</span></span>
+                <span style={{ color: '#3B4557' }}>{v.saved_by}</span>
+                <button type="button" className="c-dots" style={{ width: 36, height: 36 }} aria-haspopup="menu" aria-expanded={menu === v.n} aria-label={`Actions for v${v.n}`}
+                  onClick={() => { setMenu(menu === v.n ? null : v.n); setAsking(null); }}>⋯</button>
               </div>
-              {detail.mode === 'view' && (
-                <div style={{ maxHeight: 440, overflowY: 'auto' }}>
-                  <span className="muted">{size(counts(detail.content).groups, counts(detail.content).fields)}</span>
-                  {detail.content.groups.map((g) => (
-                    <div key={g.group_id} style={{ marginTop: 8 }}>
-                      <div className="group-head" style={{ padding: '6px 12px' }}>{g.name} <span className="muted"> · {g.fields.length}</span></div>
-                      {g.fields.map((f) => (
-                        <div key={f.field_id} className="row-between" style={{ padding: '6px 12px 6px 24px', borderBottom: '1px solid var(--line-3)' }}>
-                          <span>{f.name}{f.description && <span className="muted"> — {f.description}</span>}</span>
-                          <span className="muted" style={{ flex: 'none' }}>{TYPE_LABEL[f.type]}{f.type === 'number' && f.unit ? ` · ${f.unit}` : ''}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+              {menu === v.n && (
+                <div role="menu" aria-label={`Actions for version ${v.n}`} style={{ margin: '0 24px 10px auto', width: 230, background: '#FFFFFF', border: '1px solid #D5DBE5', borderRadius: 6, boxShadow: '0 6px 18px rgba(7,27,63,0.15)', padding: '4px 0' }}>
+                  <button type="button" role="menuitem" className="c-mitem" style={{ minHeight: 44 }} onClick={() => view(v.n)}>View</button>
+                  {v.n !== current && <button type="button" role="menuitem" className="c-mitem" style={{ minHeight: 44 }} onClick={() => compare(v.n)}>Compare with current</button>}
+                  {v.n !== current && <button type="button" role="menuitem" className="c-mitem" style={{ minHeight: 44 }} onClick={() => { setMenu(null); setAsking(v.n); }}>Restore</button>}
                 </div>
               )}
-              {detail.mode === 'compare' && detail.rows.length === 0 && <span className="muted">No differences with the current version.</span>}
-              {detail.mode === 'compare' && detail.rows.length > 0 && (
-                <div style={{ maxHeight: 440, overflowY: 'auto' }}>
-                  <table className="grid" style={{ minWidth: 0 }}>
-                    <thead><tr><th scope="col">Field or group</th><th scope="col">Change</th><th scope="col">v{detail.n}</th><th scope="col">Current</th></tr></thead>
-                    <tbody>
-                      {detail.rows.map((r) => (
-                        <tr key={r.id}><td>{r.item}</td><td>{r.what}</td>
-                          <td style={{ background: 'var(--reject-bg)', color: 'var(--reject-ink)' }}>{r.before}</td>
-                          <td style={{ background: 'var(--accept-bg)', color: 'var(--accept-ink)' }}>{r.after}</td></tr>
-                      ))}
-                    </tbody>
-                  </table>
+              {asking === v.n && (
+                <div role="alertdialog" aria-label="Restore version" className="c-confirm">
+                  <span>Restore v{v.n}? Its content is saved as a new version, v{Math.max(...list.map((x) => x.n)) + 1}. No version is deleted.</span>
+                  <div>
+                    <button type="button" className="c-btn" style={{ height: 40 }} onClick={() => setAsking(null)} disabled={busy}>Cancel</button>
+                    <button type="button" className="c-btn primary" style={{ height: 40 }} onClick={() => restore(v.n)} disabled={busy}>Restore</button>
+                  </div>
                 </div>
               )}
             </div>
-          )}
+          ))}
         </div>
-        <div className="modal-foot"><span className="muted">{data ? `The ${data.keep} most recent versions are kept (Settings). When a new one is saved, the oldest is deleted.` : ''}</span></div>
-      </div>
-    </div>
+      )}
+      {detail && (
+        <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', padding: '12px 24px 16px', borderTop: '1px solid #E3E8EF', display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <button type="button" onClick={() => setDetail(null)} style={{ height: 40, padding: '0 10px 0 0', border: 0, background: 'transparent', color: '#0B3D91', font: 'inherit', fontSize: 14 }}>‹ All versions</button>
+            <b>{detail.title}</b>
+          </div>
+          {detail.mode === 'view' && <>
+            {detail.content.groups.every((g) => !g.fields.length) && <span style={{ color: '#4A5568' }}>This version has no fields.</span>}
+            <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.7fr 1.2fr', fontSize: 14 }}>
+              {['Field', 'Type', 'Unit or values'].map((t) => <span key={t} style={HEAD}>{t}</span>)}
+              {detail.content.groups.map((g) => (
+                <React.Fragment key={g.group_id}>
+                  <span style={{ ...CELL, fontWeight: 600, background: '#F7F9FC' }}>{g.name}</span><span style={{ ...CELL, background: '#F7F9FC' }} />
+                  <span style={{ ...CELL, background: '#F7F9FC', color: '#4A5568' }}>{g.fields.length} fields</span>
+                  {g.fields.map((f) => (
+                    <React.Fragment key={f.field_id}><span style={CELL}>{f.name}</span><span style={CELL}>{TYPE_TEXT[f.type]}</span><span style={CELL}>{describe(f)}</span></React.Fragment>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </>}
+          {detail.mode === 'compare' && <>
+            {detail.rows.length === 0 && <span style={{ color: '#4A5568' }}>No differences with the current schema.</span>}
+            <div style={{ display: 'grid', gridTemplateColumns: '0.7fr 1.2fr 2fr', fontSize: 14 }}>
+              {['Change', 'Field', 'Detail'].map((t) => <span key={t} style={HEAD}>{t}</span>)}
+              {detail.rows.slice(0, 14).map((r, i) => (
+                <React.Fragment key={i}><span style={{ ...CELL, ...LOOK[r.kind] }}>{r.kind}</span><span style={{ ...CELL, ...LOOK[r.kind] }}>{r.name}</span><span style={{ ...CELL, ...LOOK[r.kind] }}>{r.detail}</span></React.Fragment>
+              ))}
+              {detail.rows.length > 14 && <><span style={CELL}>+{detail.rows.length - 14}</span><span style={CELL}>more changes</span><span style={CELL} /></>}
+            </div>
+          </>}
+        </div>
+      )}
+      <div className="c-dialog-foot">The {data ? data.keep : 20} most recent versions are kept. When a new one is saved, the oldest is deleted. The limit is set in Settings.</div>
+    </SchemaDialog>
   );
 }

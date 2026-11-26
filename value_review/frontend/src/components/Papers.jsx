@@ -1,199 +1,160 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, setSource } from '../lib/api.js';
-import { reviewHash } from '../lib/routes.js';
+import { reviewData } from '../data/review.js';
+import { CHIP_KEYS, chipCounts, runSummary, shownPapers, tiles } from '../lib/reviewView.js';
+import { RUNS_HASH, extractionHash, reviewHash } from '../lib/routes.js';
 import VersionHistory from './VersionHistory.jsx';
-import SettingsDialog from './SettingsDialog.jsx';
 import AppHeader from './AppHeader.jsx';
+import PapersTablet from './PapersTablet.jsx';
 import useMedia, { COMPACT } from './useMedia.js';
 
-const STATUS = { not_started: 'Not started', in_progress: 'In progress', done: 'Done' };
-const DOT = { not_started: '#9AA3B2', in_progress: '#0B3D91', done: '#17703A' };
-const FILTERS = [['all', 'All'], ['not_started', 'Not started'], ['in_progress', 'In progress'], ['done', 'Done']];
+const COLS = '64px minmax(300px, 1fr) 150px 150px 80px 90px 160px 120px';
+const CHIP_LABEL = { all: 'All', 'Not started': 'Not started', 'In progress': 'In progress', Done: 'Done', 'No results': 'No results' };
+const SORTS = [['id', 'Paper'], ['title', 'Name'], ['modified', 'Modified'], ['modifiedBy', 'Modified by'], ['values', 'Values'],
+  ['alerts', 'Needs a check'], ['done', 'Reviewed'], ['statusRank', 'Status']];
 
-const shortDate = (iso) => (iso ? new Date(iso).toLocaleDateString([], { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
-const n = (x) => x.toLocaleString('en-US');
-// A paper whose files are missing from the configured folders, or differ from when it was loaded (read-only).
-const missing = (r) => (r.source_problems || []).some((p) => p.endsWith('_missing'));
-const sourceText = (r) => (missing(r) ? 'Source not found' : 'Source changed');
-const sourceTitle = (r) => (missing(r) ? 'Its file is not in the folders set in Settings. It opens read-only.'
-  : 'Its file differs from the one it was loaded from. It opens read-only.');
+// A paper whose files are missing or changed opens read-only; the canvas has no mark for it, so it is said on hover.
+const sourceNote = (raw) => (!raw.source_changed ? undefined
+  : (raw.source_problems || []).some((p) => p.endsWith('_missing')) ? 'Its file is not in the folders set in Settings. It opens read-only.'
+    : 'Its file differs from the one it was loaded from. It opens read-only.');
 
-// Papers list (canvas Main.dc.html): AC-01.
-export default function Papers() {
+const ICON = {
+  open: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B4557" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14 3h7v7" /><path d="M10 14 21 3" /><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" /></svg>,
+  history: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B4557" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8" /><path d="M3 3v5h5" /><path d="M12 7v5l3 2" /></svg>,
+  download: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B4557" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>,
+};
+
+// The papers of one extraction (canvas Main.dc.html, view "run"): AC-F03.
+export default function Papers({ pair }) {
+  const [run, setRun] = useState(null);
   const [rows, setRows] = useState(null);
+  const [keep, setKeep] = useState(20);
   const [error, setError] = useState('');
+  const [missing, setMissing] = useState(false);
   const [q, setQ] = useState('');
   const [filter, setFilter] = useState('all');
-  const [sort, setSort] = useState({ key: 'paper', dir: 1 });
-  const [menu, setMenu] = useState(null);         // paper id whose row menu is open
-  const [history, setHistory] = useState(null);   // paper row whose version history is open
-  const [keep, setKeep] = useState(20);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [settings, setSettings] = useState(null);   // folder pairs and the active one
+  const [sort, setSort] = useState({ key: 'id', dir: 1 });
+  const [menu, setMenu] = useState(null);       // {row, x, y}
+  const [history, setHistory] = useState(null); // raw paper whose history is open
   const compact = useMedia(COMPACT);
 
-  // Settings first: the papers shown are those of the active folder pair, and every link names it.
-  const reload = () => api.settings()
-    .then((s) => { setSettings(s); setKeep(s.keep_versions); setSource(s.active_source); return api.papers(); })
-    .then((r) => { setRows(r); setError(''); })
-    .catch((e) => setError(e.message));
-  const switchPair = (id) => {
-    setRows(null); setMenu(null);
-    api.setActiveSource(id).then(reload).catch((e) => setError(e.message));
-  };
-  const pair = settings && settings.active_source;
-  const link = (paper) => reviewHash(pair, paper);
+  setSource(pair);   // every request of this screen goes to this extraction's folder pair
+  const reload = () => reviewData.papers(pair).then((r) => {
+    if (!r.data) { setMissing(true); return; }
+    setRun(r.data.run); setRows(r.data.papers); setKeep(r.keep); setError('');
+  }).catch((e) => setError(e.message));
   useEffect(() => {
-    document.title = 'Papers · Tensile Data Review';
     reload();
     const close = (e) => { if (e.key === 'Escape') setMenu(null); };
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
-  }, []);
+  }, [pair]);
+  useEffect(() => { document.title = `${run ? run.name : 'Review'} · Tensile Data Review`; }, [run]);
 
-  const shown = useMemo(() => {
-    if (!rows) return [];
-    const needle = q.trim().toLowerCase();
-    const key = (r) => ({ paper: Number(r.paper), title: r.title, modified: r.latest ? r.latest.at : '', by: r.latest ? r.latest.by : '',
-      values: r.values, check: r.needs_check, reviewed: r.total ? r.reviewed / r.total : 0,
-      status: { not_started: 0, in_progress: 1, done: 2 }[r.status] })[sort.key];
-    return rows
-      .filter((r) => (filter === 'all' || r.status === filter) && (!needle || `${r.paper} ${r.title}`.toLowerCase().includes(needle)))
-      .sort((a, b) => {
-        const x = key(a), y = key(b);
-        return (typeof x === 'string' ? x.localeCompare(y) : x - y) * sort.dir;
-      });
-  }, [rows, q, filter, sort]);
-
+  const shown = useMemo(() => shownPapers(rows || [], { filter, q, sort: sort.key, dir: sort.dir }), [rows, filter, q, sort]);
+  const counts = chipCounts(rows || []);
   const sortBy = (key) => setSort((s) => ({ key, dir: s.key === key ? -s.dir : 1 }));
-  const arrow = (key) => (sort.key === key ? (sort.dir === 1 ? ' ↑' : ' ↓') : '');
-  const head = (key, label) => <th scope="col" aria-sort={sort.key === key ? (sort.dir === 1 ? 'ascending' : 'descending') : 'none'}>
-    <button type="button" onClick={() => sortBy(key)}>{label}{arrow(key)}</button></th>;
-  const count = (k) => shown.filter((r) => r.status === k).length;
+  const arrow = (key) => (sort.key === key ? (sort.dir === 1 ? '↑' : '↓') : '');
+  const openMenu = (e, row) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setMenu(menu && menu.row.id === row.id ? null : { row, x: r.right + 4, y: r.top });
+  };
+
+  if (missing) {
+    return (<div><AppHeader section="review" /><main className="c-page">
+      <div className="c-error" role="alert">This extraction is not in the list. <a href={RUNS_HASH}>Back to Review</a></div></main></div>);
+  }
+
+  if (compact && rows) return <PapersTablet pair={pair} run={run} rows={rows} keep={keep} reload={reload} />;
 
   return (
     <div>
-      <AppHeader section="review" onSettings={() => setSettingsOpen(true)} />
-      <main className="papers">
-        <div className="papers-head">
-          <div>
-          <h1>Papers to review</h1>
-          <p className="lead">The model read each PDF and pulled out tensile test values. Open a paper and check every value against the page it came from.</p>
-          </div>
-          {settings && settings.sources.length > 1 && (
-            <label className="field pair-select">LLM results
-              <select value={pair} onChange={(e) => switchPair(e.target.value)} aria-describedby="pair-help">
-                {settings.sources.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
-              </select>
-              <span id="pair-help" className="muted">Each set of results is reviewed on its own.</span>
-            </label>
-          )}
+      <AppHeader section="review" />
+      <main className="c-page">
+        <div className="c-head">
+          <nav aria-label="Breadcrumb" className="c-crumbs">
+            <a href={RUNS_HASH}>Review</a><span aria-hidden="true">›</span><span aria-current="page">{run ? run.name : ''}</span>
+          </nav>
+          <h1 className="c-h1">{run ? run.name : ' '}</h1>
+          <p className="c-lead wide">{run ? runSummary(run) : ''}</p>
         </div>
-        {error && <div className="banner error" role="alert">{error}</div>}
+        {error && <div className="c-error" role="alert">{error}</div>}
+        {!rows && !error && <p className="c-note">Loading papers…</p>}
         {rows && (
           <>
-            <div className="tiles">
-              <div className="tile"><span className="k">Papers · in this view</span><span className="v">{shown.length}</span>
-                <span className="n">{count('not_started')} not started · {count('in_progress')} in progress · {count('done')} done</span></div>
-              <div className="tile"><span className="k">Records · in this view</span><span className="v">{n(shown.reduce((a, r) => a + r.records, 0))}</span>
-                <span className="n">Specimens and test conditions</span></div>
-              <div className="tile"><span className="k">Values · in this view</span><span className="v">{n(shown.reduce((a, r) => a + r.values, 0))}</span>
-                <span className="n">{n(shown.reduce((a, r) => a + r.reviewed, 0))} reviewed</span></div>
-              <div className="tile"><span className="k">Need a check · in this view</span><span className="v">{n(shown.reduce((a, r) => a + r.needs_check, 0))}</span>
-                <span className="n">Ambiguous values the model flagged</span></div>
+            <div className="c-tiles">
+              {tiles(shown).map((t) => (
+                <div key={t.label} className="c-tile"><span className="k">{t.label} · in this view</span><span className="v">{t.value}</span><span className="n">{t.note}</span></div>
+              ))}
             </div>
-            <section className="table-card" aria-label="Papers">
-              <div className="toolbar">
-                <label className="sr-only" htmlFor="q">Search papers</label>
-                <input id="q" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by title or number" />
-                <div role="group" aria-label="Filter by status" style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {FILTERS.map(([k, label]) => (
-                    <button key={k} type="button" className="pill" aria-pressed={filter === k} onClick={() => setFilter(k)}>
-                      {label} {k === 'all' ? rows.length : rows.filter((r) => r.status === k).length}
-                    </button>
+            <div className="c-card">
+              <div className="c-toolbar">
+                <label htmlFor="q" className="sr-only">Search papers</label>
+                <input id="q" type="search" className="c-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by title or number" />
+                <div className="c-chips">
+                  {CHIP_KEYS.map((k) => (
+                    <button key={k} type="button" className="c-chip" aria-pressed={filter === k} onClick={() => setFilter(k)}>{CHIP_LABEL[k]} {counts[k]}</button>
                   ))}
                 </div>
               </div>
-              {compact && (
-                <div className="paper-cards">
-                  {shown.map((r) => {
-                    const pct = r.total ? Math.round((r.reviewed / r.total) * 100) : 0;
+              <div className="c-scroll">
+                <div style={{ minWidth: 1060 }}>
+                  <div className="c-grid-head" style={{ gridTemplateColumns: COLS }}>
+                    {SORTS.map(([key, label]) => (
+                      <button key={key} type="button" onClick={() => sortBy(key)} aria-sort={sort.key === key ? (sort.dir === 1 ? 'ascending' : 'descending') : undefined}>{label} {arrow(key)}</button>
+                    ))}
+                  </div>
+                  {shown.length === 0 && <div className="c-empty">No papers match this search.</div>}
+                  {shown.map((p) => {
+                    const open = !!(menu && menu.row.id === p.id);
                     return (
-                      <div key={r.paper} className="paper-card">
-                        <a href={link(r.paper)}>
-                          <span className="t">{r.title}</span>
-                          <span className="muted">Paper {r.paper} · {r.values} values · {r.needs_check} need a check{r.latest ? ` · v${r.latest.n}, ${shortDate(r.latest.at)}` : ''}</span>
-                          <span className="mini-bar"><span className="bar"><span style={{ width: `${pct}%` }} /></span><span className="mono muted">{pct}%</span>
-                            <span className="chip" style={{ background: '#EEF1F5' }}><span className="dot" aria-hidden="true" style={{ background: DOT[r.status] }} />{STATUS[r.status]}</span>
-                            {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected">Draft</span>}
-                            {r.source_changed && <span className="chip st-rejected" title={sourceTitle(r)}>{sourceText(r)}</span>}</span>
-                        </a>
-                        <button type="button" aria-haspopup="menu" aria-expanded={menu === r.paper} aria-label={`More actions for paper ${r.paper}`}
-                          onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
-                        {menu === r.paper && (
-                          <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 8, top: 56 }}>
-                            <a role="menuitem" className="menu-link" href={link(r.paper)}>Open</a>
-                            <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
-                            {r.latest && <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>}
-                          </div>
-                        )}
+                      <div key={p.key} className={`c-row${open ? ' open' : ''}`} style={{ gridTemplateColumns: COLS }}>
+                        <span className="c-mono" style={{ color: '#4A5568' }}>{p.id}</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
+                          {p.hasResults ? (
+                            <>
+                              <a href={reviewHash(pair, p.key)} title={sourceNote(p.raw) || p.title} className="c-ell" style={{ flex: '1 1 0', color: '#101828', textDecoration: 'none' }}>{p.title}</a>
+                              <button type="button" className="c-dots" aria-haspopup="menu" aria-expanded={open} aria-label={`More actions for paper ${p.id}`} onClick={(e) => openMenu(e, p)}>⋯</button>
+                            </>
+                          ) : (
+                            <>
+                              <span title={p.title} className="c-ell" style={{ flex: '1 1 0', color: '#4A5568' }}>{p.title}</span>
+                              <a href={extractionHash()} style={{ flex: 'none', whiteSpace: 'nowrap' }}>Go to Extraction</a>
+                            </>
+                          )}
+                        </span>
+                        <span className="c-muted">{p.modified}</span>
+                        <span className="c-muted c-ell">{p.modifiedBy}</span>
+                        <span className="c-mono c-muted">{p.hasResults ? p.values : '—'}</span>
+                        <span className="c-mono c-muted">{p.hasResults ? p.alerts : '—'}</span>
+                        <span className="c-bar"><span className="track"><span style={{ width: `${p.pct}%` }} /></span><span className="pct">{p.hasResults ? `${p.pct}%` : '—'}</span></span>
+                        <span className="c-status"><span className="c-dot" aria-hidden="true" style={{ background: p.dot }} />{p.status}</span>
                       </div>
                     );
                   })}
-                  {shown.length === 0 && <div className="empty">No papers match this search.</div>}
                 </div>
-              )}
-              {!compact && <div className="scroll-x">
-                <table className="grid">
-                  <thead><tr>
-                    {head('paper', 'Paper')}{head('title', 'Name')}{head('modified', 'Modified')}{head('by', 'Modified by')}
-                    {head('values', 'Values')}{head('check', 'Needs a check')}{head('reviewed', 'Reviewed')}{head('status', 'Status')}
-                  </tr></thead>
-                  <tbody>
-                    {shown.map((r) => {
-                      const pct = r.total ? Math.round((r.reviewed / r.total) * 100) : 0;
-                      return (
-                        <tr key={r.paper}>
-                          <td className="mono">{r.paper}</td>
-                          <td className="title-cell" style={{ position: 'relative' }}>
-                            <button type="button" className="icon-btn" style={{ width: 32, height: 32, border: 0, float: 'right', background: 'transparent' }}
-                              aria-haspopup="menu" aria-expanded={menu === r.paper} aria-label={`More actions for paper ${r.paper}`}
-                              onClick={() => setMenu(menu === r.paper ? null : r.paper)}>⋯</button>
-                            {menu === r.paper && (
-                              <div className="menu" role="menu" aria-label={`Actions for paper ${r.paper}`} style={{ right: 0, top: 44 }}>
-                                <a role="menuitem" className="menu-link" href={link(r.paper)}>Open</a>
-                                <button type="button" role="menuitem" disabled={!r.latest} onClick={() => { setMenu(null); setHistory(r); }}>Version history</button>
-                                {r.latest
-                                  ? <a role="menuitem" className="menu-link" href={api.exportUrl(r.paper, r.latest.n, 'csv')} onClick={() => setMenu(null)}>Download latest version</a>
-                                  : <span className="muted" style={{ display: 'block', padding: '6px 14px 8px', whiteSpace: 'normal' }}>No versions yet. A version is saved each time the paper is submitted.</span>}
-                              </div>
-                            )}
-                            <a href={link(r.paper)} title={r.title}>{r.title}</a>
-                            {r.draft_at && (!r.latest || r.draft_at > r.latest.at) && <span className="chip st-corrected" style={{ marginLeft: 8 }} title={`Draft saved ${shortDate(r.draft_at)}`}>Draft</span>}
-                            {r.source_changed && <span className="chip st-rejected" style={{ marginLeft: 8 }} title={sourceTitle(r)}>{sourceText(r)}</span>}
-                            {r.completion && r.completion !== 'complete' && <span className="chip st-unsure" style={{ marginLeft: 8 }}>Model run {r.completion}</span>}</td>
-                          <td>{r.latest ? <>{shortDate(r.latest.at)} <span className="muted">v{r.latest.n}</span></> : '—'}</td>
-                          <td>{r.latest ? r.latest.by : '—'}</td>
-                          <td className="mono">{r.values}</td>
-                          <td className="mono">{r.needs_check}</td>
-                          <td><span className="mini-bar"><span className="bar"><span style={{ width: `${pct}%` }} /></span><span className="mono muted">{pct}%</span></span></td>
-                          <td><span className="dot" aria-hidden="true" style={{ background: DOT[r.status] }} />{STATUS[r.status]}</td>
-                        </tr>
-                      );
-                    })}
-                    {shown.length === 0 && <tr><td colSpan={8} className="empty">No papers match this search.</td></tr>}
-                  </tbody>
-                </table>
-              </div>}
-            </section>
-            <p className="note">Open a paper by its name. Counts come from the model's output; reviewed values come from the latest submitted version.</p>
+              </div>
+            </div>
+            <p className="c-note">Open a paper by its name, or use ⋯ for more actions. Counts come from the model's output.</p>
           </>
         )}
-        {!rows && !error && <p className="muted">Loading papers…</p>}
       </main>
-      {history && <VersionHistory paper={history} keep={keep} onClose={() => setHistory(null)} onChanged={reload} />}
-      {settingsOpen && <SettingsDialog onClose={() => { setSettingsOpen(false); reload(); }}
-        onLoaded={reload} />}
+
+      {menu && (
+        <>
+          <div className="c-menu-veil" onClick={() => setMenu(null)} />
+          <div role="menu" aria-label={`Actions for paper ${menu.row.id}`} className="c-menu" style={{ position: 'fixed', left: Math.min(menu.x, window.innerWidth - 248), top: menu.y }}>
+            <a href={reviewHash(pair, menu.row.key)} role="menuitem" className="c-mitem">{ICON.open}Open</a>
+            <div className="c-msep" />
+            <button type="button" role="menuitem" className="c-mitem" disabled={!menu.row.latest} onClick={() => { setHistory(menu.row.raw); setMenu(null); }}>{ICON.history}Version history</button>
+            {menu.row.latest
+              ? <a role="menuitem" className="c-mitem" href={api.exportUrl(menu.row.key, menu.row.latest.n, 'csv')} onClick={() => setMenu(null)}>{ICON.download}Download latest version</a>
+              : <button type="button" role="menuitem" className="c-mitem" disabled>{ICON.download}Download latest version</button>}
+            {!menu.row.latest && <div className="c-mnote">No versions yet. A version is saved each time the paper is submitted.</div>}
+          </div>
+        </>
+      )}
+      {history && <VersionHistory paper={history} runName={run && run.name} keep={keep} onClose={() => setHistory(null)} onChanged={reload} />}
     </div>
   );
 }

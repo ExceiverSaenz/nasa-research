@@ -95,8 +95,10 @@ export function browseFeatures(original, rows) {
 }
 
 // The value list for the current scope and filters.
-export function inScope(rows, { mode, recordId, featureId, onlyCheck, status }) {
-  return rows.filter((r) => (mode === 'record' ? r.scopeRecordIds.includes(recordId) : r.featureId === featureId)
+// secFeature narrows a record to one column, secRecord a column to one record (the second filter of the canvas).
+export function inScope(rows, { mode, recordId, featureId, onlyCheck, status, secFeature = '', secRecord = '' }) {
+  return rows.filter((r) => (mode === 'record' ? r.scopeRecordIds.includes(recordId) && (!secFeature || r.featureId === secFeature)
+    : r.featureId === featureId && (!secRecord || r.scopeRecordIds.includes(secRecord)))
     && (!onlyCheck || r.needsCheck)
     && (status === 'any' || r.status === status));
 }

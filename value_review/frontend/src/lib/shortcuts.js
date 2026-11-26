@@ -6,7 +6,7 @@
 export const SHORTCUTS = [
   { group: 'Decide', items: [
     ['accept', 'Accept and go to the next value', ['F']],
-    ['unsure', 'Mark as unsure (asks for a reason)', ['D']],
+    ['unsure', 'Mark as unsure', ['D']],
     ['reject', 'Reject (asks for a reason)', ['S']],
     ['note', 'Add a note', ['A']],
     ['undo', 'Undo the last decision', ['Ctrl', 'Z']],
@@ -20,13 +20,13 @@ export const SHORTCUTS = [
   ] },
   { group: 'Edit the value', items: [
     ['edit', 'Edit value', ['E']],
-    ['saveEdit', 'Save the correction (while editing)', ['Ctrl', 'Enter']],
-    ['escape', 'Cancel editing, close a dialog or menu', ['Esc']],
+    ['saveEdit', 'Save correction', ['Ctrl', 'Enter']],
+    ['escape', 'Cancel editing, close a menu', ['Esc']],
+    ['symbol', 'Symbol by name, e.g. \\pm then space', ['\\']],
   ] },
   { group: 'PDF and highlights', items: [
-    ['prevPage', 'Previous page', [',']],
-    ['nextPage', 'Next page', ['.']],
-    ['fit', 'Zoom to 100%', ['0']],
+    ['pages', 'Previous / next page', [',', '.']],
+    ['fit', 'Zoom to fit width', ['0']],
     ['addBox', 'Add a highlight', ['V']],
     ['redraw', 'Redraw the selected highlight', ['R']],
     ['deleteBox', 'Delete the selected highlight', ['X']],

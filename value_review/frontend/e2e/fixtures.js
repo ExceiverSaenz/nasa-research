@@ -59,6 +59,12 @@ export { expect };
 // Helpers shared by the specs.
 export const progress = async (page) => (await page.locator('header').innerText()).match(/(\d+) \/ (\d+) values/)[1];
 export const selected = (page) => page.locator('[aria-current="true"]').first();
+// The record or column navigator of Review (canvas): its button, and picking an entry by id.
+export const scopeButton = (page) => page.getByRole('region', { name: 'Browse values' }).locator('button[aria-haspopup="listbox"]');
+export async function pickScope(page, id) {
+  await scopeButton(page).click();
+  await page.locator(`[role="option"][data-id="${id}"]`).click();
+}
 
 // Every visible control whose touch target is under 44 px (WCAG 2.5.5), except the evidence boxes drawn on the page.
 export const smallTargets = (page) => page.evaluate(() => {

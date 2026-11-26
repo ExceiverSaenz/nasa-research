@@ -1,0 +1,553 @@
+<div style="position: relative; min-height: 1180px; background: #EEF1F5; color: #101828; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45">
+
+<div style="background: #071B3F; color: #FFFFFF; display: flex; align-items: center; gap: 16px; padding: 0 32px; min-height: 60px; flex-wrap: wrap">
+<a href="Main.dc.html" aria-label="Back to papers" style="width: 34px; height: 34px; border-radius: 50%; background: #0B3D91; border: 2px solid #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #FFFFFF; text-decoration: none">TD</a>
+<div style="font-weight: 600; letter-spacing: 0.08em; font-size: 14px">TENSILE DATA REVIEW</div>
+<nav aria-label="Sections" style="display: flex; align-self: stretch; margin-left: 16px">
+<a href="Schema.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Schema</a>
+<a href="Extraction.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Extraction</a>
+<a href="Main.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Review</a>
+<a href="Normalize-Rules.dc.html" aria-current="page" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #FFFFFF; text-decoration: none; font-weight: 600; border-bottom: 3px solid #FFFFFF">Normalize</a>
+</nav>
+<div style="flex: 1 1 0"></div>
+<a href="Settings.dc.html" aria-label="Settings" title="Settings" class="tab" style="display: flex; align-items: center; align-self: stretch; width: 44px; justify-content: center; padding: 0; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: #E6EEFB; color: #071B3F; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px">ER</span>
+<span>Expert reviewer</span>
+</div>
+</div>
+
+<div style="max-width: 1376px; margin: 0 auto; padding: 32px 32px 48px; display: flex; flex-direction: column; gap: 24px">
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em">Normalize</h1>
+<p style="margin: 0; color: #4A5568; max-width: 760px">Choose an extraction. Its rules, normalized values and validation belong to it and never mix with another one. Normalization starts from the values you reviewed in <a href="Main.dc.html">Review</a>.</p>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #E3E8EF">
+<label for="lq" style="position: absolute; left: -9999px">Search extractions</label>
+<input id="lq" type="search" value="{{lq}}" onInput="{{onLq}}" placeholder="Search by extraction or paper set" style="flex: 1 1 260px; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 12px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 1040px">
+<div style="display: grid; grid-template-columns: minmax(220px, 2fr) minmax(130px, 1.1fr) 110px 120px 150px 190px 150px; gap: 16px; padding: 10px 20px; border-bottom: 1px solid #E3E8EF; font-size: 14px; color: #3B4557; font-weight: 600">
+<span>Extraction</span><span>Paper set</span><span>Schema</span><span>Reviewed papers</span><span>Rules</span><span>Validated</span><span>Status</span>
+</div>
+<sc-if value="{{noRuns}}" hint-placeholder-val="{{ false }}"><div style="padding: 28px 20px; color: #4A5568">No extractions match this search.</div></sc-if>
+<sc-for list="{{listRows}}" as="x" hint-placeholder-count="2">
+<button type="button" onClick="{{x.open}}" class="frow" style="display: grid; grid-template-columns: minmax(220px, 2fr) minmax(130px, 1.1fr) 110px 120px 150px 190px 150px; gap: 16px; align-items: center; width: 100%; box-sizing: border-box; min-height: 56px; padding: 0 20px; border: 0; border-bottom: 1px solid #EEF1F5; background: transparent; font: inherit; font-size: 14px; color: #101828; text-align: left">
+<span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 500; color: #0B3D91; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{x.name}}</span><span style="font-size: 12px; color: #4A5568">{{x.when}}</span></span>
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{x.set}}</span>
+<span style="color: #3B4557">{{x.schema}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; color: #3B4557">{{x.reviewed}}</span>
+<span style="color: #3B4557">{{x.rules}}</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="flex: 1 1 0; height: 4px; border-radius: 2px; background: #E3E8EF; overflow: hidden"><span style="display: block; height: 4px; background: #0B3D91; width: {{x.pct}}%"></span></span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568; min-width: 36px; text-align: right">{{x.pctTxt}}</span></span>
+<span style="display: flex; align-items: center; gap: 6px; color: #3B4557"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: {{x.dot}}"></span>{{x.status}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+<p style="margin: 0; font-size: 14px; color: #4A5568">An extraction can be normalized when some of its papers are reviewed; papers reviewed later are added and normalized with the same rules.</p>
+</sc-if>
+
+<sc-if value="{{isRun}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: #4A5568">
+<button type="button" onClick="{{toList}}" style="min-height: 32px; padding: 0; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px; text-decoration: underline">Normalize</button>
+<span aria-hidden="true">›</span>
+<span aria-current="page">{{runName}}</span>
+</nav>
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{runName}}</h1>
+<p style="margin: 0; color: #4A5568; max-width: 900px">{{runSummary}}</p>
+</div>
+
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<nav aria-label="Normalize steps" style="display: flex; gap: 4px; background: #E3E8EF; padding: 4px; border-radius: 8px">
+<a href="Normalize-Rules.dc.html" onClick="{{goRules}}" aria-current="page" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; background: #FFFFFF; color: #071B3F; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(7,27,63,0.12)">Rules</a>
+<a href="Normalize-Validate.dc.html" onClick="{{goValidate}}" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; color: #3B4557; text-decoration: none">Validate<span style="margin-left: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: #FFFFFF; border-radius: 10px; padding: 1px 7px; color: #071B3F">{{pendingAll}}</span></a>
+<a href="Normalize-Results.dc.html" onClick="{{goResults}}" style="display: flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 6px; color: #3B4557; text-decoration: none">Results</a>
+</nav>
+<div style="flex: 1 1 0"></div>
+<sc-if value="{{hasData}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{openCopy}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Copy rules from another extraction…</button>
+<button type="button" onClick="{{openRun}}" disabled="{{runOff}}" style="height: 40px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{runOp}}">{{runBtnLabel}}</button>
+</sc-if>
+</div>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 6px; background: #DDF3E4; color: #0F5A2C">
+<span style="flex: 1 1 0">{{toast}}</span>
+<button type="button" onClick="{{closeToast}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; color: #0F5A2C; font: inherit; font-size: 14px; font-weight: 600">Close</button>
+</div>
+</sc-if>
+
+<sc-if value="{{emptyRun}}" hint-placeholder-val="{{ false }}">
+<div style="background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; max-width: 760px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Nothing to normalize yet</h2>
+<span style="color: #3B4557">Normalization starts from reviewed values. No paper of this extraction has a submitted version, so there is nothing for the rules to work on.</span>
+<div><a href="Main.dc.html" onClick="{{goReview}}" style="display: inline-flex; align-items: center; height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Go to Review</a></div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasData}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; color: #4A5568; max-width: 900px">You decide how each feature is normalized. Which fields exist, with their types, units and allowed values, comes from the schema version of this extraction (<a href="Schema.dc.html">Schema</a>). Pick a feature in the list and write its rule on the right. The model only applies your rules to the reviewed values of this extraction; then you validate its work, feature by feature.</p>
+
+<div role="note" style="display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; padding: 12px 16px">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 1px"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01"></path><path d="M11 12h1v5h1"></path></svg>
+<span style="color: #3B4557">Normalization starts from <b style="color: #101828">reviewed values</b>: <b style="color: #101828">4 of 14 papers</b> have a submitted version (1, 2, 5, 9), with <b style="color: #101828">612 values</b>. Rejected values are left out. Papers you review later are added and normalized with the same rules. When a paper is submitted again, its normalized values are marked <i>Outdated</i>.</span>
+</div>
+
+<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap">
+
+<section aria-label="Features" style="flex: 999 1 640px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<label for="fq" style="position: absolute; left: -9999px">Search features</label>
+<input id="fq" type="search" value="{{q}}" onInput="{{onQuery}}" placeholder="Search features" style="flex: 1 1 200px; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 12px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<div role="group" aria-label="Filter by decision" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{c.look}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 760px">
+<div style="display: grid; grid-template-columns: minmax(180px, 1.3fr) 120px 64px minmax(170px, 1.5fr) 110px 120px; gap: 14px; padding: 10px 20px; border-bottom: 1px solid #E3E8EF; font-size: 14px; color: #3B4557; font-weight: 600">
+<span>Feature</span><span>Type</span><span>Values</span><span>Formats found</span><span>Decision</span><span>Status</span>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 20px 6px; background: #F7F9FC; border-bottom: 1px solid #E3E8EF">
+<span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #3B4557; font-weight: 600">{{g.name}}</span>
+<span style="font-size: 12px; color: #4A5568">{{g.note}}</span>
+<sc-if value="{{g.collapsible}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{g.toggle}}" aria-expanded="{{g.openStr}}" style="margin-left: auto; height: 32px; padding: 0 10px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px">{{g.toggleLabel}}</button>
+</sc-if>
+</div>
+<sc-for list="{{g.rows}}" as="f" hint-placeholder-count="3">
+<button type="button" onClick="{{f.pick}}" aria-pressed="{{f.selStr}}" class="frow" style="display: grid; grid-template-columns: minmax(180px, 1.3fr) 120px 64px minmax(170px, 1.5fr) 110px 120px; gap: 14px; width: 100%; box-sizing: border-box; padding: 4px 20px; min-height: 44px; border: 0; border-bottom: 1px solid #EEF1F5; align-items: center; background: transparent; font: inherit; font-size: 14px; color: #101828; text-align: left; {{f.rowLook}}">
+<span style="min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: {{f.weight}}">{{f.label}}</span>
+<span style="color: #3B4557">{{f.typeLabel}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; color: #3B4557">{{f.count}}</span>
+<span style="color: #3B4557; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis" title="{{f.formats}}">{{f.formats}}</span>
+<span style="color: #101828">{{f.decision}}<sc-if value="{{f.hasTarget}}" hint-placeholder-val="{{ true }}"><span style="font-family: 'IBM Plex Mono', monospace; color: #4A5568"> → {{f.target}}</span></sc-if></span>
+<span style="display: inline-flex; align-items: center; gap: 6px; color: #3B4557; font-size: 13px"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: {{f.dot}}"></span>{{f.status}}</span>
+</button>
+</sc-for>
+</sc-for>
+</div>
+</div>
+<p style="margin: 0; padding: 12px 20px; font-size: 13px; color: #4A5568; border-top: 1px solid #E3E8EF">Counts are sample data for this prototype. Formats found are read from the reviewed values before any rule exists.</p>
+</section>
+
+<aside aria-labelledby="ed-t" style="flex: 1 1 440px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; display: flex; flex-direction: column">
+<div style="padding: 18px 22px 14px; border-bottom: 1px solid #E3E8EF; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #4A5568; font-weight: 600">Your rule · {{sel.group}}</span>
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+<h2 id="ed-t" style="margin: 0; font-size: 22px; font-weight: 600; color: #071B3F">{{sel.label}}</h2>
+<span style="font-size: 13px; color: #4A5568">{{sel.count}} reviewed values · {{sel.typeLabel}}</span>
+</div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #3B4557"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{sel.dot}}"></span>{{sel.status}} · {{sel.ruleMeta}}</span>
+</div>
+
+<div style="padding: 16px 22px; display: flex; flex-direction: column; gap: 18px">
+
+<sc-if value="{{showArchived}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px; background: #F7F9FC; border: 1px solid #E3E8EF; border-radius: 6px; padding: 12px 14px">
+<span style="font-weight: 600">Archived feature</span>
+<span style="font-size: 13px; color: #3B4557">This feature was removed from the schema in v2, after this extraction. Its rule and its normalized values are kept as they were, in read only: you cannot edit the rule or run it again.</span>
+<a href="Schema.dc.html" style="font-size: 13px">See it in the schema history</a>
+</div>
+</sc-if>
+
+<sc-if value="{{showDecision}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span id="dec-l" style="font-weight: 600">Normalize this feature?</span>
+<div role="radiogroup" aria-labelledby="dec-l" style="display: flex; gap: 4px; background: #EEF1F5; padding: 4px; border-radius: 8px">
+<sc-for list="{{decisions}}" as="d" hint-placeholder-count="3">
+<button type="button" role="radio" aria-checked="{{d.checked}}" onClick="{{d.pick}}" style="flex: 1 1 0; height: 40px; border: 0; border-radius: 6px; font: inherit; font-size: 14px; {{d.look}}">{{d.label}}</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: #4A5568">{{decisionHelp}}</span>
+</div>
+</sc-if>
+
+<sc-if value="{{showRuleEditor}}" hint-placeholder-val="{{ true }}">
+
+<div style="display: flex; flex-direction: column; gap: 10px; border: 1px solid #D5DBE5; border-radius: 6px; padding: 12px 14px; background: #F7F9FC">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">Assistant</span><span style="font-size: 13px; color: #4A5568">Say how you want this feature normalized and the assistant drafts the rule from the reviewed values. It only proposes: you decide. Uses {{tryModel}}.</span></div>
+<sc-for list="{{asst}}" as="m" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: {{m.align}}">
+<span style="font-size: 12px; color: #4A5568">{{m.who}}</span>
+<div style="max-width: 94%; padding: 8px 10px; border-radius: 6px; {{m.look}}">{{m.text}}</div>
+<sc-if value="{{m.hasProp}}" hint-placeholder-val="{{ false }}">
+<div style="max-width: 94%; padding: 10px 12px; border: 1px solid #0B3D91; border-radius: 6px; background: #F2F6FC; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #4A5568; font-weight: 600">{{m.propLabel}}</span>
+<span style="white-space: pre-wrap; overflow-wrap: anywhere">{{m.propText}}</span>
+<sc-if value="{{m.propOpen}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{m.accept}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Apply to the rule</button><button type="button" onClick="{{m.ignore}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Ignore</button></div>
+</sc-if>
+<sc-if value="{{m.propDone}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #4A5568">{{m.propState}}</span></sc-if>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<sc-if value="{{canDraft}}" hint-placeholder-val="{{ false }}"><div><button type="button" onClick="{{asstDraft}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Draft the rule with the assistant</button></div></sc-if>
+<div style="display: flex; gap: 8px">
+<label for="am" style="position: absolute; left: -9999px">Message to the assistant</label>
+<input id="am" value="{{asstMsg}}" onInput="{{onAsstMsg}}" placeholder="For example: ranges should keep both bounds" style="flex: 1 1 0; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<button type="button" onClick="{{asstSend}}" disabled="{{asstOff}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{asstOp}}">Send</button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<label for="rt" style="font-weight: 600; flex: 1 1 auto">Rule <span style="font-weight: 400; color: #4A5568">· in your own words</span></label>
+<div role="group" aria-label="Rule view" style="display: flex; gap: 4px">
+<button type="button" aria-pressed="{{editPressed}}" onClick="{{setEdit}}" style="height: 32px; padding: 0 12px; border-radius: 16px; font: inherit; font-size: 13px; {{editLook}}">Edit</button>
+<button type="button" aria-pressed="{{previewPressed}}" onClick="{{setPreview}}" style="height: 32px; padding: 0 12px; border-radius: 16px; font: inherit; font-size: 13px; {{previewLook}}">Preview</button>
+</div>
+</div>
+<sc-if value="{{ruleEdit}}" hint-placeholder-val="{{ true }}"><textarea id="rt" rows="9" value="{{ruleText}}" onInput="{{onRule}}" spellcheck="false" style="box-sizing: border-box; width: 100%; border: 1px solid #C6CEDB; border-radius: 6px; padding: 10px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #101828; resize: vertical; line-height: 1.55; background: #FFFFFF"></textarea></sc-if>
+<sc-if value="{{rulePreview}}" hint-placeholder-val="{{ false }}">
+<div role="region" aria-label="Rule preview" style="box-sizing: border-box; min-height: 120px; max-height: 320px; overflow: auto; border: 1px solid #D5DBE5; border-radius: 6px; padding: 10px 14px; background: #F7F9FC; display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{ruleBlocks}}" as="b" hint-placeholder-count="4">
+<div style="{{b.style}}"><sc-if value="{{b.hasMarker}}" hint-placeholder-val="{{ false }}"><span style="flex: none; width: 20px; color: #4A5568">{{b.marker}}</span></sc-if><span style="min-width: 0; overflow-wrap: anywhere"><sc-for list="{{b.parts}}" as="s" hint-placeholder-count="2"><span style="{{s.look}}">{{s.t}}</span></sc-for></span></div>
+</sc-for>
+<sc-if value="{{ruleEmpty}}" hint-placeholder-val="{{ false }}"><span style="color: #4A5568">Nothing written yet.</span></sc-if>
+</div>
+</sc-if>
+<span style="font-size: 13px; color: #4A5568">Write what the model must do and what to do when it finds something unusual. Markdown works: use a list with - for each case. The patterns found below can be added with one click, and anything you do not mention falls under “Anything else”.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-weight: 600">Patterns found</span>
+<span style="font-size: 13px; color: #4A5568">Found in the reviewed values of this extraction, with a real example each. They are suggestions: write the action in your own words or pick a quick one, then add it to the rule. The rule can also say things that are not here.</span>
+<div style="border: 1px solid #E3E8EF; border-radius: 6px; overflow: hidden">
+<sc-for list="{{pats}}" as="k" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-bottom: 1px solid #EEF1F5">
+<div style="display: flex; align-items: baseline; gap: 4px 10px; flex-wrap: wrap">
+<span style="font-weight: 500">{{k.name}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568">{{k.count}}</span>
+<sc-if value="{{k.hasExample}}" hint-placeholder-val="{{ true }}"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #3B4557; overflow-wrap: anywhere">{{k.example}}</span></sc-if>
+<sc-if value="{{k.inRule}}" hint-placeholder-val="{{ false }}"><span style="margin-left: auto; padding: 1px 8px; border-radius: 10px; background: #DDF3E4; color: #0F5A2C; font-size: 12px; font-weight: 600">In the rule</span></sc-if>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{k.chips}}" as="q" hint-placeholder-count="2"><button type="button" onClick="{{q.pick}}" style="min-height: 34px; padding: 2px 10px; border: 1px solid #C6CEDB; border-radius: 17px; background: #FFFFFF; color: #3B4557; font: inherit; font-size: 12px; text-align: left">{{q.label}}</button></sc-for>
+</div>
+<div style="display: flex; gap: 8px">
+<input value="{{k.act}}" onInput="{{k.onAct}}" aria-label="{{k.aria}}" placeholder="What should the model do?" style="flex: 1 1 0; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<button type="button" onClick="{{k.add}}" disabled="{{k.addOff}}" style="height: 40px; padding: 0 12px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600; opacity: {{k.addOp}}">Add to the rule</button>
+</div>
+</div>
+</sc-for>
+</div>
+<button type="button" onClick="{{openCust}}" aria-expanded="{{custOpenStr}}" style="align-self: flex-start; min-height: 40px; padding: 0 2px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px">{{custLabel}}</button>
+<sc-if value="{{custOpen}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #0B3D91; border-radius: 6px; background: #F2F6FC; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+<label for="cn" style="font-weight: 600">When the value is…</label>
+<input id="cn" value="{{custName}}" onInput="{{onCustName}}" placeholder="For example: a value in a figure caption" style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<label for="ca" style="font-weight: 600">the model should…</label>
+<input id="ca" value="{{custAct}}" onInput="{{onCustAct}}" placeholder="For example: keep it and flag it" style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{cancelCust}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>
+<button type="button" onClick="{{addCust}}" disabled="{{custOff}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{custOp}}">Add to the rule</button>
+</div>
+</div>
+</sc-if>
+</div>
+
+</sc-if>
+
+<sc-if value="{{showNumber}}" hint-placeholder-val="{{ true }}">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-weight: 600">Target unit</span>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-height: 40px">
+<span style="display: inline-flex; align-items: center; height: 40px; padding: 0 12px; border: 1px solid #D5DBE5; border-radius: 6px; background: #F7F9FC; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #071B3F">{{sel.target}}</span>
+<a href="Schema.dc.html" style="font-size: 13px">Set in Schema</a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<label for="dec" style="font-weight: 600">Decimals</label>
+<select id="dec" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<option>As in the paper</option><option>Round to 1</option><option>Round to 0</option>
+</select>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showOutput}}" hint-placeholder-val="{{ true }}">
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+<legend style="font-weight: 600; padding: 0; margin-bottom: 4px">Output fields</legend>
+<span style="font-size: 13px; color: #4A5568; margin-bottom: 4px">What the model returns for each value. The type suggests them: rename, remove or add the ones you need.</span>
+<sc-for list="{{fieldRows}}" as="o" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 8px">
+<input type="checkbox" checked="{{o.on}}" disabled="{{o.fixed}}" onChange="{{o.toggle}}" aria-label="Include {{o.label}}" style="flex: none; width: 18px; height: 18px; accent-color: #0B3D91">
+<input value="{{o.label}}" onInput="{{o.onLabel}}" aria-label="{{o.aria}}" style="flex: 1 1 0; min-width: 0; height: 36px; box-sizing: border-box; border: 1px solid #D5DBE5; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<sc-if value="{{o.canRemove}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{o.remove}}" aria-label="Remove {{o.label}}" style="flex: none; width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 18px; line-height: 1">×</button></sc-if>
+</div>
+</sc-for>
+<div style="display: flex; gap: 8px; margin-top: 2px">
+<label for="fn" style="position: absolute; left: -9999px">New output field</label>
+<input id="fn" value="{{fieldNew}}" onInput="{{onFieldNew}}" placeholder="Add a field, for example Heat number" style="flex: 1 1 0; min-width: 0; height: 36px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+<button type="button" onClick="{{addField}}" disabled="{{fieldOff}}" style="height: 36px; padding: 0 12px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600; opacity: {{fieldOp}}">Add</button>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" checked="{{followOn}}" onChange="{{toggleFollow}}" style="width: 18px; height: 18px; accent-color: #0B3D91"><span>Follow the format of my examples</span></label>
+</fieldset>
+</sc-if>
+
+<sc-if value="{{showCategory}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap"><span style="font-weight: 600">Allowed values</span><a href="Schema.dc.html" style="font-size: 13px">Set in Schema</a></span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{sel.vocab}}" as="w" hint-placeholder-count="6"><span style="display: inline-flex; align-items: center; height: 30px; padding: 0 10px; border: 1px solid #D5DBE5; border-radius: 15px; background: #F7F9FC; font-size: 13px; color: #3B4557">{{w}}</span></sc-for>
+</div>
+<span style="font-size: 13px; color: #4A5568">The model picks one of these. If none fits, it proposes a value and flags it for you.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{showCalculated}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px; background: #F7F9FC; border: 1px solid #E3E8EF; border-radius: 6px; padding: 12px 14px">
+<span style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap"><span style="font-weight: 600">Calculated in Schema</span><a href="Schema.dc.html" style="font-size: 13px">Edit the formula</a></span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #071B3F">{{sel.formula}}</span>
+<span style="font-size: 13px; color: #4A5568">Nothing to normalize here. The value is calculated from its inputs, never by the model, and it updates when an input is validated or corrected.</span>
+<div style="display: flex; flex-direction: column; gap: 4px; margin-top: 4px">
+<sc-for list="{{sel.inputs}}" as="i" hint-placeholder-count="2">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{i.dot}}"></span>{{i.label}} · {{i.status}}</span>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showKeep}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 8px; background: #F7F9FC; border: 1px solid #E3E8EF; border-radius: 6px; padding: 12px 14px">
+<span style="font-weight: 600">Exported as reviewed</span>
+<span style="font-size: 13px; color: #3B4557">{{sel.keepText}}</span>
+<label style="display: flex; align-items: center; gap: 8px; min-height: 36px"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #0B3D91"><span>Only tidy spacing and capital letters</span></label>
+</div>
+</sc-if>
+
+<sc-if value="{{showContext}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="ctx" style="font-weight: 600">Context for the model</label>
+<textarea id="ctx" rows="4" value="{{sel.context}}" onInput="{{onContext}}" style="box-sizing: border-box; width: 100%; border: 1px solid #C6CEDB; border-radius: 6px; padding: 10px 12px; font: inherit; font-size: 14px; color: #101828; resize: vertical; line-height: 1.45"></textarea>
+<span style="font-size: 13px; color: #4A5568">What an expert would tell a colleague before they normalize this feature. Sent with every value.</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-weight: 600">Examples</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{sel.examples}}" as="x" hint-placeholder-count="2">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid #E3E8EF; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">
+<span style="overflow-wrap: anywhere">{{x.raw}}</span><span aria-hidden="true" style="color: #8A94A6">→</span><span style="color: #071B3F; overflow-wrap: anywhere">{{x.out}}</span>
+<sc-if value="{{x.canRemove}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{x.remove}}" aria-label="Remove the example {{x.raw}}" style="width: 32px; height: 32px; margin: -4px -6px -4px 0; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 18px; line-height: 1">×</button></sc-if>
+</div>
+</sc-for>
+</div>
+<button type="button" onClick="{{openEx}}" aria-expanded="{{exOpenStr}}" style="align-self: flex-start; min-height: 40px; padding: 0 2px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px">{{exLabel}}</button>
+<sc-if value="{{exOpen}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #0B3D91; border-radius: 6px; background: #F2F6FC; padding: 12px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-weight: 600">Pick a reviewed value</span>
+<sc-if value="{{exNone}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #4A5568">All the reviewed values shown for this feature are already examples.</span></sc-if>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{exCands}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="min-height: 40px; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 4px 10px; border: 1px solid #C6CEDB; border-radius: 6px; font: inherit; font-size: 13px; text-align: left; {{c.look}}"><span style="font-family: 'IBM Plex Mono', monospace; overflow-wrap: anywhere">{{c.raw}}</span><span style="margin-left: auto; font-size: 12px; color: #4A5568">{{c.hint}}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{exHasSel}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="exo" style="font-weight: 600">How should it be normalized?</label>
+<input id="exo" value="{{exOut}}" onInput="{{onExOut}}" style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: #101828; background: #FFFFFF">
+<span style="font-size: 12px; color: #4A5568">Write the result exactly as you want the model to give it. It is prefilled with the model’s result when there is one.</span>
+</div>
+</sc-if>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{cancelEx}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>
+<button type="button" onClick="{{addEx}}" disabled="{{exOff}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{exOp}}">Add example</button>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #E3E8EF; padding-top: 14px">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{tryIt}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600">{{tryLabel}}</button>
+<span style="font-size: 13px; color: #4A5568">The model ({{tryModel}}) normalizes 10 values with this rule. Nothing is saved.</span>
+</div>
+<sc-if value="{{showTry}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #E3E8EF; border-radius: 6px; overflow: hidden">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 8px 12px; background: #F7F9FC; font-size: 13px; font-weight: 600; color: #3B4557"><span>Reviewed value</span><span>Model's result</span></div>
+<sc-for list="{{sel.trial}}" as="t" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 7px 12px; border-top: 1px solid #EEF1F5; font-size: 13px; align-items: start">
+<span style="font-family: 'IBM Plex Mono', monospace; overflow-wrap: anywhere">{{t.raw}}</span>
+<span style="display: flex; flex-direction: column"><span style="font-family: 'IBM Plex Mono', monospace; color: #071B3F; overflow-wrap: anywhere">{{t.out}}</span><sc-if value="{{t.flag}}" hint-placeholder-val="{{ false }}"><span style="color: #6B4A00; font-size: 12px">{{t.note}}</span></sc-if></span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+
+<div style="margin-top: auto; padding: 14px 22px; border-top: 1px solid #E3E8EF; display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<span style="font-size: 13px; color: #4A5568; flex: 1 1 160px">Saving a changed rule marks the values it normalized as <i>Outdated</i>.</span>
+<button type="button" onClick="{{openHist}}" disabled="{{histOff}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px; opacity: {{histOp}}">Rule history</button>
+<button type="button" onClick="{{saveRule}}" disabled="{{archivedOff}}" style="height: 40px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{histOpSave}}">{{saveLabel}}</button>
+</div>
+</aside>
+
+</div>
+</sc-if>
+</sc-if>
+</div>
+<sc-if value="{{dlgOpen}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{dlgBackdrop}}" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 12; background: rgba(7,27,63,0.45); display: flex; align-items: flex-start; justify-content: center; padding: 80px 24px 24px; box-sizing: border-box">
+
+<sc-if value="{{dRun}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dr-t" style="width: 700px; max-width: 100%; max-height: 860px; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 12px 12px 24px; border-bottom: 1px solid #E3E8EF">
+<h2 id="dr-t" style="margin: 0; flex: 1 1 0; font-size: 20px; font-weight: 600; color: #071B3F">{{lnTitle}}</h2>
+<button type="button" onClick="{{closeDlg}}" aria-label="Close" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 20px">×</button>
+</div>
+<div style="padding: 16px 24px 20px; display: flex; flex-direction: column; gap: 14px; overflow: auto">
+
+<sc-if value="{{lnSetup}}" hint-placeholder-val="{{ true }}">
+<span style="color: #3B4557">The model applies the saved rule of each ready feature to the reviewed values of this extraction. You validate the results afterwards.</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="lnm" style="font-weight: 600">Model</label>
+<select id="lnm" value="{{lnModel}}" onChange="{{onLnModel}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{lnModels}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+<span style="font-size: 13px; color: #4A5568">Only the models enabled in <a href="Settings.dc.html">Settings</a>.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="lnk" style="font-weight: 600">API key</label>
+<select id="lnk" value="{{lnKey}}" onChange="{{onLnKey}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{lnKeys}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+</div>
+<dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px">
+<dt style="color: #4A5568">Features</dt><dd style="margin: 0">{{lnFeatures}}</dd>
+<dt style="color: #4A5568">Values</dt><dd style="margin: 0">{{lnValues}}</dd>
+<dt style="color: #4A5568">System prompt</dt><dd style="margin: 0">Normalization {{lnSysV}} · <a href="Settings.dc.html">Settings</a></dd>
+<dt style="color: #4A5568">Estimate</dt><dd style="margin: 0">{{lnEstimate}}</dd>
+</dl>
+<sc-if value="{{lnOver}}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 6px; background: #FFF3D6; color: #5C3D00; font-size: 13px">The estimate is over your warning limit of $5. You can still run it. Change the limit in <a href="Settings.dc.html">Settings</a>.</div></sc-if>
+<sc-if value="{{lnKeyBad}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 6px; background: #FDE7E4; color: #7A1B12; font-size: 13px">
+<span>{{lnKeyWarn}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-if value="{{lnHasAlt}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{lnUseAlt}}" style="height: 40px; padding: 0 14px; border: 1px solid #7A1B12; border-radius: 6px; background: #FFFFFF; color: #7A1B12; font: inherit; font-size: 14px; font-weight: 600">{{lnAltLabel}}</button></sc-if>
+<a href="Settings.dc.html" style="display: inline-flex; align-items: center; min-height: 40px; color: #7A1B12">Raise the limit in Settings</a>
+</div>
+</div>
+</sc-if>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>
+<button type="button" onClick="{{doLaunch}}" disabled="{{lnOff}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{lnOp}}">{{lnBtn}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{lnShowRows}}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{lnActive}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between"><span>{{lnProgressText}}</span><span style="font-family: 'IBM Plex Mono', monospace">{{lnPct}}</span></div>
+<div style="height: 8px; border-radius: 4px; background: #E3E8EF; overflow: hidden"><div style="height: 8px; background: #0B3D91; width: {{lnPct}}"></div></div>
+</div>
+</sc-if>
+<sc-if value="{{lnDone}}" hint-placeholder-val="{{ false }}"><div style="padding: 10px 12px; border-radius: 6px; background: #DDF3E4; color: #0F5A2C">{{lnDoneText}}</div></sc-if>
+<div style="border: 1px solid #E3E8EF; border-radius: 6px; overflow: hidden">
+<sc-for list="{{lnRows}}" as="x" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: minmax(0, 1.2fr) 90px minmax(0, 1.4fr); gap: 12px; align-items: center; min-height: 44px; padding: 0 14px; border-bottom: 1px solid #EEF1F5">
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{x.label}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #4A5568">{{x.count}}</span>
+<span style="display: flex; align-items: center; gap: 6px; {{x.look}}"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: {{x.dot}}"></span><span style="min-width: 0">{{x.status}}</span>
+<sc-if value="{{x.canRetry}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{x.retry}}" style="margin-left: auto; height: 32px; padding: 0 8px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px; text-decoration: underline">Retry</button></sc-if></span>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{lnActive}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{lnPause}}" style="height: 44px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">{{lnPauseLabel}}</button>
+<button type="button" onClick="{{lnCancel}}" style="height: 44px; padding: 0 16px; border: 1px solid #B42318; border-radius: 6px; background: #FFFFFF; color: #B42318; font: inherit; font-size: 14px; font-weight: 600">Cancel</button>
+</div>
+<span style="font-size: 13px; color: #4A5568">Pausing or cancelling keeps every feature already normalized.</span>
+<button type="button" onClick="{{lnFinish}}" style="align-self: flex-start; padding: 0; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 13px; text-decoration: underline">Preview the finished run</button>
+</sc-if>
+<sc-if value="{{lnDone}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<a href="Normalize-Validate.dc.html" onClick="{{goValidate}}" style="display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Go to Validate</a>
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 16px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Close</button>
+</div>
+</sc-if>
+</sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{dHist}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dh-t" style="width: 1000px; max-width: 100%; max-height: 860px; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 12px 12px 24px; border-bottom: 1px solid #E3E8EF">
+<div style="flex: 1 1 0; min-width: 0"><h2 id="dh-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Rule history · {{hist.feature}}</h2><span style="font-size: 13px; color: #4A5568">Each saved version is kept (the 20 latest per feature). Restoring one makes a new version and marks its normalized values Outdated.</span></div>
+<button type="button" onClick="{{closeDlg}}" aria-label="Close" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 20px">×</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; min-height: 0; overflow: auto">
+<div style="flex: 0 0 280px; max-width: 100%; border-right: 1px solid #E3E8EF; box-sizing: border-box">
+<sc-for list="{{hist.versions}}" as="v" hint-placeholder-count="2">
+<button type="button" onClick="{{v.pick}}" style="width: 100%; min-height: 56px; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 16px; border: 0; border-bottom: 1px solid #EEF1F5; background: {{v.rowBg}}; text-align: left; font: inherit; font-size: 14px; color: #101828">
+<span style="font-weight: 600">{{v.label}}<sc-if value="{{v.current}}" hint-placeholder-val="{{ false }}"><span style="margin-left: 8px; padding: 1px 8px; border-radius: 10px; background: #DDF3E4; color: #0F5A2C; font-size: 12px; font-weight: 600">Current</span></sc-if></span>
+<span style="font-size: 12px; color: #4A5568">{{v.by}} · {{v.when}}</span>
+<sc-if value="{{v.hasNote}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5568">{{v.note}}</span></sc-if>
+</button>
+</sc-for>
+</div>
+<div style="flex: 1 1 460px; min-width: 0; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box">
+<sc-if value="{{hist.empty}}" hint-placeholder-val="{{ false }}"><span style="color: #4A5568">No version saved yet. Save the rule to start its history.</span></sc-if>
+<sc-if value="{{hist.has}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap">
+<span style="flex: 1 1 200px; font-weight: 600; color: #071B3F">{{hist.title}}</span>
+<div role="group" aria-label="View" style="display: flex; gap: 6px">
+<button type="button" aria-pressed="{{hist.cmpPressed}}" onClick="{{hist.setCompare}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{hist.cmpLook}}">Compare with current</button>
+<button type="button" aria-pressed="{{hist.txtPressed}}" onClick="{{hist.setText}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{hist.txtLook}}">Text</button>
+</div>
+</div>
+<sc-if value="{{hist.compare}}" hint-placeholder-val="{{ true }}">
+<span style="font-size: 13px; color: #4A5568">{{hist.legend}}</span>
+<div style="border: 1px solid #D5DBE5; border-radius: 6px; overflow: auto; max-height: 420px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.5">
+<sc-for list="{{hist.rows}}" as="d" hint-placeholder-count="6"><div style="display: flex; gap: 8px; padding: 2px 12px; background: {{d.bg}}; color: {{d.color}}"><span style="flex: none; width: 14px">{{d.mark}}</span><span style="min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap">{{d.t}}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{hist.asText}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #D5DBE5; border-radius: 6px; overflow: auto; max-height: 420px; padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere">{{hist.text}}</div>
+</sc-if>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-if value="{{hist.canRestore}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{hist.restore}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Restore this version</button></sc-if>
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Close</button>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{dCopy}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dc-t" style="width: 560px; max-width: 100%; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="dc-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Copy rules from another extraction</h2>
+<span style="color: #3B4557">Rules of the features that exist in both schemas are copied as drafts. Values, validations and results are not copied.</span>
+<div style="border: 1px solid #E3E8EF; border-radius: 6px; overflow: hidden">
+<sc-for list="{{copyRows}}" as="x" hint-placeholder-count="1">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-bottom: 1px solid #EEF1F5"><span style="font-weight: 500">{{x.name}}</span><span style="font-size: 13px; color: #4A5568">{{x.note}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Close</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+</div>

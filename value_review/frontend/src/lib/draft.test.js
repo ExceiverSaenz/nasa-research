@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { savePill, uiOf, viewFromUi } from './draft.js';
 
 test('save status pill', () => {
-  assert.deepEqual(savePill(true, { kind: 'draft' }), { text: 'Unsaved changes', tone: 'unsure' });
+  assert.deepEqual(savePill(true, { kind: 'draft' }), { text: 'Unsaved changes', tone: 'unsaved', look: { background: '#FFF3CD', color: '#5C3F00' } });
   assert.equal(savePill(false, { kind: 'original' }).text, 'Original model output');
-  assert.equal(savePill(false, { kind: 'version', version: 3 }).text, 'Matches v3');
+  assert.equal(savePill(false, { kind: 'version', version: 3 }).text, 'Submitted');
   assert.match(savePill(false, { kind: 'draft', at: '2026-11-16T10:00:00Z', auto: true }).text, /^Draft saved automatically · /);
   assert.match(savePill(false, { kind: 'draft', at: '2026-11-16T10:00:00Z', auto: false }).text, /^Draft saved · /);
 });

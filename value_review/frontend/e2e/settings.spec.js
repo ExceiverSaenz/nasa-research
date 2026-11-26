@@ -1,69 +1,69 @@
-// Settings (OP-10, OP-12): folder pairs, validation, loading, and how the dialog behaves for mouse and keyboard.
+// The Settings page (canvas Settings.dc.html; AC-F11, AC-F12, ADR-015, ADR-017): six tabs, a Save per tab, values on
+// the server when it can hold them and in the browser otherwise; keys, models and System prompts are sample data.
 import { test, expect } from './fixtures.js';
 
-const openSettings = async (page) => {
-  await page.goto('/#/');
-  await page.getByRole('button', { name: 'Settings' }).click();
-  const dialog = page.getByRole('dialog', { name: 'Settings' });
-  await expect(dialog.getByRole('group')).toHaveCount(2);
-  return dialog;
-};
-
-test('keyboard: focus moves in, stays in, and returns to the gear', async ({ page }) => {
-  const dialog = await openSettings(page);
-  await expect.poll(() => page.evaluate(() => !!document.activeElement.closest('[role=dialog]'))).toBe(true);
-  for (let i = 0; i < 40; i++) await page.keyboard.press('Tab');
-  expect(await page.evaluate(() => !!document.activeElement.closest('[role=dialog]'))).toBe(true);
-  for (let i = 0; i < 5; i++) await page.keyboard.press('Shift+Tab');
-  expect(await page.evaluate(() => !!document.activeElement.closest('[role=dialog]'))).toBe(true);
-  await page.keyboard.press('Escape');
-  await expect(dialog).toHaveCount(0);
-  await expect(page.getByRole('button', { name: 'Settings' })).toBeFocused();
+test('the gear opens the Settings page with its six tabs', async ({ page }) => {
+  await page.goto('/#/review');
+  await page.getByRole('link', { name: 'Settings' }).click();
+  await expect(page).toHaveURL(/#\/settings$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
+  await expect(page.getByRole('tab')).toHaveText(['Profile', 'Workspace', 'Models and API keys', 'System prompt', 'Extraction', 'Review and export']);
+  await expect(page.getByRole('tab', { name: 'Profile' })).toHaveAttribute('aria-selected', 'true');
+  await page.getByRole('tab', { name: 'Review and export' }).click();
+  await expect(page).toHaveURL(/#\/settings\/review$/);
 });
 
-test('fields are named by their label and described by their hint', async ({ page }) => {
-  const dialog = await openSettings(page);
-  const pair = dialog.getByRole('group', { name: 'Model B' });
-  await expect(pair.getByRole('textbox', { name: 'Name', exact: true })).toHaveValue('Model B');
-  const data = pair.getByRole('textbox', { name: 'Data folder (LLM results)', exact: true });
-  await expect(data).toHaveAccessibleDescription(/one file per paper/i);
+test('profile: the display name goes to the server, the initials to the browser and the header', async ({ page, server }) => {
+  await page.goto('/#/settings');
+  const save = page.getByRole('region', { name: 'Profile' }).getByRole('button', { name: 'Save' });
+  await expect(save).toBeDisabled();   // nothing changed yet
+  await page.getByLabel('Display name').fill('Ana López');
+  await expect(page.getByLabel('Initials')).toHaveValue('AL');   // follows the name while they matched
+  await save.click();
+  await expect(page.getByRole('status')).toContainText('New versions are marked as modified by “Ana López”.');
+  expect((await server.api('/settings')).reviewer_name).toBe('Ana López');
+  await expect(page.locator('header .who')).toContainText('Ana López');
+  await expect(page.locator('header .avatar')).toHaveText('AL');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('vr-settings')).initials)).toBe('AL');
 });
 
-test('invalid folders are flagged per field and nothing is saved', async ({ page, server }) => {
-  const dialog = await openSettings(page);
-  await dialog.getByRole('button', { name: '+ Add folder pair' }).click();
-  const pair = dialog.getByRole('group').last();
-  await pair.getByRole('textbox', { name: 'Name', exact: true }).fill('model a');   // same name, other case
-  await pair.getByRole('textbox', { name: 'Data folder (LLM results)', exact: true }).fill('C:\\no\\such\\folder');
-  await pair.getByRole('textbox', { name: 'Papers folder (PDFs)', exact: true }).fill(`"${server.root}\\pdfs"`);
-  await dialog.getByRole('button', { name: 'Save' }).click();
-  await expect(dialog.getByText('Check the fields marked below. Nothing was saved.')).toBeVisible();
-  const name = pair.getByRole('textbox', { name: 'Name', exact: true });   // still named "Name" with an error shown
-  await expect(name).toHaveAttribute('aria-invalid', 'true');
-  await expect(name).toHaveAccessibleDescription('Another pair has this name.');
-  await expect(pair.getByRole('textbox', { name: 'Data folder (LLM results)', exact: true })).toHaveAccessibleDescription('This folder does not exist.');
-  await expect(pair.getByRole('textbox', { name: 'Papers folder (PDFs)', exact: true })).toHaveAttribute('aria-invalid', 'false');
-  expect((await server.api('/settings')).sources.map((s) => s.id)).toEqual(['default', 'model-b']);
+test('review and export: autosave off and the separator stay in the browser; limits are checked', async ({ page, server }) => {
+  await page.goto('/#/settings/review');
+  const card = page.getByRole('region', { name: 'Review and export' });
+  await card.getByLabel('Save the draft automatically').selectOption('0');
+  await card.getByLabel('Separator').selectOption(';');
+  await card.getByLabel('Review versions per paper').fill('500');
+  await expect(card.getByText('Between 1 and 200.')).toBeVisible();
+  await expect(card.getByRole('button', { name: 'Save' })).toBeDisabled();
+  await card.getByLabel('Review versions per paper').fill('10');
+  await expect(card.getByText('Lowering a limit deletes the oldest versions')).toBeVisible();
+  await card.getByRole('button', { name: 'Save' }).click();
+  await expect(page.getByRole('status')).toContainText('Review and the downloads use these settings.');
+  expect((await server.api('/settings')).keep_versions).toBe(10);
+  const prefs = await page.evaluate(() => JSON.parse(localStorage.getItem('vr-settings')));
+  expect([prefs.autosave_seconds, prefs.csv.delim]).toEqual([0, ';']);
+  await page.goto('/#/review/default/paper/7');
+  await expect(page.locator('header')).toContainText('Autosave off');
 });
 
-test('loading reports what each paper is missing', async ({ page }) => {
-  const dialog = await openSettings(page);
-  await dialog.getByRole('button', { name: 'Load papers again' }).click();
-  const banner = dialog.getByRole('status').first();
-  await expect(banner).toContainText('Model B: 1 already loaded.');
-  await expect(banner).toContainText('Missing PDF (LLM results found, not loaded): 1 paper: 11.');
-  await expect(banner).toContainText('Missing LLM results (PDF found, not loaded): 1 paper: 12.');
-  await expect(banner).toHaveClass(/warn/);
+test('System prompt: a save is a new version and an older one can be restored (sample data)', async ({ page }) => {
+  await page.goto('/#/settings/system-prompt');
+  const card = page.getByRole('region', { name: 'System prompts' });
+  await expect(card).toContainText('Sample data · backend pending');
+  await expect(card).toContainText('Current: v3');
+  await card.getByLabel('System prompt').fill('Write a short prompt.');
+  await card.getByRole('button', { name: 'Save as v4' }).click();
+  await expect(card).toContainText('Current: v4');
+  await card.getByRole('button', { name: 'Restore' }).first().click();
+  await expect(page.getByRole('status')).toContainText('restored as v5');
 });
 
-test('mouse: a drag that ends outside keeps it open; a click outside closes it', async ({ page }) => {
-  const dialog = await openSettings(page);
-  const box = await dialog.getByRole('textbox', { name: 'Name', exact: true }).first().boundingBox();
-  await page.mouse.move(box.x + 5, box.y + 5);
-  await page.mouse.down();
-  await page.mouse.move(5, 5);
-  await page.mouse.up();
-  await expect(dialog).toBeVisible();
-  await page.mouse.click(5, 5);
-  await expect(dialog).toHaveCount(0);
+test('Extraction settings are kept in the browser, with ranges', async ({ page }) => {
+  await page.goto('/#/settings/extraction');
+  const card = page.getByRole('region', { name: 'Extraction' });
+  await card.getByLabel('Papers at the same time').fill('11');
+  await expect(card.getByText('Between 1 and 10.')).toBeVisible();
+  await card.getByLabel('Papers at the same time').fill('4');
+  await card.getByRole('button', { name: 'Save' }).click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('vr-settings')).extraction.parallel)).toBe(4);
 });
