@@ -683,7 +683,7 @@ unlike `keep_schema_versions`).
 
 ## ADR-020 · API keys in a separate secrets file
 
-**Status** · Proposed (option chosen by the user on 2026-11-26; built with Extraction)
+**Status** · Accepted (option chosen by the user on 2026-11-26; built on 2026-11-26 with the key tests, ADR-021)
 **Date** · 2026-11-26
 **Reference** · Settings rules 3, 4, 5, 8; PEND-04
 
@@ -703,15 +703,84 @@ when Extraction calls a provider, which would be the first request leaving the m
 
 ### Decision and rationale
 
-The secrets file, when Extraction is built: one entry per key `{id, provider, name, key, monthly_limit, default}`;
-written atomically with owner-only permissions; never included in exports, backups made by the tool, logs or error
-messages.
+`annotations/secrets.json` (`storage/secrets.py`, `schemas/secrets.schema.json`): one entry per key `{id, provider,
+name, key, url?, monthly_limit_usd, default, added_at, tested_at, models}`; written through a temporary file created
+owner-only, then replaced (mode 0600 on POSIX; on Windows the file inherits the user profile's permissions); never in
+exports, `settings.json`, logs or error messages. The API shows only the last 4 characters.
 
 ### Consequences
 
-- Until then the Models and API keys tab stays sample data (PEND-04).
-- Testing a key is the first outbound request; it gets its own ADR with the HTTP client dependency.
+- The Models and API keys tab uses the service (PEND-04 closed for Settings).
+- Testing a key is the first outbound request: ADR-021.
 
 ### Verification
 
-To be defined with Extraction.
+`test_keys.py` (nothing leaked in responses or errors, mode 0600 on Linux, damaged file reported);
+`e2e/keys.spec.js` (the key never comes back to the page).
+
+## ADR-021 · Key tests are the first outbound requests, made with the standard library
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · BR-K01, BR-K07, AC-K02 to AC-K04, AC-K08
+
+### Context
+
+Until now no request left the machine (02-repository-context.md). Settings rule 3 asks to test a key when it is saved,
+and Extraction will need the providers anyway.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Test with the provider's "list models" endpoint, through `urllib.request` | No new dependency; one small module; the list also feeds the models table | Four request shapes to keep; no retries |
+| Each provider's own SDK (`anthropic`, `openai`, `google-genai`) | Maintained by the providers; retries and typed errors | Three new dependencies and their trees for one GET each, before Extraction needs them |
+| Do not test; save as typed | No outbound request | A wrong key is found only when a run fails |
+
+### Decision and rationale
+
+`service/providers.py`: one `GET` per test to the provider's fixed address or to the own-server URL the user typed;
+15 s timeout, no retries, answer capped at 4 MB, `HTTPS_PROXY` honored. The key travels only in a header. Requests
+are made only by the key routes. When Extraction sends papers to the models it chooses its client under its own ADR
+(the providers' SDKs are the default candidates).
+
+### Consequences
+
+- The service now needs outbound HTTPS to the providers when a key is tested (the container has it by default).
+- Base URLs can be replaced by `VALUE_REVIEW_PROVIDER_URL_<PROVIDER>`, which the tests point at a local fake.
+
+### Verification
+
+`test_keys.py`, `e2e/keys.spec.js` against `tests/fake_provider.py`; by hand with a real key.
+
+## ADR-022 · A bundled model catalog for names and prices
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · Settings rule 5, AC-K01, OQ-K01
+
+### Context
+
+The Models table shows "About per paper". The providers' model lists do not carry prices.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| A file in the repository with names and prices per million tokens, plus every model a key lists | A cost for known models; nothing hidden | Prices go stale; edited by hand |
+| Only what the provider lists | Always current names | No cost at all |
+| Only the file | Simple | New models invisible until the file changes |
+
+### Decision and rationale
+
+`service/model_catalog.json` with `prices_as_of`, `tokens_per_paper` (60 000 input, 4 000 output) and the current
+Claude models at Anthropic's first-party rates as of 2026-11-03. OpenAI and Google models are shown from the key's list
+without a cost until a price source is added. A catalog model is usable only when a key listed it.
+
+### Consequences
+
+- The file must be updated when prices change; the date is shown with the prices in the API.
+
+### Verification
+
+`test_keys.py` `test_no_keys` (cost per paper), `test_models_follow_the_keys`.

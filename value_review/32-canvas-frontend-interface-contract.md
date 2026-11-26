@@ -58,7 +58,7 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 | PEND-01 | Runs and paper sets (schema, model, finish date of an extraction) | Review list, papers summary, "Results from" meta | "—", the PDF folder name |
 | PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of —" |
 | PEND-03 | Run metadata for "Results from" | Review header | Pair name and folder |
-| PEND-04 | API keys, usage, models | Settings · Models and API keys; Extraction | Sample data |
+| PEND-04 | API keys, usage, models | Extraction (model and key in Setup, spending) | Settings uses the service (ADR-020 to ADR-022); spending is 0 until runs record it |
 | PEND-05 | System prompts and their versions | Extraction; Normalize | Settings uses the service (ADR-019); the boards keep their sample prompts |
 | PEND-06 | Prompts, the assistant, prompt history | Extraction | Sample data |
 | PEND-07 | Test and launch of runs, progress, cost | Extraction | Sample data |
