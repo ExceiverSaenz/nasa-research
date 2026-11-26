@@ -18,7 +18,8 @@ _CACHE_MAX = 2000
 _CACHE_LOCK = threading.Lock()
 _EMPTY_STATE = {'schema': 'value-review-state/1', 'decisions': {}, 'column_moves': {}, 'record_moves': {}, 'record_edits': {},
                 'added_records': [], 'added_values': [], 'boxes': {}}
-SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5}
+SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5,
+                     'keep_schema_versions': 20}   # the last: OP-S12, 22-schema-interface-contract.md
 
 
 def _dumps(data):

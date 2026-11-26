@@ -1,11 +1,21 @@
 // Hash routes: #/ (papers of the active folder pair), #/source/<pair>/paper/<id> (review of a paper of that pair)
-// and #/paper/<id> (a paper of the active pair, links made before there were several pairs). Anything else: Papers.
+// and #/paper/<id> (a paper of the active pair, links made before there were several pairs); #/schemas and
+// #/schemas/<id> the Schema section. Anything else: Papers.
 const REVIEW = /^#\/(?:source\/([a-z0-9][a-z0-9-]{0,39})\/)?paper\/(\d{1,4})$/;
+
+// The Schema section: #/schemas (list) and #/schemas/<id> (editor), 22-schema-interface-contract.md.
+const SCHEMA = /^#\/schemas(?:\/([a-z0-9][a-z0-9-]{0,63}))?\/?$/;
 
 export function parseRoute(hash) {
   const m = (hash || '').match(REVIEW);
-  return m ? { view: 'review', source: m[1] || null, paper: m[2] } : { view: 'papers' };
+  if (m) return { view: 'review', source: m[1] || null, paper: m[2] };
+  const s = (hash || '').match(SCHEMA);
+  if (s) return s[1] ? { view: 'schema', schema: s[1] } : { view: 'schemas' };
+  return { view: 'papers' };
 }
+
+export const SCHEMAS_HASH = '#/schemas';
+export const schemaHash = (id) => `#/schemas/${id}`;
 
 export const reviewHash = (source, paper) => (source ? `#/source/${source}/paper/${paper}` : `#/paper/${paper}`);
 

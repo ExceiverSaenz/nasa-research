@@ -7,7 +7,8 @@ from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
 FOLDER = Path(__file__).resolve().parent
-NAMES = ('state', 'draft', 'version', 'export', 'original')
+NAMES = ('state', 'draft', 'version', 'export', 'original',
+         'schema-content', 'schema-version', 'schema-draft', 'schema-meta')   # the last four: 22-schema-interface-contract.md
 
 
 @lru_cache(maxsize=None)

@@ -57,4 +57,23 @@ export const api = {
     (await request(`${P()}/papers/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
   pageUrl: (id, page, width) => `${BASE}${P()}/papers/${encodeURIComponent(id)}/pages/${page}/image?w=${width}`,
   exportUrl: (id, n, kind) => `${BASE}${P()}/papers/${encodeURIComponent(id)}/versions/${n}/export.${kind}`,
+
+  // Schemas (22-schema-interface-contract.md): global, not per folder pair.
+  schemas: async () => (await request('/schemas')).data.schemas,
+  schema: async (id) => (await request(`/schemas/${encodeURIComponent(id)}`)).data,
+  createSchema: async (body) => (await request('/schemas', { method: 'POST', body })).data,
+  renameSchema: async (id, name) => (await request(`/schemas/${encodeURIComponent(id)}`, { method: 'PATCH', body: { name } })).data,
+  deleteSchema: async (id) => { await request(`/schemas/${encodeURIComponent(id)}`, { method: 'DELETE' }); },
+  saveSchemaDraft: async (id, baseVersion, content, { keepalive = false } = {}) =>
+    (await request(`/schemas/${encodeURIComponent(id)}/draft`, { method: 'PUT', body: { base_version: baseVersion, content }, keepalive })).data,
+  deleteSchemaDraft: async (id) => { await request(`/schemas/${encodeURIComponent(id)}/draft`, { method: 'DELETE' }); },
+  saveSchemaVersion: async (id, version, content, note = '') =>
+    (await request(`/schemas/${encodeURIComponent(id)}/versions`, { method: 'POST', body: { content, note }, headers: { 'If-Match': `"${version}"` } })).data,
+  schemaVersions: async (id) => (await request(`/schemas/${encodeURIComponent(id)}/versions`)).data,
+  schemaVersion: async (id, n) => (await request(`/schemas/${encodeURIComponent(id)}/versions/${n}`)).data,
+  importSchema: async (filename, dataBase64) => (await request('/schemas/import', { method: 'POST', body: { filename, data_base64: dataBase64 } })).data,
+  schemaTemplateUrl: () => `${BASE}/schemas/template.xlsx`,
+  schemaExportUrl: (id, n) => `${BASE}/schemas/${encodeURIComponent(id)}/versions/${n}/export.xlsx`,
+  restoreSchemaVersion: async (id, n, current) =>
+    (await request(`/schemas/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
 };

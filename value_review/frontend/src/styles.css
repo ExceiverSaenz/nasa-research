@@ -222,3 +222,46 @@ kbd { font-family: var(--mono); font-size: 12px; font-weight: 500; padding: 0 5p
 .paper-card > a { flex: 1 1 0; min-width: 0; padding: 12px 4px 12px 16px; color: var(--ink); text-decoration: none; display: flex; flex-direction: column; gap: 6px; }
 .paper-card .t { font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .paper-card > button { flex: none; width: 52px; border: 0; background: transparent; font-size: 22px; color: var(--ink-2); }
+
+/* Shared top bar and the Schema section (20-schema-specification.md) */
+.app-name { font-size: 14px; color: var(--ink-3); white-space: nowrap; }
+.app-nav { display: flex; align-self: stretch; gap: 4px; margin: -10px 0; }
+.app-nav a { display: flex; align-items: center; min-height: 44px; padding: 0 14px; color: var(--ink-2); text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent; }
+.app-nav a:hover { color: var(--navy); background: var(--soft); }
+.app-nav a[aria-current=page] { color: var(--navy-dark); font-weight: 600; border-bottom-color: var(--navy); }
+.schema-grid { min-width: 900px; }
+.schema-desc { display: block; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 520px; }
+.danger-text { color: var(--reject) !important; }
+.schema-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(320px, 1fr); gap: 20px; align-items: start; }
+.schema-layout > .panel { overflow: visible; }
+/* The details follow the list: a field picked far down shows its details at once */
+.schema-layout > aside.panel { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: auto; }
+.group-head { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--sel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--navy-dark); font-weight: 600; }
+.field-row { display: flex; align-items: center; gap: 6px; padding: 2px 12px 2px 16px; border-bottom: 1px solid var(--line-3); min-height: 48px; }
+.group-head[aria-current=true], .field-row[aria-current=true] { outline: 2px solid var(--navy); outline-offset: -2px; }
+.field-row[aria-current=true] { background: #F2F6FC; }
+.has-error { box-shadow: inset 4px 0 0 var(--reject); }
+.group-head .pick, .field-row .pick { flex: 1 1 0; min-width: 0; min-height: 40px; border: 0; background: transparent; text-align: left; padding: 4px 0; display: flex; flex-direction: column; justify-content: center; color: inherit; font-weight: inherit; }
+.group-head .pick { flex-direction: row; align-items: center; }
+.field-row .pick .muted { font-size: 12px; }
+.drag-handle { flex: none; width: 18px; text-align: center; color: var(--ink-3); cursor: grab; user-select: none; letter-spacing: -2px; }
+.drag-handle:active { cursor: grabbing; }
+.drop-here { box-shadow: inset 0 3px 0 var(--navy); }
+.mini-btn { flex: none; width: 32px; height: 32px; border: 1px solid var(--line-2); border-radius: 6px; background: #fff; color: var(--ink-2); }
+.mini-btn:disabled { opacity: 0.4; }
+.eyebrow { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+.model-text { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: var(--soft); border-radius: 6px; font-size: 13px; }
+.inputs-list { border: 1px solid var(--line-3); border-radius: 6px; padding: 6px 10px; max-height: 200px; overflow: auto; }
+.inputs-list legend { font-size: 12px; color: var(--ink-3); padding: 0 4px; }
+@media (max-width: 1023px) {
+  .schema-layout { grid-template-columns: 1fr; }
+  .schema-layout > aside.panel { top: auto; bottom: 0; z-index: 5; max-height: 45vh; box-shadow: 0 -4px 16px rgba(7, 27, 63, 0.12); }
+  .mini-btn { width: 44px; height: 44px; }
+  .app-nav a { padding: 0 10px; }
+  a.brand { width: 44px; height: 44px; }
+  .schema-grid .title-cell > a { display: inline-flex; align-items: center; min-height: 44px; }
+  .schema-page .btn, .schema-page .field input, .schema-page .field select { height: 44px; min-height: 44px; }
+  .schema-page .crumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+  .schema-page .check-row { min-height: 44px; }
+  .group-head .btn.link, .field-row .pick, .group-head .pick { min-height: 44px; }
+}

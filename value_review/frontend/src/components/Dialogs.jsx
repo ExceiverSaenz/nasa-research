@@ -30,7 +30,7 @@ export function ShortcutsDialog({ onClose }) {
   );
 }
 
-function Dialog({ id, title, intro, children, onCancel, onOk, okLabel, error }) {
+export function Dialog({ id, title, intro, children, onCancel, onOk, okLabel, error, danger = false }) {
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onCancel(); };
     window.addEventListener('keydown', onKey);
@@ -45,7 +45,7 @@ function Dialog({ id, title, intro, children, onCancel, onOk, okLabel, error }) 
         <div className="modal-body">{children}{error && <span className="error-text" role="alert">{error}</span>}</div>
         <div className="modal-foot" style={{ justifyContent: 'flex-end' }}>
           <button type="button" className="btn big" onClick={onCancel}>Cancel</button>
-          <button type="submit" className="btn big primary">{okLabel}</button>
+          <button type="submit" className={danger ? 'btn big danger' : 'btn big primary'}>{okLabel}</button>
         </div>
       </form>
     </div>

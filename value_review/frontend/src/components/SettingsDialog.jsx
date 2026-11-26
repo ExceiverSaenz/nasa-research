@@ -56,9 +56,10 @@ export default function SettingsDialog({ onClose, onLoaded }) {
     e.preventDefault();
     const local = {};
     if (!values.reviewer_name.trim()) local.reviewer_name = 'Type a name.';
-    const keep = Number(values.keep_versions), auto = Number(values.autosave_minutes);
+    const keep = Number(values.keep_versions), auto = Number(values.autosave_minutes), keepSchemas = Number(values.keep_schema_versions);
     if (!Number.isInteger(keep) || keep < 1 || keep > 100) local.keep_versions = 'A whole number from 1 to 100.';
     if (!Number.isInteger(auto) || auto < 1 || auto > 60) local.autosave_minutes = 'A whole number from 1 to 60.';
+    if (!Number.isInteger(keepSchemas) || keepSchemas < 1 || keepSchemas > 200) local.keep_schema_versions = 'A whole number from 1 to 200.';
     values.sources.forEach((p, i) => {
       if (!p.name.trim()) local[`sources.${i}.name`] = 'Type a name.';
       if (!p.run_dir.trim()) local[`sources.${i}.run_dir`] = 'Type the folder.';
@@ -70,7 +71,7 @@ export default function SettingsDialog({ onClose, onLoaded }) {
     try {
       const sources = values.sources.map(({ key, ...p }) => (p.id ? p : { name: p.name, run_dir: p.run_dir, pdf_dir: p.pdf_dir }));
       const saved = await api.saveSettings({ reviewer_name: values.reviewer_name.trim(), keep_versions: keep, autosave_minutes: auto,
-        sources, active_source: values.active_source });
+        keep_schema_versions: keepSchemas, sources, active_source: values.active_source });
       const before = Object.fromEntries(initial.sources.filter((p) => p.id).map((p) => [p.id, p]));
       const toLoad = saved.sources.filter((p) => !sameFolders(before[p.id], p));
       take(saved);
@@ -136,6 +137,11 @@ export default function SettingsDialog({ onClose, onLoaded }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {field('keep_versions', 'Versions kept per paper', { type: 'number', min: 1, max: 100 })}
               {field('autosave_minutes', 'Autosave every (minutes)', { type: 'number', min: 1, max: 60 })}
+            </div>
+            <b style={{ marginTop: 8 }}>Schemas</b>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              {field('keep_schema_versions', 'Versions kept per schema', { type: 'number', min: 1, max: 200 },
+                'When a new version is saved and the limit is reached, the oldest is deleted.')}
             </div>
           </div>
         )}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/schema-meta.schema.json",
+  "title": "Metadata of one schema (annotations/schemas/<id>/schema.json): its identity and name, not versioned.",
+  "type": "object",
+  "required": ["schema", "schema_id", "name", "created_at", "created_by"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-schema-meta/1" },
+    "schema_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$", "description": "Folder name. Never reused, not even after the schema is moved to trash (BR-S09)." },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120, "description": "Shown in the list. Renaming changes only this file (OP-S08)." },
+    "created_at": { "type": "string", "format": "date-time" },
+    "created_by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "source": {
+      "type": "object",
+      "description": "How the schema was created.",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["blank", "copy", "import", "seed"] },
+        "schema_id": { "type": "string" },
+        "version": { "type": "integer", "minimum": 1 },
+        "filename": { "type": "string", "maxLength": 255 }
+      }
+    }
+  }
+}

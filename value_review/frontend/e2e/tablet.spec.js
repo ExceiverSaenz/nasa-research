@@ -21,3 +21,17 @@ test('Papers and the review screens fit and are easy to touch', async ({ page })
   expect(await noHorizontalScroll(page)).toBe(true);
   expect(await smallTargets(page)).toEqual([]);
 });
+
+test('the Schema list and editor fit and are easy to touch (AC-S15)', async ({ page }) => {
+  await page.goto('/#/schemas');
+  await expect(page.getByRole('row', { name: /Tensile properties/ })).toBeVisible();
+  expect(await noHorizontalScroll(page)).toBe(true);
+  expect(await smallTargets(page)).toEqual([]);
+
+  await page.getByRole('link', { name: 'Tensile properties' }).tap();
+  await expect(page.getByRole('heading', { level: 1, name: 'Tensile properties' })).toBeVisible();
+  await page.getByRole('button', { name: /^Yield strength/ }).tap();
+  await expect(page.getByRole('complementary', { name: 'Details' }).getByRole('textbox', { name: 'Name' })).toHaveValue('Yield strength');
+  expect(await noHorizontalScroll(page)).toBe(true);
+  expect(await smallTargets(page)).toEqual([]);
+});

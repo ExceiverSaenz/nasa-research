@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/schema-draft.schema.json",
+  "title": "The one draft of a schema (annotations/schemas/<id>/draft.json). Replaced on every autosave, deleted on Save version.",
+  "type": "object",
+  "required": ["schema", "schema_id", "base_version", "saved_at", "content"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-schema-draft/1" },
+    "schema_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "base_version": { "type": "integer", "minimum": 0, "description": "Version the draft started from (0 = no version yet)." },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "content": { "$ref": "schema-content.schema.json" }
+  }
+}

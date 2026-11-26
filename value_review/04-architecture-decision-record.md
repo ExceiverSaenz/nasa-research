@@ -322,3 +322,136 @@ One container per reviewer. Criterion: shareable and reproducible without weaken
 real run: healthy, 14 papers and 2,581 values loaded on start, pages rendered from the read-only mount, a submit written
 to the host folder, Settings showing `/sources/results`; after `docker kill` (lock left with pid 1) and `docker start`,
 healthy again with the version kept.
+
+---
+
+## ADR-010 · Schemas as global JSON files: metadata, one draft, a full snapshot per version
+
+**Status** · Proposed (decisions taken with the user on 2026-11-23: draft on the server; schemas independent of Review)
+**Date** · 2026-11-23
+**Reference** · [20-schema-specification.md](20-schema-specification.md) BR-S01 to BR-S07, BR-S09; [22-schema-interface-contract.md](22-schema-interface-contract.md) OP-S01 to OP-S09
+
+### Context
+
+The Schema section needs schemas that exist before any folder pair or paper (canvas Schema rule 1), a draft that
+survives a reload or a closed browser, versions that can be viewed, compared and restored, and stable field ids. Once
+Extraction reads a schema version, its stored format and its ids are costly to change.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Global files under `annotations/schemas/<id>/`: `schema.json` (name), `draft.json`, `versions/v<n>.json` full snapshots | Same model as papers (ADR-002, ADR-005): atomic writes, write-once versions, numbers never reused, trivial compare and restore; small files | Another folder to back up; the trash grows |
+| The same files inside each folder pair (`sources/<id>/annotations/`) | Reuses the per-pair routes | Contradicts the canvas: a schema must not depend on a pair; copying between pairs would duplicate ids |
+| SQLite | Queries, one file | New dependency and a second storage model next to JSON files; harder to inspect by hand |
+| Drafts only in the browser | No draft endpoint | Lost when changing computer or clearing the browser; not like Review |
+
+### Decision and rationale
+
+Global JSON files under `annotations/schemas/<id>/`, with one draft per schema on the server and a full snapshot per
+version. Criterion: the same guarantees reviewers already rely on for papers (never overwrite, never reuse a number, keep
+the newest N), with the least new code. The name lives in `schema.json` and is not versioned; everything else is
+versioned content. Ids of groups and fields are minted once and never reused (BR-S02). Deleting moves the folder to
+`annotations/schemas/.trash/` (BR-S09).
+
+### Consequences
+
+- New `value_review/storage/schemas.py` (`SchemaStore`) reusing `storage/atomic.py`; four JSON Schemas
+  (`schema-content`, `schema-version`, `schema-draft`, `schema-meta`) registered in `schemas/__init__.py`.
+- `settings.json` gains `keep_schema_versions` (default 20); OP-10 and the Settings dialog gain one field.
+- One lock per schema id in the service; still one instance per data folder (ADR-005). With one container per reviewer
+  (ADR-009), each reviewer has their own schemas; sharing a schema is done by .xlsx (ADR-011).
+- The trash is never emptied by the tool.
+
+### Verification
+
+`tests/test_schema_store.py` and `tests/test_schemas_api.py` (proposed) for AC-S02 to AC-S09, AC-S13 and AC-S14, plus the
+atomic-write fault tests already in `test_storage.py` applied to the new store.
+
+---
+
+## ADR-011 · openpyxl for the .xlsx template, uploads as base64 JSON
+
+**Status** · Proposed (in scope by decision of the user on 2026-11-23)
+**Date** · 2026-11-23
+**Reference** · BR-S08, AC-S10, AC-S11; OP-S10, OP-S11
+
+### Context
+
+The canvas fixes one .xlsx standard for importing and exporting a schema (groups in row 1, field names with units in
+row 2, "Reference" in A2, an optional "Descriptions" sheet). The repository rule is that a new dependency needs an ADR
+and a pinned line in `requirements.txt`. The service has no file-upload code, and FastAPI form uploads need
+`python-multipart`, which is not installed.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| openpyxl on the backend | Already installed (3.1.5, with et-xmlfile 2.0.0); reads merged cells and several sheets; one place for both directions | A new runtime dependency (about 4 MB) in the image |
+| Hand-written OOXML with `zipfile` and `xml.etree` | No dependency | Export is easy but import of files saved by Excel (shared strings, merges, styles) is fragile |
+| A client library (SheetJS) | No Python dependency | A new client dependency, the template logic split between two places, and the rules would still need a server check |
+| Upload as multipart form | Standard for files | Needs `python-multipart`, another dependency |
+
+### Decision and rationale
+
+openpyxl on the backend, in one module (`value_review/schema_xlsx.py`), with uploads sent as base64 inside JSON
+(at most 5 MB decoded). Criterion: a robust import of files that people edit in Excel, with a single new dependency
+that is already in use elsewhere in the repository (`llm_baseline/run_extraction.py`).
+
+### Consequences
+
+- `requirements.txt` gains `openpyxl==3.1.5` and `et-xmlfile==2.0.0`; the Docker image and README follow.
+- Uploaded workbooks are opened with `data_only=True` (the full reader, which merged group cells need; files are at most 5 MB);
+  formulas are read as their cached text and never evaluated;
+  macros are never run (an .xlsm is rejected as not the template).
+- The same module writes the template, so import and export cannot drift apart.
+
+### Verification
+
+`tests/test_schema_xlsx.py` (proposed): export → import round trip equals the version (AC-S10); a .csv, a file without
+"Reference" in A2 and a file with duplicate field names are rejected with one problem each (AC-S11); `docker build
+--target test` passes with the pinned versions.
+
+---
+
+## ADR-012 · The Schema section stays independent of Review in this change; seed from features.py
+
+**Status** · Proposed (option chosen by the user on 2026-11-23)
+**Date** · 2026-11-23
+**Reference** · BR-S10, OQ-S01; `value_review/ingest/features.py`
+
+### Context
+
+Review, ingest, the rules (`domain/rules.py`) and the exports read the feature ids and labels of
+`value_review/ingest/features.py`, a copy of the Feature guide of the extraction prompt. Making them read a schema means
+choosing a schema version per folder pair and touching stored originals and versions, and Extraction, the natural owner
+of "which schema version produced these results", does not exist yet.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Schema independent now; seed "Tensile properties" from `features.py` with the same ids | No change to stored data or to Review; a later connection is a mapping by id, not a migration | Two sources of field names for a while |
+| Review reads labels and order from a chosen schema version | Users see schema names in Review at once | A schema choice per pair, fallbacks for ids not in the schema, more tests on stored data |
+| Replace `features.py` everywhere now | One source of truth | The largest change; touches ingest, rules, exports and stored originals before Extraction exists |
+
+### Decision and rationale
+
+Keep the Schema section independent and seed one schema from `features.py`, with the same ids and order, the groups of
+the Feature guide's sections and the 26 elements as a family. Criterion: deliver the canvas section with no risk to the
+reviews already stored, and keep the later connection cheap.
+
+### Consequences
+
+- `features.py` stays the source for Review; the seed does not invent types, units or descriptions (OQ-S03).
+- The seed runs once, when `annotations/schemas/` does not exist; deleting it does not bring it back.
+- A known gap until Extraction: editing a schema does not change Review.
+
+### Verification
+
+AC-S01 (seed equals `features.py` ids and order); the existing Review tests still pass unchanged.
+
+### Review
+
+Reconsider when Extraction is built: each run then records `schema_id` and the version it used, and Review and ingest
+read the run's schema version instead of `features.py`.

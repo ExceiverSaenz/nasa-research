@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/schema-version.schema.json",
+  "title": "One saved version of a schema (annotations/schemas/<id>/versions/v<n>.json). Written once, never changed.",
+  "type": "object",
+  "required": ["schema", "schema_id", "n", "saved_at", "saved_by", "note", "content"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-schema-version/1" },
+    "schema_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+    "n": { "type": "integer", "minimum": 1, "maximum": 999999 },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "saved_by": { "type": "string", "minLength": 1, "maxLength": 80, "description": "Reviewer name from Settings at save time (BR-S11)." },
+    "note": { "type": "string", "maxLength": 200, "description": "Empty, or for example \"Restored from v1\", \"Imported from <file>\", \"Seeded from features.py\"." },
+    "content": { "$ref": "schema-content.schema.json" }
+  }
+}
