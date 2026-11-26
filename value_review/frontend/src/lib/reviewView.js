@@ -3,23 +3,42 @@
 export const STATUS_DOT = { 'Not started': '#9AA3B2', 'In progress': '#0B3D91', Done: '#17703A', 'No results': '#B7791F' };
 
 // One folder pair as a row of the list of extractions. Unknown run metadata is null and shows "—" (PEND-01).
-export function extractionRow(source, papers, { set, problem = '' } = {}) {
+export function extractionRow(source, papers, { set, problem = '', pdfs = null } = {}) {
   const values = papers.reduce((a, p) => a + (p.total || 0), 0);
   const reviewed = papers.reduce((a, p) => a + (p.reviewed || 0), 0);
   const pct = values ? Math.round((reviewed / values) * 100) : 0;
   return {
     id: source.id, name: source.name, set: set || source.name, path: source.pdf_dir || '',
     schema: null, model: null, when: null,
-    withResults: papers.length, pdfs: null,
+    withResults: papers.length, pdfs,
     values, reviewed, pct,
     status: problem ? 'Folders not found' : pct === 100 && values ? 'Done' : reviewed > 0 ? 'In progress' : 'Not started',
     problem,
   };
 }
 
+// The extractions Review can open: the folder pairs, then the runs of the workspace (ADR-024). A pair on a workspace
+// run's folders takes the run's paper set; a run whose folders are gone is listed with "Folders not found".
+// ``workspace`` is the answer of GET /workspace, or null when it could not be read.
+export function sourceList(pairs, workspace) {
+  const ws = workspace || {};
+  const runs = (ws.sets || []).flatMap((set) => set.runs.filter((r) => r.source_id).map((r) => ({ set, r })));
+  const ofPair = new Map(runs.filter((x) => x.r.pair).map((x) => [x.r.source_id, x]));
+  const folder = (path) => String(path || '').split(/[\\/]+/).filter(Boolean).pop() || '';
+  const list = (pairs || []).filter((p) => !(ws.hidden_pairs || []).includes(p.id)).map((p) => {
+    const x = ofPair.get(p.id);
+    return { id: p.id, name: p.name, set: x ? x.set.name : folder(p.pdf_dir) || p.name, path: p.pdf_dir || '', pdfs: x ? x.set.pdfs : null, missing: false };
+  });
+  runs.filter((x) => !x.r.pair).forEach(({ set, r }) => list.push(
+    { id: r.source_id, name: r.name, set: set.name, path: `papers\\${set.name}\\`, pdfs: set.pdfs, missing: false }));
+  (ws.missing || []).forEach((m) => list.push(
+    { id: m.source_id, name: m.run, set: m.set, path: `results\\${m.set}\\${m.run}\\`, pdfs: null, missing: true }));
+  return list;
+}
+
 export const dotOf = (status) => STATUS_DOT[status] || '#B42318';
 
-// "14 of 16"; the PDFs of the set are not known yet (PEND-02), so the second number is "—".
+// "14 of 16"; the PDFs of a folder pair outside the workspace are not known (PEND-02), so the second number is "—".
 export const papersText = (row) => `${row.withResults} of ${row.pdfs === null ? '—' : row.pdfs}`;
 
 // Summary line under the title: "Tensile papers · Schema v1 · Sonnet · 14 of 16 papers with results · papers\tensile\".

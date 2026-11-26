@@ -1,6 +1,5 @@
-// Sample data of the Settings board (canvas Settings.dc.html) for the parts with no backend yet (ADR-013):
-// the workspace folder (PEND-14). PROVIDERS and KINDS are the board's labels.
-// Kept in memory: a reload starts again from here.
+// The labels of the Settings board (canvas Settings.dc.html): the providers and the two System prompt kinds. Their
+// data comes from the service.
 
 export const PROVIDERS = [
   { id: 'anthropic', name: 'Anthropic', hint: 'Claude models' },
@@ -16,5 +15,3 @@ export const KINDS = {
   norm: { label: 'Normalization', desc: 'Sent to the model with every normalization: it applies the expert’s rule of a feature to a reviewed value.',
     help: 'Say how the model must apply the rules. Do not write rules for a feature here: each feature has its own rule in Normalize. A change applies to the next normalization; a result keeps the version it used.' },
 };
-
-export const WORKSPACE = 'C:\\TensileWorkspace\\';

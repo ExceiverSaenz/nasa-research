@@ -93,5 +93,8 @@ export const api = {
   testKey: async (id) => (await request(`/keys/${encodeURIComponent(id)}/test`, { method: 'POST' })).data,
   removeKey: async (id) => { await request(`/keys/${encodeURIComponent(id)}`, { method: 'DELETE' }); },
   models: async () => (await request('/models')).data,
+  // The workspace folder (62-workspace-interface-contract.md): GET looks, scan also loads what is new.
+  workspace: async () => (await request('/workspace')).data,
+  scanWorkspace: async () => (await request('/workspace/scan', { method: 'POST' })).data,
   saveModels: async (body) => (await request('/models', { method: 'PUT', body })).data,
 };

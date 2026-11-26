@@ -31,11 +31,14 @@ async function waitUntilUp(url, child, log) {
 }
 
 export const test = base.extend({
-  server: async ({}, use) => {
+  // test.use({ withWorkspace: true }) starts the service on a workspace folder too (tests/e2e_server.py).
+  withWorkspace: [false, { option: true }],
+  server: async ({ withWorkspace }, use) => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'vr-e2e-'));
     const port = await freePort();
     let output = '';
-    const child = spawn(PYTHON, ['-B', '-m', 'value_review.tests.e2e_server', '--root', root, '--port', String(port)],
+    const child = spawn(PYTHON, ['-B', '-m', 'value_review.tests.e2e_server', '--root', root, '--port', String(port),
+      ...(withWorkspace ? ['--with-workspace'] : [])],
       { cwd: REPO, stdio: ['ignore', 'pipe', 'pipe'] });
     child.stdout.on('data', (d) => { output += d; });
     child.stderr.on('data', (d) => { output += d; });

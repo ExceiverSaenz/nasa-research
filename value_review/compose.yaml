@@ -5,6 +5,7 @@
 #   REVIEW_PDFS         the PDFs (<paper>.pdf)                                    mounted read-only
 #   REVIEW_DATA         your reviews: originals, drafts, versions, settings, page cache (kept between runs)
 #   REVIEW_NAME         your name, the author of your decisions (required)
+#   REVIEW_WORKSPACE    optional: a folder with papers/<set>/ and results/<set>/<run>/, mounted read-only
 name: value-review
 
 services:
@@ -30,8 +31,15 @@ services:
         target: /sources/pdfs
         read_only: true
         bind: { create_host_path: false }
+      # The workspace (60-workspace-specification.md); an empty volume when REVIEW_WORKSPACE is not set.
+      - "${REVIEW_WORKSPACE:-no-workspace}:/workspace:ro"
     environment:
       # your name, shown as the author of your decisions and versions (required; change it later in Settings if needed)
       VALUE_REVIEW_REVIEWER: "${REVIEW_NAME:?Set REVIEW_NAME (your name) in value_review/.env}"
       VALUE_REVIEW_PUBLIC_PORT: "${REVIEW_PORT:-8766}"   # the address printed in the log
+      VALUE_REVIEW_WORKSPACE: "${REVIEW_WORKSPACE:+/workspace}"   # empty: no workspace
+      VALUE_REVIEW_WORKSPACE_SHOWN: "${REVIEW_WORKSPACE:-}"       # the folder as you know it, shown in Settings
     restart: unless-stopped
+
+volumes:
+  no-workspace:

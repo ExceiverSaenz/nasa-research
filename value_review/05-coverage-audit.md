@@ -298,3 +298,22 @@ no real key is used.
 
 Gaps: the real providers are not called by any test (by hand only, with the user's own key); on Windows the file's
 permissions are those of the user profile folder.
+
+## Workspace (added 2026-11-26)
+
+[60-workspace-specification.md](60-workspace-specification.md).
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-W01 No root | workspace `test_not_configured` | Covered |
+| AC-W02, AC-W03 Found and loaded once | workspace `test_runs_are_found_and_loaded` | Covered |
+| AC-W04 A new run | workspace `test_a_new_run_appears_without_setup`; e2e "settings: … a new run appears…" | Covered |
+| AC-W05 Review a run | workspace `test_review_and_submit_on_a_run` (nothing written in the workspace); e2e "first workflow…" | Covered |
+| AC-W06 Problems | workspace `test_problems_are_listed…`, `test_a_missing_root_or_folder`, `test_one_load_at_a_time_and_failures_are_reported` | Covered |
+| AC-W07 A removed run | workspace `test_a_removed_run_keeps_its_reviews` | Covered |
+| AC-W08 A pair on a run | workspace `test_a_folder_pair_on_a_run_keeps_it` | Covered |
+| AC-W09 Settings | e2e "settings: the workspace folder…" | Covered |
+| BR-W03, BR-W07 | `test_ids_are_stable_and_distinct`, `test_the_default_pair_is_hidden…`, `test_a_tampered_record_is_ignored` | Covered |
+
+Gaps: a load of many large papers is synchronous and shows only "Loading new papers…"; the "Another load is running"
+answer is covered only by the shared lock, not by a concurrent test.
