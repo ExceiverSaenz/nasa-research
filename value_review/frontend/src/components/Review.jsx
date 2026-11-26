@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../lib/api.js';
 import { RUNS_HASH, papersHash, reviewHash } from '../lib/routes.js';
 import { reviewData } from '../data/review.js';
-import { autosaveText, readPrefs } from '../lib/prefs.js';
+import { autosaveText } from '../lib/prefs.js';
+import { loadSettings } from './useProfile.js';
 import { savePill, uiOf, viewFromUi } from '../lib/draft.js';
 import {
   addBox, addRecord, addValue, boxesOf, changesOf, deleteAddedBox, editRecord, moveColumn, moveRecord, recordNameTaken,
@@ -28,7 +29,7 @@ const when = (iso) => WHEN.format(new Date(iso));
 export default function Review({ paperId, sourceId = null, guard }) {
   const backHash = sourceId ? papersHash(sourceId) : RUNS_HASH;
   const [load, setLoad] = useState({ status: 'loading' });
-  const [settings, setSettings] = useState({ reviewer_name: 'Expert reviewer', autosave_minutes: 5 });
+  const [settings, setSettings] = useState({ reviewer_name: 'Expert reviewer', autosave_seconds: 60 });
   const [version, setVersion] = useState(0);
   const [state, setState] = useState(emptyState);
   const [saved, setSaved] = useState({ sig: signature(emptyState()), kind: 'original', version: 0 });
@@ -50,7 +51,6 @@ export default function Review({ paperId, sourceId = null, guard }) {
   const [bulkAsk, setBulkAsk] = useState(false);
   const [undo, setUndo] = useState(null);         // last bulk accept, while it can still be undone
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
-  const [prefs] = useState(readPrefs);             // autosave interval kept in this browser (ADR-015)
   const [runs, setRuns] = useState(null);         // extractions with results for this paper ("Results from")
   const [runNote, setRunNote] = useState(takeRunNote);
   const [runAsk, setRunAsk] = useState(null);     // run to switch to, while asking about unsaved changes
@@ -71,7 +71,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
     setLoad({ status: 'loading' });
     setSummary(null); setProblem(null); setLeave(null); setUndo(null);
     history.current = [];
-    Promise.all([api.paper(paperId), api.settings()]).then(([data, s]) => {
+    Promise.all([api.paper(paperId), loadSettings().then((s) => s || api.settings())]).then(([data, s]) => {
       setSettings(s);
       setVersion(data.version);
       setState(data.current);
@@ -158,10 +158,10 @@ export default function Review({ paperId, sourceId = null, guard }) {
 
   // Autosave at the interval of Settings (off, 30 s, 1 min, 5 min) while there are unsaved changes.
   useEffect(() => {
-    if (!prefs.autosave_seconds) return undefined;
-    const timer = setInterval(() => { if (latest.current.dirty) saveDraft('auto'); }, prefs.autosave_seconds * 1000);
+    if (!settings.autosave_seconds) return undefined;
+    const timer = setInterval(() => { if (latest.current.dirty) saveDraft('auto'); }, settings.autosave_seconds * 1000);
     return () => clearInterval(timer);
-  }, [prefs.autosave_seconds, saveDraft]);
+  }, [settings.autosave_seconds, saveDraft]);
 
   // Closing or reloading the tab: save on pagehide and ask the browser to warn.
   useEffect(() => {
@@ -436,7 +436,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
   return (
     <div className={`review ${compact ? 'compact' : ''}`}>
       <Header paperId={paperId} backHash={backHash} title={doc.title} reviewed={total.reviewed} total={total.total} pill={pill}
-        autosave={autosaveText(prefs.autosave_seconds)} runs={runs} runId={sourceId} onPickRun={pickRun}
+        autosave={autosaveText(settings.autosave_seconds)} runs={runs} runId={sourceId} onPickRun={pickRun}
         canSave={dirty && !locked} onSave={() => saveDraft('manual')} onFinish={() => setSummary({})}
         onStartOver={readOnly || (signature(state) === signature(emptyState()) && !offer) ? null : () => setStartOver(true)}
         onShortcuts={() => setShortcutsOpen(true)}

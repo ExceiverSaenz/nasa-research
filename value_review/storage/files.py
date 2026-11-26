@@ -3,6 +3,7 @@
 Reading, settings, draft writes, version writes and pruning.
 A file that cannot be read (malformed JSON, wrong schema) is reported, never repaired or deleted.
 """
+import copy
 import json
 import os
 import re
@@ -18,8 +19,16 @@ _CACHE_MAX = 2000
 _CACHE_LOCK = threading.Lock()
 _EMPTY_STATE = {'schema': 'value-review-state/1', 'decisions': {}, 'column_moves': {}, 'record_moves': {}, 'record_edits': {},
                 'added_records': [], 'added_values': [], 'boxes': {}}
-SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5,
-                     'keep_schema_versions': 20}   # the last: OP-S12, 22-schema-interface-contract.md
+# OP-T01 (42-settings-interface-contract.md); keep_schema_versions is OP-S12 (22-schema-interface-contract.md).
+SETTINGS_DEFAULTS = {'reviewer_name': 'Expert reviewer', 'username': 'expert.reviewer', 'initials': '',
+                     'autosave_seconds': 60, 'csv_delimiter': ',', 'csv_encoding': 'utf8bom',
+                     'keep_versions': 20, 'keep_schema_versions': 20, 'keep_rule_versions': 20,
+                     'extraction': {'parallel': 3, 'retries': 2, 'minutes': 10, 'warn_usd': 5}}
+
+
+def autosave_from_minutes(minutes):
+    """An older file's whole minutes as one of the seconds the canvas offers: the nearer of 1 and 5 minutes."""
+    return 60 if minutes <= 3 else 300
 
 
 def _dumps(data):
@@ -171,12 +180,18 @@ class AnnotationStore:
 
     def settings(self):
         """Reviewer settings over the defaults (the folder pairs are read by the service). The default reviewer name
-        comes from ``VALUE_REVIEW_REVIEWER`` when set (each tester's container sets it); a name saved in Settings wins."""
+        comes from ``VALUE_REVIEW_REVIEWER`` when set (each tester's container sets it); a name saved in Settings wins.
+        A stored value that does not match settings.schema.json is ignored (its default is used), never repaired; an
+        older file's ``autosave_minutes`` is read as ``autosave_seconds``."""
         stored = self.stored_settings()
-        out = dict(SETTINGS_DEFAULTS)
+        bad = {p.split('/')[1] for p, _m in schemas.errors('settings', stored) if p.count('/') >= 1 and p != '/'}
+        stored = {k: v for k, v in stored.items() if k not in bad}
+        out = copy.deepcopy(SETTINGS_DEFAULTS)
         name = os.environ.get('VALUE_REVIEW_REVIEWER', '').strip()
         if name:
             out['reviewer_name'] = name[:80]
+        if 'autosave_seconds' not in stored and isinstance(stored.get('autosave_minutes'), int):
+            out['autosave_seconds'] = autosave_from_minutes(stored['autosave_minutes'])
         out.update({k: v for k, v in stored.items() if k in out})
         return out
 

@@ -12,22 +12,20 @@
 |---|---|---|---|
 | Folder pairs | `GET /api/v1/settings` → `sources[]` | Yes | Each pair is one extraction (ADR-014) |
 | Papers of a pair | `GET /api/v1/sources/<pair>/papers` | Yes | As in OP-01 |
-| Browser settings | `localStorage["vr-settings"]` | No | Cleaned by `cleanPrefs`: unknown keys and values out of range are replaced by the defaults below |
+| Older browser settings | `localStorage["vr-settings"]` | No | Read once, sent to the service and removed (ADR-018, `importPatch`) |
 | Canvas board | `src/boards/<name>.html`, `.css`, `.logic.js` | Yes for Extraction and Normalize | Bindings are `{{path}}`; `<sc-if value>`, `<sc-for list as>` |
 
-Browser settings, version 1 (defaults): `username` "expert.reviewer", `initials` "" (from the display name),
-`autosave_seconds` 60 (0, 30, 60 or 300), `csv` `{delim: ",", enc: "utf8bom"}` (`;`, `tab`; `utf8`),
-`keep_rule_versions` 20 (1–200), `keep_paper_versions` null (101–200 when wanted above the service's 100),
-`extraction` `{parallel: 3, retries: 2, minutes: 10, warn_usd: 5}`.
+The values Settings edits are stored by the service: [42-settings-interface-contract.md](42-settings-interface-contract.md)
+(OP-T01, OP-T02). The older browser format, version 1, is read only to send it once: `username`, `initials`,
+`autosave_seconds`, `csv {delim, enc}`, `keep_rule_versions`, `keep_paper_versions`, `extraction`.
 
 ## Successful result and effects
 
 - **Output** · `reviewData.extractions()` → `{data: [{id, name, set, path, schema: null, model: null, when: null,
   withResults, pdfs: null, values, reviewed, pct, status}], source: "real"}`; `reviewData.papers(pair)` →
   `{data: {run, papers}}`; `reviewData.runsForPaper(id)` → `[{id, name, meta, reviewed}]`.
-- **Postcondition** · Settings saves write the service fields it holds (`reviewer_name`, `keep_versions` ≤ 100,
-  `keep_schema_versions`, `autosave_minutes` when whole minutes) and the rest to `vr-settings`; the boards read a mirror
-  of these in `tdr-settings`.
+- **Postcondition** · Each Settings tab saves its own fields on the service (OP-T01); the boards read a mirror of the
+  display name, autosave and CSV in `tdr-settings`.
 - **Invariant** · A board on sample data never calls the service with anything but `GET` (tested in
   `e2e/boards.spec.js`).
 
@@ -37,7 +35,7 @@ Browser settings, version 1 (defaults): `username` "expert.reviewer", `initials`
 |---|---|---|
 | The service is not reachable | "The review service is not reachable. Is it still running?" or "The paper data could not be loaded." | Nothing written |
 | A pair's folders are missing | Its row says "Folders not found" | The other pairs still list |
-| `localStorage` is blocked (private window) | None | Browser settings use their defaults for that page |
+| `localStorage` is blocked (private window) | None | The older browser settings are not read; the service's values are used |
 
 ## Additional guarantees
 
@@ -61,14 +59,14 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 | PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of —" |
 | PEND-03 | Run metadata for "Results from" | Review header | Pair name and folder |
 | PEND-04 | API keys, usage, models | Settings · Models and API keys; Extraction | Sample data |
-| PEND-05 | System prompts and their versions | Settings · System prompt; Extraction; Normalize | Sample data |
+| PEND-05 | System prompts and their versions | Extraction; Normalize | Settings uses the service (ADR-019); the boards keep their sample prompts |
 | PEND-06 | Prompts, the assistant, prompt history | Extraction | Sample data |
 | PEND-07 | Test and launch of runs, progress, cost | Extraction | Sample data |
 | PEND-08 | Normalization rules, validation, results | Normalize | Sample data |
-| PEND-09 | Username and initials | Settings · Profile, top bar | Browser |
-| PEND-10 | Autosave off or every 30 s | Settings · Review and export, Review | Browser (whole minutes also on the service) |
-| PEND-11 | CSV separator and encoding for the service's downloads | Papers and history downloads | Browser only (Normalize's CSV uses it) |
-| PEND-12 | More than 100 versions per paper | Settings · Review and export | The service keeps 100; the wanted value stays in the browser |
+| PEND-09 | Username and initials | Settings · Profile, top bar | Closed: the service (ADR-018) |
+| PEND-10 | Autosave off or every 30 s | Settings · Review and export, Review | Closed: the service (ADR-018) |
+| PEND-11 | CSV separator and encoding for the service's downloads | Papers and history downloads | Closed: the service applies them (OP-T03) |
+| PEND-12 | More than 100 versions per paper | Settings · Review and export | Closed: up to 200 on the service |
 | PEND-13 | Schema "The model may suggest new values" and field notes | Schema details | Drawn, disabled |
 | PEND-14 | Workspace folder | Settings · Workspace | Sample folder; the real folder pairs are listed |
 | PEND-15 | Type proposals and typo fixes on .xlsx import | Schema import | Not shown |

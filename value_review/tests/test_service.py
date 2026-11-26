@@ -24,7 +24,7 @@ from value_review.ingest import ingest_run  # noqa: E402
 from value_review.service.app import create_app  # noqa: E402
 from value_review.service.config import Config  # noqa: E402
 from value_review.storage import InstanceLock, StorageError  # noqa: E402
-from value_review.storage.files import AnnotationStore  # noqa: E402
+from value_review.storage.files import SETTINGS_DEFAULTS, AnnotationStore  # noqa: E402
 from value_review.tests.test_ingest import make_pdf, result, sha  # noqa: E402
 
 PNG = b'\x89PNG\r\n\x1a\n'
@@ -214,11 +214,56 @@ class SettingsAndHealth(Base):  # OP-10, OP-11
     def test_defaults_and_update(self):
         folders = {'sources': [{'id': 'default', 'name': 'run', 'run_dir': str(self.run), 'pdf_dir': str(self.pdfs)}],
                    'active_source': 'default'}
-        self.assertEqual(self.client.get('/api/v1/settings').json(), {'reviewer_name': 'Expert reviewer', 'keep_versions': 20, 'autosave_minutes': 5, 'keep_schema_versions': 20, **folders})
-        new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_minutes': 10}
-        kept = {'keep_schema_versions': 20}   # left out: unchanged (OP-S12)
+        self.assertEqual(self.client.get('/api/v1/settings').json(), {**SETTINGS_DEFAULTS, **folders})   # AC-T01
+        new = {'reviewer_name': 'Dr. Reviewer', 'keep_versions': 5, 'autosave_seconds': 0}
+        kept = {k: v for k, v in SETTINGS_DEFAULTS.items() if k not in new}   # left out: unchanged (BR-T02)
         self.assertEqual(self.client.put('/api/v1/settings', json=new).json(), {**new, **kept, **folders})   # folders left out: unchanged
         self.assertEqual(json.loads(self.store.settings_path.read_text(encoding='utf-8')), {**new, **kept, **folders})
+
+    def test_review_and_export_profile_and_extraction(self):   # AC-T02, AC-T04, AC-T05, AC-T06
+        r = self.client.put('/api/v1/settings', json={'csv_delimiter': ';', 'csv_encoding': 'utf8', 'autosave_seconds': 30,
+                                                      'keep_versions': 150, 'keep_rule_versions': 200})
+        self.assertEqual(r.status_code, 200)
+        r = self.client.put('/api/v1/settings', json={'reviewer_name': '  Ana López ', 'username': 'ana.lopez', 'initials': 'al'})
+        r = self.client.put('/api/v1/settings', json={'extraction': {'parallel': 4, 'retries': 1, 'minutes': 20, 'warn_usd': 2.5}})
+        got = self.client.get('/api/v1/settings').json()
+        self.assertEqual({k: got[k] for k in ('csv_delimiter', 'csv_encoding', 'autosave_seconds', 'keep_versions', 'keep_rule_versions',
+                                              'reviewer_name', 'username', 'initials', 'extraction')},
+                         {'csv_delimiter': ';', 'csv_encoding': 'utf8', 'autosave_seconds': 30, 'keep_versions': 150,
+                          'keep_rule_versions': 200, 'reviewer_name': 'Ana López', 'username': 'ana.lopez', 'initials': 'AL',
+                          'extraction': {'parallel': 4, 'retries': 1, 'minutes': 20, 'warn_usd': 2.5}})
+
+    def test_values_out_of_range_write_nothing(self):   # AC-T05, AC-T06, BR-T02
+        for bad in ({'keep_versions': 201}, {'keep_rule_versions': 0}, {'autosave_seconds': 45}, {'csv_delimiter': '|'},
+                    {'csv_encoding': 'latin1'}, {'username': 'Ana López'}, {'initials': 'A1'}, {'initials': 'ABCD'},
+                    {'extraction': {'parallel': 11, 'retries': 1, 'minutes': 20, 'warn_usd': 2.5}},
+                    {'extraction': {'parallel': 4}}, {'autosave_minutes': 0}):
+            r = self.client.put('/api/v1/settings', json=bad)
+            self.assertEqual((r.status_code, r.json()['error']['code']), (400, 'invalid_request'), bad)
+            self.assertTrue(r.json()['error']['details']['pointers'], bad)
+        r = self.client.put('/api/v1/settings', json={'extraction': {'parallel': 11, 'retries': 1, 'minutes': 20, 'warn_usd': 2.5}})
+        self.assertIn('/body/extraction/parallel', [p['pointer'] for p in r.json()['error']['details']['pointers']])
+        self.assertFalse(self.store.settings_path.exists())
+
+    def test_older_files_and_clients(self):   # AC-T11 (service): autosave_minutes read as seconds, then dropped
+        for minutes, seconds in ((1, 60), (3, 60), (5, 300), (60, 300)):
+            self.store.settings_path.parent.mkdir(parents=True, exist_ok=True)
+            self.store.settings_path.write_text(json.dumps({'reviewer_name': 'R', 'keep_versions': 20, 'autosave_minutes': minutes}), encoding='utf-8')
+            self.assertEqual(self.client.get('/api/v1/settings').json()['autosave_seconds'], seconds, minutes)
+        self.client.put('/api/v1/settings', json={'keep_versions': 21})
+        stored = json.loads(self.store.settings_path.read_text(encoding='utf-8'))
+        self.assertEqual((stored['autosave_seconds'], 'autosave_minutes' in stored), (300, False))
+        self.client.put('/api/v1/settings', json={'reviewer_name': 'R', 'keep_versions': 20, 'autosave_minutes': 1})   # an older client
+        self.assertEqual(self.client.get('/api/v1/settings').json()['autosave_seconds'], 60)
+
+    def test_a_stored_value_out_of_range_is_ignored(self):   # read as its default, never repaired on disk
+        self.store.settings_path.parent.mkdir(parents=True, exist_ok=True)
+        raw = json.dumps({'reviewer_name': 'R', 'keep_versions': 999, 'csv_delimiter': '|', 'extraction': {'parallel': 4}, 'other': 1})
+        self.store.settings_path.write_text(raw, encoding='utf-8')
+        got = self.client.get('/api/v1/settings').json()
+        self.assertEqual((got['reviewer_name'], got['keep_versions'], got['csv_delimiter'], got['extraction'], 'other' in got),
+                         ('R', 20, ',', SETTINGS_DEFAULTS['extraction'], False))
+        self.assertEqual(self.store.settings_path.read_text(encoding='utf-8'), raw)
 
     def test_reviewer_name_from_the_environment(self):  # each tester's container sets it; Settings wins
         with mock.patch.dict('os.environ', {'VALUE_REVIEW_REVIEWER': '  Ana López  '}):
@@ -249,7 +294,7 @@ class SettingsAndHealth(Base):  # OP-10, OP-11
 
     def test_settings_that_cannot_be_saved(self):
         before = self.client.get('/api/v1/settings').json()
-        new = {k: before[k] for k in ('keep_versions', 'autosave_minutes')}
+        new = {k: before[k] for k in ('keep_versions', 'autosave_seconds')}
         with mock.patch.object(AnnotationStore, 'save_settings', side_effect=StorageError('Could not write settings.json: Access is denied')):
             r = self.client.put('/api/v1/settings', json={**new, 'reviewer_name': 'Dr. R'})
             self.assertEqual((r.status_code, r.json()['error']), (500, {

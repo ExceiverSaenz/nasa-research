@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/system-prompt-version.schema.json",
+  "title": "One saved version of a System prompt (annotations/system-prompts/<kind>/v<n>.json, OP-T02 of 42-settings-interface-contract.md). Written once, never changed or deleted (BR-T06).",
+  "type": "object",
+  "required": ["schema", "kind", "n", "saved_at", "saved_by", "note", "text"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-system-prompt-version/1" },
+    "kind": { "enum": ["extraction", "normalization"] },
+    "n": { "type": "integer", "minimum": 1, "description": "Never reused." },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "saved_by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "note": { "type": "string", "maxLength": 200 },
+    "text": { "type": "string", "minLength": 1, "maxLength": 20000 },
+    "restored_from": { "type": "integer", "minimum": 1 }
+  }
+}

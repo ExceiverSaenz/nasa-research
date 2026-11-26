@@ -1,21 +1,29 @@
-// Settings kept in this browser until the backend stores them (ADR-015, 32-canvas-frontend-interface-contract.md).
-// Server values win: reviewer_name is the display name, keep_versions and keep_schema_versions are the limits.
-// One key, versioned, so a later format can be read and migrated.
+// Settings are stored by the service (ADR-018, 42-settings-interface-contract.md). This module keeps the helpers for
+// the profile and autosave, and reads once what an older version of the app kept in this browser (`vr-settings`,
+// ADR-015) so it can be sent to the service and removed (importPatch).
 
 export const PREFS_KEY = 'vr-settings';
 
+// The older browser format, version 1, with its defaults.
 export const PREF_DEFAULTS = {
   version: 1,
   username: 'expert.reviewer',
-  initials: '',                 // empty: taken from the display name
-  autosave_seconds: 60,         // 0 = off, 30, 60, 300 (canvas Review and export)
+  initials: '',
+  autosave_seconds: 60,
   csv: { delim: ',', enc: 'utf8bom' },
   keep_rule_versions: 20,
-  keep_paper_versions: null,   // wanted above 100, the server's limit (PEND-12); null = the server value
+  keep_paper_versions: null,
   extraction: { parallel: 3, retries: 2, minutes: 10, warn_usd: 5 },
 };
 
+// The service's defaults for the same values (SETTINGS_DEFAULTS in storage/files.py).
+export const SERVER_DEFAULTS = {
+  username: 'expert.reviewer', initials: '', autosave_seconds: 60, csv_delimiter: ',', csv_encoding: 'utf8bom',
+  keep_versions: 20, keep_rule_versions: 20, extraction: { parallel: 3, retries: 2, minutes: 10, warn_usd: 5 },
+};
+
 const isObj = (x) => x && typeof x === 'object' && !Array.isArray(x);
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 // Merge what was stored with the defaults, keeping only known keys with values of the right kind.
 export function cleanPrefs(raw) {
@@ -41,23 +49,36 @@ export function cleanPrefs(raw) {
   return out;
 }
 
-const storage = () => { try { return window.localStorage; } catch (e) { return null; } };
-
-export function readPrefs() {
-  const s = storage();
-  if (!s) return cleanPrefs(null);
-  try { return cleanPrefs(JSON.parse(s.getItem(PREFS_KEY) || 'null')); } catch (e) { return cleanPrefs(null); }
+// What to send to the service, once, from the older browser settings (AC-T11): each value changed in this browser
+// while the service still has its default. The service wins when both were changed. {} when there is nothing to send.
+export function importPatch(raw, server) {
+  if (!isObj(raw) || !isObj(server)) return {};
+  const p = cleanPrefs(raw), d = PREF_DEFAULTS, out = {};
+  const take = (key, value, browserDefault) => {
+    if (!same(value, browserDefault) && same(server[key], SERVER_DEFAULTS[key])) out[key] = value;
+  };
+  if (/^[a-z0-9._-]{1,40}$/.test(p.username)) take('username', p.username, d.username);
+  take('initials', p.initials, d.initials);
+  take('autosave_seconds', p.autosave_seconds, d.autosave_seconds);
+  take('csv_delimiter', p.csv.delim, d.csv.delim);
+  take('csv_encoding', p.csv.enc, d.csv.enc);
+  take('keep_rule_versions', p.keep_rule_versions, d.keep_rule_versions);
+  if (p.keep_paper_versions) take('keep_versions', p.keep_paper_versions, d.keep_paper_versions);
+  take('extraction', p.extraction, d.extraction);
+  return out;
 }
 
-const listeners = new Set();
-export const onPrefs = (fn) => { listeners.add(fn); return () => listeners.delete(fn); };
+const storage = () => { try { return window.localStorage; } catch (e) { return null; } };
 
-export function writePrefs(patch) {
-  const next = cleanPrefs({ ...readPrefs(), ...patch });
+// The older browser settings as stored, or null when there are none (or the storage is blocked).
+export function readOldPrefs() {
   const s = storage();
-  try { if (s) s.setItem(PREFS_KEY, JSON.stringify(next)); } catch (e) { /* private window: kept for this page only */ }
-  listeners.forEach((fn) => fn(next));
-  return next;
+  try { return s ? JSON.parse(s.getItem(PREFS_KEY) || 'null') : null; } catch (e) { return null; }
+}
+
+export function dropOldPrefs() {
+  const s = storage();
+  try { if (s) s.removeItem(PREFS_KEY); } catch (e) { /* blocked: nothing kept to drop */ }
 }
 
 // Initials from a display name: first letters of the first two words ("Expert reviewer" -> "ER").
@@ -66,10 +87,11 @@ export function initialsOf(name) {
   return words.slice(0, 2).map((w) => w[0]).join('').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 3) || '?';
 }
 
-// The profile shown in the header and saved as "Modified by": the server's reviewer name, with the browser's initials.
-export function profileOf(serverSettings, prefs) {
-  const display = (serverSettings && serverSettings.reviewer_name) || 'Expert reviewer';
-  return { display, initials: (prefs && prefs.initials) || initialsOf(display), username: prefs ? prefs.username : PREF_DEFAULTS.username };
+// The profile shown in the header and saved as "Modified by", all from the service.
+export function profileOf(serverSettings) {
+  const s = serverSettings || {};
+  const display = s.reviewer_name || 'Expert reviewer';
+  return { display, initials: s.initials || initialsOf(display), username: s.username || SERVER_DEFAULTS.username };
 }
 
 // The text Review shows next to Save draft (canvas): "Autosave every minute", "… off".
@@ -79,6 +101,3 @@ export function autosaveText(seconds) {
   if (seconds === 60) return 'Autosave every minute';
   return 'Autosave every 5 minutes';
 }
-
-// The server keeps autosave in whole minutes (1-60); off and 30 s stay in the browser (PEND-10).
-export const serverAutosaveMinutes = (seconds) => (seconds && seconds % 60 === 0 && seconds / 60 <= 60 ? seconds / 60 : null);

@@ -77,4 +77,12 @@ export const api = {
   schemaExportUrl: (id, n) => `${BASE}/schemas/${encodeURIComponent(id)}/versions/${n}/export.xlsx`,
   restoreSchemaVersion: async (id, n, current) =>
     (await request(`/schemas/${encodeURIComponent(id)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+  // System prompts (42-settings-interface-contract.md, OP-T02): kind is "extraction" or "normalization".
+  systemPrompt: async (kind) => (await request(`/system-prompts/${kind}`)).data,
+  systemPromptVersions: async (kind) => (await request(`/system-prompts/${kind}/versions`)).data,
+  systemPromptVersion: async (kind, n) => (await request(`/system-prompts/${kind}/versions/${n}`)).data,
+  saveSystemPrompt: async (kind, current, text, note = '') =>
+    (await request(`/system-prompts/${kind}/versions`, { method: 'POST', body: { text, note }, headers: { 'If-Match': `"${current}"` } })).data,
+  restoreSystemPrompt: async (kind, n, current) =>
+    (await request(`/system-prompts/${kind}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
 };

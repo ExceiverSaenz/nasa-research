@@ -1,5 +1,6 @@
-"""FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md) and the schema operations
-OP-S01 to OP-S12 (22-schema-interface-contract.md)."""
+"""FastAPI application: OP-01 to OP-12 of the contract (03-interface-contract.md), the schema operations
+OP-S01 to OP-S12 (22-schema-interface-contract.md) and the settings and System prompts, OP-T01 to OP-T03
+(42-settings-interface-contract.md)."""
 import base64
 import binascii
 import json
@@ -28,8 +29,9 @@ from ..config import RESULT_SUFFIX
 from ..ingest import features, find_papers, ingest_run
 from ..ingest.seed_schema import SEED_ID, SEED_NAME, seed_content
 from ..storage import StorageError
-from ..storage.files import SETTINGS_DEFAULTS, AnnotationStore
+from ..storage.files import SETTINGS_DEFAULTS, AnnotationStore, autosave_from_minutes
 from ..storage.schemas import SCHEMA_ID, SchemaStore, empty_content
+from ..storage.system_prompts import KINDS as PROMPT_KINDS, SystemPromptStore
 from . import exports
 from .config import Config
 from .errors import ApiError, body, install
@@ -53,12 +55,29 @@ class SourceIn(BaseModel):
     pdf_dir: str = Field(max_length=1000)
 
 
-class Settings(BaseModel):
+class ExtractionSettings(BaseModel):
+    """How extraction runs behave (Settings rule 6); sent whole by the Extraction tab."""
     model_config = ConfigDict(extra='forbid')
-    reviewer_name: str = Field(min_length=1, max_length=80)
-    keep_versions: int = Field(ge=1, le=100)
-    autosave_minutes: int = Field(ge=1, le=60)
-    keep_schema_versions: int | None = Field(default=None, ge=1, le=200)   # OP-S12; left out = unchanged
+    parallel: int = Field(ge=1, le=10)
+    retries: int = Field(ge=0, le=5)
+    minutes: int = Field(ge=1, le=60)
+    warn_usd: float = Field(ge=0, le=100000)
+
+
+class Settings(BaseModel):
+    """OP-10 extended by OP-T01 (42-settings-interface-contract.md). Every field is optional: left out = unchanged."""
+    model_config = ConfigDict(extra='forbid')
+    reviewer_name: str | None = Field(default=None, min_length=1, max_length=80)
+    username: str | None = Field(default=None, pattern=r'^[a-z0-9._-]{1,40}$')
+    initials: str | None = Field(default=None, max_length=3)
+    autosave_seconds: Literal[0, 30, 60, 300] | None = None
+    autosave_minutes: int | None = Field(default=None, ge=1, le=60)   # older clients; read as autosave_seconds
+    csv_delimiter: Literal[',', ';', 'tab'] | None = None
+    csv_encoding: Literal['utf8bom', 'utf8'] | None = None
+    keep_versions: int | None = Field(default=None, ge=1, le=200)
+    keep_schema_versions: int | None = Field(default=None, ge=1, le=200)   # OP-S12
+    keep_rule_versions: int | None = Field(default=None, ge=1, le=200)
+    extraction: ExtractionSettings | None = None
     # The folder pairs (LLM results + their PDFs) and the one Papers shows. Left out = unchanged.
     sources: list[SourceIn] | None = Field(default=None, max_length=50)
     active_source: str | None = Field(default=None, max_length=40)
@@ -99,6 +118,12 @@ class SchemaImport(BaseModel):
 class SchemaRename(BaseModel):
     model_config = ConfigDict(extra='forbid')
     name: str = Field(max_length=500)
+
+
+class SystemPromptBody(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    text: str = Field(min_length=1, max_length=20000)
+    note: str = Field(default='', max_length=200)
 
 
 class ActiveSource(BaseModel):
@@ -459,7 +484,9 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
 
     @route('GET', '/papers/{paper}/versions/{k}/export.csv')
     def export_csv(paper: str, k: int, source: str | None = None):
-        return attachment(exports.export_csv(read_version(ctx(source), paper, k)), 'text/csv; charset=utf-8', f'paper-{paper}-v{k}.csv')
+        s = settings_now()   # OP-T03: the stored separator and encoding, read at request time
+        data = exports.export_csv(read_version(ctx(source), paper, k), s['csv_delimiter'], s['csv_encoding'])
+        return attachment(data, 'text/csv; charset=utf-8', f'paper-{paper}-v{k}.csv')
 
     @route('GET', '/export/latest.zip')
     def export_latest(source: str | None = None):
@@ -469,7 +496,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             latest, _problems = c.store.latest(paper)
             if latest is not None:
                 items.append((c.library.original(paper), latest))
-        return attachment(exports.latest_zip(items), 'application/zip', 'value-review-latest.zip')
+        s = settings_now()
+        return attachment(exports.latest_zip(items, s['csv_delimiter'], s['csv_encoding']), 'application/zip', 'value-review-latest.zip')
 
     # --- OP-10 -----------------------------------------------------------------
     def save(values):
@@ -524,7 +552,18 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     @app.put(f'{API}/settings')
     def put_settings(values: Settings):
         current = settings_now()
-        new = {k: current[k] if getattr(values, k) is None else getattr(values, k) for k in SETTINGS_DEFAULTS}
+        sent = values.model_dump(exclude_none=True, exclude={'sources', 'active_source', 'autosave_minutes'})
+        if values.initials is not None:
+            initials = values.initials.strip().upper()
+            if initials and not initials.isalpha():
+                raise ApiError(400, 'invalid_request', 'The request is not valid',
+                               {'pointers': [{'pointer': '/body/initials', 'message': 'Use letters only.'}]})
+            sent['initials'] = initials
+        if values.reviewer_name is not None:
+            sent['reviewer_name'] = values.reviewer_name.strip() or current['reviewer_name']
+        if values.autosave_minutes is not None and values.autosave_seconds is None:
+            sent['autosave_seconds'] = autosave_from_minutes(values.autosave_minutes)
+        new = {k: sent.get(k, current[k]) for k in SETTINGS_DEFAULTS}
         new['sources'] = current['sources'] if values.sources is None else check_sources(values.sources, current['sources'])
         ids = [s['id'] for s in new['sources']]
         wanted = values.active_source or current['active_source']
@@ -806,6 +845,104 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         def content_for(_k):
             return read_schema_version(sid, n)['content'], f'Restored from v{n}', False
         return new_schema_version(sid, request, response, content_for)
+
+    # --- System prompts: OP-T02 (42-settings-interface-contract.md; ADR-019) ---------------------
+    # Global to the data folder. Every save is a new version; none is changed or deleted (BR-T06).
+    prompt_store = SystemPromptStore(config.annotations / 'system-prompts')
+    prompt_locks: defaultdict[str, threading.Lock] = defaultdict(threading.Lock)
+    app.state.system_prompts = prompt_store
+
+    def need_kind(kind):
+        if kind not in PROMPT_KINDS:
+            raise ApiError(404, 'system_prompt_not_found', f'No System prompt {kind}')
+        if not prompt_store.exists(kind):
+            with prompt_locks[kind]:
+                try:
+                    prompt_store.seed(kind, clock())
+                except StorageError as error:
+                    raise ApiError(500, 'storage_error', str(error)) from None
+
+    def prompt_view(kind, response=None):
+        need_kind(kind)
+        k, latest, _n, problems = prompt_store.current(kind)
+        if response is not None:
+            response.headers['ETag'] = _etag(k)
+        out = {'kind': kind, 'n': k, 'problems': problems}
+        if latest:
+            out.update({key: latest[key] for key in ('saved_at', 'saved_by', 'note', 'text')})
+        return out
+
+    def read_prompt_version(kind, n):
+        need_kind(kind)
+        data, problem = prompt_store.read_version(kind, n) if n >= 1 else (None, None)
+        if data is None:
+            if problem:
+                raise ApiError(500, 'storage_error', f'Version {n} cannot be read', {'problem': problem})
+            raise ApiError(404, 'version_not_found', f'The {kind} System prompt has no version {n}')
+        return data
+
+    def new_prompt_version(kind, request, response, text_for):
+        """Shared by Save and Restore. ``text_for()`` returns (text, note, restored_from) under the kind's lock."""
+        expected = if_match(request)
+        need_kind(kind)
+        with prompt_locks[kind]:
+            k, _latest, n, _problems = prompt_store.current(kind)
+            if expected != k:
+                raise ApiError(409, 'version_conflict', f'The System prompt is at version {k}', {'current': k}, headers={'ETag': _etag(k)})
+            text, note, restored_from = text_for()
+            version = {'schema': 'value-review-system-prompt-version/1', 'kind': kind, 'n': n, 'saved_at': clock(),
+                       'saved_by': settings_now()['reviewer_name'], 'note': note, 'text': text}
+            if restored_from is not None:
+                version['restored_from'] = restored_from
+            problems = schemas.errors('system-prompt-version', version)
+            if problems:   # a bug, not a client error: never write an invalid version
+                raise RuntimeError(f'System prompt version would not validate: {problems[:3]}')
+            try:
+                prompt_store.write_version(kind, version)
+            except StorageError as error:
+                raise ApiError(500, 'storage_error', str(error)) from None
+        response.headers['ETag'] = _etag(n)
+        response.headers['Location'] = f'{API}/system-prompts/{kind}/versions/{n}'
+        return {key: version[key] for key in ('kind', 'n', 'saved_at', 'saved_by', 'note')}
+
+    @app.get(f'{API}/system-prompts')
+    def list_system_prompts():
+        return {'prompts': [prompt_view(kind) for kind in PROMPT_KINDS]}
+
+    @app.get(f'{API}/system-prompts/{{kind}}')
+    def get_system_prompt(kind: str, response: Response):
+        return prompt_view(kind, response)
+
+    @app.get(f'{API}/system-prompts/{{kind}}/versions')
+    def list_system_prompt_versions(kind: str):
+        need_kind(kind)
+        out, problems = [], []
+        for n in prompt_store.version_numbers(kind):
+            data, problem = prompt_store.read_version(kind, n)
+            if data is None:
+                problems.append(problem)
+                continue
+            row = {key: data[key] for key in ('n', 'saved_at', 'saved_by', 'note')}
+            row['used_by'] = 0   # runs and normalizations will record {kind, n} (PEND-07, PEND-08)
+            if 'restored_from' in data:
+                row['restored_from'] = data['restored_from']
+            out.append(row)
+        return {'kind': kind, 'versions': out, 'problems': problems}
+
+    @app.get(f'{API}/system-prompts/{{kind}}/versions/{{n}}')
+    def get_system_prompt_version(kind: str, n: int):
+        return read_prompt_version(kind, n)
+
+    @app.post(f'{API}/system-prompts/{{kind}}/versions', status_code=201)
+    def save_system_prompt(kind: str, payload: SystemPromptBody, request: Request, response: Response):
+        if not payload.text.strip():
+            raise ApiError(400, 'invalid_request', 'The System prompt is empty',
+                           {'pointers': [{'pointer': '/body/text', 'message': 'Type the prompt.'}]})
+        return new_prompt_version(kind, request, response, lambda: (payload.text, payload.note.strip(), None))
+
+    @app.post(f'{API}/system-prompts/{{kind}}/versions/{{n}}/restore', status_code=201)
+    def restore_system_prompt(kind: str, n: int, request: Request, response: Response):
+        return new_prompt_version(kind, request, response, lambda: (read_prompt_version(kind, n)['text'], f'Restored from v{n}', n))
 
     # --- OP-12: load the papers of a folder pair -------------------------------------
     @route('POST', '/ingest')

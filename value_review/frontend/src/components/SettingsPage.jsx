@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import AppHeader, { SampleBadge } from './AppHeader.jsx';
-import { refreshProfile } from './useProfile.js';
+import { loadSettings, refreshProfile } from './useProfile.js';
 import { api } from '../lib/api.js';
-import { initialsOf, readPrefs, serverAutosaveMinutes, writePrefs } from '../lib/prefs.js';
+import { initialsOf } from '../lib/prefs.js';
 import { settingsHash } from '../lib/routes.js';
-import { KEYS, KINDS, MODELS, PROVIDERS, SYSTEM_PROMPTS, WORKSPACE } from '../data/sampleSettings.js';
+import { KEYS, KINDS, MODELS, PROVIDERS, WORKSPACE } from '../data/sampleSettings.js';
 
 const TABS = [['profile', 'Profile'], ['workspace', 'Workspace'], ['models', 'Models and API keys'], ['system-prompt', 'System prompt'],
   ['extraction', 'Extraction'], ['review', 'Review and export']];
@@ -13,19 +13,21 @@ const RANGES = { par: [1, 10, 'Between 1 and 10.'], retries: [0, 5, 'Between 0 a
 const HINTS = { par: 'More papers at once is faster but can hit the provider’s rate limits.', retries: 'Each retry is paid like a new attempt.',
   timeout: 'A paper that takes longer is marked as failed.', warn: 'Shown before you launch a run. Use 0 to never warn.',
   vSchema: 'Kept for each schema: view, compare and restore.', vPaper: 'Each submit in Review saves a version.', vRule: 'Each saved rule in Normalize is a version of its feature.' };
+const SYS_KIND = { ext: 'extraction', norm: 'normalization' };   // the service's names (OP-T02)
+const dateOf = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 const folderName = (path) => String(path || '').split(/[\\/]+/).filter(Boolean).pop() || '';
 
-const fromSettings = (s, p) => ({
-  user: p.username, display: s.reviewer_name, initials: p.initials || initialsOf(s.reviewer_name), ws: WORKSPACE,
-  par: String(p.extraction.parallel), retries: String(p.extraction.retries), timeout: String(p.extraction.minutes), warn: String(p.extraction.warn_usd),
-  autosave: String(p.autosave_seconds), delim: p.csv.delim, enc: p.csv.enc,
-  vSchema: String(s.keep_schema_versions), vPaper: String(p.keep_paper_versions || s.keep_versions), vRule: String(p.keep_rule_versions),
+const USERNAME = /^[a-z0-9._-]{1,40}$/;
+const fromSettings = (s) => ({
+  user: s.username, display: s.reviewer_name, initials: s.initials || initialsOf(s.reviewer_name), ws: WORKSPACE,
+  par: String(s.extraction.parallel), retries: String(s.extraction.retries), timeout: String(s.extraction.minutes), warn: String(s.extraction.warn_usd),
+  autosave: String(s.autosave_seconds), delim: s.csv_delimiter, enc: s.csv_encoding,
+  vSchema: String(s.keep_schema_versions), vPaper: String(s.keep_versions), vRule: String(s.keep_rule_versions),
 });
 
-// The Settings page (canvas Settings.dc.html, ADR-017): six tabs, each with its own Save. Stored on the server: the
-// display name, the version limits it knows and the autosave interval when it is whole minutes. Stored in this browser
-// (ADR-015): username, initials, autosave off or 30 s, CSV, rule versions, paper versions above 100, Extraction.
-// Sample (ADR-013): workspace, API keys, models, System prompts.
+// The Settings page (canvas Settings.dc.html, ADR-017): six tabs, each with its own Save. Profile, Extraction and
+// Review and export are stored by the service (ADR-018, 42-settings-interface-contract.md); each Save sends only its
+// tab's fields. The System prompts and their versions too (ADR-019). Sample (ADR-013): workspace, API keys, models.
 export default function SettingsPage({ tab = 'profile' }) {
   const [server, setServer] = useState(null);
   const [f, setF] = useState(null);
@@ -40,14 +42,22 @@ export default function SettingsPage({ tab = 'profile' }) {
   const [def, setDef] = useState('sonnet');
   const [customModels, setCustomModels] = useState([]);
   const [newModel, setNewModel] = useState('');
-  const [sysAll, setSysAll] = useState(SYSTEM_PROMPTS);
+  // System prompts (service)
+  const [sys, setSys] = useState({ ext: null, norm: null });          // {cur, versions} of each kind
   const [sysKind, setSysKind] = useState('ext');
-  const [sysTexts, setSysTexts] = useState({ ext: SYSTEM_PROMPTS.ext[0].text, norm: SYSTEM_PROMPTS.norm[0].text });
-  const [sysView, setSysView] = useState(null);
+  const [sysTexts, setSysTexts] = useState({ ext: '', norm: '' });    // the text being edited
+  const [sysView, setSysView] = useState(null);                       // {n, text} shown read only
+  const [sysBusy, setSysBusy] = useState(false);
+  const loadSys = (k, keepText = false) => Promise.all([api.systemPrompt(SYS_KIND[k]), api.systemPromptVersions(SYS_KIND[k])]).then(([cur, list]) => {
+    setSys((x) => ({ ...x, [k]: { cur, versions: list.versions } }));
+    if (!keepText) setSysTexts((x) => ({ ...x, [k]: cur.text || '' }));
+    return cur;
+  });
 
   useEffect(() => {
     document.title = 'Settings · Tensile Data Review';
-    api.settings().then((s) => { const v = fromSettings(s, readPrefs()); setServer(s); setF(v); setSaved(v); }).catch((e) => setError(e.message));
+    loadSettings().then((s) => s || api.settings()).then((s) => { const v = fromSettings(s); setServer(s); setF(v); setSaved(v); }).catch((e) => setError(e.message));
+    Promise.all(['ext', 'norm'].map((k) => loadSys(k))).catch((e) => setError(e.message));
   }, []);
   const pick = (t) => { setToast(''); window.location.hash = settingsHash(t); };
   const set = (k, v) => setF((x) => ({ ...x, [k]: v }));
@@ -67,10 +77,8 @@ export default function SettingsPage({ tab = 'profile' }) {
   const dirty = (ks) => ks.some((k) => f[k] !== saved[k]);
   const off = (ks, extra = false) => !dirty(ks) || ks.some((k) => bad[k]) || extra;
 
-  const putServer = async (patch) => {
-    const body = { reviewer_name: server.reviewer_name, keep_versions: server.keep_versions, autosave_minutes: server.autosave_minutes,
-      keep_schema_versions: server.keep_schema_versions, ...patch };
-    const s = await api.saveSettings(body);
+  const putServer = async (patch) => {   // fields left out keep their value on the service (BR-T02)
+    const s = await api.saveSettings(patch);
     setServer(s);
     refreshProfile();
     return s;
@@ -78,28 +86,26 @@ export default function SettingsPage({ tab = 'profile' }) {
   const run = async (fn) => { setError(''); try { await fn(); } catch (e) { setError(e.message); } };
 
   const profileKeys = ['user', 'display', 'initials'];
-  const profileBad = !f.user.trim() || !f.display.trim() || !f.initials.trim();
+  const userBad = !USERNAME.test(f.user.trim());
+  const profileBad = userBad || !f.display.trim() || !/^[A-Za-z]{1,3}$/.test(f.initials.trim());
   const saveProfile = () => run(async () => {
-    await putServer({ reviewer_name: f.display.trim() });
-    writePrefs({ username: f.user.trim(), initials: f.initials.trim() });
+    await putServer({ reviewer_name: f.display.trim(), username: f.user.trim(), initials: f.initials.trim().toUpperCase() });
     setSaved((x) => ({ ...x, user: f.user.trim(), display: f.display.trim(), initials: f.initials.trim() }));
     setToast(`Profile saved. New versions are marked as modified by “${f.display.trim()}”.`);
   });
   const reviewKeys = ['autosave', 'delim', 'enc', 'vSchema', 'vPaper', 'vRule'];
   const saveReview = () => run(async () => {
-    const seconds = Number(f.autosave), vPaper = Number(f.vPaper);
-    const minutes = serverAutosaveMinutes(seconds);
-    await putServer({ keep_schema_versions: Number(f.vSchema), keep_versions: Math.min(vPaper, 100), ...(minutes ? { autosave_minutes: minutes } : {}) });
-    writePrefs({ autosave_seconds: seconds, csv: { delim: f.delim, enc: f.enc }, keep_rule_versions: Number(f.vRule), keep_paper_versions: vPaper > 100 ? vPaper : null });
+    await putServer({ autosave_seconds: Number(f.autosave), csv_delimiter: f.delim, csv_encoding: f.enc,
+      keep_schema_versions: Number(f.vSchema), keep_versions: Number(f.vPaper), keep_rule_versions: Number(f.vRule) });
     setSaved((x) => ({ ...x, ...Object.fromEntries(reviewKeys.map((k) => [k, f[k]])) }));
     setToast('Saved. Review and the downloads use these settings.');
   });
   const extKeys = ['par', 'retries', 'timeout', 'warn'];
-  const saveExtraction = () => {
-    writePrefs({ extraction: { parallel: Number(f.par), retries: Number(f.retries), minutes: Number(f.timeout), warn_usd: Number(f.warn) } });
+  const saveExtraction = () => run(async () => {
+    await putServer({ extraction: { parallel: Number(f.par), retries: Number(f.retries), minutes: Number(f.timeout), warn_usd: Number(f.warn) } });
     setSaved((x) => ({ ...x, ...Object.fromEntries(extKeys.map((k) => [k, f[k]])) }));
     setToast('Extraction settings saved. They apply to the next run you launch.');
-  };
+  });
   const low = (k) => Number(f[k]) < Number(saved[k]) && !bad[k];
 
   const numField = (k, id, label, attrs) => (
@@ -144,20 +150,27 @@ export default function SettingsPage({ tab = 'profile' }) {
     setEnabled(en); setDef(d);
   };
 
-  // System prompts (sample)
-  const sysList = sysAll[sysKind], sysCur = sysList[0], sysTxt = sysTexts[sysKind], sysDirty = sysTxt !== sysCur.text, sysOff = !sysDirty || !sysTxt.trim();
-  const viewV = sysView ? sysList.find((v) => v.n === sysView) : null;
-  const when = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  const saveSys = () => {
-    const n = sysCur.n + 1;
-    setSysAll((x) => ({ ...x, [sysKind]: [{ n, text: sysTxt, by: saved.display, when, note: '', runs: 0 }].concat(sysList) }));
-    setToast(`${KINDS[sysKind].label} system prompt saved as v${n}. ${sysKind === 'ext' ? 'Prompts written from now on use it; runs already made keep the version they used.' : 'The next normalization uses it; results already made keep the version they used.'}`);
+  // System prompts (service, OP-T02): a save or a restore is a new version; a stale one is refused (409)
+  const sysData = sys[sysKind], sysCur = sysData && sysData.cur, sysList = sysData ? sysData.versions : [];
+  const sysTxt = sysTexts[sysKind], sysDirty = !!sysCur && sysTxt !== sysCur.text, sysOff = !sysDirty || !sysTxt.trim() || sysBusy;
+  const sysCall = (k, call, done) => {
+    setSysBusy(true); setError(''); setToast('');
+    call().then((v) => loadSys(k).then(() => done(v)))
+      .catch((e) => {
+        if (e.code === 'version_conflict') {
+          loadSys(k, true);
+          setError(`Someone else saved this System prompt as v${e.details.current}. Your text is still here: save again to make it v${e.details.current + 1}.`);
+        } else setError(e.message);
+      })
+      .finally(() => setSysBusy(false));
   };
-  const restoreSys = (num) => {
-    const v = sysList.find((x) => x.n === num), n = sysCur.n + 1;
-    setSysAll((x) => ({ ...x, [sysKind]: [{ n, text: v.text, by: saved.display, when, note: `Restored from v${num}`, runs: 0 }].concat(sysList) }));
-    setSysTexts((x) => ({ ...x, [sysKind]: v.text })); setSysView(null); setToast(`v${num} restored as v${n}.`);
-  };
+  const saveSys = () => { const k = sysKind; sysCall(k, () => api.saveSystemPrompt(SYS_KIND[k], sysCur.n, sysTxt), (v) =>
+    setToast(`${KINDS[k].label} system prompt saved as v${v.n}. ${k === 'ext' ? 'Prompts written from now on use it; runs already made keep the version they used.' : 'The next normalization uses it; results already made keep the version they used.'}`)); };
+  const restoreSys = (num) => { const k = sysKind; sysCall(k, () => api.restoreSystemPrompt(SYS_KIND[k], num, sysCur.n), (v) => {
+    setSysView(null); setToast(`v${num} restored as v${v.n}.`);
+  }); };
+  const viewSys = (num) => api.systemPromptVersion(SYS_KIND[sysKind], num).then((v) => setSysView({ n: v.n, text: v.text })).catch((e) => setError(e.message));
+  const viewV = sysView;
 
   const pairs = (server.sources || []).map((s) => ({ name: folderName(s.pdf_dir) || s.name, path: s.pdf_dir, runs: '1 run' }));
 
@@ -186,7 +199,9 @@ export default function SettingsPage({ tab = 'profile' }) {
               <span style={{ display: 'flex', flexDirection: 'column' }}><span style={{ fontWeight: 600 }}>{f.display}</span><span className="st-muted">{f.user}</span></span>
             </div>
             <div className="st-field"><label htmlFor="pu" style={{ fontWeight: 600 }}>Username</label>
-              <input id="pu" className="st-input" value={f.user} onChange={(e) => set('user', e.target.value)} /></div>
+              <input id="pu" className="st-input" value={f.user} maxLength={40} onChange={(e) => set('user', e.target.value)} aria-invalid={userBad}
+                aria-describedby={userBad ? 'pu-h' : undefined} style={userBad ? { borderColor: '#B42318' } : undefined} />
+              {userBad && <span id="pu-h" style={{ fontSize: 13, color: '#B42318' }}>Lower-case letters, digits, dots, dashes and underscores.</span>}</div>
             <div className="st-field"><label htmlFor="pd" style={{ fontWeight: 600 }}>Display name</label>
               <input id="pd" className="st-input" value={f.display} maxLength={80} onChange={(e) => {
                 const nd = e.target.value;
@@ -344,13 +359,14 @@ export default function SettingsPage({ tab = 'profile' }) {
         {tab === 'system-prompt' && (
           <section aria-label="System prompts" className="st-card" style={{ maxWidth: 860 }}>
             <div className="st-pad" style={{ borderBottom: '1px solid #E3E8EF', gap: 14 }}>
-              <div><h2 className="st-h2">System prompts <SampleBadge /></h2><span className="st-muted">One general prompt for each task, shared by every run. Anyone can edit them; every save is a new version.</span></div>
+              <div><h2 className="st-h2">System prompts</h2><span className="st-muted">One general prompt for each task, shared by every run. Anyone can edit them; every save is a new version.</span></div>
               <div role="group" aria-label="Task" style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {['ext', 'norm'].map((k) => <button key={k} type="button" className="c-chip" aria-pressed={sysKind === k} onClick={() => { setSysKind(k); setSysView(null); }}>{KINDS[k].label}</button>)}
               </div>
               <span className="st-muted">{KINDS[sysKind].desc}</span>
+              {!sysCur ? <p className="c-note">Loading the System prompt…</p> : <>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px 14px', flexWrap: 'wrap' }}>
-                <span style={{ fontWeight: 600, color: '#071B3F' }}>Current: v{sysCur.n}</span><span className="st-muted">{sysCur.by} · {sysCur.when}</span></div>
+                <span style={{ fontWeight: 600, color: '#071B3F' }}>Current: v{sysCur.n}</span><span className="st-muted">{sysCur.saved_by} · {dateOf(sysCur.saved_at)}</span></div>
               <div className="st-field">
                 <label htmlFor="sp" className="sr-only">System prompt</label>
                 <textarea id="sp" rows={16} value={sysTxt} onChange={(e) => setSysTexts((x) => ({ ...x, [sysKind]: e.target.value }))} className="st-textarea" />
@@ -360,18 +376,19 @@ export default function SettingsPage({ tab = 'profile' }) {
                 {saveBtn(sysOff, saveSys, `Save as v${sysCur.n + 1}`)}
                 {sysDirty && <button type="button" className="st-plain" style={{ height: 44, padding: '0 18px' }} onClick={() => setSysTexts((x) => ({ ...x, [sysKind]: sysCur.text }))}>Discard changes</button>}
               </div>
+              </>}
             </div>
             <div className="st-pad" style={{ gap: 4 }}>
               <h3 className="st-h3" style={{ margin: '0 0 8px' }}>Versions</h3>
               <div className="st-sgrid st-shead"><span>Version</span><span>Modified by</span><span>Date</span><span>Used by</span><span /></div>
               {sysList.map((v, i) => (
-                <div key={v.n} className="st-sgrid" style={{ alignItems: 'center', minHeight: 52, borderBottom: '1px solid #EEF1F5', background: sysView === v.n ? '#F2F6FC' : 'transparent' }}>
+                <div key={v.n} className="st-sgrid" style={{ alignItems: 'center', minHeight: 52, borderBottom: '1px solid #EEF1F5', background: sysView && sysView.n === v.n ? '#F2F6FC' : 'transparent' }}>
                   <span style={{ display: 'flex', flexDirection: 'column' }}><span style={{ fontWeight: 600 }}>v{v.n}{i === 0 && <span className="st-current">Current</span>}</span>
                     {v.note && <span style={{ fontSize: 12, color: '#4A5568' }}>{v.note}</span>}</span>
-                  <span>{v.by}</span><span style={{ color: '#3B4557' }}>{v.when}</span><span style={{ color: '#3B4557' }}>{v.runs ? `${v.runs} ${v.runs === 1 ? 'run' : 'runs'}` : 'No runs yet'}</span>
+                  <span>{v.saved_by}</span><span style={{ color: '#3B4557' }}>{dateOf(v.saved_at)}</span><span style={{ color: '#3B4557' }}>{v.used_by ? `${v.used_by} ${v.used_by === 1 ? 'run' : 'runs'}` : 'No runs yet'}</span>
                   <span style={{ display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-                    <button type="button" className="st-linkbtn" onClick={() => setSysView(v.n)}>View</button>
-                    {i !== 0 && <button type="button" className="st-linkbtn" onClick={() => restoreSys(v.n)}>Restore</button>}
+                    <button type="button" className="st-linkbtn" onClick={() => viewSys(v.n)}>View</button>
+                    {i !== 0 && <button type="button" className="st-linkbtn" disabled={sysBusy} onClick={() => restoreSys(v.n)}>Restore</button>}
                   </span>
                 </div>
               ))}
@@ -382,7 +399,7 @@ export default function SettingsPage({ tab = 'profile' }) {
                 <h3 className="st-h3">v{viewV.n} · read only</h3>
                 <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', background: '#FFFFFF', border: '1px solid #D5DBE5', borderRadius: 6, padding: '12px 14px', lineHeight: 1.5 }}>{viewV.text}</div>
                 <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  {viewV.n !== sysCur.n && saveBtn(false, () => restoreSys(viewV.n), 'Restore this version')}
+                  {sysCur && viewV.n !== sysCur.n && saveBtn(sysBusy, () => restoreSys(viewV.n), 'Restore this version')}
                   <button type="button" className="st-plain" style={{ height: 44, padding: '0 18px' }} onClick={() => setSysView(null)}>Close</button>
                 </div>
               </div>

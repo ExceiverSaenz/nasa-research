@@ -534,7 +534,7 @@ edited in `annotations/settings.json` until the Workspace backend exists.
 
 ## ADR-015 · Settings the service cannot hold stay in the browser
 
-**Status** · Accepted (option chosen by the user on 2026-11-25)
+**Status** · Superseded by ADR-018 (2026-11-26) except for per-browser conveniences; was Accepted (option chosen by the user on 2026-11-25)
 **Date** · 2026-11-25
 **Reference** · BR-F04, AC-F11, AC-F12
 
@@ -607,3 +607,111 @@ opens it; the dialog is removed.
 ### Verification
 
 `e2e/settings.spec.js`.
+
+## ADR-018 · Settings stored by the service
+
+**Status** · Accepted (option chosen by the user on 2026-11-26); supersedes ADR-015 for every value it lists
+**Date** · 2026-11-26
+**Reference** · BR-T01 to BR-T05, BR-T07, AC-T01 to AC-T06, AC-T11, AC-T12; OP-T01, OP-T03
+
+### Context
+
+The canvas Settings has values the service did not store (username, initials, autosave off or 30 s, CSV, rule
+versions, more than 100 paper versions, Extraction). They lived in one browser (ADR-015), so they differed per machine,
+and the service's own CSV downloads ignored the separator and encoding.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| The service's `settings.json`, every field optional, checked by Pydantic and a JSON Schema | One source for every browser; the service applies the values (author, pruning, CSV) | Older clients and files send or hold `autosave_minutes` |
+| Keep them in the browser (ADR-015) | No service change | Values differ per browser; downloads ignore the CSV choice |
+| A settings database | Queries, history | A new dependency for a dozen values |
+
+### Decision and rationale
+
+The service stores them in `annotations/settings.json` (`SETTINGS_DEFAULTS`, `schemas/settings.schema.json`). A PUT
+writes only the fields it sends. `autosave_seconds` replaces `autosave_minutes`, which is still read from older files and
+accepted from older clients (up to 3 minutes → 60 s, above → 300 s) and dropped on the next save. The limits go to 200.
+The client sends once what an older version kept in `vr-settings` that the service still has at its default, then
+removes the key; ADR-015 remains only for per-browser conveniences.
+
+### Consequences
+
+- PEND-09 to PEND-12 are closed. The boards still read `tdr-settings`, now written from the service's values.
+- A stored value that does not match its schema is ignored (default used), never repaired.
+
+### Verification
+
+`test_service.py::SettingsAndHealth`; `test_versions.py::Exports` (CSV options); `canvas.test.js` (`importPatch`);
+`e2e/settings.spec.js` (the first workflow, the one-time import).
+
+## ADR-019 · System prompts as write-once versioned files, all kept
+
+**Status** · Accepted
+**Date** · 2026-11-26
+**Reference** · Settings rule 9, BR-T06, AC-T07 to AC-T10; OP-T02
+
+### Context
+
+Settings rule 9: one System prompt for extractions and one for normalizations; anyone can edit them; every save is a new
+version and all are kept; a version can be viewed and restored, which makes a new version; a run keeps the version it
+used.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| One folder per kind with `v<n>.json` written once (as schema versions, ADR-010) | Same model as schemas and papers: If-Match, numbers never reused, nothing rewritten | One file per version |
+| One file per kind holding a list of versions | One file | Every save rewrites all versions |
+| Inside `settings.json` | No new folder | The file grows; no per-version integrity |
+
+### Decision and rationale
+
+`storage/system_prompts.py`, `annotations/system-prompts/<kind>/v<n>.json`. v1 is written from the canvas text the
+first time a kind is asked for (OQ-T01). Saves and restores need If-Match; no version is ever pruned (rule 9 keeps all,
+unlike `keep_schema_versions`).
+
+### Consequences
+
+- Runs and normalizations will record `{kind, n}`; until then `used_by` is 0 ("No runs yet").
+- PEND-05 is closed for Settings; Extraction and Normalize boards still show their own sample prompts (PEND-06, PEND-08).
+
+### Verification
+
+`test_system_prompts.py`; `e2e/settings.spec.js` "System prompt: …".
+
+## ADR-020 · API keys in a separate secrets file
+
+**Status** · Proposed (option chosen by the user on 2026-11-26; built with Extraction)
+**Date** · 2026-11-26
+**Reference** · Settings rules 3, 4, 5, 8; PEND-04
+
+### Context
+
+Settings rule 3: keys are stored only on this computer and are never shown again after saving. Keys are needed only
+when Extraction calls a provider, which would be the first request leaving the machine (no outbound request today,
+02-repository-context.md).
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| A separate file in the data folder (`annotations/secrets.json`), readable only by the user, never exported; the API returns only the last 4 characters | Works in Docker (the mounted `/data`) and on Windows; kept apart from `settings.json` and exports | A file on disk in clear text, protected by file permissions |
+| The operating system's credential store | Encrypted by the system | Not available in the container (ADR-009) |
+| Environment variables only | Nothing on disk | Keys cannot be added, edited or tested from Settings |
+
+### Decision and rationale
+
+The secrets file, when Extraction is built: one entry per key `{id, provider, name, key, monthly_limit, default}`;
+written atomically with owner-only permissions; never included in exports, backups made by the tool, logs or error
+messages.
+
+### Consequences
+
+- Until then the Models and API keys tab stays sample data (PEND-04).
+- Testing a key is the first outbound request; it gets its own ADR with the HTTP client dependency.
+
+### Verification
+
+To be defined with Extraction.

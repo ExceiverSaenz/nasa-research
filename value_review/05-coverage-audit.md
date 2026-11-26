@@ -250,11 +250,31 @@ paper, Schema editor, Extraction, Normalize) and at 834 × 1112 (papers and revi
 | AC-F08 Schema | schemas.spec (17 tests); schema.js "the version history compares fields by id…" | Covered |
 | AC-F09 Extraction on sample data | boards "Extraction: list, a run, its four steps…" | Covered |
 | AC-F10 Normalize on sample data | boards "Normalize: an extraction through Rules, Validate and Results…" | Covered |
-| AC-F11 Profile | settings "profile: the display name goes to the server…" | Covered |
-| AC-F12 Review and export | settings "review and export…" | Covered |
+| AC-F11 Profile | settings "profile: name, username and initials go to the service…" | Covered |
+| AC-F12 Review and export | settings "first workflow: the CSV separator and autosave are stored by the service…" | Covered |
 | AC-F13 Leaving with unsaved work | review "leaving with unsaved changes…"; schemas "leaving the editor…" | Covered |
 | AC-F14 Keyboard | review keyboard test; schemas "the whole first workflow with the keyboard only" | Covered (Extraction and Normalize boards: by hand only) |
 | AC-F15 Old links | papers "each extraction keeps its own papers and links; old links still open the paper" | Covered |
 
 Gaps: the boards' inner interactions (assistant, launch, rule editor, validation keys) are the canvas prototype's and
 are not tested one by one; the pending register lists what waits for the backend.
+
+## Settings stored by the service (added 2026-11-26)
+
+[40-settings-specification.md](40-settings-specification.md). Python 236 tests, ruff clean, client 62, browser 46, all
+passing.
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-T01 Defaults | service `test_defaults_and_update` | Covered |
+| AC-T02 Review and export on the service | service `test_review_and_export_profile_and_extraction`; e2e "first workflow…" (a second browser sees the values) | Covered |
+| AC-T03 CSV separator and encoding | versions `test_csv_follows_the_stored_separator_and_encoding` (`;`, tab, BOM, the zip and `summary.csv`); e2e "first workflow…" (the downloaded file) | Covered |
+| AC-T04 Profile | service `test_review_and_export_profile_and_extraction`; e2e "profile: …"; the author of versions as before (`test_reviewer_name_comes_from_settings`) | Covered |
+| AC-T05, AC-T06 Ranges | service `test_values_out_of_range_write_nothing`; e2e range messages | Covered |
+| AC-T07 to AC-T10 System prompts | `test_system_prompts.py` (8 tests); e2e "System prompt: …" (save, view, restore, a stale save, the other kind) | Covered |
+| AC-T11 Older files and browsers | service `test_older_files_and_clients`, `test_a_stored_value_out_of_range_is_ignored`; `canvas.test.js` `importPatch`; e2e "older browser settings are sent…" | Covered |
+| AC-T12 Disk errors | service `test_settings_that_cannot_be_saved`; `test_system_prompts.py` `test_disk_errors` | Covered |
+| BR-T07 Autosave off | e2e "first workflow…" (Review shows "Autosave off"); the timer is not started when 0 | Covered (no timer check beyond the code) |
+
+Gaps: two browsers saving Settings at the same moment (last write wins, as before; System prompts use If-Match); the
+Extraction values are stored but no run reads them yet (PEND-07).

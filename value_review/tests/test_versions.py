@@ -324,6 +324,22 @@ class Exports(Versions):  # OP-09, AC-08, BR-12
         summary = list(csv.DictReader(io.StringIO(z.read('summary.csv').decode('utf-8-sig'))))
         self.assertEqual((summary[0]['paper'], summary[0]['version'], summary[0]['corrected'], summary[0]['added_values']), ('7', '1', '1', '1'))
 
+    def test_csv_follows_the_stored_separator_and_encoding(self):   # AC-T03, OP-T03
+        self.client.put('/api/v1/settings', json={'csv_delimiter': ';', 'csv_encoding': 'utf8'})
+        data = self.client.get(f'{URL}/1/export.csv').content
+        self.assertFalse(data.startswith('﻿'.encode('utf-8')))
+        self.assertTrue(data.decode('utf-8').startswith('paper;version;observation_id;'))
+        rows = list(csv.DictReader(io.StringIO(data.decode('utf-8')), delimiter=';'))
+        self.assertEqual((rows[0]['observation_id'], rows[0]['value']), ('o1', '710 ± 26'))
+        z = zipfile.ZipFile(io.BytesIO(self.client.get('/api/v1/export/latest.zip').content))
+        for name in ('paper-7-v1.csv', 'summary.csv'):
+            text = z.read(name)
+            self.assertFalse(text.startswith('﻿'.encode('utf-8')), name)
+            self.assertIn(b';', text.split(b'\r\n')[0], name)
+        self.client.put('/api/v1/settings', json={'csv_delimiter': 'tab', 'csv_encoding': 'utf8bom'})
+        data = self.client.get(f'{URL}/1/export.csv').content
+        self.assertTrue(data.startswith('﻿paper\tversion\t'.encode('utf-8')))
+
     def test_missing_version_export(self):
         self.assertEqual(self.client.get(f'{URL}/4/export.csv').status_code, 404)
 

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/settings.schema.json",
+  "title": "Settings stored by the service (annotations/settings.json, OP-T01 of 42-settings-interface-contract.md). Every key is optional; a key left out takes its default.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "reviewer_name": { "type": "string", "minLength": 1, "maxLength": 80, "description": "Display name: the author of every version saved after it changes (BR-T03)." },
+    "username": { "type": "string", "pattern": "^[a-z0-9._-]{1,40}$" },
+    "initials": { "type": "string", "maxLength": 3, "description": "Upper-case letters; empty means taken from the display name." },
+    "autosave_seconds": { "enum": [0, 30, 60, 300], "description": "0 is Off (BR-T07)." },
+    "autosave_minutes": { "type": "integer", "minimum": 1, "maximum": 60, "description": "Older files only; read once as autosave_seconds and dropped on the next save." },
+    "csv_delimiter": { "enum": [",", ";", "tab"] },
+    "csv_encoding": { "enum": ["utf8bom", "utf8"] },
+    "keep_versions": { "type": "integer", "minimum": 1, "maximum": 200 },
+    "keep_schema_versions": { "type": "integer", "minimum": 1, "maximum": 200 },
+    "keep_rule_versions": { "type": "integer", "minimum": 1, "maximum": 200 },
+    "extraction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parallel", "retries", "minutes", "warn_usd"],
+      "properties": {
+        "parallel": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "retries": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "minutes": { "type": "integer", "minimum": 1, "maximum": 60 },
+        "warn_usd": { "type": "number", "minimum": 0, "maximum": 100000 }
+      }
+    },
+    "sources": { "type": "array", "maxItems": 50, "description": "Folder pairs (ADR-014); checked by the service, see 03-interface-contract.md OP-10." },
+    "active_source": { "type": "string", "maxLength": 40 }
+  }
+}
