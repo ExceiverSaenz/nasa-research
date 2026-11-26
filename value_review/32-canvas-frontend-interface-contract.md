@@ -55,8 +55,8 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 
 | ID | What | Where it shows | Today |
 |---|---|---|---|
-| PEND-01 | Runs and paper sets (schema, model, finish date of an extraction) | Review list, papers summary, "Results from" meta | "—", the PDF folder name |
-| PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of —" |
+| PEND-01 | Runs and paper sets (schema, model, finish date of an extraction) | Review list, papers summary, "Results from" meta | "—"; the paper set is real for workspace runs (ADR-024), else the PDF folder name |
+| PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of M" for workspace runs, else "N of —" |
 | PEND-03 | Run metadata for "Results from" | Review header | Pair name and folder |
 | PEND-04 | API keys, usage, models | Extraction (model and key in Setup, spending) | Settings uses the service (ADR-020 to ADR-022); spending is 0 until runs record it |
 | PEND-05 | System prompts and their versions | Extraction; Normalize | Settings uses the service (ADR-019); the boards keep their sample prompts |
@@ -68,8 +68,8 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 | PEND-11 | CSV separator and encoding for the service's downloads | Papers and history downloads | Closed: the service applies them (OP-T03) |
 | PEND-12 | More than 100 versions per paper | Settings · Review and export | Closed: up to 200 on the service |
 | PEND-13 | Schema "The model may suggest new values" and field notes | Schema details | Drawn, disabled |
-| PEND-14 | Workspace folder | Settings · Workspace | Sample folder; the real folder pairs are listed |
+| PEND-14 | Workspace folder | Settings · Workspace | Closed: the service reads it (ADR-023, ADR-024) |
 | PEND-15 | Type proposals and typo fixes on .xlsx import | Schema import | Not shown |
 | PEND-16 | The full symbol table (unicodeit, about 4,000) | Review · Insert symbol | About 100 symbols bundled |
-| PEND-17 | "Load papers again" (ingest) | Not in the canvas | Only through `POST /ingest` |
+| PEND-17 | "Load papers again" (ingest) | Not in the canvas | Workspace runs load by themselves; folder pairs only through `POST /ingest` |
 | PEND-18 | Schema element families as one item | Schema editor | One field per element, with the family under its name |

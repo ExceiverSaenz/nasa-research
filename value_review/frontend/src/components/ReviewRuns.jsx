@@ -12,10 +12,13 @@ export default function ReviewRuns() {
   const [rows, setRows] = useState(null);
   const [error, setError] = useState('');
   const [lq, setLq] = useState('');
+  const [loading, setLoading] = useState('Loading extractions…');
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     document.title = 'Review · Tensile Data Review';
-    reviewData.extractions().then((r) => setRows(r.data)).catch((e) => setError(e.message));
+    reviewData.extractions({ onLoading: () => setLoading('Loading new papers…') })
+      .then((r) => { setRows(r.data); setNote(r.note); }).catch((e) => setError(e.message));
   }, []);
 
   const needle = lq.trim().toLowerCase();
@@ -30,6 +33,7 @@ export default function ReviewRuns() {
           <p className="c-lead">Choose an extraction to check its values, paper by paper. Only extractions with results are listed.</p>
         </div>
         {error && <div className="c-error" role="alert">{error}</div>}
+        {note && <div className="c-error" role="status">{note}</div>}
         <div className="c-card">
           <div className="c-toolbar">
             <label htmlFor="lq" className="sr-only">Search extractions</label>
@@ -41,7 +45,7 @@ export default function ReviewRuns() {
                 <span>Extraction</span><span>Paper set</span><span>Schema</span><span>Model</span><span>Papers</span><span>Reviewed</span><span>Status</span>
               </div>
               {rows && shown.length === 0 && <div className="c-empty">No extractions match this search.</div>}
-              {!rows && !error && <div className="c-empty">Loading extractions…</div>}
+              {!rows && !error && <div className="c-empty">{loading}</div>}
               {shown.map((r) => (
                 <button key={r.id} type="button" className="c-row" style={{ gridTemplateColumns: COLS }} onClick={() => { window.location.hash = papersHash(r.id); }}>
                   <span style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>

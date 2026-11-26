@@ -22,7 +22,7 @@ ENV VALUE_REVIEW_HOST=0.0.0.0 \
     VALUE_REVIEW_DATA=/data \
     VALUE_REVIEW_RUN_DIR=/sources/results \
     VALUE_REVIEW_PDF_DIR=/sources/pdfs
-RUN useradd --create-home --uid 1000 reviewer && mkdir -p /data /sources/results /sources/pdfs && chown -R reviewer /data
+RUN useradd --create-home --uid 1000 reviewer && mkdir -p /data /sources/results /sources/pdfs /workspace && chown -R reviewer /data
 USER reviewer
 EXPOSE 8766
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \

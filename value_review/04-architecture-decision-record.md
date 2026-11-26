@@ -501,7 +501,7 @@ When a backend lands for a section, replace its board by React screens reading t
 
 ## ADR-014 · Folder pairs are shown as extractions
 
-**Status** · Accepted (option chosen by the user on 2026-11-25)
+**Status** · Accepted (option chosen by the user on 2026-11-25); amended by ADR-024
 **Date** · 2026-11-25
 **Reference** · BR-F05, AC-F02, AC-F03, AC-F15
 
@@ -784,3 +784,69 @@ without a cost until a price source is added. A catalog model is usable only whe
 ### Verification
 
 `test_keys.py` `test_no_keys` (cost per paper), `test_models_follow_the_keys`.
+
+## ADR-023 · The workspace folder is set at startup
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · Settings rule 2, BR-W01, BR-W06, AC-W01, AC-W09
+
+### Context
+
+The canvas draws a "Workspace folder" field. The tool runs in a container for testers (ADR-009), which can only see
+folders mounted when it starts.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| The root from `REVIEW_WORKSPACE` / `--workspace`; shown read only | Works the same in Docker and on Windows; no path typed that the tool cannot see | Changing it needs a restart |
+| A path typed and saved in Settings | As drawn | In a container only already mounted paths work; the page must explain failures |
+
+### Decision and rationale
+
+The first. `service/config.py` `Config.workspace`; compose mounts it read only at `/workspace` (an empty volume when
+unset) and passes the host path to show. Settings shows it in a read-only field with the way to change it.
+
+### Consequences
+
+- A deviation from the board: no Save on this tab.
+- Extraction will need the mount to be writable.
+
+### Verification
+
+`test_workspace.py` `test_the_root_comes_from_the_environment`, `test_not_configured`; `e2e/workspace.spec.js`.
+
+## ADR-024 · Workspace runs are extractions beside the folder pairs
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · BR-W02 to BR-W05, BR-W07, AC-W02 to AC-W08; amends ADR-014
+
+### Context
+
+Review shows folder pairs as extractions (ADR-014), with reviews stored per pair. The workspace has another layout
+(`results\<set>\<run>\`), and today's folders do not follow it.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Runs become sources with a stable id derived from set and run, beside the pairs; nothing moved | Existing reviews untouched; no setup for new runs | Two ways to add data; a copied folder is a new extraction |
+| Copy the current data into the workspace and re-attach reviews | One layout | Copies data and moves reviews: a mistake can lose or mix work |
+| Replace the pairs with the workspace | One layout | Old reviews unreachable until everything is reorganised by hand |
+
+### Decision and rationale
+
+The first: `service/workspace.py` gives each valid run the id `ws-<set run>-<hash>` and records `{set, run}` in its data
+folder when first loaded, so a request never scans the workspace. Loading reuses `ingest_run` and happens when Review or
+Settings › Workspace opens. A pair on the same folders wins.
+
+### Consequences
+
+- Renaming a set or run makes a new extraction; the old data stays (OQ-W01).
+- PEND-14 closed; PEND-17 closed for workspace runs; the paper set of a run is real (part of PEND-01).
+
+### Verification
+
+`test_workspace.py` (ids, loading, review of a run, pair on a run, missing run); `e2e/workspace.spec.js`.

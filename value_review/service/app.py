@@ -38,6 +38,7 @@ from .config import Config
 from .errors import ApiError, body, install
 from .library import WIDTH_DEFAULT, Library
 from . import sources as pairs
+from . import workspace
 
 log = logging.getLogger('value_review')
 # Every column a value may be moved to or added in (the extraction guide), in the guide's order.
@@ -200,11 +201,15 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         out['sources'], out['active_source'] = pairs.normalize(settings_store.stored_settings(), config.run_dir, config.pdf_dir)
         return out
 
-    def find_source(sid, settings=None):
+    def find_pair(sid, settings=None):
         return next((x for x in (settings or settings_now())['sources'] if x['id'] == sid), None)
 
+    def find_source(sid, settings=None):
+        """A folder pair, or a loaded run of the workspace (ADR-024)."""
+        return find_pair(sid, settings) or workspace.find(config, sid)
+
     class Source:
-        """One folder pair: its own originals, drafts, versions and page cache."""
+        """One folder pair or workspace run: its own originals, drafts, versions and page cache."""
         def __init__(self, sid):
             root = pairs.source_dir(config.data, sid)
             self.id, self.originals = sid, root / 'originals'
@@ -575,7 +580,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     @app.put(f'{API}/active-source')
     def put_active_source(payload: ActiveSource):
         current = settings_now()
-        if find_source(payload.source, current) is None:
+        if find_pair(payload.source, current) is None:
             raise ApiError(404, 'source_not_found', f'No folder pair {payload.source}')
         save({**{k: current[k] for k in (*SETTINGS_DEFAULTS, 'sources')}, 'active_source': payload.source})
         return settings_now()
@@ -853,6 +858,9 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         save({**{k: current[k] for k in (*SETTINGS_DEFAULTS, 'sources', 'active_source')}, **patch})
 
     install_keys(app, config, settings_now, save_settings_patch, clock)
+
+    # --- Workspace (62-workspace-interface-contract.md) ---------------------------------------------
+    workspace.install_workspace(app, config, settings_now, ingest_lock)
 
     # --- System prompts: OP-T02 (42-settings-interface-contract.md; ADR-019) ---------------------
     # Global to the data folder. Every save is a new version; none is changed or deleted (BR-T06).

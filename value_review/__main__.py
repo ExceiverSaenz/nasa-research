@@ -1,4 +1,4 @@
-"""Start the tool: python -B -m value_review [--port N] [--no-browser] [--data DIR].
+"""Start the tool: python -B -m value_review [--port N] [--no-browser] [--data DIR] [--workspace DIR].
 
 One process, one uvicorn worker, bound to 127.0.0.1 only (AC-20). A second instance on the same data
 folder, or a taken port, stops with a clear message. The browser opens once the service is ready.
@@ -46,6 +46,7 @@ def main(argv=None):
     parser.add_argument('--host', default=os.environ.get(HOST_VARIABLE, HOST),
                         help='address to listen on (default 127.0.0.1; 0.0.0.0 inside a container, published on the host\'s 127.0.0.1 only)')
     parser.add_argument('--data', help='data folder holding originals/, annotations/ and cache/ (default value_review/)')
+    parser.add_argument('--workspace', help='folder holding papers/ and results/ (default: VALUE_REVIEW_WORKSPACE, else none)')
     args = parser.parse_args(argv)
 
     import uvicorn
@@ -54,7 +55,8 @@ def main(argv=None):
     from .storage import InstanceLock, StorageError
     from .storage.files import AnnotationStore
 
-    config = Config(port=args.port, bind=args.host, **({'data': args.data} if args.data else {}))
+    folders = {key: value for key, value in (('data', args.data), ('workspace', args.workspace)) if value}
+    config = Config(port=args.port, bind=args.host, **folders)
     store = AnnotationStore(config.annotations)
     try:
         lock = InstanceLock(store.lock_path).acquire()

@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { autosaveText, cleanPrefs, importPatch, initialsOf, PREF_DEFAULTS, profileOf, SERVER_DEFAULTS } from './prefs.js';
-import { chipCounts, extractionRow, papersText, paperRow, runSummary, shownPapers, tiles } from './reviewView.js';
+import { chipCounts, extractionRow, papersText, paperRow, runSummary, shownPapers, sourceList, tiles } from './reviewView.js';
 
 test('older browser settings keep only known values of the right kind (ADR-015)', () => {
   assert.deepEqual(cleanPrefs(null), PREF_DEFAULTS);
@@ -87,3 +87,22 @@ test('symbols by name, and a backslash name followed by a space', () => {
   assert.equal(replaceName(`${bs}nosuch `, 8), null);
   assert.equal(replaceName('710 ', 4), null);
 });
+
+test('extractions: folder pairs and the runs of the workspace, without listing a run twice (ADR-024)', () => {
+  const pairs = [{ id: 'default', name: 'Model A', pdf_dir: '/gone/pdfs' }, { id: 'mine', name: 'Mine', pdf_dir: 'C:\\ws\\papers\\tensile' }];
+  const workspace = {
+    hidden_pairs: ['default'],
+    sets: [{ name: 'tensile', pdfs: 23, runs: [
+      { name: 'low', source_id: 'mine', pair: true },
+      { name: 'high', source_id: 'ws-tensile-high-abc123', pair: false },
+      { name: 'empty', source_id: null, pair: false, problem: 'No result files.' }] }],
+    missing: [{ source_id: 'ws-old-run-000000', set: 'old', run: 'run' }],
+  };
+  assert.deepEqual(sourceList(pairs, workspace).map((s) => [s.id, s.name, s.set, s.pdfs, s.missing]), [
+    ['mine', 'Mine', 'tensile', 23, false],
+    ['ws-tensile-high-abc123', 'high', 'tensile', 23, false],
+    ['ws-old-run-000000', 'run', 'old', null, true]]);
+  assert.deepEqual(sourceList(pairs, null).map((s) => [s.id, s.set]), [['default', 'pdfs'], ['mine', 'tensile']]);
+  assert.equal(papersText(extractionRow({ id: 'x', name: 'X' }, [], { pdfs: 23 })), '0 of 23');
+});
+

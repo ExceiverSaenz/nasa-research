@@ -27,6 +27,15 @@ def main():
             print(f'WARNING: no {what} ({pattern}) in {folder}. Check {variable} in value_review/.env: it must be the '
                   f'folder on your computer that holds them. Then run: docker compose -f value_review/compose.yaml up -d',
                   file=sys.stderr)
+    workspace = os.environ.get('VALUE_REVIEW_WORKSPACE', '').strip()
+    if workspace:
+        missing = [name for name in ('papers', 'results') if not (Path(workspace) / name).is_dir()]
+        if missing:
+            ok = False
+            print(f'WARNING: the workspace has no {" or ".join(missing)} folder. Check REVIEW_WORKSPACE in value_review/.env: '
+                  f'it must be the folder on your computer that holds papers/ and results/.', file=sys.stderr)
+        else:
+            print(f'Workspace: {workspace} (loaded when you open Review)')
     return 0 if ok else 1
 
 

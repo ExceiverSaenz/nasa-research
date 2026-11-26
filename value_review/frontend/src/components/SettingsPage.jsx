@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import AppHeader, { SampleBadge } from './AppHeader.jsx';
+import React, { useEffect, useRef, useState } from 'react';
+import AppHeader from './AppHeader.jsx';
+import WorkspaceTab from './WorkspaceTab.jsx';
 import { loadSettings, refreshProfile } from './useProfile.js';
 import { api } from '../lib/api.js';
 import { initialsOf } from '../lib/prefs.js';
 import { settingsHash } from '../lib/routes.js';
-import { KINDS, PROVIDERS, WORKSPACE } from '../data/sampleSettings.js';
+import { KINDS, PROVIDERS } from '../data/sampleSettings.js';
 
 const TABS = [['profile', 'Profile'], ['workspace', 'Workspace'], ['models', 'Models and API keys'], ['system-prompt', 'System prompt'],
   ['extraction', 'Extraction'], ['review', 'Review and export']];
@@ -15,11 +16,10 @@ const HINTS = { par: 'More papers at once is faster but can hit the provider’s
   vSchema: 'Kept for each schema: view, compare and restore.', vPaper: 'Each submit in Review saves a version.', vRule: 'Each saved rule in Normalize is a version of its feature.' };
 const SYS_KIND = { ext: 'extraction', norm: 'normalization' };   // the service's names (OP-T02)
 const dateOf = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-const folderName = (path) => String(path || '').split(/[\\/]+/).filter(Boolean).pop() || '';
 
 const USERNAME = /^[a-z0-9._-]{1,40}$/;
 const fromSettings = (s) => ({
-  user: s.username, display: s.reviewer_name, initials: s.initials || initialsOf(s.reviewer_name), ws: WORKSPACE,
+  user: s.username, display: s.reviewer_name, initials: s.initials || initialsOf(s.reviewer_name), 
   par: String(s.extraction.parallel), retries: String(s.extraction.retries), timeout: String(s.extraction.minutes), warn: String(s.extraction.warn_usd),
   autosave: String(s.autosave_seconds), delim: s.csv_delimiter, enc: s.csv_encoding,
   vSchema: String(s.keep_schema_versions), vPaper: String(s.keep_versions), vRule: String(s.keep_rule_versions),
@@ -28,7 +28,7 @@ const fromSettings = (s) => ({
 // The Settings page (canvas Settings.dc.html, ADR-017): six tabs, each with its own Save. Profile, Extraction and
 // Review and export are stored by the service (ADR-018, 42-settings-interface-contract.md); each Save sends only its
 // tab's fields. The System prompts and their versions too (ADR-019); API keys and models (ADR-020 to ADR-022): a key is
-// tested by the service before it is saved and only its last 4 characters come back. Sample (ADR-013): workspace.
+// tested by the service before it is saved and only its last 4 characters come back. The workspace is read from the service (ADR-023).
 export default function SettingsPage({ tab = 'profile' }) {
   const [server, setServer] = useState(null);
   const [f, setF] = useState(null);
@@ -43,6 +43,7 @@ export default function SettingsPage({ tab = 'profile' }) {
   const [confirm, setConfirm] = useState('');
   const [keyBusy, setKeyBusy] = useState(false);
   const [newModel, setNewModel] = useState('');
+  const modelSaves = useRef({ last: 0, queue: Promise.resolve() });   // ticks are saved one after another
   const loadKeys = () => Promise.all([api.keys(), api.models()]).then(([k, m]) => { setKeys(k); setModels(m.models); });
   // System prompts (service)
   const [sys, setSys] = useState({ ext: null, norm: null });          // {cur, versions} of each kind
@@ -151,10 +152,13 @@ export default function SettingsPage({ tab = 'profile' }) {
   const manualNames = () => (models || []).filter((m) => m.source === 'manual').map((m) => m.id.slice('server:'.length));
   const putModels = (enabled, def, manual, done) => {
     setError(''); setToast('');
-    const before = models;   // shown at once, put back if the service refuses
-    setModels((ms) => ms.map((m) => ({ ...m, enabled: enabled.includes(m.id), default: m.id === def })));
-    api.saveModels({ enabled, default: def, ...(manual ? { manual } : {}) }).then((r) => { setModels(r.models); if (done) done(); })
-      .catch((e) => { setModels(before); setError(e.message); });
+    setModels((ms) => ms.map((m) => ({ ...m, enabled: enabled.includes(m.id), default: m.id === def })));   // shown at once
+    const saves = modelSaves.current, n = ++saves.last;
+    saves.queue = saves.queue.then(() => api.saveModels({ enabled, default: def, ...(manual ? { manual } : {}) }))
+      // only the newest answer is shown: an older one would undo a tick made while it was on its way
+      .then((r) => { if (n === saves.last) setModels(r.models); if (done) done(); })
+      .catch((e) => { setError(e.message); if (n === saves.last) return loadKeys(); return null; })
+      .catch((e) => setError(e.message));
   };
   const toggleModel = (id) => {
     const on = enabledIds(), was = on.includes(id), en = was ? on.filter((x) => x !== id) : on.concat([id]);
@@ -188,8 +192,6 @@ export default function SettingsPage({ tab = 'profile' }) {
   }); };
   const viewSys = (num) => api.systemPromptVersion(SYS_KIND[sysKind], num).then((v) => setSysView({ n: v.n, text: v.text })).catch((e) => setError(e.message));
   const viewV = sysView;
-
-  const pairs = (server.sources || []).map((s) => ({ name: folderName(s.pdf_dir) || s.name, path: s.pdf_dir, runs: '1 run' }));
 
   return (
     <div>
@@ -233,31 +235,7 @@ export default function SettingsPage({ tab = 'profile' }) {
           </section>
         )}
 
-        {tab === 'workspace' && (
-          <section aria-label="Workspace" className="st-card">
-            <div className="st-pad" style={{ gap: 14, borderBottom: '1px solid #E3E8EF' }}>
-              <div><h2 className="st-h2">Workspace folder <SampleBadge /></h2><span className="st-muted">One folder with a fixed structure. Extraction, Review and Normalize all read and write inside it.</span></div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                <label htmlFor="ws" className="sr-only">Workspace folder</label>
-                <input id="ws" className="st-input" style={{ flex: '1 1 320px', minWidth: 0, fontFamily: 'var(--c-mono)' }} value={f.ws} onChange={(e) => set('ws', e.target.value)} />
-                {saveBtn(off(['ws'], !f.ws.trim()), () => { setSaved((x) => ({ ...x, ws: f.ws.trim() })); setToast('Workspace saved. Found papers\\ and results\\ inside it.'); })}
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '4px 14px' }}>
-                <span className="c-mono">papers\</span><span className="st-muted">One subfolder of PDFs per paper set.</span>
-                <span className="c-mono">results\</span><span className="st-muted">One subfolder per paper set, and inside it one per run.</span>
-              </div>
-            </div>
-            <div className="st-pad" style={{ gap: 8 }}>
-              <h3 className="st-h3">Paper sets found</h3>
-              {pairs.map((s) => (
-                <div key={s.path} style={{ display: 'grid', gridTemplateColumns: 'minmax(140px, 1fr) minmax(160px, 1.4fr) 90px 90px', gap: 16, alignItems: 'center', minHeight: 44, borderBottom: '1px solid #EEF1F5' }}>
-                  <span style={{ fontWeight: 500 }}>{s.name}</span><span className="c-mono c-ell" style={{ fontSize: 13, color: '#3B4557' }} title={s.path}>{s.path}</span><span>— PDFs</span><span className="st-muted">{s.runs}</span>
-                </div>
-              ))}
-              <span style={{ fontSize: 13, color: '#4A5568' }}>A new subfolder in papers\ shows up here and in Extraction, with no setup.</span>
-            </div>
-          </section>
-        )}
+        {tab === 'workspace' && <WorkspaceTab pairs={server.sources} />}
 
         {tab === 'models' && <>
           <section aria-label="API keys" className="st-card">

@@ -52,10 +52,28 @@ def build(root):
     return data
 
 
+def build_workspace(root, data_root):
+    """A workspace (62-workspace-interface-contract.md): set "tensile" with PDFs 7, 8 and 9 and two runs, "gpt-low"
+    with a result for paper 7 and "gpt-high" with results for 7 and 8."""
+    folder = Path(root) / 'workspace'
+    papers = folder / 'papers' / 'tensile'
+    papers.mkdir(parents=True)
+    shutil.copy(data_root.parent / 'pdfs' / '7.pdf', papers / '7.pdf')
+    shutil.copy(data_root.parent / 'pdfs' / '8.pdf', papers / '8.pdf')
+    make_pdf(papers / '9.pdf', [(612, 792)])
+    for name, ids in (('gpt-low', ['7']), ('gpt-high', ['7', '8'])):
+        run = folder / 'results' / 'tensile' / name
+        run.mkdir(parents=True)
+        for pid in ids:
+            shutil.copy(data_root.parent / 'run' / f'{pid}{RESULT}', run / f'{pid}{RESULT}')
+    return folder
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog='python -B -m value_review.tests.e2e_server')
     parser.add_argument('--root', required=True)
     parser.add_argument('--port', type=int, required=True)
+    parser.add_argument('--with-workspace', action='store_true')
     args = parser.parse_args(argv)
     data = build(args.root)
     # A local fake of the model providers (fake_provider.py): no request leaves the machine. Its address is written
@@ -63,7 +81,8 @@ def main(argv=None):
     fake = FakeProvider()
     os.environ.update(fake.env())
     (Path(args.root) / 'fake-provider.txt').write_text(fake.url, encoding='utf-8')
-    return launch(['--no-browser', '--data', str(data), '--port', str(args.port)])
+    extra = ['--workspace', str(build_workspace(args.root, data))] if args.with_workspace else []
+    return launch(['--no-browser', '--data', str(data), '--port', str(args.port), *extra])
 
 
 if __name__ == '__main__':

@@ -36,6 +36,9 @@ Everything runs on your own computer. Nothing is sent anywhere, and the PDFs and
    ```
 
    - `REVIEW_NAME` is required: it is written as the author of every decision and version you make.
+   - Optional: `REVIEW_WORKSPACE=C:/Users/you/workspace`, a folder with `papers/<set>/` (PDFs) and
+     `results/<set>/<run>/` (LLM results). Each run shows in Review and its papers load by themselves. The tool only
+     reads this folder.
    - `REVIEW_DATA` is where **your reviews** are kept. Do not delete it while testing.
    - Change `REVIEW_PORT` only if port 8766 is already in use on your computer.
 

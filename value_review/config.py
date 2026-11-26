@@ -40,5 +40,11 @@ def default_pdf_dir():
     return Path(os.environ.get('VALUE_REVIEW_PDF_DIR') or source_root() / PDFS_REL)
 
 
+def default_workspace():
+    """``VALUE_REVIEW_WORKSPACE``: the folder holding ``papers/`` and ``results/`` (ADR-023), or None when not set."""
+    path = os.environ.get('VALUE_REVIEW_WORKSPACE', '').strip()
+    return Path(path).expanduser() if path else None
+
+
 def originals_dir(data=None):
     return Path(data or data_root()) / 'originals'

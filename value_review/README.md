@@ -29,7 +29,7 @@ Run every command from the repository root.
    python -B -m value_review
    ```
 
-   The browser opens at `http://127.0.0.1:8766/`. Options: `--port N` (or `VALUE_REVIEW_PORT`), `--no-browser`, `--data DIR` to work on a copy of the data folder. Only one instance can run on a data folder. Stop it with Ctrl+C.
+   The browser opens at `http://127.0.0.1:8766/`. Options: `--port N` (or `VALUE_REVIEW_PORT`), `--no-browser`, `--data DIR` to work on a copy of the data folder, `--workspace DIR` (or `VALUE_REVIEW_WORKSPACE`) for a folder of paper sets and runs. Only one instance can run on a data folder. Stop it with Ctrl+C.
 
 The built front end in `value_review/web/` is committed, so Node is not needed to run the tool.
 
@@ -48,6 +48,7 @@ are mounted read-only, never copied into the image.
    REVIEW_LLM_RESULTS=C:/path/to/llm_results       # <paper>-pdf_with_feature_guide.json
    REVIEW_PDFS=C:/path/to/pdfs                      # <paper>.pdf
    REVIEW_DATA=./review-data                         # your reviews; keep this folder
+   # REVIEW_WORKSPACE=C:/path/to/workspace          # optional: papers/<set>/ and results/<set>/<run>/
    ```
 
 2. From the repository root:
@@ -82,7 +83,7 @@ The screens follow the canvas design ([30-canvas-frontend-specification.md](30-c
   - **+ New schema** starts blank, from a copy of a saved schema, or from an **.xlsx template** (the empty one can be downloaded there). The ⋯ menu of a row renames, opens the version history, duplicates, exports the latest version as .xlsx, or deletes (the folder goes to a trash folder; nothing is erased).
   - In the editor, add groups and fields. A field has a name and, if you want, a description and a type (Number with a unit, Category with allowed values, Text, Calculated with a formula), and shows the line the model will read. Reorder by dragging the ⋮⋮ handle or with the arrows. Every change is saved as a draft on the server a moment later; **Save version** makes the next version after checking that names are filled in and unique in their group. The ⋯ menu fills the draft from an .xlsx template (fields with the same names keep their identity) or exports the current version.
   - **Version history**: view a version, compare it with the current one (a renamed field shows as one change), restore it as a new version. The 20 most recent are kept per schema (Settings).
-- **Settings** (gear in the top bar) is a page with six tabs: Profile (your name is "Modified by"; username, initials), Workspace, Models and API keys, System prompt, Extraction, and Review and export (autosave, CSV, versions kept). Profile, Extraction, Review and export and the two System prompts (Extraction and Normalization, every save a new version, all kept) are stored by the service, so every browser sees them ([40-settings-specification.md](40-settings-specification.md)). In **Models and API keys**, a key is tested with its provider before it is saved (the only requests that leave your computer), kept in `annotations/secrets.json` and never shown again, only its last 4 characters; tick the models a run may use and choose the default ([50-models-keys-specification.md](50-models-keys-specification.md)). The workspace is sample data for now.
+- **Settings** (gear in the top bar) is a page with six tabs: Profile (your name is "Modified by"; username, initials), Workspace, Models and API keys, System prompt, Extraction, and Review and export (autosave, CSV, versions kept). Profile, Extraction, Review and export and the two System prompts (Extraction and Normalization, every save a new version, all kept) are stored by the service, so every browser sees them ([40-settings-specification.md](40-settings-specification.md)). In **Models and API keys**, a key is tested with its provider before it is saved (the only requests that leave your computer), kept in `annotations/secrets.json` and never shown again, only its last 4 characters; tick the models a run may use and choose the default ([50-models-keys-specification.md](50-models-keys-specification.md)). **Workspace** shows the folder set at startup (`papers\\<set>\\` and `results\\<set>\\<run>\\`), its sets and runs, and loads new papers; each run is an extraction in Review, beside the folder pairs ([60-workspace-specification.md](60-workspace-specification.md)).
 - **Folder pairs** are set in `annotations/settings.json` (`sources`: each a named **data folder** of LLM results, `<paper>-pdf_with_feature_guide.json`, with its **papers folder** of PDFs). Each pair is one extraction in Review, reviewed on its own with its own drafts and versions. Papers are loaded with `POST /api/v1/sources/<pair>/ingest`: papers already loaded are never changed or removed, and open read-only when their file differs or is missing. The canvas has no button for this yet (PEND-17).
 
 ## Data
