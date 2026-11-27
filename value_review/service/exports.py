@@ -10,7 +10,7 @@ import json
 import re
 import zipfile
 
-from ..ingest import features
+from ..domain.review_schema import label as field_label
 
 CSV_COLUMNS = ['paper', 'version', 'observation_id', 'record', 'record_id', 'column', 'feature_id', 'value', 'unit',
                'original_value', 'original_unit', 'status', 'note', 'by', 'at', 'origin', 'needs_check']
@@ -81,7 +81,7 @@ def export_json(original, version):
                              'record_ids': v['record_ids'], 'value_as_reported': None, 'unit_as_reported': None,
                              'review': review(rows[v['observation_id']])})
     return {'schema': 'value-review-export/1', 'paper': version['paper'], 'version': version['n'],
-            'at': version['at'], 'by': version['by'], 'source': version['source'],
+            'at': version['at'], 'by': version['by'], 'source': version['source'], 'schema_ref': version.get('schema_ref'),
             'records': records, 'evidence': evidence, 'observations': observations}
 
 
@@ -93,24 +93,26 @@ def _text(text, encoding):
     return (text if encoding == 'utf8' else '﻿' + text).encode('utf-8')
 
 
-def export_csv(version, delimiter=',', encoding='utf8bom'):
+def export_csv(version, delimiter=',', encoding='utf8bom', labels=None):
     """RFC 4180 quoting with the stored separator, one row per value in the version's order; UTF-8 with a BOM by
-    default (OP-T03 of 42-settings-interface-contract.md)."""
+    default (OP-T03 of 42-settings-interface-contract.md). ``labels`` are the field names of the version's schema
+    (BR-R07); a field id they do not hold keeps the old guide's label."""
+    labels = labels or {}
     buf = io.StringIO()
     writer = csv.writer(buf, delimiter=DELIMITERS[delimiter], lineterminator='\r\n')
     writer.writerow(CSV_COLUMNS)
     for r in version['values']:
         writer.writerow([cell(x) for x in (
             version['paper'], version['n'], r['observation_id'], '; '.join(r['record_labels']),
-            '; '.join(r['record_ids']), features.label(r['feature_id']), r['feature_id'],
+            '; '.join(r['record_ids']), field_label(labels, r['feature_id']), r['feature_id'],
             r['value'], r['unit'], r['original_value'], r['original_unit'],
             r['status'], r['note'], r['by'], r['at'], r['origin'], 'yes' if r['needs_check'] else 'no')])
     return _text(buf.getvalue(), encoding)
 
 
-def latest_zip(items, delimiter=',', encoding='utf8bom'):
+def latest_zip(items, delimiter=',', encoding='utf8bom', labels_of=None):
     """``items``: [(original, version)] for papers with a version. Latest JSON and CSV of each, plus summary.csv;
-    every CSV uses the stored separator and encoding."""
+    every CSV uses the stored separator and encoding. ``labels_of(version)`` gives that version's field names."""
     buf = io.BytesIO()
     summary = io.StringIO()
     writer = csv.writer(summary, delimiter=DELIMITERS[delimiter], lineterminator='\r\n')
@@ -120,7 +122,7 @@ def latest_zip(items, delimiter=',', encoding='utf8bom'):
         for original, version in items:
             stem = f"paper-{version['paper']}-v{version['n']}"
             z.writestr(f'{stem}.json', json.dumps(export_json(original, version), ensure_ascii=False, indent=1))
-            z.writestr(f'{stem}.csv', export_csv(version, delimiter, encoding))
+            z.writestr(f'{stem}.csv', export_csv(version, delimiter, encoding, labels_of(version) if labels_of else None))
             c = version['counts']
             writer.writerow([cell(x) for x in (
                 version['paper'], version['n'], version['at'], version['by'], c['total'], c['pending'],

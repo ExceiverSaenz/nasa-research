@@ -83,7 +83,7 @@ class Submit(Versions):  # OP-05, AC-03, AC-05
         body = r.json()
         self.assertEqual((body['n'], body['by']), (1, BY))
         self.assertEqual(body['counts'], {'total': 4, 'pending': 1, 'accepted': 1, 'corrected': 1, 'rejected': 1, 'unsure': 0,
-                                          'added_values': 0, 'added_records': 0, 'edited_records': 0})
+                                          'added_values': 0, 'added_records': 0, 'edited_records': 0, 'mismatched': 0})
         v1 = json.loads(self.store.version_path('7', 1).read_text(encoding='utf-8'))
         self.assertEqual(schemas.errors('version', v1), [])
         self.assertEqual((v1['base_version'], v1['note'], v1['state']), (0, 'Submitted', three_decisions()))

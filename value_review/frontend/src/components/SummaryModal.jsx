@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { displayValue, STATUS_LABEL } from '../lib/values.js';
+import { WARNING_TEXT } from '../lib/fieldFit.js';
 
 const CHIP = {
   accepted: { background: '#DDF3E4', color: '#0F5A2C' }, rejected: { background: '#FBE3E1', color: '#8A1C15' },
@@ -21,6 +22,8 @@ export default function SummaryModal({ paperId, backHash = '#/review', title, ro
   }, [onClose, submitting]);
 
   const unsure = rows.filter((r) => r.status === 'unsure');
+  // BR-R06: values typed by the reviewer that do not fit their field; kept as typed, listed so they are seen
+  const mismatched = rows.filter((r) => r.warnings && r.warnings.length && r.status !== 'rejected');
   const changed = rows.filter((r) => r.status === 'rejected' || r.status === 'corrected' || r.origin === 'reviewer' || changesOf(r).length);
   const name = (r) => labels[r.featureId] || r.featureId;
   const rec = (r) => r.recordIds.map(recordLabel).join(', ') || 'Unassigned';
@@ -68,6 +71,17 @@ export default function SummaryModal({ paperId, backHash = '#/review', title, ro
                 <span style={{ fontWeight: 600 }}>{name(r)}</span> · {rec(r)} · <span style={{ fontFamily: 'var(--c-mono)' }}>{displayValue(r.value, r.unit)}</span>
                 <div style={{ fontSize: 14, color: '#5C3F00' }}>{r.decision.note}</div>
                 <div style={{ fontSize: 12, color: '#4A5568' }}>{by(r.decision)}</div>
+              </div>
+            ))}
+          </div>
+        </>}
+        {mismatched.length > 0 && <>
+          <div style={{ padding: '0 24px 8px' }}><b>Doesn't match its field ({mismatched.length})</b></div>
+          <div style={{ padding: '0 24px 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {mismatched.map((r) => (
+              <div key={r.id} style={{ border: '1px solid #E8C766', background: '#FFFBEB', borderRadius: 6, padding: '8px 12px' }}>
+                <span style={{ fontWeight: 600 }}>{name(r)}</span> · {rec(r)} · <span style={{ fontFamily: 'var(--c-mono)' }}>{displayValue(r.value, r.unit)}</span>
+                <div style={{ fontSize: 14, color: '#5C3F00' }}>{r.warnings.map((w) => WARNING_TEXT[w]).join(' ')} It is kept as typed.</div>
               </div>
             ))}
           </div>

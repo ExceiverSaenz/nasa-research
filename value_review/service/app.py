@@ -22,11 +22,12 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .. import schema_xlsx, schemas
 from ..domain.materialize import counts as count_values, values as materialize
+from ..domain.review_schema import fields_of, labels as field_labels, model_checks, needs_check_count, targets
 from ..domain.rules import check_state, shape_problems
 from ..domain.schema_rules import check_name, check_schema, counts as schema_counts
 from ..domain.state import empty_state, progress, status_of
 from ..config import RESULT_SUFFIX
-from ..ingest import features, find_papers, ingest_run
+from ..ingest import find_papers, ingest_run
 from ..ingest.seed_schema import SEED_ID, SEED_NAME, seed_content
 from ..storage import StorageError
 from ..storage.files import SETTINGS_DEFAULTS, AnnotationStore, autosave_from_minutes
@@ -41,10 +42,9 @@ from .errors import ApiError, body, install
 from .library import WIDTH_DEFAULT, Library
 from . import sources as pairs
 from . import workspace
+from .review_binding import bind, fields_for
 
 log = logging.getLogger('value_review')
-# Every column a value may be moved to or added in (the extraction guide), in the guide's order.
-FEATURE_CATALOG = [{'feature_id': f, 'label': label} for f, label in features.FEATURES]
 LOCAL_HOSTS = {'127.0.0.1', 'localhost', '::1'}
 API = '/api/v1'
 WEB = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'web')
@@ -279,6 +279,15 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         k = latest['n'] if latest else 0
         return k, latest, (latest['state'] if latest else empty_state()), draft, problems
 
+    def binding(c):
+        """The schema version this extraction is bound to (BR-R01, BR-R09), read from its results folder."""
+        return bind(c.folders()[0], schema_store, seed_schemas)
+
+    def review_of(bound, original):
+        """(fields, checks) of one paper under its binding (BR-R02, BR-R04)."""
+        fields = fields_for(bound, original)
+        return fields, model_checks(original, fields, bound=bound['content'] is not None)
+
     # --- OP-11 -----------------------------------------------------------------
     @app.get(f'{API}/health')
     def health():
@@ -296,9 +305,11 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     @route('GET', '/papers')
     def list_papers(source: str | None = None):
         c = ctx(source)
+        bound = binding(c)
         out = []
         for paper in c.library.papers():
             original = c.library.original(paper)
+            _fields, checks = review_of(bound, original)
             k, latest, state, draft, problems = working(c, paper)
             newer_draft = draft is not None and (latest is None or draft['saved_at'] > latest['at'])
             reviewed, total = progress(original, draft['state'] if newer_draft else state)
@@ -306,13 +317,14 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             entry = {
                 'paper': paper, 'title': original['document']['title'], 'pages': original['document']['page_count'],
                 'records': original['counts']['records'], 'values': original['counts']['values'],
-                'needs_check': original['counts']['needs_check'],
+                'needs_check': needs_check_count(original, checks),
                 'reviewed': reviewed, 'total': total, 'status': status_of(reviewed, total),
                 'version': k, 'latest': {'n': latest['n'], 'at': latest['at'], 'by': latest['by']} if latest else None,
                 'draft_at': draft['saved_at'] if draft else None,
                 'source_changed': bool(source_problems),
                 'source_problems': source_problems,
                 'completion': original['document']['completion']['status'],
+                'schema_ref': bound['ref'],
             }
             if problems:
                 entry['warnings'] = problems
@@ -324,11 +336,16 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     def open_paper(paper: str, response: Response, source: str | None = None):
         c = ctx(source)
         original = c.library.original(paper)
+        bound = binding(c)
+        fields, checks = review_of(bound, original)
         k, _latest, state, draft, problems = working(c, paper)
         source_problems = c.library.source_problems(original)
         response.headers['ETag'] = _etag(k)
         out = {'original': original, 'version': k, 'current': state, 'draft': draft,
-               'feature_catalog': FEATURE_CATALOG,
+               'schema_ref': bound['ref'], 'schema_problem': bound['problem'], 'fields': fields,
+               'checks': {oid: {'action': codes} for oid, codes in checks.items()},
+               # the columns a value may be moved to or added in (BR-R03); kept for older clients
+               'feature_catalog': [{'feature_id': f['field_id'], 'label': f['label']} for f in fields if not f['calculated']],
                'draft_stale': bool(draft and draft['base_version'] != k),
                'source_changed': bool(source_problems), 'source_problems': source_problems}
         if problems:
@@ -363,7 +380,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             shape = shape_problems(payload.state)
             if shape:
                 raise ApiError(400, 'invalid_request', 'The working copy does not match the schema', {'pointers': shape})
-            broken = check_state(original, payload.state, submit=False)   # a reason may still be being typed
+            fields, _checks = review_of(binding(c), original)
+            broken = check_state(original, payload.state, submit=False, targets=targets(fields))   # a reason may still be being typed
             if broken:
                 raise ApiError(422, 'rules_violation', 'The working copy breaks a review rule', {'items': broken})
             draft = {'schema': 'value-review-draft/1', 'paper': paper, 'base_version': k, 'trigger': payload.trigger,
@@ -409,11 +427,13 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             shape = shape_problems(state)
             if shape:
                 raise ApiError(400, 'invalid_request', 'The working copy does not match the schema', {'pointers': shape})
-            broken = check_state(original, state, submit=True)
+            bound = binding(c)
+            fields, checks = review_of(bound, original)
+            broken = check_state(original, state, submit=True, targets=targets(fields))
             if broken:
                 raise ApiError(422, 'rules_violation', 'The working copy breaks a review rule', {'items': broken})
             settings = settings_now()
-            rows = materialize(original, state)
+            rows = materialize(original, state, checks, fields)
             src = original['source']
             version = {
                 'schema': 'value-review-version/1', 'paper': paper, 'n': n, 'at': clock(),
@@ -421,6 +441,7 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
                 'source': {'run_id': src['run_id'] or '', 'result_sha256': src['result_sha256'], 'pdf_sha256': src['pdf_sha256'],
                            'original_sha256': c.library.original_sha256(paper)},
                 'state': state, 'counts': count_values(rows, state), 'values': rows,
+                'schema_ref': bound['ref'],   # BR-R07; null when the bound version could not be read (BR-R09)
             }
             if restored_from is not None:
                 version['restored_from'] = restored_from
@@ -483,6 +504,14 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
         return read_version(ctx(source), paper, k)
 
     # --- OP-09: exports ----------------------------------------------------------
+    def version_labels(version):
+        """Field names of the schema version a paper version was reviewed against (BR-R07); {} when it has none."""
+        ref = version.get('schema_ref')
+        if not ref:
+            return {}
+        data, _problem = schema_store.read_version(ref['id'], ref['version'])
+        return field_labels(fields_of(data['content'])) if data else {}
+
     @route('GET', '/papers/{paper}/versions/{k}/export.json')
     def export_json(paper: str, k: int, source: str | None = None):
         c = ctx(source)
@@ -493,7 +522,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     @route('GET', '/papers/{paper}/versions/{k}/export.csv')
     def export_csv(paper: str, k: int, source: str | None = None):
         s = settings_now()   # OP-T03: the stored separator and encoding, read at request time
-        data = exports.export_csv(read_version(ctx(source), paper, k), s['csv_delimiter'], s['csv_encoding'])
+        version = read_version(ctx(source), paper, k)
+        data = exports.export_csv(version, s['csv_delimiter'], s['csv_encoding'], version_labels(version))
         return attachment(data, 'text/csv; charset=utf-8', f'paper-{paper}-v{k}.csv')
 
     @route('GET', '/export/latest.zip')
@@ -505,7 +535,8 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
             if latest is not None:
                 items.append((c.library.original(paper), latest))
         s = settings_now()
-        return attachment(exports.latest_zip(items, s['csv_delimiter'], s['csv_encoding']), 'application/zip', 'value-review-latest.zip')
+        return attachment(exports.latest_zip(items, s['csv_delimiter'], s['csv_encoding'], version_labels),
+                          'application/zip', 'value-review-latest.zip')
 
     # --- OP-10 -----------------------------------------------------------------
     def save(values):

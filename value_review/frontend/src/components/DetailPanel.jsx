@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { displayValue, STATUS_LABEL } from '../lib/values.js';
 import { noteForVerdict } from '../lib/state.js';
 import { charDiff, findSymbols, replaceName } from '../lib/textDiff.js';
+import { CHECK_TEXT, fit, WARNING_TEXT } from '../lib/fieldFit.js';
 
 export const REJECT_REASONS = ['The value is wrong', 'It belongs to another record', 'It belongs to another column',
   'The paper does not say this', 'The highlight points to the wrong place'];
@@ -17,7 +18,7 @@ const INFO_TEXT = {
   'source:derived_inputs': 'The model calculated this from other values in the paper.',
   'source:not_explicitly_reported': 'The paper does not state this value directly.',
 };
-const codeText = (c, table) => table[c] || (c.startsWith('assignment:') ? 'The model is unsure which record this value belongs to.' : c.replace(/^source:/, '').replace(/_/g, ' '));
+const codeText = (c, table) => table[c] || CHECK_TEXT[c] || (c.startsWith('assignment:') ? 'The model is unsure which record this value belongs to.' : c.replace(/^source:/, '').replace(/_/g, ' '));
 // One formatter, made once (13-performance-report.md, B-1).
 const WHEN = new Intl.DateTimeFormat([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 const when = (iso) => WHEN.format(new Date(iso));
@@ -32,7 +33,7 @@ const EDGE = { main: '#0B3D91', context: '#6C7A92', added: '#0E7C86' };
 const DIFF_LOOK = { same: {}, add: { background: '#DDF3E4', color: '#0F5A2C', fontWeight: 600 }, del: { background: '#FBE3E1', color: '#8A1C15', textDecoration: 'line-through' } };
 
 // Detail panel (canvas Review.dc.html, "Value detail"): value, evidence, decision. AC-03, AC-04.
-export default function DetailPanel({ row, index, total, onPrev, onNext, label, recordText, recordSummary, readOnly,
+export default function DetailPanel({ row, index, total, onPrev, onNext, label, schemaField = null, recordText, recordSummary, readOnly,
   onDecide, onClear, onShowPage, toast, boxes = [], onShowBox, onRemoveBox, onRestoreBox,
   columnOptions = [], recordOptions = [], moves = {}, onMoveColumn, onMoveRecord, onRemoveValue, commands, compact,
   showCtx = true, decidedBy = '', lastEdit = '' }) {
@@ -90,6 +91,18 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
   const valChanged = draftV !== (row.originalValue || '');
   const unitChanged = draftU !== (row.originalUnit || '');
   const changed = valChanged || unitChanged;
+  // BR-R06: a value that does not fit its field is saved as typed, with this warning
+  const draftWarnings = editing ? fit(schemaField, draftV) : (row.warnings || []);
+  const allowedId = schemaField && schemaField.type === 'category' && schemaField.allowed.length ? `allowed-${row.id}` : undefined;
+  const fieldHint = schemaField ? [schemaField.type === 'number' && schemaField.unit ? `Field unit: ${schemaField.unit}` : '',
+    allowedId ? `Allowed: ${schemaField.allowed.join(', ')}` : ''].filter(Boolean).join(' · ') : '';
+  const fieldNotes = (
+    <>
+      {allowedId && <datalist id={allowedId}>{schemaField.allowed.map((a) => <option key={a} value={a} />)}</datalist>}
+      {editing && fieldHint && <span style={{ fontSize: 12, color: '#4A5568' }}>{fieldHint}</span>}
+      {draftWarnings.map((w) => <span key={w} role="status" style={{ fontSize: 14, color: '#8A4B00' }}>⚠ {WARNING_TEXT[w]} It is kept as typed.</span>)}
+    </>
+  );
   const openNote = () => { setNoteOpen(true); setTimeout(() => noteRef.current && noteRef.current.focus(), 0); };
   const cancelEdit = () => { setEditing(false); setSymOpen(false); setDraftV(row.value || ''); setDraftU(row.unit || ''); setError(''); };
 
@@ -155,9 +168,9 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
             <button type="button" onClick={onPrev} disabled={index <= 0} className="tb-small" style={{ flex: '1 1 0', justifyContent: 'center', color: '#0B3D91' }}>‹ Previous</button>
             <button type="button" onClick={onNext} disabled={index >= total - 1} className="tb-small" style={{ flex: '1 1 0', justifyContent: 'center', color: '#0B3D91' }}>Next ›</button>
           </div>
-          {o && o.action.length > 0 && (
+          {row.action && row.action.length > 0 && (
             <div style={{ background: '#FFF3CD', color: '#5C3F00', borderRadius: 10, padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 2, fontSize: 14 }}>
-              <b>Check this</b>{o.action.map((c) => <span key={c}>{codeText(c, ACTION_TEXT)}</span>)}</div>
+              <b>Check this</b>{row.action.map((c) => <span key={c}>{codeText(c, ACTION_TEXT)}</span>)}</div>
           )}
           {((o && o.info.length > 0) || row.origin === 'reviewer') && (
             <div style={{ background: '#F4F6F9', color: '#3B4557', borderRadius: 10, padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 2, fontSize: 14 }}>
@@ -172,12 +185,14 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
               {!readOnly && <button type="button" className="tb-small" style={{ color: '#0B3D91', fontWeight: 600 }} onClick={() => setEditing(true)}>Edit value</button>}
             </div>
           )}
+          {!editing && fieldNotes}
           {editing && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 110px', gap: 10 }}>
-                <label className="rv-flabel">Value<input ref={vRef} className="tb-fin" value={draftV} onChange={typed(setDraftV, vRef)} onFocus={() => setField('v')} spellCheck={false} autoComplete="off" autoFocus /></label>
+                <label className="rv-flabel">Value<input ref={vRef} className="tb-fin" value={draftV} list={allowedId} onChange={typed(setDraftV, vRef)} onFocus={() => setField('v')} spellCheck={false} autoComplete="off" autoFocus /></label>
                 <label className="rv-flabel">Unit<input ref={uRef} className="tb-fin" value={draftU} onChange={typed(setDraftU, uRef)} onFocus={() => setField('u')} spellCheck={false} autoComplete="off" /></label>
               </div>
+              {fieldNotes}
               {changed && (
                 <div style={{ borderRadius: 10, background: '#F2F6FC', padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {valChanged && <div className="rv-diff" style={{ fontSize: 16 }}>{charDiff(row.originalValue || '', draftV).map((p, i) => <span key={i} style={DIFF_LOOK[p.k]}>{p.t}</span>)}</div>}
@@ -323,14 +338,16 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
             {!readOnly && <button type="button" className="rv-link" style={{ fontSize: 16, padding: '0 4px' }} title="Edit value (E)" onClick={() => setEditing(true)}>Edit value</button>}
           </div>
         )}
+        {!editing && fieldNotes}
         {editing && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 96px', gap: 10 }}>
               <label className="rv-flabel">Value
-                <input ref={vRef} className="rv-fin" value={draftV} onChange={typed(setDraftV, vRef)} onFocus={() => setField('v')} spellCheck={false} autoComplete="off" autoFocus /></label>
+                <input ref={vRef} className="rv-fin" value={draftV} list={allowedId} onChange={typed(setDraftV, vRef)} onFocus={() => setField('v')} spellCheck={false} autoComplete="off" autoFocus /></label>
               <label className="rv-flabel">Unit
                 <input ref={uRef} className="rv-fin" value={draftU} onChange={typed(setDraftU, uRef)} onFocus={() => setField('u')} spellCheck={false} autoComplete="off" /></label>
             </div>
+            {fieldNotes}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
               <button type="button" className="rv-link" style={{ padding: '0 4px' }} aria-expanded={symOpen} onMouseDown={keep} onClick={() => setSymOpen((x) => !x)}>Ω Insert symbol</button>
               <span style={{ fontSize: 12, color: '#4A5568' }}>Into: {field === 'u' ? 'Unit' : 'Value'}</span>
@@ -364,10 +381,10 @@ export default function DetailPanel({ row, index, total, onPrev, onNext, label, 
           </div>
         )}
 
-        {o && o.action.length > 0 && (
+        {row.action && row.action.length > 0 && (
           <div style={{ background: '#FFF4DC', color: '#3D2C00', borderRadius: 8, padding: '12px 14px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
             <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C26A00" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flex: 'none', marginTop: 1 }}><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 14 }}><b>Check this</b>{o.action.map((c) => <span key={c}>{codeText(c, ACTION_TEXT)}</span>)}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 14 }}><b>Check this</b>{row.action.map((c) => <span key={c}>{codeText(c, ACTION_TEXT)}</span>)}</div>
           </div>
         )}
         {((o && o.info.length > 0) || row.origin === 'reviewer') && (

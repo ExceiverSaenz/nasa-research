@@ -14,12 +14,18 @@
     "note": { "type": "string", "description": "'Submitted' or 'Restored from v<k>'." },
     "base_version": { "type": "integer", "minimum": 0 },
     "restored_from": { "type": "integer", "minimum": 1 },
+    "schema_ref": { "$ref": "#/$defs/schema_ref" },
     "source": { "$ref": "#/$defs/source" },
     "state": { "$ref": "state.schema.json" },
     "counts": { "$ref": "#/$defs/counts" },
     "values": { "type": "array", "items": { "$ref": "#/$defs/value" } }
   },
   "$defs": {
+    "schema_ref": {
+      "description": "The schema version the paper was reviewed against (BR-R07); null when it could not be read (BR-R09).",
+      "oneOf": [{ "type": "null" }, { "type": "object", "required": ["id", "version", "name"], "additionalProperties": false,
+        "properties": { "id": { "type": "string" }, "version": { "type": "integer", "minimum": 1 }, "name": { "type": "string" } } }]
+    },
     "source": {
       "type": "object", "required": ["run_id", "result_sha256", "pdf_sha256", "original_sha256"], "additionalProperties": false,
       "properties": {
@@ -36,7 +42,8 @@
         "accepted": { "type": "integer", "minimum": 0 }, "corrected": { "type": "integer", "minimum": 0 },
         "rejected": { "type": "integer", "minimum": 0 }, "unsure": { "type": "integer", "minimum": 0 },
         "added_values": { "type": "integer", "minimum": 0 }, "added_records": { "type": "integer", "minimum": 0 },
-        "edited_records": { "type": "integer", "minimum": 0 }
+        "edited_records": { "type": "integer", "minimum": 0 },
+        "mismatched": { "type": "integer", "minimum": 0, "description": "Values the reviewer typed that do not fit their field (BR-R06), rejected ones left out." }
       }
     },
     "value": {
@@ -60,7 +67,8 @@
         "by": { "type": ["string", "null"] },
         "at": { "type": ["string", "null"], "format": "date-time" },
         "origin": { "enum": ["model", "reviewer"] },
-        "needs_check": { "type": "boolean" }
+        "needs_check": { "type": "boolean" },
+        "warnings": { "type": "array", "items": { "enum": ["not_allowed", "not_a_number"] }, "description": "Why a value the reviewer typed does not fit its field (BR-R06); the value is kept as typed." }
       }
     }
   }

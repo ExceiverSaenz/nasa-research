@@ -96,14 +96,20 @@ export default function Review({ paperId, sourceId = null, guard }) {
   // or the next save (manual, autosave, closing the tab, submit) would silently replace or delete that draft.
   const draftPending = !!(offer && !offer.stale);
   const locked = readOnly || draftPending;
-  const rows = useMemo(() => (original ? effectiveValues(original, state) : []), [original, state]);
+  // The bound schema version's fields and the service's checks (80-review-schema-specification.md, BR-R02, BR-R04).
+  const fields = load.status === 'ready' ? load.data.fields || null : null;
+  const checks = load.status === 'ready' ? load.data.checks || {} : {};
+  const rows = useMemo(() => (original ? effectiveValues(original, state, { checks, fields }) : []), [original, state, checks, fields]);
   const catalog = load.status === 'ready' ? load.data.feature_catalog : [];
   const catalogLabels = useMemo(() => Object.fromEntries(catalog.map((f) => [f.feature_id, f.label])), [catalog]);
-  const labels = useMemo(() => (original ? { ...catalogLabels, ...featureLabels(original) } : {}), [original, catalogLabels]);
+  // the schema's names win over the labels frozen in the original at ingest (BR-R02)
+  const labels = useMemo(() => (original ? { ...featureLabels(original), ...Object.fromEntries((fields || []).map((f) => [f.field_id, f.label])) } : {}),
+    [original, fields]);
+  const fieldOf = useMemo(() => Object.fromEntries((fields || []).map((f) => [f.field_id, f])), [fields]);
   const recLabels = useMemo(() => (original ? recordLabels(original, state) : {}), [original, state]);
   const recordLabel = useCallback((id) => (id === UNASSIGNED ? 'Unassigned' : recLabels[id] || id), [recLabels]);
   const records = useMemo(() => (original ? browseRecords(original, state, rows) : []), [original, state, rows]);
-  const columns = useMemo(() => (original ? browseFeatures(original, rows) : []), [original, rows]);
+  const columns = useMemo(() => (original ? browseFeatures(original, rows, fields) : []), [original, rows, fields]);
   const items = view.mode === 'record' ? records : columns;
   const currentId = view.mode === 'record' ? view.recordId : view.featureId;
 
@@ -482,6 +488,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
       {readOnly && <div className="banner error" role="alert">{(load.data.source_problems || []).some((p) => p.endsWith('_missing'))
         ? 'The files of this paper are not in the folders set in Settings. It is read-only until they are found again.'
         : 'The source files of this paper changed since they were loaded. It is read-only until it is loaded again.'}</div>}
+      {load.data.schema_problem && <div className="banner warn" role="status">{load.data.schema_problem.message}</div>}
       {doc.completion.status && doc.completion.status !== 'complete' && (
         <div className="banner warn" role="status">The model's run on this paper is {doc.completion.status}
           {doc.completion.pages_unreviewed.length ? `: pages ${doc.completion.pages_unreviewed.join(', ')} were not reviewed by the model.` : '.'}</div>
@@ -548,7 +555,7 @@ export default function Review({ paperId, sourceId = null, guard }) {
           onDelete={onDeleteBox} onUndoRedraw={(b) => setState((s) => undoRedraw(s, row.id, b.evidenceId))}
           onRestoreRemoved={() => setState((s) => restoreAllBoxes(s, row.id))} compact={compact} showCtx={showCtx} setShowCtx={setShowCtx} />}
         {(!compact || screen === 'detail') && <DetailPanel row={row} index={index} total={list.length} onPrev={() => select(list[index - 1].id)} onNext={() => select(list[index + 1].id)}
-          label={row ? labels[row.featureId] || row.featureId : ''} recordText={recText} recordSummary={recSummary} readOnly={locked}
+          label={row ? labels[row.featureId] || row.featureId : ''} schemaField={row ? fieldOf[row.featureId] || null : null} recordText={recText} recordSummary={recSummary} readOnly={locked}
           onDecide={onDecide} onClear={() => { setUndo(null); setState((s) => clearDecision(s, row.id)); }} onShowPage={setPage} toast={toast}
           boxes={boxes} onShowBox={(b) => { setPage(b.page); setSelBox(b.key); }}
           onRemoveBox={onDeleteBox} onRestoreBox={(b) => setState((s) => restoreBox(s, row.id, b.evidenceId))}
