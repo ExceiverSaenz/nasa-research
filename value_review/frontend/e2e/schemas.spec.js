@@ -307,3 +307,15 @@ for (const [width, height] of [[1440, 900], [834, 1112]]) {
     await expect(name).toBeInViewport();
   });
 }
+
+test('a row menu shows whole on a short window, without scrolling the table', async ({ page, server }) => {
+  await page.setViewportSize({ width: 1200, height: 520 });
+  await page.goto('/#/schemas');
+  const dots = page.getByRole('button', { name: 'Actions for Tensile properties' });
+  await dots.click();
+  const menu = page.getByRole('menu', { name: 'Schema actions' });
+  await expect(menu).toBeVisible();
+  for (const name of ['Open', 'Delete schema']) await expect(menu.getByRole('menuitem', { name })).toBeInViewport({ ratio: 1 });
+  await page.mouse.wheel(0, 200);
+  await expect(menu).toHaveCount(0);   // scrolling the page closes it
+});

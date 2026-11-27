@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
 import { schemaHash } from '../lib/routes.js';
+import { menuSpot, scrollClosesMenu } from '../lib/menuSpot.js';
 import AppHeader from './AppHeader.jsx';
 import ImportDialog from './ImportDialog.jsx';
 import SchemaHistory from './SchemaHistory.jsx';
@@ -27,6 +28,7 @@ export default function SchemaList() {
   const [lq, setLq] = useState('');
   const [filter, setFilter] = useState('all');
   const [menu, setMenu] = useState(null);       // schema id whose row menu is open
+  const [spot, setSpot] = useState(null);       // where that menu sits on screen (menuSpot)
   const [dialog, setDialog] = useState(null);   // {kind: 'new' | 'copy' | 'import' | 'delete' | 'history', row}
 
   const reload = () => api.schemas().then((r) => { setRows(r); setError(''); }).catch((e) => setError(e.message));
@@ -34,9 +36,22 @@ export default function SchemaList() {
     document.title = 'Schemas · Tensile Data Review';
     reload();
     const close = (e) => { if (e.key === 'Escape') { setMenu(null); } };
+    const onScroll = (e) => { if (scrollClosesMenu(e)) setMenu(null); };
+    const onResize = () => setMenu(null);
     window.addEventListener('keydown', close);
-    return () => window.removeEventListener('keydown', close);
+    window.addEventListener('scroll', onScroll, true);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', close);
+      window.removeEventListener('scroll', onScroll, true);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
+  const openMenu = (e, id) => {
+    if (menu === id) { setMenu(null); return; }
+    setSpot(menuSpot(e.currentTarget.getBoundingClientRect(), { width: window.innerWidth, height: window.innerHeight }, 300));
+    setMenu(id);
+  };
 
   const all = rows || [];
   const shown = useMemo(() => {
@@ -103,10 +118,10 @@ export default function SchemaList() {
                   </button>
                   <div style={{ position: 'relative', gridColumn: 7 }}>
                     <button type="button" className="c-dots" style={{ width: 44, height: 44 }} aria-haspopup="menu" aria-expanded={menu === r.schema_id} aria-label={`Actions for ${r.name}`}
-                      onClick={() => setMenu(menu === r.schema_id ? null : r.schema_id)}>⋯</button>
+                      onClick={(e) => openMenu(e, r.schema_id)}>⋯</button>
                     {menu === r.schema_id && <>
                       <div className="c-menu-veil" onClick={() => setMenu(null)} />
-                      <div role="menu" aria-label="Schema actions" className="c-menu" style={{ right: 0, top: '100%' }}>
+                      <div role="menu" aria-label="Schema actions" className="c-menu" style={spot}>
                         {actions(r).map((a) => (
                           <React.Fragment key={a.label}>
                             {a.sep && <div className="c-msep" />}

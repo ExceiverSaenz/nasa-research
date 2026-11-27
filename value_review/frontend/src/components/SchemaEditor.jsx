@@ -5,6 +5,7 @@ import {
   moveGroupBefore, nextId, problemsByItem, removeField, removeGroup, renameGroup, sameName, signature, updateField,
 } from '../lib/schema.js';
 import { SCHEMAS_HASH, schemaHash } from '../lib/routes.js';
+import { menuSpot, scrollClosesMenu } from '../lib/menuSpot.js';
 import AppHeader from './AppHeader.jsx';
 import ImportDialog from './ImportDialog.jsx';
 import SchemaHistory from './SchemaHistory.jsx';
@@ -44,6 +45,7 @@ export default function SchemaEditor({ schemaId }) {
   const [problems, setProblems] = useState({});     // item id -> messages, from a failed Save version
   const [dialog, setDialog] = useState(null);       // 'history' | 'import' | 'delete' | {group}
   const [menu, setMenu] = useState(null);           // 'actions' | group id
+  const [spot, setSpot] = useState(null);           // where a group's menu sits on screen (menuSpot)
   const [renaming, setRenaming] = useState(false);
   const [nameDraft, setNameDraft] = useState('');
   const [editingDesc, setEditingDesc] = useState(false);
@@ -110,8 +112,16 @@ export default function SchemaEditor({ schemaId }) {
   }, [flush]);
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') setMenu(null); };
+    const onScroll = (e) => { if (scrollClosesMenu(e)) setMenu(null); };
+    const onResize = () => setMenu(null);
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('scroll', onScroll, true);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll, true);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   const change = (next) => {
@@ -348,10 +358,14 @@ export default function SchemaEditor({ schemaId }) {
                         <button type="button" className="sc-textlink" style={{ height: 36, padding: '0 10px', textDecoration: 'none', whiteSpace: 'nowrap' }} onClick={() => newField(g)}>+ Field</button>
                         <div style={{ position: 'relative', flex: 'none' }}>
                           <button type="button" className="c-dots" style={{ width: 36, height: 36 }} aria-haspopup="menu" aria-expanded={menu === g.group_id} aria-label={`Actions for ${g.name}`}
-                            onClick={() => setMenu(menu === g.group_id ? null : g.group_id)}>⋯</button>
+                            onClick={(e) => {
+                              if (menu === g.group_id) { setMenu(null); return; }
+                              setSpot(menuSpot(e.currentTarget.getBoundingClientRect(), { width: window.innerWidth, height: window.innerHeight }, 150));
+                              setMenu(g.group_id);
+                            }}>⋯</button>
                           {menu === g.group_id && <>
                             <div className="c-menu-veil" onClick={() => setMenu(null)} />
-                            <div role="menu" aria-label="Group actions" className="c-menu" style={{ right: 0, top: '100%', width: 200 }}>
+                            <div role="menu" aria-label="Group actions" className="c-menu" style={{ ...spot, width: 200 }}>
                               <button type="button" role="menuitem" className="c-mitem" style={{ minHeight: 44 }} disabled={gi === 0} aria-label={`Move ${g.name} up`}
                                 onClick={() => { setMenu(null); change(moveGroup(content, g.group_id, -1)); }}>Move up</button>
                               <button type="button" role="menuitem" className="c-mitem" style={{ minHeight: 44 }} disabled={gi === content.groups.length - 1} aria-label={`Move ${g.name} down`}
