@@ -72,7 +72,7 @@ export default function App() {
   if (route.view === 'extraction') return <BoardPage key="extraction" board="extraction" section="extraction" />;
   if (route.view === 'normalize') {
     const step = route.step === 'validate' || route.step === 'results' ? route.step : 'rules';
-    return <BoardPage key={step} board={step} section="normalize" />;
+    return <BoardPage key={`${step}-${route.run}`} board={step} section="normalize" run={route.run} />;
   }
   return <ReviewRuns />;
 }

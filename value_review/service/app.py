@@ -37,6 +37,7 @@ from . import exports
 from .extraction import install_extraction
 from .extraction.runs import Context as ExtractionContext
 from .keys import install_keys
+from .normalize import NormalizeContext, install_normalize
 from .config import Config
 from .errors import ApiError, body, install
 from .library import WIDTH_DEFAULT, Library
@@ -896,8 +897,13 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
     workspace.install_workspace(app, config, settings_now, ingest_lock)
 
     # --- Extraction (72-extraction-interface-contract.md) ------------------------------------------
-    install_extraction(app, ExtractionContext(config=config, settings_now=settings_now, clock=clock,
-                                              schema_store=schema_store, seed_schemas=seed_schemas, ingest_lock=ingest_lock))
+    extraction = ExtractionContext(config=config, settings_now=settings_now, clock=clock,
+                                   schema_store=schema_store, seed_schemas=seed_schemas, ingest_lock=ingest_lock)
+    install_extraction(app, extraction)
+
+    # --- Normalize (92-normalize-interface-contract.md; ADR-033 to ADR-036) ------------------------
+    install_normalize(app, NormalizeContext(config=config, settings_now=settings_now, clock=clock, source=ctx, binding=binding,
+                                            extraction=extraction))
 
     # --- System prompts: OP-T02 (42-settings-interface-contract.md; ADR-019) ---------------------
     # Global to the data folder. Every save is a new version; none is changed or deleted (BR-T06).

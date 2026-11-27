@@ -81,7 +81,12 @@ Work on at least two papers, one of them a large one, and try each of these:
     version the run was made with. A value whose field is not in that schema says "not in schema"; a value whose quote
     was not found in the PDF has no highlight and says so under **Check this**. Correct a number field with text, or a
     category with a value outside its list: the value is kept, with a warning, and **Finish paper** lists it.
-11. If you have a tablet, open the same address from it only if it runs the tool itself; the demo is not reachable from
+11. **Normalize** · submit at least one paper in Review, then open **Normalize** and the same extraction. Pick a
+    feature (for example Yield strength), look at **Formats found**, choose **Normalize**, **Draft the rule with the
+    assistant**, apply the proposal, edit it and **Save rule**. **Run ready rules** with your model and key, then open
+    **Validate**: accept a case, reject one value with a reason. **Results** shows only validated values;
+    **Download CSV**. Change the rule and save it again: its values say **Outdated**.
+12. If you have a tablet, open the same address from it only if it runs the tool itself; the demo is not reachable from
     other devices by design.
 
 ## 5. How to report

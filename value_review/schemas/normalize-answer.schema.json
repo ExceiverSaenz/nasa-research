@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/normalize-answer.schema.json",
+  "title": "The model's answer for one batch of reviewed values of one feature (BR-N06; ADR-034). Fixed keys, so strict structured output works for any output fields.",
+  "type": "object",
+  "required": ["results"],
+  "additionalProperties": false,
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "case", "fields", "unit", "display", "flag", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "description": "The id of the value, as given." },
+          "case": { "type": "string", "description": "The case of the rule that was applied, by its name in the rule; 'Anything else' when none fits." },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object", "required": ["name", "value"], "additionalProperties": false,
+              "properties": { "name": { "type": "string" }, "value": { "type": ["string", "null"] } }
+            }
+          },
+          "unit": { "type": ["string", "null"] },
+          "display": { "type": "string", "description": "The normalized value in one line, for people." },
+          "flag": { "type": "boolean", "description": "True when the expert should look at it (a conversion, a guess, no case fits)." },
+          "note": { "type": "string", "description": "What was done, and why, in one or two sentences." }
+        }
+      }
+    }
+  }
+}

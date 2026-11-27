@@ -73,13 +73,13 @@
 <span style="font-size: 13px; color: #4A5568">{{csvInfo}}</span>
 </div>
 <div style="overflow-x: auto">
-<div style="min-width: 980px">
-<div style="display: grid; grid-template-columns: 52px minmax(190px, 1.3fr) repeat(5, minmax(120px, 1fr)); gap: 12px; padding: 8px 20px; border-bottom: 1px solid #E3E8EF; font-size: 13px; color: #3B4557; font-weight: 600">
+<div style="min-width: {{minW}}px">
+<div style="display: grid; grid-template-columns: 52px minmax(190px, 1.3fr) repeat({{nCols}}, minmax(120px, 1fr)); gap: 12px; padding: 8px 20px; border-bottom: 1px solid #E3E8EF; font-size: 13px; color: #3B4557; font-weight: 600">
 <span>Paper</span><span>Record</span>
 <sc-for list="{{cols}}" as="c" hint-placeholder-count="5"><span>{{c.label}}</span></sc-for>
 </div>
 <sc-for list="{{rows}}" as="x" hint-placeholder-count="6">
-<div style="display: grid; grid-template-columns: 52px minmax(190px, 1.3fr) repeat(5, minmax(120px, 1fr)); gap: 12px; padding: 4px 20px; min-height: 44px; border-bottom: 1px solid #EEF1F5; align-items: center">
+<div style="display: grid; grid-template-columns: 52px minmax(190px, 1.3fr) repeat({{nCols}}, minmax(120px, 1fr)); gap: 12px; padding: 4px 20px; min-height: 44px; border-bottom: 1px solid #EEF1F5; align-items: center">
 <span style="font-family: 'IBM Plex Mono', monospace; color: #4A5568">{{x.paper}}</span>
 <span style="color: #3B4557; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{x.record}}</span>
 <sc-for list="{{x.cells}}" as="c" hint-placeholder-count="5">
@@ -92,7 +92,7 @@
 </div>
 <div style="display: flex; gap: 16px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid #E3E8EF; font-size: 13px; color: #4A5568">
 <sc-for list="{{legend}}" as="l" hint-placeholder-count="4"><span style="display: inline-flex; align-items: center; gap: 6px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{l.dot}}"></span>{{l.label}}</span></sc-for>
-<span style="flex: 1 1 0"></span><span>Sample data for this prototype. Four papers with a submitted version.</span>
+<span style="flex: 1 1 0"></span><span>{{footNote}}</span>
 </div>
 </section>
 

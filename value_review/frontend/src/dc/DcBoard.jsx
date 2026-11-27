@@ -119,11 +119,11 @@ function children(node, scopes, ctx) {
 // The board's own navy top bar is replaced by the app's (AppHeader), so the profile and links are the real ones.
 const isTopBar = (el) => (el.getAttribute('style') || '').includes('background: #071B3F') && el.textContent.includes('TENSILE DATA REVIEW');
 
-export default function DcBoard({ template, css, Logic, links = {} }) {
+export default function DcBoard({ template, css, Logic, links = {}, props = {} }) {
   const tree = useMemo(() => parseTemplate(template), [template]);
   const [, force] = useReducer((x) => x + 1, 0);
   const inst = useRef(null);
-  if (!inst.current) inst.current = new Logic({});
+  if (!inst.current) inst.current = new Logic(props);
   inst.current._render = force;
   useEffect(() => () => { inst.current._render = null; }, []);
   useEffect(() => {

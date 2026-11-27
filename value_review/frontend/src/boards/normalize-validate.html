@@ -60,26 +60,26 @@
 <nav aria-label="Features to validate" style="flex: 1 1 250px; max-width: 300px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
 <div style="padding: 12px 16px; border-bottom: 1px solid #E3E8EF; font-weight: 600">Features with results</div>
 <sc-for list="{{features}}" as="f" hint-placeholder-count="6">
-<a href="{{f.href}}" aria-current="{{f.current}}" class="fitem" style="display: flex; flex-direction: column; gap: 6px; padding: 10px 16px; border-bottom: 1px solid #EEF1F5; text-decoration: none; color: #101828; {{f.look}}">
+<a href="{{f.href}}" onClick="{{f.pick}}" aria-current="{{f.current}}" class="fitem" style="display: flex; flex-direction: column; gap: 6px; padding: 10px 16px; border-bottom: 1px solid #EEF1F5; text-decoration: none; color: #101828; {{f.look}}">
 <span style="display: flex; align-items: baseline; gap: 8px"><span style="flex: 1 1 0; font-weight: {{f.weight}}">{{f.label}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568">{{f.unit}}</span></span>
 <span style="display: flex; align-items: center; gap: 8px"><span style="flex: 1 1 0; height: 4px; border-radius: 2px; background: #E3E8EF; overflow: hidden"><span style="display: block; height: 4px; background: {{f.bar}}; width: {{f.pct}}%"></span></span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5568">{{f.done}}/{{f.total}}</span></span>
 <span style="font-size: 12px; color: {{f.noteColor}}">{{f.note}}</span>
 </a>
 </sc-for>
-<div style="padding: 12px 16px; font-size: 13px; color: #4A5568">Features with a ready rule that has not run yet: Ultimate tensile strength, Gauge length, Width, Irradiation temperature, Treatment category. Run them from Rules.</div>
+<div style="padding: 12px 16px; font-size: 13px; color: #4A5568">{{readyNote}}</div>
 </nav>
 
 <section aria-labelledby="ft" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; overflow: hidden">
 <div style="padding: 16px 20px 12px; border-bottom: 1px solid #E3E8EF; display: flex; flex-direction: column; gap: 10px">
 <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
-<h2 id="ft" style="margin: 0; font-size: 22px; font-weight: 600; color: #071B3F">Yield strength</h2>
-<span style="font-family: 'IBM Plex Mono', monospace; color: #3B4557">→ MPa</span>
-<span style="font-size: 13px; color: #4A5568">rule v2 · Sonnet · System prompt v2 · 64 reviewed values from papers 1, 2, 5 and 9</span>
+<h2 id="ft" style="margin: 0; font-size: 22px; font-weight: 600; color: #071B3F">{{featLabel}}</h2>
+<span style="font-family: 'IBM Plex Mono', monospace; color: #3B4557">{{featTarget}}</span>
+<span style="font-size: 13px; color: #4A5568">{{featMeta}}</span>
 <a href="Normalize-Rules.dc.html" onClick="{{goRules}}" style="margin-left: auto; font-size: 14px">Edit rule</a>
 </div>
 <div style="display: flex; align-items: center; gap: 12px">
 <span style="flex: 1 1 0; height: 6px; border-radius: 3px; background: #E3E8EF; overflow: hidden"><span style="display: block; height: 6px; background: #0B3D91; width: {{featPct}}%"></span></span>
-<span style="font-size: 13px; color: #3B4557">{{featDone}} of 64 validated</span>
+<span style="font-size: 13px; color: #3B4557">{{featDone}} of {{featTotal}} validated</span>
 </div>
 <div role="group" aria-label="Show" style="display: flex; gap: 6px; flex-wrap: wrap">
 <sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
@@ -118,7 +118,7 @@
 <sc-if value="{{noRows}}" hint-placeholder-val="{{ false }}"><div style="padding: 24px 20px; color: #4A5568">No values in this view.</div></sc-if>
 </div>
 </div>
-<p style="margin: 0; padding: 12px 20px; font-size: 13px; color: #4A5568; border-top: 1px solid #E3E8EF">Sample data for this prototype. Each group shows a few of its values.</p>
+<p style="margin: 0; padding: 12px 20px; font-size: 13px; color: #4A5568; border-top: 1px solid #E3E8EF">{{footNote}}</p>
 </section>
 
 <aside aria-labelledby="dt" style="flex: 1 1 340px; max-width: 400px; min-width: 0; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; display: flex; flex-direction: column">
@@ -132,7 +132,7 @@
 <div style="display: flex; flex-direction: column; gap: 4px">
 <span style="font-size: 13px; font-weight: 600; color: #3B4557">Reviewed value</span>
 <span style="font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #101828">{{cur.raw}}</span>
-<span style="font-size: 12px; color: #4A5568">From v2 of paper {{cur.paper}}, accepted in review. It is never changed here.</span>
+<span style="font-size: 12px; color: #4A5568">From v{{cur.version}} of paper {{cur.paper}}, as submitted in Review. It is never changed here.</span>
 </div>
 
 <div style="display: flex; flex-direction: column; gap: 8px">
@@ -150,7 +150,7 @@
 <sc-if value="{{editing}}" hint-placeholder-val="{{ false }}">
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
 <label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #4A5568">Value<input value="{{draft}}" onInput="{{onDraft}}" style="height: 40px; box-sizing: border-box; border: 1px solid #0B3D91; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #101828"></label>
-<label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #4A5568">Unit<input value="MPa" readOnly style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4A5568; background: #F7F9FC"></label>
+<label style="display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #4A5568">Unit<input value="{{draftUnit}}" readOnly style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4A5568; background: #F7F9FC"></label>
 </div>
 <div style="display: flex; gap: 8px; justify-content: flex-end">
 <button type="button" onClick="{{cancelEdit}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>

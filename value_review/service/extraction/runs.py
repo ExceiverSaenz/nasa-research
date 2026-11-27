@@ -51,6 +51,8 @@ class Context:
     read_run: Callable = None
     schema_version: Callable = None
     view: Callable = None
+    model_blocked: Callable = None
+    default_key: Callable = None
     launcher: object = None
 
     def __post_init__(self):
@@ -121,7 +123,14 @@ def install_runs(app, ctx):
         ref = run['schema_ref']
         if not ref or schema_version(ref['id'], ref['version'])[0] is None:
             add('schema_not_found', 'This schema version cannot be read. Choose another saved version.')
-        model = run['model']
+        return out + model_blocked(run['model'], run['key_id'])
+
+    def model_blocked(model, key_id):
+        """[{code, message}] about the model and the key alone (BR-X07); Normalize uses it too (BR-N06)."""
+        out = []
+
+        def add(code, message):
+            out.append({'code': code, 'message': message})
         provider = model.split(':', 1)[0] if model else None
         if not model:
             add('no_model', 'Choose a model. Models are enabled in Settings, Models and API keys.')
@@ -129,13 +138,13 @@ def install_runs(app, ctx):
             add('model_unavailable', 'This model is not enabled. See Settings, Models and API keys.')
         elif provider not in PROVIDERS_NOW:
             add('provider_pending', f'Runs with {providers.label(provider)} models come in a later version.')
-        key = next((k for k in keys() if k['id'] == run['key_id']), None)
-        if not run['key_id']:
+        key = next((k for k in keys() if k['id'] == key_id), None)
+        if not key_id:
             add('no_key', 'Choose an API key. Keys are added in Settings, Models and API keys.')
         elif key is None:
             add('key_not_found', 'This API key was removed. Choose another one.')
         elif provider and key['provider'] != provider:
-            add('key_wrong_provider', f'This key is for {providers.label(key["provider"])}, not for the model of the run.')
+            add('key_wrong_provider', f'This key is for {providers.label(key["provider"])}, not for the chosen model.')
         elif key.get('monthly_limit_usd') is not None and ctx.spending.spent(key['id'], ctx.month()) >= key['monthly_limit_usd']:
             add('key_at_limit', f'The key "{key["name"]}" is at its monthly limit. Use another key or raise the limit in Settings.')
         return out
@@ -311,6 +320,7 @@ def install_runs(app, ctx):
         return Response(status_code=204)
 
     ctx.blocked, ctx.read_run, ctx.schema_version, ctx.view = blocked, read, schema_version, view
+    ctx.model_blocked, ctx.default_key = model_blocked, default_key
     install_prompt(app, ctx, API, read, schema_version)
     install_trial(app, ctx, API)
     install_launch(app, ctx, API)
