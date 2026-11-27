@@ -720,7 +720,7 @@ exports, `settings.json`, logs or error messages. The API shows only the last 4 
 
 ## ADR-021 · Key tests are the first outbound requests, made with the standard library
 
-**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Status** · Accepted (option chosen by the user on 2026-11-26); model calls are added by ADR-026
 **Date** · 2026-11-26
 **Reference** · BR-K01, BR-K07, AC-K02 to AC-K04, AC-K08
 
@@ -787,7 +787,7 @@ without a cost until a price source is added. A catalog model is usable only whe
 
 ## ADR-023 · The workspace folder is set at startup
 
-**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Status** · Accepted (option chosen by the user on 2026-11-26); its read-only mount is amended by ADR-028
 **Date** · 2026-11-26
 **Reference** · Settings rule 2, BR-W01, BR-W06, AC-W01, AC-W09
 
@@ -850,3 +850,146 @@ Settings › Workspace opens. A pair on the same folders wins.
 ### Verification
 
 `test_workspace.py` (ids, loading, review of a run, pair on a run, missing run); `e2e/workspace.spec.js`.
+
+## ADR-025 · Runs execute inside the service
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · BR-X04, BR-X08, AC-X08 to AC-X10
+
+### Context
+
+A run calls a model once per paper and may last hours. The tool is one process per reviewer (ADR-009).
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Background threads in the service, each paper's state saved after every change | Nothing new to install or start; one place for keys and files | A restart stops the work: the run must be resumed |
+| A separate worker process and a queue | Survives a restart of the web part | More moving parts for one reviewer on one computer |
+| In the browser | No server work | Keys would reach the page; closing the tab stops the run |
+
+### Decision and rationale
+
+The first: `service/extraction/launch.py`. At most "papers at the same time" (Settings) threads per run; the state of
+every paper in `<run>/papers.json`; the last worker to stop settles the run's status. After a restart a running run is
+Paused and its extracting papers Queued; nothing restarts by itself.
+
+### Consequences
+
+- The reviewer resumes a run after a restart; done papers are never lost or extracted twice.
+- Tests and launches share `work.extract_one` (retries, spending).
+
+### Verification
+
+`test_extraction_launch.py` (pause, resume, cancel, failure and retry, restart).
+
+## ADR-026 · Model calls through the official Anthropic and OpenAI SDKs
+
+**Status** · Accepted (option chosen by the user on 2026-11-26: Anthropic and OpenAI first)
+**Date** · 2026-11-26
+**Reference** · BR-X10, AC-X05, AC-X07; amends ADR-021
+
+### Context
+
+A run sends a whole PDF and needs a structured answer back. Key tests use the standard library (ADR-021).
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| The providers' SDKs (`anthropic` 0.86.0, `openai` 2.37.0, pinned with what they need) | Documented PDF input and structured outputs; typed errors | New dependencies (`httpx` and others); slow first import with `python -B` |
+| The standard library, as for key tests | No dependency | Two request and answer formats, PDF upload and errors written by hand |
+
+### Decision and rationale
+
+The SDKs, already installed here, pinned in `requirements.txt`. Anthropic: Messages API with a base64 `document` block
+and `output_config.format` (sent as `extra_body`, so the pinned SDK version needs no newer typed parameter). OpenAI:
+Responses API with `input_file` and a strict JSON schema. The SDKs' own retries are off: the run counts its retries
+(Settings). Base URLs follow `VALUE_REVIEW_PROVIDER_URL_<PROVIDER>` for the tests' fake provider. The SDKs are imported
+in the background when the service starts.
+
+### Consequences
+
+- Requests are not streamed: one answer per paper, waited for up to the time limit. Very long answers may need
+  streaming later (OQ-X02).
+- Google and own servers come with their own step.
+
+### Verification
+
+`test_extraction_models.py` against the fake provider; a hand run with the user's key.
+
+## ADR-027 · The model answers a compact JSON; the service writes the result and places the boxes
+
+**Status** · Accepted
+**Date** · 2026-11-26
+**Reference** · BR-X11, BR-X12, AC-X15
+
+### Context
+
+The existing results were made by an agent that measured each evidence box itself. One API call cannot do that, and
+models give poor page coordinates.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| The model returns records and values with a page and a quote; the service finds the quote in the PDF's text layer (pypdfium2) and writes the existing result format | Exact boxes when the text is found; Review and the ingest unchanged | No box for scanned PDFs or quotes not copied exactly |
+| Ask the model for coordinates | One step | Unreliable boxes |
+| No boxes | Simple | Reviewers lose the highlight |
+
+### Decision and rationale
+
+The first: `schemas/extraction-answer.schema.json`, `service/extraction/results.py`. The quote is searched on the given
+page, then on the other pages, then the value alone; the evidence records `exact`, `other_page`, `value_only` or
+`not_found`. Values keep the model's text as returned.
+
+### Consequences
+
+- Review shows the page without a box when the quote was not found; the test screen says "Quote not found".
+
+### Verification
+
+`test_extraction_results.py` (boxes, the ingest accepts every file).
+
+## ADR-028 · The workspace is writable under results/, and each run leaves a manifest
+
+**Status** · Accepted (option chosen by the user on 2026-11-26)
+**Date** · 2026-11-26
+**Reference** · BR-X11, AC-X07; amends ADR-023 and ADR-024
+
+### Context
+
+Canvas Extraction rules 1 and 2: a run writes its results to `results/<set>/<run>/`, which Review reads.
+
+### Decision and rationale
+
+Compose mounts the workspace read-write; the tool writes only `results/<set>/<run>/`. Each run's folder gets
+`run.json` (`schemas/run-manifest.schema.json`: run id, schema, prompt and System prompt versions, model, dates,
+per-paper tokens and cost), which Review shows as the run's schema, model and finish date (PEND-01). Renaming a run
+keeps its folder, so its Review data keeps its id.
+
+### Consequences
+
+- `papers/` is never written; a reviewer who wants a read-only workspace can mount it so, and Extraction then fails
+  with "Could not write the result".
+
+### Verification
+
+`test_extraction_launch.py` (files, manifest, metadata in the workspace scan); `docker compose config`.
+
+## ADR-029 · Spending per key and month from token usage
+
+**Status** · Accepted
+**Date** · 2026-11-26
+**Reference** · BR-X10, AC-X13, AC-X16, Settings rule 4
+
+### Decision and rationale
+
+Every attempt the provider billed adds its cost (tokens × catalog price) to `annotations/spending.json` under the key
+and the month; `GET /keys` shows it as `spent_usd`; a key at or above its monthly limit blocks tests and launches.
+Models without a catalog price add nothing, and Setup says their key's limit cannot be checked (OQ-X01).
+
+### Verification
+
+`test_extraction_trial.py`, `test_extraction_launch.py`, `test_extraction_runs.py` (`key_at_limit`).

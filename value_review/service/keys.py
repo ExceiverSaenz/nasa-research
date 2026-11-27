@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from ..storage import StorageError
 from ..storage.secrets import SecretStore, public
+from ..storage.spending import SpendingStore
 from . import providers
 from .errors import ApiError
 
@@ -142,9 +143,15 @@ def install_keys(app, config, settings_now, save_settings, clock):
             raise ApiError(404, 'key_not_found', f'No key {kid}')
         return entry
 
+    spending = SpendingStore(config.annotations)
+
+    def shown(entry):
+        """A key as the API shows it, with what it spent this month (ADR-029)."""
+        return {**public(entry), 'spent_usd': round(spending.spent(entry['id'], clock()[:7]), 4)}
+
     @app.get(f'{API}/keys')
     def list_keys():
-        return [public(k) for k in read()['keys']]
+        return [shown(k) for k in read()['keys']]
 
     @app.post(f'{API}/keys', status_code=201)
     def add_key(payload: KeyIn, response: Response):
@@ -165,7 +172,7 @@ def install_keys(app, config, settings_now, save_settings, clock):
             data['keys'].append(entry)
             write(data)
         response.headers['Location'] = f"{API}/keys/{entry['id']}"
-        return public(entry)
+        return shown(entry)
 
     @app.patch(f'{API}/keys/{{kid}}')
     def edit_key(kid: str, payload: KeyPatch):
@@ -193,7 +200,7 @@ def install_keys(app, config, settings_now, save_settings, clock):
                         k['default'] = k['id'] == kid
             write(data)
             tidy_models(data)
-        return public(current)
+        return shown(current)
 
     @app.post(f'{API}/keys/{{kid}}/test')
     def test_key(kid: str):
@@ -206,7 +213,7 @@ def install_keys(app, config, settings_now, save_settings, clock):
             current['tested_at'], current['models'] = clock(), [m['id'] for m in models]
             write(data)
             tidy_models(data)
-        return public(current)
+        return shown(current)
 
     @app.delete(f'{API}/keys/{{kid}}', status_code=204)
     def remove_key(kid: str):

@@ -55,13 +55,13 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 
 | ID | What | Where it shows | Today |
 |---|---|---|---|
-| PEND-01 | Runs and paper sets (schema, model, finish date of an extraction) | Review list, papers summary, "Results from" meta | "—"; the paper set is real for workspace runs (ADR-024), else the PDF folder name |
+| PEND-01 | Runs and paper sets (schema, model, finish date of an extraction) | Review list, papers summary, "Results from" meta | Real for runs made in Extraction (`run.json`, ADR-028); "—" for other folders |
 | PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of M" for workspace runs, else "N of —" |
 | PEND-03 | Run metadata for "Results from" | Review header | Pair name and folder |
-| PEND-04 | API keys, usage, models | Extraction (model and key in Setup, spending) | Settings uses the service (ADR-020 to ADR-022); spending is 0 until runs record it |
-| PEND-05 | System prompts and their versions | Extraction; Normalize | Settings uses the service (ADR-019); the boards keep their sample prompts |
-| PEND-06 | Prompts, the assistant, prompt history | Extraction | Sample data |
-| PEND-07 | Test and launch of runs, progress, cost | Extraction | Sample data |
+| PEND-04 | API keys, usage, models | — | Closed: Settings and Extraction use the service; spending is recorded (ADR-029) |
+| PEND-05 | System prompts and their versions | Normalize | Settings and Extraction use the service (ADR-019); the Normalize boards keep their sample prompts |
+| PEND-06 | The assistant that proposes prompt changes | Extraction · Prompt | Not available: the prompt is written from a template and edited by hand (70-extraction-specification.md) |
+| PEND-07 | Test and launch of runs, progress, cost | — | Closed: the service (ADR-025 to ADR-029); Google and own-server models still pending |
 | PEND-08 | Normalization rules, validation, results | Normalize | Sample data |
 | PEND-09 | Username and initials | Settings · Profile, top bar | Closed: the service (ADR-018) |
 | PEND-10 | Autosave off or every 30 s | Settings · Review and export, Review | Closed: the service (ADR-018) |

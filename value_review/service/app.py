@@ -33,6 +33,8 @@ from ..storage.files import SETTINGS_DEFAULTS, AnnotationStore, autosave_from_mi
 from ..storage.schemas import SCHEMA_ID, SchemaStore, empty_content
 from ..storage.system_prompts import KINDS as PROMPT_KINDS, SystemPromptStore
 from . import exports
+from .extraction import install_extraction
+from .extraction.runs import Context as ExtractionContext
 from .keys import install_keys
 from .config import Config
 from .errors import ApiError, body, install
@@ -861,6 +863,10 @@ def create_app(config: Config | None = None, web_dir=WEB, clock=utc_now) -> Fast
 
     # --- Workspace (62-workspace-interface-contract.md) ---------------------------------------------
     workspace.install_workspace(app, config, settings_now, ingest_lock)
+
+    # --- Extraction (72-extraction-interface-contract.md) ------------------------------------------
+    install_extraction(app, ExtractionContext(config=config, settings_now=settings_now, clock=clock,
+                                              schema_store=schema_store, seed_schemas=seed_schemas, ingest_lock=ingest_lock))
 
     # --- System prompts: OP-T02 (42-settings-interface-contract.md; ADR-019) ---------------------
     # Global to the data folder. Every save is a new version; none is changed or deleted (BR-T06).

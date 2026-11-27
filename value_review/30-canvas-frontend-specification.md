@@ -54,7 +54,7 @@ says so.
 | AC-F06 | All values decided | Finish → Submit | Summary with six tiles; then "Open next paper: Paper N ›" |
 | AC-F07 | 834 × 1112 | Open the papers and a paper | Cards and a ⋯ sheet; full-screen history; the list and detail screens; accordion; decision bar fixed at the bottom; bottom sheets; full-screen summary |
 | AC-F08 | Schema list and editor | Use the board's controls | Chips, row buttons, tiles, preview, search, collapsible groups, inline group names, details with "More options", the dark "What the model will read"; draft, versions and .xlsx unchanged on the service |
-| AC-F09 | Extraction | List → a run → Setup, Prompt, Test, Launch | The board's steps and dialogs on sample data; the page says so; no request writes to the service |
+| AC-F09 | Extraction | List → a run → Setup, Prompt, Test, Launch | The board's steps and dialogs, on the service since 2026-11-26 ([70-extraction-specification.md](70-extraction-specification.md)) |
 | AC-F10 | Normalize | Rules → Validate → Results → Download CSV | The board's behaviour on sample data; the CSV uses the browser's separator and encoding; no request writes to the service |
 | AC-F11 | Settings, Profile | Change the display name and save | Saved on the service as the reviewer name, with username and initials; the header updates |
 | AC-F12 | Settings, Review and export | Autosave Off, separator ";", save | Saved on the service; Review shows "Autosave off"; downloads use ";"; ranges are checked ("Between 1 and 200.") |

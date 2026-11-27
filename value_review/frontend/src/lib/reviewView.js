@@ -3,13 +3,14 @@
 export const STATUS_DOT = { 'Not started': '#9AA3B2', 'In progress': '#0B3D91', Done: '#17703A', 'No results': '#B7791F' };
 
 // One folder pair as a row of the list of extractions. Unknown run metadata is null and shows "—" (PEND-01).
-export function extractionRow(source, papers, { set, problem = '', pdfs = null } = {}) {
+export function extractionRow(source, papers, { set, problem = '', pdfs = null, meta = null } = {}) {
   const values = papers.reduce((a, p) => a + (p.total || 0), 0);
   const reviewed = papers.reduce((a, p) => a + (p.reviewed || 0), 0);
   const pct = values ? Math.round((reviewed / values) * 100) : 0;
   return {
     id: source.id, name: source.name, set: set || source.name, path: source.pdf_dir || '',
-    schema: null, model: null, when: null,
+    schema: meta ? meta.schema : null, model: meta ? meta.model : null,
+    when: meta && meta.finished_at ? new Date(meta.finished_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : null,
     withResults: papers.length, pdfs,
     values, reviewed, pct,
     status: problem ? 'Folders not found' : pct === 100 && values ? 'Done' : reviewed > 0 ? 'In progress' : 'Not started',
@@ -30,7 +31,7 @@ export function sourceList(pairs, workspace) {
     return { id: p.id, name: p.name, set: x ? x.set.name : folder(p.pdf_dir) || p.name, path: p.pdf_dir || '', pdfs: x ? x.set.pdfs : null, missing: false };
   });
   runs.filter((x) => !x.r.pair).forEach(({ set, r }) => list.push(
-    { id: r.source_id, name: r.name, set: set.name, path: `papers\\${set.name}\\`, pdfs: set.pdfs, missing: false }));
+    { id: r.source_id, name: r.name, set: set.name, path: `papers\\${set.name}\\`, pdfs: set.pdfs, missing: false, meta: r.meta || null }));
   (ws.missing || []).forEach((m) => list.push(
     { id: m.source_id, name: m.run, set: m.set, path: `results\\${m.set}\\${m.run}\\`, pdfs: null, missing: true }));
   return list;

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/run-manifest.schema.json",
+  "title": "What made the results of a run (workspace results/<set>/<run>/run.json; ADR-028). Written by the tool after each paper; Review reads it for the run's schema, model and dates.",
+  "type": "object",
+  "required": ["schema", "run_id", "name", "set", "schema_ref", "schema_name", "prompt_version", "system_prompt_version", "model", "launched_at", "finished_at", "papers"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-run-manifest/1" },
+    "run_id": { "type": "string", "pattern": "^r_[0-9a-f]{8}$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "set": { "type": "string" },
+    "schema_ref": { "type": "object", "required": ["id", "version"], "properties": { "id": { "type": "string" }, "version": { "type": "integer", "minimum": 1 } } },
+    "schema_name": { "type": ["string", "null"] },
+    "prompt_version": { "type": "integer", "minimum": 1 },
+    "system_prompt_version": { "type": ["integer", "null"] },
+    "model": { "type": "string" },
+    "launched_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": ["string", "null"], "format": "date-time" },
+    "papers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["extracted_at", "input_tokens", "output_tokens", "usd", "seconds"],
+        "properties": {
+          "extracted_at": { "type": "string", "format": "date-time" },
+          "input_tokens": { "type": "integer", "minimum": 0 },
+          "output_tokens": { "type": "integer", "minimum": 0 },
+          "usd": { "type": ["number", "null"], "minimum": 0 },
+          "seconds": { "type": "number", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

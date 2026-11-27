@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/extraction-answer.schema.json",
+  "title": "What the model returns for one paper (structured output, 72-extraction-interface-contract.md; ADR-027). Kept simple so both providers accept it: every property required, no extra properties, no numeric limits.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records", "values", "completion"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "description": "One record per specimen or test condition.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["record_id", "label", "condition"],
+        "properties": {
+          "record_id": { "type": "string", "description": "A short id you choose, unique in this answer, such as r1." },
+          "label": { "type": "string", "description": "The specimen or condition as the paper names it." },
+          "condition": { "type": "string", "description": "What sets this record apart (temperature, treatment…), or empty." }
+        }
+      }
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_id", "record_ids", "value", "unit", "page", "quote", "flags", "notes"],
+        "properties": {
+          "field_id": { "type": "string", "description": "The field id from the prompt." },
+          "record_ids": { "type": "array", "items": { "type": "string" }, "description": "The record(s) this value belongs to." },
+          "value": { "type": "string", "description": "Exactly as written in the paper, with its symbols." },
+          "unit": { "type": "string", "description": "As written, or empty." },
+          "page": { "type": "integer", "description": "PDF page number, 1 for the first page." },
+          "quote": { "type": "string", "description": "A short text copied exactly from that page, containing the value." },
+          "flags": { "type": "array", "items": { "type": "string" }, "description": "Optional marks such as reported_aggregate, uncertain, from_figure." },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "completion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": { "enum": ["complete", "partial"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

@@ -104,5 +104,10 @@ test('extractions: folder pairs and the runs of the workspace, without listing a
     ['ws-old-run-000000', 'run', 'old', null, true]]);
   assert.deepEqual(sourceList(pairs, null).map((s) => [s.id, s.set]), [['default', 'pdfs'], ['mine', 'tensile']]);
   assert.equal(papersText(extractionRow({ id: 'x', name: 'X' }, [], { pdfs: 23 })), '0 of 23');
+  const meta = { schema: 'Tensile properties · v1', model: 'claude-opus-5-5', finished_at: '2026-11-26T10:00:00Z' };
+  const ws = { sets: [{ name: 't', pdfs: 3, runs: [{ name: 'r', source_id: 'ws-t-r-000000', pair: false, meta }] }] };
+  const s = sourceList([], ws)[0];
+  const row = extractionRow({ id: s.id, name: s.name, pdf_dir: s.path }, [], { set: s.set, pdfs: s.pdfs, meta: s.meta });
+  assert.deepEqual([row.schema, row.model, row.when], ['Tensile properties · v1', 'claude-opus-5-5', '26 Nov 2026']);
 });
 

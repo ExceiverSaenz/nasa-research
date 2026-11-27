@@ -3,9 +3,9 @@ import AppHeader, { SampleBadge } from './AppHeader.jsx';
 import { useSettings } from './useProfile.js';
 import DcBoard from '../dc/DcBoard.jsx';
 import { profileOf } from '../lib/prefs.js';
-import extractionHtml from '../boards/extraction.html?raw';
-import extractionCss from '../boards/extraction.css?raw';
-import Extraction from '../boards/extraction.logic.js';
+import extractionHtml from '../extraction/extraction.html?raw';
+import extractionCss from '../extraction/extraction.css?raw';
+import Extraction from '../extraction/ExtractionLogic.js';
 import rulesHtml from '../boards/normalize-rules.html?raw';
 import rulesCss from '../boards/normalize-rules.css?raw';
 import Rules from '../boards/normalize-rules.logic.js';
@@ -23,7 +23,7 @@ const LINKS = {
   'Normalize-Rules.dc.html': '#/normalize', 'Normalize-Validate.dc.html': '#/normalize/sample/validate', 'Normalize-Results.dc.html': '#/normalize/sample/results',
 };
 const BOARDS = {
-  extraction: { html: extractionHtml, css: extractionCss, Logic: Extraction, title: 'Extraction' },
+  extraction: { html: extractionHtml, css: extractionCss, Logic: Extraction, title: 'Extraction', real: true },   // 70-extraction-specification.md
   rules: { html: rulesHtml, css: rulesCss, Logic: Rules, title: 'Normalize' },
   validate: { html: validateHtml, css: validateCss, Logic: Validate, title: 'Validate · Normalize' },
   results: { html: resultsHtml, css: resultsCss, Logic: Results, title: 'Results · Normalize' },
@@ -37,8 +37,8 @@ function mirrorSettings(display, s) {
   } catch (e) { /* private window: the boards use their defaults */ }
 }
 
-// Extraction and Normalize (canvas boards on sample data, ADR-013): the app's top bar, a "Sample data" label, and the
-// board itself. The board starts again from its sample data each time the page opens.
+// Extraction (on the service, 70-extraction-specification.md) and Normalize (canvas boards on sample data, ADR-013): the
+// app's top bar and the board. A board on sample data says so and starts again from its sample each time it opens.
 export default function BoardPage({ board, section }) {
   const b = BOARDS[board];
   const settings = useSettings();
@@ -55,8 +55,8 @@ export default function BoardPage({ board, section }) {
   return (
     <div>
       <AppHeader section={section} onNavigate={navigate} />
-      <div className="board-note"><SampleBadge /><span>This section has no backend yet: what you do here is not saved.</span></div>
-      <DcBoard key={`${board}-${round}-${settings ? 'set' : 'default'}`} template={b.html} css={b.css} Logic={b.Logic} links={LINKS} />
+      {!b.real && <div className="board-note"><SampleBadge /><span>This section has no backend yet: what you do here is not saved.</span></div>}
+      <DcBoard key={b.real ? `${board}-${round}` : `${board}-${round}-${settings ? 'set' : 'default'}`} template={b.html} css={b.css} Logic={b.Logic} links={LINKS} />
     </div>
   );
 }

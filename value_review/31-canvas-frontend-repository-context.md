@@ -15,7 +15,7 @@
 | `frontend/src/components/Review.jsx`, `ValuesPanel.jsx`, `ReviewTabletList.jsx`, `PageViewer.jsx`, `DetailPanel.jsx`, `Dialogs.jsx`, `SummaryModal.jsx`, `lib/textDiff.js` | The review of a paper, desktop and tablet |
 | `frontend/src/components/SettingsPage.jsx`, `data/sampleSettings.js` | The Settings page (ADR-017) and its sample data |
 | `frontend/src/components/SchemaList.jsx`, `SchemaEditor.jsx`, `SchemaHistory.jsx`, `ImportDialog.jsx`, `lib/schema.js` | The Schema section |
-| `frontend/src/dc/DcBoard.jsx`, `frontend/src/boards/*`, `components/BoardPage.jsx` | The runtime that runs the copied canvas boards; Extraction and Normalize (ADR-013) |
+| `frontend/src/dc/DcBoard.jsx`, `frontend/src/boards/*`, `components/BoardPage.jsx` | The runtime that runs the copied canvas boards: Normalize (ADR-013); Extraction runs its own copy with data from the service (`frontend/src/extraction/`, 71-extraction-repository-context.md) |
 | `service/app.py` (read only) | `Settings` model and the routes the front end calls |
 | `frontend/e2e/*.spec.js`, `frontend/e2e/fixtures.js` | Browser tests per section; `pickScope`, `scopeButton`, `smallTargets` helpers |
 

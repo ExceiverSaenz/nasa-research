@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/prompt-version.schema.json",
+  "title": "One saved version of a run's prompt (<data>/extraction/runs/<id>/prompt/v<n>.json, OP-X03). Written once; the 20 latest are kept (BR-X02).",
+  "type": "object",
+  "required": ["schema", "run_id", "n", "saved_at", "saved_by", "note", "text", "system_prompt_version", "schema_ref"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-prompt-version/1" },
+    "run_id": { "type": "string", "pattern": "^r_[0-9a-f]{8}$" },
+    "n": { "type": "integer", "minimum": 1 },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "saved_by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "note": { "type": "string", "maxLength": 200 },
+    "text": { "type": "string", "minLength": 1, "maxLength": 200000, "description": "Markdown, as the model receives it." },
+    "system_prompt_version": { "type": ["integer", "null"], "minimum": 1, "description": "The extraction System prompt version the text was written from." },
+    "schema_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": { "id": { "type": "string", "maxLength": 64 }, "version": { "type": "integer", "minimum": 1 } }
+    },
+    "restored_from": { "type": "integer", "minimum": 1 }
+  }
+}

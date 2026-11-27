@@ -1,0 +1,522 @@
+<!-- The Extraction screen of the app: the canvas board Extraction.dc.html (copied in src/boards/extraction.html) with
+     its data from the service (70-extraction-specification.md). Differences from the board, each for real data:
+     the workspace path; the prompt is written from a template (no model call) and the assistant is pending (PEND-06);
+     a value's page shows the real PDF page; errors from the service are shown; no "Preview the finished run". -->
+<div style="position: relative; min-height: 940px; background: #EEF1F5; color: #101828; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45">
+
+<div style="background: #071B3F; color: #FFFFFF; display: flex; align-items: center; gap: 16px; padding: 0 32px; min-height: 60px; flex-wrap: wrap">
+<a href="Main.dc.html" aria-label="Back to papers" style="width: 34px; height: 34px; border-radius: 50%; background: #0B3D91; border: 2px solid #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #FFFFFF; text-decoration: none">TD</a>
+<div style="font-weight: 600; letter-spacing: 0.08em; font-size: 14px">TENSILE DATA REVIEW</div>
+<nav aria-label="Sections" style="display: flex; align-self: stretch; margin-left: 16px">
+<a href="Schema.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Schema</a>
+<a href="Extraction.dc.html" onClick="{{navList}}" aria-current="page" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #FFFFFF; text-decoration: none; font-weight: 600; border-bottom: 3px solid #FFFFFF">Extraction</a>
+<a href="Main.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Review</a>
+<a href="Normalize-Rules.dc.html" class="tab" style="display: flex; align-items: center; padding: 0 16px; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent">Normalize</a>
+</nav>
+<div style="flex: 1 1 0"></div>
+<a href="Settings.dc.html" aria-label="Settings" title="Settings" class="tab" style="display: flex; align-items: center; align-self: stretch; width: 44px; justify-content: center; padding: 0; color: #C9D6EE; text-decoration: none; font-weight: 500; border-bottom: 3px solid transparent"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 32px; height: 32px; border-radius: 50%; background: #E6EEFB; color: #071B3F; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px">ER</span>
+<span>Expert reviewer</span>
+</div>
+</div>
+
+<div style="max-width: 1320px; margin: 0 auto; padding: 36px 32px 48px; display: flex; flex-direction: column; gap: 24px">
+
+<sc-if value="{{hasError}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 6px; background: #FDE7E4; color: #7A1B12">
+<span style="flex: 1 1 0">{{error}}</span>
+<button type="button" onClick="{{closeError}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; color: #7A1B12; font: inherit; font-size: 14px; font-weight: 600">Close</button>
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 6px; background: #DDF3E4; color: #0F5A2C">
+<span style="flex: 1 1 0">{{toast}}</span>
+<button type="button" onClick="{{closeToast}}" style="height: 36px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; color: #0F5A2C; font: inherit; font-size: 14px; font-weight: 600">Close</button>
+</div>
+</sc-if>
+
+<!-- ===================== LIST OF RUNS ===================== -->
+<sc-if value="{{isList}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: flex-start; gap: 12px 16px; flex-wrap: wrap">
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25">Extraction</h1>
+<p style="margin: 0; color: #4A5568; max-width: 760px">A run reads the papers of a paper set with a schema, a prompt and a model, and writes the results that Review and Normalize use.</p>
+</div>
+<button type="button" onClick="{{newRun}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">+ New run</button>
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; padding: 12px 16px; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; color: #3B4557">
+<span style="font-weight: 600; color: #071B3F">Workspace</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{workspaceRoot}}</span>
+<span style="color: #4A5568">PDFs are read from <b style="font-weight: 600">papers\</b>, results are written to <b style="font-weight: 600">results\</b>. Set when the tool starts (Settings, Workspace); every tab uses the same folders.</span>
+</div>
+
+<section aria-label="Runs" style="background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10); min-height: 360px">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<label for="rq" style="position: absolute; left: -9999px">Search runs</label>
+<input id="rq" type="search" value="{{q}}" onInput="{{onQ}}" placeholder="Search by run name" style="flex: 1 1 200px; min-width: 0; height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 12px; font: inherit; font-size: 14px; color: #101828; background: #FFFFFF">
+</div>
+<div style="display: grid; grid-template-columns: minmax(200px, 2fr) minmax(140px, 1.2fr) minmax(150px, 1.2fr) 90px 110px 190px 44px; gap: 16px; padding: 10px 12px 10px 20px; border-bottom: 1px solid #E3E8EF; font-size: 14px; color: #3B4557; font-weight: 600">
+<span>Run</span><span>Paper set</span><span>Schema</span><span>Model</span><span>Papers</span><span>Status</span><span></span>
+</div>
+<sc-for list="{{runRows}}" as="r" hint-placeholder-count="2">
+<div class="frow" style="display: grid; grid-template-columns: minmax(200px, 2fr) minmax(140px, 1.2fr) minmax(150px, 1.2fr) 90px 110px 190px 44px; gap: 16px; padding: 0 12px 0 20px; min-height: 56px; border-bottom: 1px solid #E3E8EF; align-items: center">
+<button type="button" onClick="{{r.open}}" style="grid-column: 1 / 7; min-width: 0; display: grid; grid-template-columns: subgrid; gap: 16px; align-items: center; min-height: 56px; padding: 0; border: 0; background: transparent; text-align: left; font: inherit; font-size: 14px; color: #101828">
+<span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 500; color: #0B3D91; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{r.name}}</span><span style="font-size: 12px; color: #4A5568; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{r.when}}</span></span>
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{r.set}}</span>
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{r.schema}}</span>
+<span style="color: #3B4557">{{r.model}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace">{{r.papers}}</span>
+<span style="display: flex; align-items: center; gap: 6px"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: {{r.dot}}"></span>{{r.status}}</span>
+</button>
+<div style="position: relative; grid-column: 7">
+<button type="button" onClick="{{r.menuToggle}}" aria-haspopup="menu" aria-expanded="{{r.menuStr}}" aria-label="Actions for {{r.name}}" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 18px; line-height: 1">⋯</button>
+<sc-if value="{{r.menuOpen}}" hint-placeholder-val="{{ false }}">
+<div role="menu" aria-label="Run actions" style="position: absolute; z-index: 5; right: 0; top: 100%; width: 240px; background: #FFFFFF; border: 1px solid #D5DBE5; border-radius: 6px; box-shadow: 0 8px 24px rgba(7,27,63,0.18); padding: 4px 0">
+<sc-for list="{{r.actions}}" as="a" hint-placeholder-count="3">
+<button type="button" role="menuitem" onClick="{{a.run}}" class="mitem" style="width: 100%; min-height: 44px; display: flex; align-items: center; padding: 0 14px; border: 0; background: transparent; font: inherit; font-size: 14px; text-align: left; color: #101828">{{a.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{noRuns}}" hint-placeholder-val="{{ false }}"><div style="padding: 28px 20px; color: #4A5568">{{emptyText}}</div></sc-if>
+</section>
+</sc-if>
+
+<!-- ===================== ONE RUN ===================== -->
+<sc-if value="{{isRun}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: flex-start; gap: 12px 16px; flex-wrap: wrap">
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: #4A5568">
+<button type="button" onClick="{{toList}}" style="min-height: 32px; padding: 0; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px; text-decoration: underline">Extraction</button>
+<span aria-hidden="true">›</span>
+<span aria-current="page">{{run.name}}</span>
+</nav>
+<h1 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{run.name}}</h1>
+<p style="margin: 0; color: #4A5568; max-width: 760px">{{run.summary}}</p>
+</div>
+</div>
+
+<sc-if value="{{locked}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border-radius: 6px; background: #F2F6FC; border: 1px solid #D5DBE5; color: #3B4557">
+<span style="flex: 1 1 320px">This run has results, so its schema, model, key and prompt are read only. The name can still change. To try something else, make a copy: it starts as a draft with the same set, schema, model and prompt.</span>
+<button type="button" onClick="{{makeCopy}}" style="height: 40px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600">Make a copy</button>
+</div>
+</sc-if>
+
+<div role="tablist" aria-label="Run steps" style="display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid #C6CEDB">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 0; border-bottom: 3px solid {{t.line}}; margin-bottom: -1px; background: transparent; font: inherit; font-size: 14px; color: {{t.color}}; font-weight: {{t.weight}}">
+<span aria-hidden="true" style="width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; {{t.badge}}">{{t.n}}</span>{{t.label}}
+</button>
+</sc-for>
+</div>
+
+<!-- ---------- 1 Setup ---------- -->
+<sc-if value="{{tabSetup}}" hint-placeholder-val="{{ true }}">
+<section aria-label="Setup" style="background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10); padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 760px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rn" style="font-weight: 600">Run name</label>
+<input id="rn" value="{{run.name}}" onInput="{{onName}}" style="height: 40px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; color: #101828">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rs" style="font-weight: 600">Paper set</label>
+<select id="rs" value="{{run.setId}}" onChange="{{onSet}}" disabled="{{lock}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{setOptions}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+<span style="font-size: 13px; color: #4A5568">Reads the PDFs in <span style="font-family: 'IBM Plex Mono', monospace">{{run.papersPath}}</span> ({{run.nPdfs}} PDFs). Review shows these same papers.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rc" style="font-weight: 600">Schema</label>
+<select id="rc" value="{{run.schemaId}}" onChange="{{onSchema}}" disabled="{{lock}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{schemaOptions}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+<span style="font-size: 13px; color: #4A5568">Only saved versions can be chosen. The run keeps the version it used, so later schema changes show which papers were extracted with an older one.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rm" style="font-weight: 600">Model</label>
+<select id="rm" value="{{run.modelId}}" onChange="{{onModel}}" disabled="{{lock}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{modelOptions}}" as="o" hint-placeholder-count="3"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+<span style="font-size: 13px; color: #4A5568">Only the models you enabled in <a href="Settings.dc.html">Settings</a>.</span>
+<sc-if value="{{modelBad}}" hint-placeholder-val="{{ false }}"><div role="alert" style="padding: 10px 12px; border-radius: 6px; background: #FDE7E4; color: #7A1B12; font-size: 13px">{{modelWarn}} <a href="Settings.dc.html" style="color: #7A1B12">Open Settings</a></div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rk" style="font-weight: 600">API key</label>
+<select id="rk" value="{{run.keyId}}" onChange="{{onKey}}" disabled="{{lock}}" style="height: 40px; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 10px; font: inherit; font-size: 14px; background: #FFFFFF; color: #101828">
+<sc-for list="{{keyOptions}}" as="o" hint-placeholder-count="2"><option value="{{o.id}}">{{o.name}}</option></sc-for>
+</select>
+<span style="font-size: 13px; color: #4A5568">The default key of the provider is chosen for you. The key’s monthly limit applies to this run.</span>
+<sc-if value="{{keyBad}}" hint-placeholder-val="{{ false }}"><div role="alert" style="padding: 10px 12px; border-radius: 6px; background: #FDE7E4; color: #7A1B12; font-size: 13px">{{keyWarn}} <a href="Settings.dc.html" style="color: #7A1B12">Open Settings</a></div></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; background: #F2F6FC; border: 1px solid #D5DBE5; border-radius: 6px">
+<span style="font-weight: 600; color: #071B3F">Results are written to</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{run.resultsPath}}</span>
+<span style="font-size: 13px; color: #4A5568">Fixed from the workspace; Review and Normalize read the results of the run you open there.</span>
+</div>
+<div><button type="button" onClick="{{toPrompt}}" disabled="{{setupOff}}" style="opacity: {{setupOp}}; height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Next: design the prompt</button></div>
+</section>
+</sc-if>
+
+<!-- ---------- 2 Prompt ---------- -->
+<sc-if value="{{tabPrompt}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap">
+
+<section aria-label="Conversation" style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10); display: flex; flex-direction: column">
+<div style="padding: 14px 20px; border-bottom: 1px solid #E3E8EF"><h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #071B3F">Conversation</h2><span style="font-size: 13px; color: #4A5568">Ask the assistant to change the prompt. It reads the text on the right as it is now, including your own edits. It only proposes: you decide.</span></div>
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 20px; min-height: 300px">
+<div style="color: #4A5568">{{chatEmpty}}</div>
+<sc-for list="{{chat}}" as="m" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: {{m.align}}">
+<span style="font-size: 12px; color: #4A5568">{{m.who}}</span>
+<div style="max-width: 92%; padding: 10px 12px; border-radius: 6px; {{m.look}}">{{m.text}}</div>
+<sc-if value="{{m.hasProp}}" hint-placeholder-val="{{ false }}">
+<div style="max-width: 92%; padding: 10px 12px; border: 1px solid #0B3D91; border-radius: 6px; background: #F2F6FC; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #4A5568; font-weight: 600">Proposed change</span>
+<sc-if value="{{m.isReplace}}" hint-placeholder-val="{{ false }}"><span style="color: #4A5568; text-decoration: line-through">{{m.propFrom}}</span></sc-if>
+<span>{{m.propText}}</span>
+<sc-if value="{{m.propOpen}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px"><button type="button" onClick="{{m.accept}}" style="height: 40px; padding: 0 14px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Apply to the prompt</button><button type="button" onClick="{{m.ignore}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Ignore</button></div>
+</sc-if>
+<sc-if value="{{m.propDone}}" hint-placeholder-val="{{ false }}"><span style="font-size: 13px; color: #4A5568">{{m.propState}}</span></sc-if>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid #E3E8EF">
+<label for="msg" style="position: absolute; left: -9999px">Message</label>
+<input id="msg" value="{{msg}}" onInput="{{onMsg}}" disabled="{{chatOff}}" placeholder="For example: tables are in the supplementary material" style="flex: 1 1 0; min-width: 0; height: 44px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 12px; font: inherit; font-size: 14px; color: #101828">
+<button type="button" onClick="{{send}}" disabled="{{chatOff}}" style="height: 44px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{sendOp}}">Send</button>
+</div>
+</section>
+
+<section aria-label="Prompt" style="flex: 1 1 460px; min-width: 0; background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10)">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<div style="flex: 1 1 0; min-width: 0"><h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #071B3F">Prompt · {{promptLabel}}</h2><span style="font-size: 13px; color: #4A5568">{{promptNote}}</span></div>
+<sc-if value="{{hasPrompt}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{openHistory}}" disabled="{{noHistory}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px; opacity: {{historyOp}}">Version history</button></sc-if>
+<sc-if value="{{hasPrompt}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{exportPrompt}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Export prompt</button></sc-if>
+<sc-if value="{{canSavePrompt}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{savePrompt}}" style="height: 40px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Save version</button></sc-if>
+</div>
+<div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 16px">
+
+<sc-if value="{{noPrompt}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; background: #F2F6FC; border: 1px solid #D5DBE5; border-radius: 6px">
+<span style="font-weight: 600; color: #071B3F">The first prompt is written for you</span>
+<span style="color: #3B4557">It starts from the <a href="Settings.dc.html">System prompt {{sysCurrent}}</a>, which is the same for every extraction, and lists every field of the schema of this run, <b style="font-weight: 600">{{run.schemaName}}</b>. No model is called. Then edit it as you need.</span>
+<div><button type="button" onClick="{{generate}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Write the prompt</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasPrompt}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13px; color: #4A5568">
+<span>Written from</span>
+<span style="padding: 2px 10px; border-radius: 12px; background: #E6EEFB; color: #071B3F; font-weight: 500">System prompt {{sysLabel}}</span>
+<span>and</span>
+<span style="padding: 2px 10px; border-radius: 12px; background: #E6EEFB; color: #071B3F; font-weight: 500">{{genSchemaName}}</span>
+<a href="Settings.dc.html" style="margin-left: auto">Open the System prompt</a>
+</div>
+
+<sc-if value="{{sysOld}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 10px 12px; border-radius: 6px; background: #F2F6FC; border: 1px solid #D5DBE5; color: #3B4557; font-size: 13px">The System prompt is now {{sysCurrent}}. This run keeps {{sysLabel}}, the one that wrote this prompt, so it can be repeated.</div>
+</sc-if>
+
+<sc-if value="{{schemaChanged}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 12px; border-radius: 6px; background: #FFF3D6; color: #5C3D00; font-size: 13px">
+<span style="flex: 1 1 240px">The schema changed after this prompt was written. The prompt still lists the old fields. Nothing is rewritten by itself.</span>
+<button type="button" onClick="{{generate}}" style="height: 40px; padding: 0 14px; border: 1px solid #5C3D00; border-radius: 6px; background: #FFFFFF; color: #5C3D00; font: inherit; font-size: 14px; font-weight: 600">Regenerate</button>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-weight: 600">Prompt <span style="font-weight: 400; color: #4A5568">· {{promptStats}}</span></span>
+<button type="button" onClick="{{openPrompt}}" aria-label="Open the prompt to read or edit it" style="text-align: left; width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #F7F9FC; color: #101828; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 9; overflow: hidden">{{instr}}</button>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{openPrompt}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">{{openLabel}}</button>
+<button type="button" onClick="{{toTest}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #FFFFFF; color: #0B3D91; font: inherit; font-size: 14px; font-weight: 600">Next: test on a few papers</button>
+<sc-if value="{{canRewrite}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{generate}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Write it again from the schema</button></sc-if>
+</div>
+</sc-if>
+
+</div>
+</section>
+</div>
+</sc-if>
+
+<!-- ---------- 3 Test ---------- -->
+<sc-if value="{{tabTest}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap">
+<section aria-label="Choose papers" style="flex: 1 1 360px; min-width: 0; background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10)">
+<div style="padding: 14px 20px; border-bottom: 1px solid #E3E8EF"><h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #071B3F">Choose 1 to 3 papers</h2><span style="font-size: 13px; color: #4A5568">The test is not saved: it only shows what this prompt would extract.</span></div>
+<sc-for list="{{testRows}}" as="p" hint-placeholder-count="5">
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 20px; border-bottom: 1px solid #E3E8EF; opacity: {{p.op}}">
+<input type="checkbox" checked="{{p.on}}" disabled="{{p.off}}" onChange="{{p.toggle}}" style="width: 18px; height: 18px; accent-color: #0B3D91">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; width: 64px">{{p.file}}</span>
+<span style="flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #3B4557">{{p.title}}</span>
+<span style="font-size: 12px; color: #4A5568">{{p.pages}} pages</span>
+</label>
+</sc-for>
+<div style="padding: 12px 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<button type="button" onClick="{{runTest}}" disabled="{{noTestPick}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{testBtnOp}}">{{testBtn}}</button>
+<span style="font-size: 13px; color: #4A5568">{{testEstimate}}</span>
+</div>
+</section>
+
+<section aria-label="Test results" style="flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<sc-if value="{{noTestYet}}" hint-placeholder-val="{{ true }}">
+<div style="background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10); padding: 28px 24px; color: #4A5568">Pick papers and run the test. The values appear here, with the PDF page each one came from.</div>
+</sc-if>
+<sc-for list="{{testResults}}" as="t" hint-placeholder-count="2">
+<div style="background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10)">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap"><span style="font-family: 'IBM Plex Mono', monospace; font-weight: 500">{{t.file}}</span><span style="flex: 1 1 0; min-width: 0; color: #3B4557; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{t.title}}</span><span style="color: #4A5568">{{t.summary}}</span></div>
+<div style="display: grid; grid-template-columns: minmax(160px, 1.4fr) minmax(140px, 1.2fr) 70px 120px; gap: 16px; padding: 8px 20px; border-bottom: 1px solid #E3E8EF; font-size: 13px; color: #3B4557; font-weight: 600"><span>Field</span><span>Value</span><span>Page</span><span></span></div>
+<sc-for list="{{t.rows}}" as="v" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: minmax(160px, 1.4fr) minmax(140px, 1.2fr) 70px 120px; gap: 16px; padding: 0 20px; min-height: 44px; align-items: center; border-bottom: 1px solid #EEF1F5">
+<span>{{v.field}}</span><span style="font-family: 'IBM Plex Mono', monospace">{{v.value}}</span><button type="button" onClick="{{v.openPdf}}" aria-label="Show {{v.page}} of the PDF" style="justify-self: start; min-height: 44px; padding: 0 6px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px; text-decoration: underline">{{v.page}}</button>
+<span style="display: flex; align-items: center; gap: 6px; color: #8A5A00"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{v.dot}}"></span>{{v.flag}}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<sc-if value="{{hasTest}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<button type="button" onClick="{{backToPrompt}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Adjust the prompt</button>
+<button type="button" onClick="{{toLaunch}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Looks good: go to launch</button>
+</div>
+</sc-if>
+</section>
+</div>
+</sc-if>
+
+<!-- ---------- 4 Launch ---------- -->
+<sc-if value="{{tabLaunch}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap">
+
+<section aria-label="Papers" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10)">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<div role="group" aria-label="Show" style="display: flex; gap: 6px; flex-wrap: wrap; flex: 1 1 0">
+<sc-for list="{{lchips}}" as="c" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{c.look}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: 24px 70px minmax(160px, 1.6fr) 60px 200px; gap: 16px; padding: 10px 20px; border-bottom: 1px solid #E3E8EF; font-size: 14px; color: #3B4557; font-weight: 600">
+<span></span><span>File</span><span>Paper</span><span>Pages</span><span>Results</span>
+</div>
+<sc-for list="{{launchRows}}" as="p" hint-placeholder-count="6">
+<div style="display: grid; grid-template-columns: 24px 70px minmax(160px, 1.6fr) 60px 200px; gap: 16px; padding: 0 20px; min-height: 48px; align-items: center; border-bottom: 1px solid #EEF1F5; opacity: {{p.op}}">
+<input type="checkbox" aria-label="Include {{p.file}}" checked="{{p.on}}" disabled="{{p.off}}" onChange="{{p.toggle}}" style="width: 18px; height: 18px; accent-color: #0B3D91">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{p.file}}</span>
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #3B4557">{{p.title}}</span>
+<span style="color: #4A5568">{{p.pages}}</span>
+<span style="display: flex; align-items: center; gap: 6px; {{p.look}}"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: {{p.dot}}"></span><span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{p.status}}</span>
+<sc-if value="{{p.canRetry}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{p.retry}}" style="margin-left: auto; height: 32px; padding: 0 8px; border: 0; background: transparent; color: #0B3D91; font: inherit; font-size: 14px; text-decoration: underline">Retry</button></sc-if></span>
+</div>
+</sc-for>
+<sc-if value="{{noLaunchRows}}" hint-placeholder-val="{{ false }}"><div style="padding: 28px 20px; color: #4A5568">No papers in this filter.</div></sc-if>
+</section>
+
+<aside aria-label="Launch" style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border: 1px solid #C6CEDB; border-radius: 6px; box-shadow: 0 1px 3px rgba(7,27,63,0.10); align-self: flex-start">
+<div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600; color: #071B3F">{{launchTitle}}</h2>
+<dl style="margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14px">
+<dt style="color: #4A5568">Schema</dt><dd style="margin: 0">{{run.schemaName}}</dd>
+<dt style="color: #4A5568">Prompt</dt><dd style="margin: 0">{{promptLabel}}</dd>
+<dt style="color: #4A5568">System prompt</dt><dd style="margin: 0">{{sysLabel}}</dd>
+<dt style="color: #4A5568">Model</dt><dd style="margin: 0">{{run.modelName}}</dd>
+<dt style="color: #4A5568">API key</dt><dd style="margin: 0">{{keyName}}</dd>
+<dt style="color: #4A5568">Papers</dt><dd style="margin: 0">{{nTargets}} selected</dd>
+<dt style="color: #4A5568">Estimate</dt><dd style="margin: 0">{{launchEstimate}}</dd>
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}"><dt style="color: #4A5568">Actual</dt><dd style="margin: 0">{{actualText}}</dd></sc-if>
+</dl>
+<sc-if value="{{overWarn}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 10px 12px; border-radius: 6px; background: #FFF3D6; color: #5C3D00; font-size: 13px">The estimate is over your warning limit of ${{warnLimit}}. You can still launch. Change the limit in <a href="Settings.dc.html">Settings</a>.</div>
+</sc-if>
+<sc-if value="{{modelBad}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="padding: 10px 12px; border-radius: 6px; background: #FDE7E4; color: #7A1B12; font-size: 13px">{{modelWarn}} Pick it in Setup.</div>
+</sc-if>
+<sc-if value="{{keyBad}}" hint-placeholder-val="{{ false }}">
+<div role="alert" style="display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 6px; background: #FDE7E4; color: #7A1B12; font-size: 13px">
+<span>{{keyWarn}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-if value="{{hasAlt}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{useAlt}}" style="height: 40px; padding: 0 14px; border: 1px solid #7A1B12; border-radius: 6px; background: #FFFFFF; color: #7A1B12; font: inherit; font-size: 14px; font-weight: 600">{{altLabel}}</button></sc-if>
+<a href="Settings.dc.html" style="display: inline-flex; align-items: center; min-height: 40px; color: #7A1B12">Raise the limit in Settings</a>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{hasProtected}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 10px 12px; border-radius: 6px; background: #FFF3D6; color: #5C3D00; font-size: 13px">{{nProtected}} papers already have a version in Review. They are never overwritten: a new extraction is saved in its own run, and in Review you choose which run each paper opens.</div>
+</sc-if>
+
+<sc-if value="{{isIdle}}" hint-placeholder-val="{{ true }}">
+<button type="button" onClick="{{doLaunch}}" disabled="{{noTargets}}" style="height: 48px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 15px; font-weight: 600; opacity: {{launchOp}}">{{launchBtn}}</button>
+</sc-if>
+
+<sc-if value="{{isActive}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between"><span>{{progressText}}</span><span style="font-family: 'IBM Plex Mono', monospace">{{progressPct}}</span></div>
+<div style="height: 8px; border-radius: 4px; background: #E3E8EF; overflow: hidden"><div style="height: 8px; background: #0B3D91; width: {{progressPct}}"></div></div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{pauseResume}}" style="height: 44px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">{{pauseLabel}}</button>
+<button type="button" onClick="{{cancelRun}}" style="height: 44px; padding: 0 16px; border: 1px solid #B42318; border-radius: 6px; background: #FFFFFF; color: #B42318; font: inherit; font-size: 14px; font-weight: 600">Cancel</button>
+</div>
+<span style="font-size: 13px; color: #4A5568">Pausing or cancelling keeps every paper already extracted.</span>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 10px 12px; border-radius: 6px; background: #DDF3E4; color: #0F5A2C">{{doneText}}</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<a href="Main.dc.html" onClick="{{openReview}}" style="display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Open in Review</a>
+<button type="button" onClick="{{again}}" style="height: 44px; padding: 0 16px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Back to papers</button>
+</div>
+</sc-if>
+</div>
+</aside>
+</div>
+</sc-if>
+
+</sc-if>
+
+</div>
+
+<sc-if value="{{dlgOpen}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{dlgBackdrop}}" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 12; background: rgba(7,27,63,0.45); display: flex; align-items: flex-start; justify-content: center; padding: 80px 24px 24px; box-sizing: border-box">
+
+<sc-if value="{{dRename}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dr-t" style="width: 480px; max-width: 100%; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="dr-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Rename run</h2>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="rnn" style="font-weight: 600">Run name</label>
+<input id="rnn" value="{{renameVal}}" onInput="{{onRename}}" style="height: 44px; box-sizing: border-box; border: 1px solid #C6CEDB; border-radius: 6px; padding: 0 12px; font: inherit; font-size: 14px; color: #101828">
+<span style="font-size: 13px; color: #4A5568; font-family: 'IBM Plex Mono', monospace; overflow-wrap: anywhere">{{renameHelp}}</span>
+</div>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Cancel</button>
+<button type="button" onClick="{{applyRename}}" disabled="{{renameOff}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600; opacity: {{renameOp}}">Rename</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{dDelete}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dd-t" style="width: 480px; max-width: 100%; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="dd-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">{{delTitle}}</h2>
+<span style="color: #3B4557; overflow-wrap: anywhere">{{delText}}</span>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">{{delCancel}}</button>
+<sc-if value="{{delOk}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{applyDelete}}" style="height: 44px; padding: 0 18px; border: 1px solid #B42318; border-radius: 6px; background: #B42318; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Delete run</button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{dPdf}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dp-t" style="width: 600px; max-width: 100%; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: flex-start; gap: 12px"><h2 id="dp-t" style="margin: 0; flex: 1 1 0; font-size: 20px; font-weight: 600; color: #071B3F">{{pdf.title}}</h2>
+<button type="button" onClick="{{closeDlg}}" aria-label="Close" style="width: 44px; height: 44px; margin: -6px -10px 0 0; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 20px">×</button></div>
+<div style="background: #E3E8EF; padding: 12px; border-radius: 6px; display: flex; justify-content: center; max-height: 70vh; overflow: auto">
+<img src="{{pdf.src}}" alt="{{pdf.alt}}" style="width: 100%; max-width: 560px; height: auto; background: #FFFFFF; box-shadow: 0 1px 4px rgba(7,27,63,0.25)">
+</div>
+<span style="font-size: 13px; color: #4A5568">{{pdf.field}}: <span style="font-family: 'IBM Plex Mono', monospace">{{pdf.value}}</span>. Quoted: “{{pdf.quote}}”.</span>
+</div>
+</sc-if>
+
+<sc-if value="{{dHist}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-labelledby="dh-t" style="width: 1000px; max-width: 100%; max-height: 860px; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 12px 12px 24px; border-bottom: 1px solid #E3E8EF">
+<div style="flex: 1 1 0; min-width: 0"><h2 id="dh-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Prompt history</h2><span style="font-size: 13px; color: #4A5568">Each saved version is kept (the 20 latest). Restoring one makes a new version.</span></div>
+<button type="button" onClick="{{closeDlg}}" aria-label="Close" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 20px">×</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; min-height: 0; overflow: auto">
+<div style="flex: 0 0 280px; max-width: 100%; border-right: 1px solid #E3E8EF; box-sizing: border-box">
+<sc-for list="{{hist.versions}}" as="v" hint-placeholder-count="3">
+<button type="button" onClick="{{v.pick}}" style="width: 100%; min-height: 56px; box-sizing: border-box; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 16px; border: 0; border-bottom: 1px solid #EEF1F5; background: {{v.rowBg}}; text-align: left; font: inherit; font-size: 14px; color: #101828">
+<span style="font-weight: 600">{{v.label}}<sc-if value="{{v.current}}" hint-placeholder-val="{{ false }}"><span style="margin-left: 8px; padding: 1px 8px; border-radius: 10px; background: #DDF3E4; color: #0F5A2C; font-size: 12px; font-weight: 600">Current</span></sc-if></span>
+<span style="font-size: 12px; color: #4A5568">{{v.by}} · {{v.when}}</span>
+<sc-if value="{{v.hasNote}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #4A5568">{{v.note}}</span></sc-if>
+</button>
+</sc-for>
+</div>
+<div style="flex: 1 1 460px; min-width: 0; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box">
+<sc-if value="{{hist.empty}}" hint-placeholder-val="{{ false }}"><span style="color: #4A5568">No version saved yet. Save the prompt to start its history.</span></sc-if>
+<sc-if value="{{hist.has}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap">
+<span style="flex: 1 1 200px; font-weight: 600; color: #071B3F">{{hist.title}}</span>
+<div role="group" aria-label="View" style="display: flex; gap: 6px">
+<button type="button" aria-pressed="{{hist.cmpPressed}}" onClick="{{hist.setCompare}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{hist.cmpLook}}">Compare with current</button>
+<button type="button" aria-pressed="{{hist.txtPressed}}" onClick="{{hist.setText}}" style="height: 36px; padding: 0 14px; border-radius: 18px; font: inherit; font-size: 14px; {{hist.txtLook}}">Text</button>
+</div>
+</div>
+<sc-if value="{{hist.compare}}" hint-placeholder-val="{{ true }}">
+<span style="font-size: 13px; color: #4A5568">{{hist.legend}}</span>
+<div style="border: 1px solid #D5DBE5; border-radius: 6px; overflow: auto; max-height: 440px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.5">
+<sc-for list="{{hist.rows}}" as="d" hint-placeholder-count="6"><div style="display: flex; gap: 8px; padding: 2px 12px; background: {{d.bg}}; color: {{d.color}}"><span style="flex: none; width: 14px">{{d.mark}}</span><span style="min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap">{{d.t}}</span></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{hist.asText}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #D5DBE5; border-radius: 6px; overflow: auto; max-height: 440px; padding: 10px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere">{{hist.text}}</div>
+</sc-if>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-if value="{{hist.canRestore}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{hist.restore}}" style="height: 44px; padding: 0 18px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Restore this version</button></sc-if>
+<button type="button" onClick="{{closeDlg}}" style="height: 44px; padding: 0 18px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Close</button>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{promptOpen}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{backdropClose}}" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 10; background: rgba(7,27,63,0.45); display: flex; align-items: flex-start; justify-content: center; padding: 48px 24px 24px; box-sizing: border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="pp-t" style="width: 1240px; max-width: 100%; background: #FFFFFF; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden">
+<div style="display: flex; align-items: center; gap: 8px 12px; padding: 14px 12px 12px 24px; border-bottom: 1px solid #E3E8EF; flex-wrap: wrap">
+<div style="flex: 1 1 0; min-width: 200px"><h2 id="pp-t" style="margin: 0; font-size: 20px; font-weight: 600; color: #071B3F">Prompt · {{promptLabel}}</h2><span style="font-size: 13px; color: #4A5568">{{promptNote}}</span></div>
+<button type="button" onClick="{{openHistory}}" disabled="{{noHistory}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px; opacity: {{historyOp}}">Version history</button>
+<button type="button" onClick="{{exportPrompt}}" style="height: 40px; padding: 0 14px; border: 1px solid #C6CEDB; border-radius: 6px; background: #FFFFFF; color: #101828; font: inherit; font-size: 14px">Export prompt</button>
+<sc-if value="{{canSavePrompt}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{savePrompt}}" style="height: 40px; padding: 0 16px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Save version</button></sc-if>
+<button type="button" onClick="{{closePrompt}}" aria-label="Close" style="width: 44px; height: 44px; border: 0; border-radius: 6px; background: transparent; color: #3B4557; font: inherit; font-size: 20px">×</button>
+</div>
+<div style="padding: 16px 24px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13px; color: #4A5568">
+<span>Written from</span>
+<span style="padding: 2px 10px; border-radius: 12px; background: #E6EEFB; color: #071B3F; font-weight: 500">System prompt {{sysLabel}}</span>
+<span>and</span>
+<span style="padding: 2px 10px; border-radius: 12px; background: #E6EEFB; color: #071B3F; font-weight: 500">{{genSchemaName}}</span>
+</div>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch">
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<label for="ins" style="font-weight: 600">Text <span style="font-weight: 400; color: #4A5568">· Markdown, what the model receives</span></label>
+<textarea id="ins" value="{{instr}}" onInput="{{onInstr}}" spellcheck="false" readonly="{{lock}}" style="box-sizing: border-box; width: 100%; height: 560px; max-height: 70vh; border: 1px solid #C6CEDB; border-radius: 6px; padding: 12px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #101828; resize: vertical; line-height: 1.55; background: #FFFFFF"></textarea>
+<span style="font-size: 13px; color: #4A5568">Headings with #, lists with -, <b style="font-weight: 600">**bold**</b> and <span style="font-family: 'IBM Plex Mono', monospace">`code`</span>.</span>
+</div>
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span style="font-weight: 600">Preview <span style="font-weight: 400; color: #4A5568">· how the Markdown reads</span></span>
+<div role="region" aria-label="Markdown preview" tabindex="0" style="box-sizing: border-box; width: 100%; height: 560px; max-height: 70vh; overflow: auto; border: 1px solid #D5DBE5; border-radius: 6px; padding: 12px 16px; background: #F7F9FC; display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{mdBlocks}}" as="b" hint-placeholder-count="6">
+<div style="{{b.style}}"><sc-if value="{{b.hasMarker}}" hint-placeholder-val="{{ false }}"><span style="flex: none; width: 20px; color: #4A5568">{{b.marker}}</span></sc-if><span style="min-width: 0; overflow-wrap: anywhere"><sc-for list="{{b.parts}}" as="s" hint-placeholder-count="2"><span style="{{s.look}}">{{s.t}}</span></sc-for></span></div>
+</sc-for>
+<sc-if value="{{mdEmpty}}" hint-placeholder-val="{{ false }}"><span style="color: #4A5568">Nothing to show yet.</span></sc-if>
+</div>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<span style="flex: 1 1 280px; font-size: 13px; color: #4A5568">{{popupHelp}}</span>
+<button type="button" onClick="{{closePrompt}}" style="height: 44px; padding: 0 20px; border: 1px solid #0B3D91; border-radius: 6px; background: #0B3D91; color: #FFFFFF; font: inherit; font-size: 14px; font-weight: 600">Done</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+<div onClick="{{closeMenu}}" style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 4"></div>
+</sc-if>
+
+</div>
