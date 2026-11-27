@@ -59,10 +59,10 @@ What the front end draws but the backend cannot serve yet. Each row closes when 
 | PEND-02 | PDFs of a set without results ("No results" papers) | Papers chips and table | The chip shows 0; "N of M" for workspace runs, else "N of —" |
 | PEND-03 | Run metadata for "Results from" | Review header | Pair name and folder |
 | PEND-04 | API keys, usage, models | — | Closed: Settings and Extraction use the service; spending is recorded (ADR-029) |
-| PEND-05 | System prompts and their versions | Normalize | Settings and Extraction use the service (ADR-019); the Normalize boards keep their sample prompts |
+| PEND-05 | System prompts and their versions | — | Closed: Settings, Extraction and Normalize use the service (ADR-019, ADR-034) |
 | PEND-06 | The assistant that proposes prompt changes | Extraction · Prompt | Not available: the prompt is written from a template and edited by hand (70-extraction-specification.md) |
 | PEND-07 | Test and launch of runs, progress, cost | — | Closed: the service (ADR-025 to ADR-029); Google and own-server models still pending |
-| PEND-08 | Normalization rules, validation, results | Normalize | Sample data |
+| PEND-08 | Normalization rules, validation, results | — | Closed: the service (90-normalize-specification.md); Copy rules and the assistant's chat still pending |
 | PEND-09 | Username and initials | Settings · Profile, top bar | Closed: the service (ADR-018) |
 | PEND-10 | Autosave off or every 30 s | Settings · Review and export, Review | Closed: the service (ADR-018) |
 | PEND-11 | CSV separator and encoding for the service's downloads | Papers and history downloads | Closed: the service applies them (OP-T03) |

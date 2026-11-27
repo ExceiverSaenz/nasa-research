@@ -42,7 +42,7 @@ SEED_TEXT = {
     'normalization': (
         'You apply a normalization rule, written by an expert, to values that an expert has already reviewed in tensile test papers.\n\n'
         'You are given the feature (name, type, target unit, allowed values), the expert’s rule for each case, the context '
-        'and the examples, and one reviewed value.\n\n'
+        'and the examples, and a list of reviewed values, each with an id. Answer once for every id.\n\n'
         'Your answer must:\n' + '\n'.join(f'- {r}' for r in _NORM_RULES)),
 }
 

@@ -126,4 +126,35 @@ export const api = {
   setPageUrl: (set, paper, page, width = 800) =>
     `${BASE}/extraction/sets/${encodeURIComponent(set)}/pdfs/${encodeURIComponent(paper)}/pages/${page}/image?w=${width}`,
   saveModels: async (body) => (await request('/models', { method: 'PUT', body })).data,
+
+  // Normalize (92-normalize-interface-contract.md): one extraction's rules, apply, validation and results.
+  normExtractions: async () => (await request('/normalize/extractions')).data.extractions,
+  normFeatures: async (sid) => (await request(`/normalize/${N(sid)}/features`)).data,
+  normRule: async (sid, fid) => (await request(`/normalize/${N(sid)}/rules/${N(fid)}`)).data,
+  normRuleVersions: async (sid, fid) => (await request(`/normalize/${N(sid)}/rules/${N(fid)}/versions`)).data.versions,
+  normRuleVersion: async (sid, fid, n) => (await request(`/normalize/${N(sid)}/rules/${N(fid)}/versions/${n}`)).data,
+  saveNormRule: async (sid, fid, body, current) =>
+    (await request(`/normalize/${N(sid)}/rules/${N(fid)}/versions`, { method: 'POST', body, headers: { 'If-Match': `"${current}"` } })).data,
+  restoreNormRule: async (sid, fid, n, current) =>
+    (await request(`/normalize/${N(sid)}/rules/${N(fid)}/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+  draftNormRule: async (sid, fid) => (await request(`/normalize/${N(sid)}/rules/${N(fid)}/draft`, { method: 'POST' })).data.text,
+  tryNormRule: async (sid, fid, body) => (await request(`/normalize/${N(sid)}/rules/${N(fid)}/try`, { method: 'POST', body })).data,
+  normEstimate: async (sid, model, keyId, features) => {
+    const q = new URLSearchParams({ model });
+    if (keyId) q.set('key_id', keyId);
+    if (features) q.set('features', features.join(','));
+    return (await request(`/normalize/${N(sid)}/estimate?${q}`)).data;
+  },
+  normApply: async (sid, body) => (await request(`/normalize/${N(sid)}/apply`, { method: 'POST', body })).data,
+  normApplyState: async (sid) => (await request(`/normalize/${N(sid)}/apply`)).data,
+  normPause: async (sid) => (await request(`/normalize/${N(sid)}/apply/pause`, { method: 'POST' })).data,
+  normResume: async (sid) => (await request(`/normalize/${N(sid)}/apply/resume`, { method: 'POST' })).data,
+  normCancel: async (sid) => (await request(`/normalize/${N(sid)}/apply/cancel`, { method: 'POST' })).data,
+  normRetry: async (sid, fid) => (await request(`/normalize/${N(sid)}/apply/features/${N(fid)}/retry`, { method: 'POST' })).data,
+  normValues: async (sid, fid) => (await request(`/normalize/${N(sid)}/features/${N(fid)}/values`)).data,
+  normValidate: async (sid, vid, body) => (await request(`/normalize/${N(sid)}/values/${N(vid)}`, { method: 'PATCH', body })).data,
+  normAcceptCase: async (sid, fid, kase) => (await request(`/normalize/${N(sid)}/features/${N(fid)}/accept-case`, { method: 'POST', body: { case: kase } })).data,
+  normResults: async (sid) => (await request(`/normalize/${N(sid)}/results`)).data,
+  normResultsCsvUrl: (sid) => `${BASE}/normalize/${N(sid)}/results.csv`,
 };
+const N = (x) => encodeURIComponent(x);

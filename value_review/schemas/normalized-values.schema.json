@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/normalized-values.schema.json",
+  "title": "The normalized values of one feature of one extraction (<data>/normalize/<source>/values/<field_id>.json, OP-N08; BR-N06 to BR-N08). Outdated is not stored: it is worked out on read (BR-N07).",
+  "type": "object",
+  "required": ["schema", "field_id", "values"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-normalized-values/1" },
+    "field_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "values": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/value" }
+    }
+  },
+  "$defs": {
+    "value": {
+      "type": "object",
+      "required": ["id", "paper", "observation_id", "version_n", "rule_version", "model", "system_prompt_version", "at", "reviewed", "reviewed_unit",
+                   "case", "fields", "unit", "display", "flag", "note", "status", "reason", "by", "validated_at"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "paper": { "type": "string" },
+        "observation_id": { "type": "string" },
+        "version_n": { "type": "integer", "minimum": 1, "description": "The paper's Review version the value was read from." },
+        "rule_version": { "type": "integer", "minimum": 1 },
+        "model": { "type": "string" },
+        "system_prompt_version": { "type": ["integer", "null"] },
+        "at": { "type": "string", "format": "date-time" },
+        "reviewed": { "type": "string" },
+        "reviewed_unit": { "type": "string" },
+        "record_ids": { "type": "array", "items": { "type": "string" } },
+        "record_labels": { "type": "array", "items": { "type": "string" } },
+        "case": { "type": "string" },
+        "fields": {
+          "type": "array",
+          "items": { "type": "object", "required": ["name", "value"], "additionalProperties": false,
+                     "properties": { "name": { "type": "string" }, "value": { "type": ["string", "null"] } } }
+        },
+        "unit": { "type": ["string", "null"] },
+        "display": { "type": "string" },
+        "flag": { "type": "boolean" },
+        "note": { "type": "string" },
+        "status": { "enum": ["to_validate", "accepted", "corrected", "rejected", "unsure"] },
+        "reason": { "type": "string", "maxLength": 300 },
+        "by": { "type": ["string", "null"] },
+        "validated_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    }
+  }
+}

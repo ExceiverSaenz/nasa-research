@@ -1071,3 +1071,91 @@ later. The warnings travel with the version (`values[].warnings`, `counts.mismat
 ### Verification
 
 `test_review_schema.py` (`Fit`, a correction `abc`); `fieldFit.test.js`; e2e `review-schema.spec.js`.
+
+## ADR-033 · Normalize works per extraction from the latest submitted Review versions; Outdated is worked out on read
+
+**Status** · Accepted
+**Date** · 2026-11-27
+**Reference** · BR-N01, BR-N02, BR-N07; [90-normalize-specification.md](90-normalize-specification.md); canvas rule notes Normalization 1, 2, 8
+
+### Context
+
+Normalize must start before every paper is reviewed, follow later reviews and say which normalized values a newer review or
+rule made stale. Review must stay unaware of Normalize, and its versions are never written (BR-01).
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Read the latest versions; store each value's version and rule numbers; compare on read | Review unchanged; one source of truth; deterministic | Every read compares numbers (cheap) |
+| Mark values Outdated when Review submits | Status is stored | Review would write into Normalize; a missed hook leaves stale values looking fresh |
+| Copy the reviewed values into Normalize | Normalize independent of Review files | Two copies that drift |
+
+### Decision and rationale
+
+Read and compare. A stored value keeps `version_n` and `rule_version`; it is Outdated when either differs from the paper's
+latest version or the feature's current rule. Criterion: no write into Review and no stale state.
+
+### Consequences
+
+- A resubmitted paper makes all its values Outdated (OQ-N02).
+- `test_normalize.py` `test_outdated_after_a_new_rule_or_a_new_review`.
+
+## ADR-034 · One model call per feature batch (at most 50 values) with a fixed answer schema
+
+**Status** · Accepted (option chosen by the user on 2026-11-27)
+**Date** · 2026-11-27
+**Reference** · BR-N06; canvas rule note Normalization 4
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| A batch of up to 50 values of one feature per request | About 50× fewer calls; progress per feature as in the canvas | One failure affects a batch; a value may be left out of the answer |
+| One request per value | Isolated failures | 612 values = 612 calls; slower and dearer estimates |
+
+### Decision and rationale
+
+Batches. The answer is `normalize-answer.schema.json` with fixed keys (`fields` is a list of `{name, value}`), so strict
+structured output works for any output fields the expert names. A value missing from the answer is stored "Not normalized",
+flagged and left as reviewed; an invented id is ignored. The retry unit is the batch.
+
+### Consequences
+
+- `models.complete` sends a text-only request through the same SDK calls and error mapping as Extraction's PDF call.
+- The normalization System prompt's seed (new installs) says "a list of reviewed values, each with an id"; an existing
+  install keeps its versions, and every request explains the batch itself.
+
+## ADR-035 · Normalize data lives in the tool's data folder, per extraction; the CSV is made on download
+
+**Status** · Accepted (option chosen by the user on 2026-11-27)
+**Date** · 2026-11-27
+**Reference** · BR-N01, BR-N09; [92-normalize-interface-contract.md](92-normalize-interface-contract.md)
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| `<data>/normalize/<source>/` (rules, values, apply state) | Like Review's annotations; works for folder pairs and workspace runs | Other tools read the CSV, not live files |
+| Also write `normalized.json/csv` into `results/<set>/<run>/` | Other tools find it in the workspace | Only for workspace runs; files to keep in sync with every validation |
+
+### Decision and rationale
+
+The data folder. The workspace keeps only papers and model results (Extraction rule 2).
+
+## ADR-036 · "Draft the rule" fills a template from the patterns found; the assistant's chat comes later
+
+**Status** · Accepted (option chosen by the user on 2026-11-27)
+**Date** · 2026-11-27
+**Reference** · BR-N05; canvas rule note Normalization 5; PEND-06
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| A template: one case per pattern found, with its real example and quick action | No cost, no key needed to start; deterministic | Less fitted to unusual features; the chat box is disabled |
+| A model drafts and discusses the rule | Fits any feature | Cost and a key before any rule exists; another prompt to design (PEND-06) |
+
+### Decision and rationale
+
+The template, shown as the assistant's proposal that the expert applies or ignores. Review this when PEND-06 is designed.

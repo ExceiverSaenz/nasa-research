@@ -249,7 +249,7 @@ paper, Schema editor, Extraction, Normalize) and at 834 × 1112 (papers and revi
 | AC-F07 Tablet | tablet "Papers and the review screens fit…"; hand check at 834 | Covered |
 | AC-F08 Schema | schemas.spec (17 tests); schema.js "the version history compares fields by id…" | Covered |
 | AC-F09 Extraction on sample data | boards "Extraction: list, a run, its four steps…" | Covered |
-| AC-F10 Normalize on sample data | boards "Normalize: an extraction through Rules, Validate and Results…" | Covered |
+| AC-F10 Normalize (now on the service, 90-normalize-specification.md) | boards "Normalize: a rule drafted, saved, applied, validated and downloaded" | Covered |
 | AC-F11 Profile | settings "profile: name, username and initials go to the service…" | Covered |
 | AC-F12 Review and export | settings "first workflow: the CSV separator and autosave are stored by the service…" | Covered |
 | AC-F13 Leaving with unsaved work | review "leaving with unsaved changes…"; schemas "leaving the editor…" | Covered |
@@ -353,3 +353,22 @@ Gaps: no call to a real provider in the tests (by hand with the user's key); PDF
 | `fit` | `test_review_schema.py` `Fit` and `fieldFit.test.js` (same cases on both sides) | Covered |
 
 Gaps: calculated fields are not computed (OQ-R01); the tablet layout's field notes are covered by the desktop e2e only.
+
+## Normalize on the service (90-normalize-specification.md)
+
+| Criterion | Test | Status |
+|---|---|---|
+| AC-N01 coverage | `test_normalize.py` `test_first_workflow`; e2e boards | Covered |
+| AC-N02 features in schema order, formats | `test_first_workflow`; `Pure.test_formats_and_patterns` | Covered |
+| AC-N03 draft from the patterns | `Pure.test_formats_and_patterns`; `test_first_workflow`; e2e boards | Covered |
+| AC-N04 rule versions, conflict, restore, keep | `test_rule_versions_conflict_and_restore` | Covered |
+| AC-N05 apply with the fake provider | `test_first_workflow`; e2e boards | Covered |
+| AC-N06 blocked model or key | `test_blocked_and_nothing_to_do` | Covered |
+| AC-N07 failed batch and retry | `test_a_failed_batch_and_retry` | Covered |
+| AC-N08 restart → paused → resume | `test_pause_and_restart_resume` | Covered (pause during a live batch: by hand) |
+| AC-N09 Outdated after a rule or a review | `test_outdated_after_a_new_rule_or_a_new_review` | Covered |
+| AC-N10 reject needs a reason | `test_first_workflow`; e2e boards | Covered |
+| AC-N11 results and CSV | `test_first_workflow`; `test_keep_as_is_exports_the_reviewed_value`; e2e boards | Covered |
+| AC-N12 try writes nothing | `test_try_writes_nothing` | Covered |
+| AC-N13 Review files untouched | `test_first_workflow` (digest before and after) | Covered |
+

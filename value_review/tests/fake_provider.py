@@ -9,6 +9,7 @@ tests can check how the key was sent. ``env()`` gives the variables that point t
 import base64
 import hashlib
 import json
+import re
 import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -38,12 +39,43 @@ def answer_for(pdf_sha):
             'completion': {'status': 'complete', 'notes': f'pdf {pdf_sha[:8]}'}}
 
 
+def normalize_for(values):
+    """The fake model's answer to a Normalize batch (ADR-034): "a ± b" is split, "a–b" becomes bounds, a value without
+    digits is flagged and left as it is, anything else is copied."""
+    out = []
+    for v in values:
+        text, unit = v['value'], v['unit'] or None
+        m = re.fullmatch(r'\s*([\d.]+)\s*±\s*([\d.]+)\s*', text)
+        r = re.fullmatch(r'\s*([\d.]+)\s*[–-]\s*([\d.]+)\s*', text)
+        if m:
+            case, fields, display = 'Value ± uncertainty', [{'name': 'Value', 'value': m[1]}, {'name': 'Uncertainty (±)', 'value': m[2]}], f'{m[1]} · ± {m[2]}'
+        elif r:
+            case, fields, display = 'Range', [{'name': 'Lower and upper bound', 'value': f'{r[1]} to {r[2]}'}], f'{r[1]} to {r[2]}'
+        elif not re.search(r'\d', text):
+            out.append({'id': v['id'], 'case': 'Anything else', 'fields': [], 'unit': unit, 'display': text, 'flag': True,
+                        'note': 'No number: left as reviewed.'})
+            continue
+        else:
+            case, fields, display = 'Plain value', [{'name': 'Value', 'value': text.strip()}], text.strip()
+        out.append({'id': v['id'], 'case': case, 'fields': fields, 'unit': unit, 'display': f'{display} {unit or ""}'.strip(),
+                    'flag': False, 'note': 'Normalized by the fake model.'})
+    return {'results': out}
+
+
+def _values_in(prompt):
+    try:
+        return json.loads(prompt.split('<values>', 1)[1].split('</values>', 1)[0])
+    except (IndexError, ValueError):
+        return []
+
+
 class FakeProvider:
     def __init__(self, delay=3.0):
         self.requests, self.delay, self.empty_server = [], delay, False
         # model calls: ``failures`` are answered first, one per call (an HTTP status, "json" for text that is not JSON,
         # or "slow" to wait ``delay`` first); then ``answer`` (a function of the PDF's sha256) gives the answer
         self.failures, self.answer, self.usage = [], answer_for, (1000, 200)
+        self.normalize = normalize_for   # a function of the batch's values [{id, value, unit}], for Normalize requests
         outer = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -92,7 +124,14 @@ class FakeProvider:
                 elif isinstance(failure, int):
                     status, payload = failure, {'type': 'error', 'error': {'type': 'api_error', 'message': 'try again'}}
                 else:
-                    answer = 'not json {' if failure == 'json' else json.dumps(outer.answer(hashlib.sha256(raw).hexdigest()))
+                    fmt = body.get('output_config') or body.get('text') or {}
+                    schema = (fmt.get('format') or {}).get('schema') or {}
+                    if failure == 'json':
+                        answer = 'not json {'
+                    elif not raw and 'results' in (schema.get('properties') or {}):
+                        answer = json.dumps(outer.normalize(_values_in(text)))
+                    else:
+                        answer = json.dumps(outer.answer(hashlib.sha256(raw).hexdigest()))
                     tokens_in, tokens_out = outer.usage
                     status = 200
                     if provider == 'anthropic':

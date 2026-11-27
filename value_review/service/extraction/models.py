@@ -18,6 +18,15 @@ from ..keys import CATALOG
 
 SCHEMA_FILE = Path(__file__).resolve().parents[2] / 'schemas' / 'extraction-answer.schema.json'
 ANSWER_SCHEMA = {k: v for k, v in json.loads(SCHEMA_FILE.read_text(encoding='utf-8')).items() if k not in ('$schema', '$id', 'title')}
+FORMATS = {'extraction-answer': ('extraction_answer', ANSWER_SCHEMA)}
+
+
+def answer_format(name):
+    """(format name, JSON Schema without its $schema/$id/title) of a schemas/<name>.schema.json, for structured output."""
+    if name not in FORMATS:
+        raw = json.loads((SCHEMA_FILE.parent / f'{name}.schema.json').read_text(encoding='utf-8'))
+        FORMATS[name] = (name.replace('-', '_'), {k: v for k, v in raw.items() if k not in ('$schema', '$id', 'title')})
+    return FORMATS[name]
 MAX_PDF_BYTES = 24_000_000   # the providers' request limits are about 32 MB, and base64 adds a third
 MAX_OUTPUT_TOKENS = 64000
 
@@ -49,17 +58,15 @@ def cost(provider, model, input_tokens, output_tokens):
     return None if p is None else round((input_tokens * p['input'] + output_tokens * p['output']) / 1_000_000, 6)
 
 
-def _anthropic(model, key, prompt, pdf, timeout):
+def _anthropic(model, key, content, schema, timeout, subject):
     import anthropic
     base = providers.base_url('anthropic')
     client = anthropic.Anthropic(api_key=key, base_url=base[:-3] if base.endswith('/v1') else base, max_retries=0, timeout=timeout)
     try:
         msg = client.messages.create(
             model=model, max_tokens=MAX_OUTPUT_TOKENS,
-            messages=[{'role': 'user', 'content': [
-                {'type': 'document', 'source': {'type': 'base64', 'media_type': 'application/pdf', 'data': pdf}},
-                {'type': 'text', 'text': prompt}]}],
-            extra_body={'output_config': {'format': {'type': 'json_schema', 'schema': ANSWER_SCHEMA}}})
+            messages=[{'role': 'user', 'content': content}],
+            extra_body={'output_config': {'format': {'type': 'json_schema', 'schema': schema}}})
     except anthropic.AuthenticationError:
         raise ModelError('key_rejected', 'The provider did not accept this key.', False) from None
     except anthropic.PermissionDeniedError:
@@ -71,31 +78,29 @@ def _anthropic(model, key, prompt, pdf, timeout):
     except anthropic.BadRequestError as error:
         raise ModelError('rejected', f'The provider refused the request: {_detail(error)}', False) from None
     except anthropic.APITimeoutError:
-        raise ModelError('timeout', 'The paper took longer than the time limit.', True) from None
+        raise ModelError('timeout', f'The {subject} took longer than the time limit.', True) from None
     except anthropic.APIConnectionError:
         raise ModelError('unreachable', 'Could not reach Anthropic.', True) from None
     except anthropic.APIStatusError as error:
         raise ModelError('provider_error', f'Anthropic answered with an error ({error.status_code}).', True) from None
     if msg.stop_reason == 'max_tokens':
-        raise ModelError('output_cut', 'The answer was cut off: the paper has more values than one answer can hold.', False)
+        raise ModelError('output_cut', f'The answer was cut off: the {subject} has more values than one answer can hold.', False)
     if msg.stop_reason == 'refusal':
-        raise ModelError('refused', 'The model declined to answer for this paper.', False)
+        raise ModelError('refused', f'The model declined to answer for this {subject}.', False)
     text = ''.join(getattr(b, 'text', '') for b in msg.content if getattr(b, 'type', '') == 'text')
     u = msg.usage
     tokens_in = (u.input_tokens or 0) + (getattr(u, 'cache_creation_input_tokens', 0) or 0) + (getattr(u, 'cache_read_input_tokens', 0) or 0)
     return text, tokens_in, u.output_tokens or 0
 
 
-def _openai(model, key, prompt, pdf, filename, timeout):
+def _openai(model, key, content, schema, name, timeout, subject):
     import openai
     client = openai.OpenAI(api_key=key, base_url=providers.base_url('openai'), max_retries=0, timeout=timeout)
     try:
         res = client.responses.create(
             model=model, max_output_tokens=MAX_OUTPUT_TOKENS,
-            input=[{'role': 'user', 'content': [
-                {'type': 'input_file', 'filename': filename, 'file_data': f'data:application/pdf;base64,{pdf}'},
-                {'type': 'input_text', 'text': prompt}]}],
-            text={'format': {'type': 'json_schema', 'name': 'extraction_answer', 'schema': ANSWER_SCHEMA, 'strict': True}})
+            input=[{'role': 'user', 'content': content}],
+            text={'format': {'type': 'json_schema', 'name': name, 'schema': schema, 'strict': True}})
     except openai.AuthenticationError:
         raise ModelError('key_rejected', 'The provider did not accept this key.', False) from None
     except openai.PermissionDeniedError:
@@ -107,13 +112,13 @@ def _openai(model, key, prompt, pdf, filename, timeout):
     except openai.BadRequestError as error:
         raise ModelError('rejected', f'The provider refused the request: {_detail(error)}', False) from None
     except openai.APITimeoutError:
-        raise ModelError('timeout', 'The paper took longer than the time limit.', True) from None
+        raise ModelError('timeout', f'The {subject} took longer than the time limit.', True) from None
     except openai.APIConnectionError:
         raise ModelError('unreachable', 'Could not reach OpenAI.', True) from None
     except openai.APIStatusError as error:
         raise ModelError('provider_error', f'OpenAI answered with an error ({error.status_code}).', True) from None
     if getattr(res, 'status', 'completed') == 'incomplete':
-        raise ModelError('output_cut', 'The answer was cut off: the paper has more values than one answer can hold.', False)
+        raise ModelError('output_cut', f'The answer was cut off: the {subject} has more values than one answer can hold.', False)
     u = res.usage
     return res.output_text or '', (u.input_tokens if u else 0) or 0, (u.output_tokens if u else 0) or 0
 
@@ -136,17 +141,35 @@ def extract(provider, model, key, prompt, pdf_path, timeout):
     if len(raw) > MAX_PDF_BYTES:
         raise ModelError('pdf_too_large', 'This PDF is too large to send in one request.', False)
     pdf = base64.standard_b64encode(raw).decode('ascii')
+    parts = {'anthropic': [{'type': 'document', 'source': {'type': 'base64', 'media_type': 'application/pdf', 'data': pdf}},
+                           {'type': 'text', 'text': prompt}],
+             'openai': [{'type': 'input_file', 'filename': Path(pdf_path).name, 'file_data': f'data:application/pdf;base64,{pdf}'},
+                        {'type': 'input_text', 'text': prompt}]}
+    return _call(provider, model, key, parts[provider], 'extraction-answer', timeout, 'paper')
+
+
+def complete(provider, model, key, prompt, answer_schema, timeout, subject='batch'):
+    """The model's structured answer to a text-only prompt (Normalize, ADR-034), checked against
+    schemas/<answer_schema>.schema.json. Raises ModelError."""
+    if provider not in ('anthropic', 'openai'):
+        raise ModelError('provider_pending', f'Calls to {providers.label(provider)} models come in a later version.', False)
+    part = {'type': 'text' if provider == 'anthropic' else 'input_text', 'text': prompt}
+    return _call(provider, model, key, [part], answer_schema, timeout, subject)
+
+
+def _call(provider, model, key, content, answer_schema, timeout, subject):
+    name, schema = answer_format(answer_schema)
     started = time.monotonic()
     if provider == 'anthropic':
-        text, tokens_in, tokens_out = _anthropic(model, key, prompt, pdf, timeout)
+        text, tokens_in, tokens_out = _anthropic(model, key, content, schema, timeout, subject)
     else:
-        text, tokens_in, tokens_out = _openai(model, key, prompt, pdf, Path(pdf_path).name, timeout)
+        text, tokens_in, tokens_out = _openai(model, key, content, schema, name, timeout, subject)
     seconds = round(time.monotonic() - started, 3)
     try:
         data = json.loads(text)
     except ValueError:
         raise ModelError('not_json', 'The answer was not valid JSON.', True) from None
-    errs = schemas.errors('extraction-answer', data)
+    errs = schemas.errors(answer_schema, data)
     if errs:
         raise ModelError('bad_answer', f'The answer does not have the expected shape ({errs[0][0] or "/"}).', True)
     return Answer(data, tokens_in, tokens_out, cost(provider, model, tokens_in, tokens_out), seconds)

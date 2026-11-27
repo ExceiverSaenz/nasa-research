@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://value-review.invalid/schemas/normalize-rule.schema.json",
+  "title": "One saved version of a feature's normalization rule (<data>/normalize/<source>/rules/<field_id>/v<n>.json, OP-N03; BR-N04). Written once; the latest keep_rule_versions are kept.",
+  "type": "object",
+  "required": ["schema", "field_id", "n", "saved_at", "saved_by", "note", "decision", "text", "context", "output_fields", "follow_examples", "examples", "decimals"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "value-review-normalize-rule/1" },
+    "field_id": { "type": "string", "minLength": 1, "maxLength": 64 },
+    "n": { "type": "integer", "minimum": 1 },
+    "saved_at": { "type": "string", "format": "date-time" },
+    "saved_by": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "note": { "type": "string", "maxLength": 200 },
+    "restored_from": { "type": "integer", "minimum": 1 },
+    "decision": { "enum": ["norm", "keep"], "description": "Normalize, or Keep as is (exported as reviewed)." },
+    "text": { "type": "string", "maxLength": 50000, "description": "The rule in the expert's own words, Markdown. Required to apply a Normalize rule." },
+    "context": { "type": "string", "maxLength": 5000 },
+    "output_fields": {
+      "type": "array", "maxItems": 12,
+      "items": {
+        "type": "object", "required": ["label", "on"], "additionalProperties": false,
+        "properties": { "label": { "type": "string", "minLength": 1, "maxLength": 80 }, "on": { "type": "boolean" } }
+      }
+    },
+    "follow_examples": { "type": "boolean" },
+    "examples": {
+      "type": "array", "maxItems": 30,
+      "items": {
+        "type": "object", "required": ["raw", "out"], "additionalProperties": false,
+        "properties": { "raw": { "type": "string", "maxLength": 300 }, "out": { "type": "string", "maxLength": 300 } }
+      }
+    },
+    "decimals": { "enum": ["paper", "1", "0"], "description": "As in the paper, or rounded to 1 or 0 decimals." }
+  }
+}
