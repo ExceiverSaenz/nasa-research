@@ -80,6 +80,7 @@ def main(argv=None):
     # next to the data so a browser test can type the own-server URL.
     fake = FakeProvider()
     os.environ.update(fake.env())
+    os.environ['VALUE_REVIEW_WARM_UP'] = '0'   # a test server starts in seconds; the SDK loads on the first model call
     (Path(args.root) / 'fake-provider.txt').write_text(fake.url, encoding='utf-8')
     extra = ['--workspace', str(build_workspace(args.root, data))] if args.with_workspace else []
     return launch(['--no-browser', '--data', str(data), '--port', str(args.port), *extra])

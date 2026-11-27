@@ -100,6 +100,16 @@ def _resolved(path):
         return str(path).casefold()
 
 
+def _manifest(folder):
+    """What a run made by Extraction recorded about itself (run.json, ADR-028): schema, model, finish date; or None."""
+    try:
+        data = json.loads((folder / 'run.json').read_text(encoding='utf-8'))
+        return {'schema': f'{data["schema_name"] or data["schema_ref"]["id"]} · v{data["schema_ref"]["version"]}',
+                'model': data['model'].split(':', 1)[-1], 'finished_at': data.get('finished_at'), 'run_id': data['run_id']}
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return None
+
+
 def scan(config, folder_pairs):
     """What the workspace holds: ``{found, problems, sets, missing}``. Nothing is written."""
     root = config.workspace
@@ -132,6 +142,7 @@ def scan(config, folder_pairs):
                 seen.add(sid)
             run_id = pair or sid
             runs.append({'name': folder.name, 'source_id': None if problem else run_id, 'pair': bool(pair), 'results': len(results),
+                         'meta': _manifest(folder),
                          'loaded': 0 if problem else _originals(config.data, run_id),
                          'pdfs_without_results': [] if problem else sorted(pdfs - set(results), key=_order),
                          'results_without_pdf': [] if problem else [p for p in results if p not in pdfs],
@@ -169,6 +180,18 @@ def load(config, state):
                     run['failed'].append({'paper': row['paper'], 'error': row['error']})
             run['loaded'] = _originals(config.data, sid)
     return totals
+
+
+def load_papers(config, set_name, run_name, papers):
+    """Load ``papers`` of one run into its source, as ``load`` does, without scanning the workspace (Extraction calls
+    this after each paper it writes; the caller holds the ingest lock). Returns (source id, ingest rows)."""
+    sid = source_id(set_name, run_name)
+    if _record(config.data, sid) is None:
+        atomic_write_bytes(pairs.source_dir(config.data, sid) / RECORD,
+                           (json.dumps({'set': set_name, 'run': run_name}, ensure_ascii=False) + '\n').encode('utf-8'))
+    source = entry(config.workspace, sid, set_name, run_name)
+    rows = ingest_run(Path(source['run_dir']), Path(source['pdf_dir']), pairs.source_dir(config.data, sid) / 'originals', papers)
+    return sid, rows
 
 
 def install_workspace(app, config, settings_now, ingest_lock):

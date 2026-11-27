@@ -27,7 +27,8 @@ holds without any setup, shows it in Settings, and opens each run in Review, bes
 - **BR-W04** · A folder pair on the same two folders as a run keeps its own id and reviews; the run is not listed twice.
 - **BR-W05** · Loading only adds originals; an existing original is never changed (as OP-12). Only papers with both a
   result and a PDF are loaded.
-- **BR-W06** · The tool only reads inside the workspace; with Docker it is mounted read only.
+- **BR-W06** · The tool reads the workspace and writes only the results of runs made in Extraction, under
+  `results/<set>/<run>/` (ADR-028); `papers/` is never written.
 - **BR-W07** · The default folder pair is not shown when its folders are missing, it has no data, and the workspace has
   runs.
 

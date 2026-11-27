@@ -10,7 +10,8 @@ FOLDER = Path(__file__).resolve().parent
 NAMES = ('state', 'draft', 'version', 'export', 'original',
          'schema-content', 'schema-version', 'schema-draft', 'schema-meta',   # these four: 22-schema-interface-contract.md
          'settings', 'system-prompt-version',   # these two: 42-settings-interface-contract.md
-         'secrets')   # 52-models-keys-interface-contract.md
+         'secrets',   # 52-models-keys-interface-contract.md
+         'run', 'prompt-version', 'extraction-answer', 'run-manifest')   # 72-extraction-interface-contract.md
 
 
 @lru_cache(maxsize=None)

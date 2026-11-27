@@ -6,7 +6,7 @@ import { extractionRow, paperRow, sourceList } from '../lib/reviewView.js';
 
 const look = () => api.workspace().catch(() => null);   // null: the folder pairs still list
 const row = (s, papers, problem = '') => extractionRow({ id: s.id, name: s.name, pdf_dir: s.path }, papers,
-  { set: s.set, pdfs: s.pdfs, problem: problem || (s.missing ? 'Folders not found' : '') });
+  { set: s.set, pdfs: s.pdfs, meta: s.meta || null, problem: problem || (s.missing ? 'Folders not found' : '') });
 
 export const reviewData = {
   // Opening Review loads what is new in the workspace first (AC-W04); ``onLoading`` is called when that starts.

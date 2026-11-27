@@ -96,5 +96,34 @@ export const api = {
   // The workspace folder (62-workspace-interface-contract.md): GET looks, scan also loads what is new.
   workspace: async () => (await request('/workspace')).data,
   scanWorkspace: async () => (await request('/workspace/scan', { method: 'POST' })).data,
+
+  // Extraction (72-extraction-interface-contract.md): runs, their prompt, tests and launches.
+  extractionSets: async () => (await request('/extraction/sets')).data,
+  runs: async () => (await request('/extraction/runs')).data,
+  run: async (id) => (await request(`/extraction/runs/${id}`)).data,
+  createRun: async (body) => (await request('/extraction/runs', { method: 'POST', body })).data,
+  editRun: async (id, body) => (await request(`/extraction/runs/${id}`, { method: 'PATCH', body })).data,
+  copyRun: async (id) => (await request(`/extraction/runs/${id}/copy`, { method: 'POST' })).data,
+  deleteRun: async (id) => { await request(`/extraction/runs/${id}`, { method: 'DELETE' }); },
+  promptTemplate: async (id) => (await request(`/extraction/runs/${id}/prompt/template`, { method: 'POST' })).data,
+  runPrompt: async (id) => (await request(`/extraction/runs/${id}/prompt`)).data,
+  runPromptVersions: async (id) => (await request(`/extraction/runs/${id}/prompt/versions`)).data,
+  runPromptVersion: async (id, n) => (await request(`/extraction/runs/${id}/prompt/versions/${n}`)).data,
+  saveRunPrompt: async (id, current, body) =>
+    (await request(`/extraction/runs/${id}/prompt/versions`, { method: 'POST', body, headers: { 'If-Match': `"${current}"` } })).data,
+  restoreRunPrompt: async (id, n, current) =>
+    (await request(`/extraction/runs/${id}/prompt/versions/${n}/restore`, { method: 'POST', headers: { 'If-Match': `"${current}"` } })).data,
+  runPromptUrl: (id) => `${BASE}/extraction/runs/${id}/prompt.md`,
+  runPapers: async (id) => (await request(`/extraction/runs/${id}/papers`)).data.papers,
+  runEstimate: async (id, papers) => (await request(`/extraction/runs/${id}/estimate${papers ? `?papers=${papers.map(encodeURIComponent).join(',')}` : ''}`)).data,
+  startTest: async (id, papers) => (await request(`/extraction/runs/${id}/tests`, { method: 'POST', body: { papers } })).data,
+  test: async (tid) => (await request(`/extraction/tests/${tid}`)).data,
+  launchRun: async (id, papers) => (await request(`/extraction/runs/${id}/launch`, { method: 'POST', body: { papers } })).data,
+  pauseRun: async (id) => (await request(`/extraction/runs/${id}/pause`, { method: 'POST' })).data,
+  resumeRun: async (id) => (await request(`/extraction/runs/${id}/resume`, { method: 'POST' })).data,
+  cancelRun: async (id) => (await request(`/extraction/runs/${id}/cancel`, { method: 'POST' })).data,
+  retryPaper: async (id, paper) => (await request(`/extraction/runs/${id}/papers/${encodeURIComponent(paper)}/retry`, { method: 'POST' })).data,
+  setPageUrl: (set, paper, page, width = 800) =>
+    `${BASE}/extraction/sets/${encodeURIComponent(set)}/pdfs/${encodeURIComponent(paper)}/pages/${page}/image?w=${width}`,
   saveModels: async (body) => (await request('/models', { method: 'PUT', body })).data,
 };

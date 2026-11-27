@@ -317,3 +317,24 @@ permissions are those of the user profile folder.
 
 Gaps: a load of many large papers is synchronous and shows only "Loading new papers…"; the "Another load is running"
 answer is covered only by the shared lock, not by a concurrent test.
+
+## Extraction (added 2026-11-26)
+
+[70-extraction-specification.md](70-extraction-specification.md). Every test runs against `tests/fake_provider.py`;
+no real key or provider is used.
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-X01, AC-X02 Setup | `test_extraction_runs.py` (draft, default key, folders, every `blocked` code); e2e "first workflow…", "Setup says what blocks…" | Covered |
+| AC-X03, AC-X04 Prompt | `test_extraction_prompt.py` (template order, versions, conflict, restore, 20 kept, export, locked) | Covered |
+| AC-X05, AC-X06 Test | `test_extraction_trial.py` (values with page, nothing saved, cost counted, limits, failures); e2e (page image) | Covered |
+| AC-X07 Launch | `test_extraction_launch.py` first workflow (files, manifest, Review); `test_extraction_results.py` (ingest); e2e "Open in Review" | Covered |
+| AC-X08 to AC-X10 | `test_extraction_launch.py` (pause, resume, cancel; failure and retry; restart) | Covered |
+| AC-X11, AC-X14 | `test_extraction_runs.py` (locked), `test_extraction_launch.py` (delete refused with a Review version, else folder gone) | Covered |
+| AC-X12 | `test_extraction_launch.py` (reviewed papers never queued) | Covered |
+| AC-X13, AC-X16 | `test_extraction_launch.py` (actual cost, spending, estimate, unknown price) | Covered |
+| AC-X15 | `test_extraction_results.py` (exact, other page, not found) | Covered |
+| Model calls | `test_extraction_models.py` (both providers, headers, schema, every failure and whether it is retried) | Covered on the fake |
+
+Gaps: no call to a real provider in the tests (by hand with the user's key); PDFs over the providers' page limits
+(OQ-X02); the screen's polling is covered by the e2e first workflow only.
