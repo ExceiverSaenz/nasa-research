@@ -27,3 +27,19 @@ test('Normalize: an extraction through Rules, Validate and Results, with the CSV
   await expect(page.getByRole('heading', { level: 1, name: 'Tensile · first pass' })).toBeVisible();   // the same extraction
   expect(sent).toEqual([]);
 });
+
+test('Normalize Rules: the selected feature lists every format found in its reviewed values', async ({ page }) => {
+  await page.goto('/#/normalize');
+  await page.getByText('Tensile · first pass').first().click();
+  const list = page.getByRole('list', { name: 'Formats found in Yield strength' });
+  await expect(list.getByRole('listitem')).toHaveCount(5);
+  await expect(list.getByRole('listitem').first()).toContainText('MPa');
+  await expect(list).toContainText('103 ksi');
+
+  await page.getByRole('button', { name: /^Material\s+Text/ }).click();
+  const material = page.getByRole('list', { name: 'Formats found in Material' });
+  await expect(material.getByRole('listitem')).toHaveCount(6);
+  await page.getByRole('button', { name: 'Show all 11 formats' }).click();
+  await expect(material.getByRole('listitem')).toHaveCount(11);
+  await expect(material).toContainText('9Cr-1Mo');
+});

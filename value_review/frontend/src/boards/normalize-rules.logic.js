@@ -21,7 +21,7 @@ const TYPE = { number: 'Number + unit', comp: 'Composition', cat: 'Category', te
 const GROUPS = [
   { name: 'Material information', note: '', rows: [
     ['material', 'Material', 'text', 26, 'FeCrAl-alloy, Zircaloy-4, 316L…', 'keep', '', 'kept', ''],
-    ['material_group', 'Material group', 'cat', 26, '45 different materials', 'norm', '9 values', 'draft', '']
+    ['material_group', 'Material group', 'cat', 26, '11 different materials', 'norm', '9 values', 'draft', '']
   ] },
   { name: 'Material composition', note: '26 elements · one rule for all', collapsible: true, rows: [
     ['cr', 'Cr', 'comp', 18, 'wt% 15 · at% 2 · “<0.01” 1', 'norm', 'wt.%', 'draft', ''],
@@ -34,7 +34,7 @@ const GROUPS = [
   { name: 'Manufacturing and treatment', note: '', rows: [
     ['manufacturing', 'Manufacturing', 'text', 14, 'free text', 'keep', '', 'kept', ''],
     ['treatment', 'Treatment', 'text', 17, 'free text', 'keep', '', 'kept', ''],
-    ['treatment_three_categories', 'Treatment category', 'cat', 17, '18 different texts', 'norm', '3 values', 'ready', ''],
+    ['treatment_three_categories', 'Treatment category', 'cat', 17, '7 different texts', 'norm', '3 values', 'ready', ''],
     ['post_treatment_temperature', 'Post-treatment temperature', 'number', 9, '°C 7 · K 2', 'norm', '°C', 'draft', ''],
     ['post_treatment_time', 'Post-treatment time', 'number', 9, 'h 6 · min 3', 'norm', 'h', 'draft', ''],
     ['cooling', 'Cooling', 'text', 8, 'air, water quench, furnace…', 'none', '', 'none', ''],
@@ -164,6 +164,42 @@ const DETAIL = {
   aspect_ratio_t_w: { formula: 'Thickness ÷ Width', inputs: ['thickness', 'width'] }
 };
 
+// Every format found in the reviewed values of a feature, for the list in the editor. Features not listed here are read
+// from their summary in the table ("MPa 52 · ksi 6"); EXAMPLE adds a real value to a format when one is known.
+const FORMATS = {
+  material: [['FeCrAl-alloy', 4], ['Zircaloy-4', 3], ['316L', 3], ['SS316-A', 2], ['JPCA', 2], ['JFMS', 2], ['SA508-3', 2], ['Zr-2.5 Nb', 2], ['Sanicro 25', 2], ['Alloy 690', 2], ['9Cr-1Mo', 2]],
+  material_group: [['FeCrAl', 4], ['Zircaloy-4', 3], ['SS316', 3], ['SS316-A', 2], ['JPCA', 2], ['JFMS', 2], ['SA508-3', 2], ['Zr-2.5 Nb', 2], ['Sanicro 25', 2], ['Alloy 690', 2], ['9Cr-1Mo', 2]],
+  treatment_three_categories: [['Solution Annealed', 6], ['Stress Relieved', 3], ['heat treated-annealed', 2], ['Tempering', 2], ['cold work', 2], ['Thermo-mechanical treatment (TMT)', 1], ['heat treated', 1]],
+  cooling: [['air', 3], ['water quench', 2], ['furnace', 2], ['oil quench', 1]],
+  specimen_size_type: [['SS-J', 9], ['SS-3', 7], ['ASTM E8 subsize', 5], ['SS-J2', 3], ['flat dog-bone', 2], ['round bar', 2]]
+};
+const EXAMPLE = {
+  yield_strength: { MPa: '710 ± 25 MPa', ksi: '103 ksi', GPa: '0.71 GPa', ranges: '600–650 MPa', text: 'about 0.7 GPa' },
+  ultimate_tensile_strength: { MPa: '812 MPa', ksi: '118 ksi' },
+  total_elongation: { '%': '21.5 %', text: 'not measured' },
+  test_temperature: { '°C': '300 °C', K: '573 K', '“room temperature”': 'room temperature' },
+  strain_rate: { 's⁻¹': '1 × 10⁻³ s⁻¹', 'mm/min': '0.5 mm/min', '“close to 10⁻³”': 'close to 10⁻³' },
+  cr: { 'wt%': '13.1 wt%', 'at%': '14.2 at%', '“<0.01”': '<0.01' },
+  fe: { 'wt%': '0.05 wt%', '“bal.”': 'bal.' },
+  c: { 'wt%': '0.02 wt%', ppm: '120 ppm' },
+  nb: { 'wt%': '0.3 wt%', '“<0.01”': '<0.01' },
+  thickness: { mm: '0.5 mm', 'µm': '500 µm' },
+  fillet_radius: { mm: '1.4 mm', '“1.40R”': '1.40R' },
+  post_treatment_temperature: { '°C': '1050 °C', K: '1323 K' },
+  post_treatment_time: { h: '1 h', min: '30 min' },
+  grain_size: { 'µm': '25 µm', 'ASTM number': 'ASTM 7' },
+  irradiation_dose: { dpa: '2.5 dpa', 'n/m²': '3 × 10²⁵ n/m²' },
+  irradiation_time: { h: '500 h', days: '21 days' }
+};
+const formatsOf = (r) => {
+  const list = FORMATS[r[0]] || (r[4] || '').split(' · ').map((part) => {
+    const m = part.match(/^(.*\S)\s+(\d+)$/);
+    return m ? [m[1], Number(m[2])] : [part.replace(/…$/, ''), null];
+  });
+  const fixed = list.length === 1 && list[0][1] === null ? [[list[0][0].charAt(0).toUpperCase() + list[0][0].slice(1), r[3]]] : list;
+  return fixed.slice().sort((a, b) => (b[1] || 0) - (a[1] || 0));
+};
+
 const DECISIONS = [['norm', 'Normalize'], ['keep', 'Keep as is']];   // Calculated is defined in Schema, not chosen here
 const DEC_LABEL = { norm: 'Normalize', keep: 'Keep as is', calc: 'Calculated', none: '—' };
 
@@ -255,7 +291,7 @@ export default class Component extends DCLogic {
       view: hr ? 'run' : 'list', runId: hr || 'r1', lq: '', toast: '', dlg: null, hv: null, hmode: 'compare',
       rule: {}, acts: {}, fieldsOv: {}, fieldNew: '', followEx: {}, rmode: 'edit', chats: {}, asstMsg: '', cust: { open: false, name: '', act: '' },
       exOpen: false, exSel: null, exOut: '', exAdded: {}, ran: {}, rver: RVER0, ln: { phase: 'setup', model: 'sonnet', key: 'k1', ids: [], retried: {} },
-      sel: 'yield_strength', q: '', filter: 'all', compOpen: false, tryOn: false, decision: {}, choice: {}, ctx: {}
+      sel: 'yield_strength', fmtAll: false, q: '', filter: 'all', compOpen: false, tryOn: false, decision: {}, choice: {}, ctx: {}
     };
   }
 
@@ -327,7 +363,7 @@ export default class Component extends DCLogic {
         status: s[0] + (note ? ' · ' + note : ''), dot: s[1],
         selStr: String(st.sel === r[0]), weight: st.sel === r[0] ? 600 : 400,
         rowLook: st.sel === r[0] ? 'background:#E6EEFB' : '',
-        pick: () => this.setState({ sel: r[0], tryOn: false, exOpen: false, exSel: null, asstMsg: '', cust: { open: false, name: '', act: '' } })
+        pick: () => this.setState({ sel: r[0], fmtAll: false, tryOn: false, exOpen: false, exSel: null, asstMsg: '', cust: { open: false, name: '', act: '' } })
       };
     };
 
@@ -376,6 +412,19 @@ export default class Component extends DCLogic {
       trial: d.trial || [{ raw: '(no examples yet)', out: '—' }],
       formula: d.formula || '', keepText: d.keepText || 'This feature is exported exactly as reviewed. There is nothing for the model to do and nothing to validate.',
       inputs: (d.inputs || []).map((id) => { const x = byId[id].r; const xs = ST[x[7]]; return { label: x[1], status: xs[0], dot: xs[1] }; })
+    };
+    // ---- every format found in the reviewed values of the selected feature ----
+    const fmtList = formatsOf(r), fmtShown = 6, ex = EXAMPLE[r[0]] || {};
+    const fmtTotal = fmtList.reduce((acc, [, n]) => acc + (n || 0), 0) || r[3];
+    const fmts = (st.fmtAll ? fmtList : fmtList.slice(0, fmtShown)).map(([name, n]) => ({
+      name, count: n === null ? '' : String(n), share: n ? Math.max(2, Math.round((100 * n) / fmtTotal)) + '%' : '0%',
+      pct: n ? Math.round((100 * n) / fmtTotal) + '%' : '', example: ex[name] || '', hasExample: !!ex[name]
+    }));
+    const fmtVals = {
+      fmts, fmtCount: fmtList.length + (fmtList.length === 1 ? ' format' : ' formats'),
+      fmtMore: fmtList.length > fmtShown, fmtOpenStr: String(!!st.fmtAll),
+      fmtLabel: st.fmtAll ? 'Show fewer' : 'Show all ' + fmtList.length + ' formats',
+      fmtToggle: () => this.setState({ fmtAll: !st.fmtAll })
     };
     const isNorm = dec === 'norm';
     const isArch = r[7] === 'archived';
@@ -600,6 +649,6 @@ export default class Component extends DCLogic {
       onContext: (e) => this.setState({ ctx: Object.assign({}, st.ctx, { [r[0]]: e.target.value }) }),
       saveLabel: isNorm ? 'Save rule' : 'Save decision'
     };
-    return Object.assign(out, extra, flexVals);
+    return Object.assign(out, extra, flexVals, fmtVals);
   }
 }
