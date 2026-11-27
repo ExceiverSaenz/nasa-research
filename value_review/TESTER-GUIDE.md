@@ -77,7 +77,11 @@ Work on at least two papers, one of them a large one, and try each of these:
 7. **Save and come back** · **Save draft** (Ctrl+S), close the tab, open the paper again and choose **Continue draft**.
 8. **Finish** · **Finish paper**, read the summary, **Submit paper**; then **Download CSV** and look at it.
 9. **Versions** · on Papers, the **⋯** menu of a paper: **Version history**, **Compare with current**, **Restore**.
-10. If you have a tablet, open the same address from it only if it runs the tool itself; the demo is not reachable from
+10. **Schema in Review** · after a run in **Extraction**, open it in Review: the columns use the names of the schema
+    version the run was made with. A value whose field is not in that schema says "not in schema"; a value whose quote
+    was not found in the PDF has no highlight and says so under **Check this**. Correct a number field with text, or a
+    category with a value outside its list: the value is kept, with a warning, and **Finish paper** lists it.
+11. If you have a tablet, open the same address from it only if it runs the tool itself; the demo is not reachable from
     other devices by design.
 
 ## 5. How to report

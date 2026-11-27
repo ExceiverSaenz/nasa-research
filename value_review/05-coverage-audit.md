@@ -338,3 +338,18 @@ no real key or provider is used.
 
 Gaps: no call to a real provider in the tests (by hand with the user's key); PDFs over the providers' page limits
 (OQ-X02); the screen's polling is covered by the e2e first workflow only.
+
+## Review bound to the schema (added 2026-11-27)
+
+[80-review-schema-specification.md](80-review-schema-specification.md).
+
+| AC | Evidence | Status |
+|---|---|---|
+| AC-R01, AC-R03 to AC-R05 | `test_review_schema.py` `BoundReview.test_columns_and_checks_follow_the_runs_schema_version`; e2e `review-schema.spec.js` | Covered |
+| AC-R02, AC-R10 | `test_service.py` (seeded v1, same counts); the 14-paper run checked by hand: 0 new checks, about 60 ms | Covered (run by hand) |
+| AC-R06 | `test_review_schema.py` (draft 422, move to a v2 field, back to its own column) | Covered |
+| AC-R07, AC-R08 | `test_review_schema.py` (warning, `mismatched`, `schema_ref`, CSV names, JSON); `fieldFit.test.js`; e2e (warning, Finish paper, version) | Covered |
+| AC-R09 | `test_review_schema.py` (deleted schema; unreadable `run.json`) | Covered |
+| `fit` | `test_review_schema.py` `Fit` and `fieldFit.test.js` (same cases on both sides) | Covered |
+
+Gaps: calculated fields are not computed (OQ-R01); the tablet layout's field notes are covered by the desktop e2e only.

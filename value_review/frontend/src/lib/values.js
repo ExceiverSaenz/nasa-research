@@ -1,4 +1,5 @@
 // Effective values (original + working copy), scopes and counts. Mirrors value_review/domain/materialize.py.
+import { fit } from './fieldFit.js';
 
 export const STATUSES = ['pending', 'accepted', 'corrected', 'rejected', 'unsure'];
 export const STATUS_LABEL = { pending: 'To review', accepted: 'Accepted', corrected: 'Corrected', rejected: 'Rejected', unsure: 'Unsure' };
@@ -19,14 +20,19 @@ export function recordLabels(original, state) {
 }
 
 // One row per value, with what the interface needs. Model values first, then the reviewer's.
-export function effectiveValues(original, state) {
+// ``checks`` ({observation_id: {action}}) are the service's schema and evidence checks (BR-R04); with ``fields`` (the
+// bound schema's), a value the reviewer typed carries ``warnings`` when it does not fit its field (BR-R06).
+export function effectiveValues(original, state, { checks = {}, fields = null } = {}) {
+  const byId = fields ? Object.fromEntries(fields.map((f) => [f.field_id, f])) : null;
+  const warn = (row, typed) => ({ ...row, warnings: byId && typed ? fit(byId[row.featureId], row.value) : [] });
   const rows = original.observations.map((o) => {
     const d = state.decisions[o.observation_id];
     const col = state.column_moves[o.observation_id];
     const rec = state.record_moves[o.observation_id];
     const corrected = d && d.verdict === 'corrected';
     const recordIds = rec ? rec.record_ids : o.record_ids;
-    return {
+    const extra = (checks[o.observation_id] && checks[o.observation_id].action) || [];
+    return warn({
       id: o.observation_id, origin: 'model', obs: o,
       featureId: col ? col.feature_id : o.feature_id,
       recordIds,
@@ -36,19 +42,20 @@ export function effectiveValues(original, state) {
       unit: corrected ? (d.unit !== undefined ? d.unit : o.unit) : o.unit,
       originalValue: o.value, originalUnit: o.unit,
       status: d ? d.verdict : 'pending', decision: d || null,
-      needsCheck: o.needs_check,
-    };
+      needsCheck: o.needs_check || extra.length > 0,
+      action: (o.action || []).concat(extra.filter((c) => !(o.action || []).includes(c))),
+    }, corrected);
   });
   state.added_values.forEach((v) => {
     const d = state.decisions[v.observation_id];
     const corrected = d && d.verdict === 'corrected';
-    rows.push({
+    rows.push(warn({
       id: v.observation_id, origin: 'reviewer', obs: null, added: v,
       featureId: v.feature_id, recordIds: v.record_ids, scopeRecordIds: v.record_ids,
       value: corrected ? d.value : v.value, unit: corrected ? (d.unit !== undefined ? d.unit : v.unit) : v.unit,
       originalValue: null, originalUnit: null,
-      status: d ? d.verdict : 'pending', decision: d || null, needsCheck: false,
-    });
+      status: d ? d.verdict : 'pending', decision: d || null, needsCheck: false, action: [],
+    }, true));
   });
   return rows;
 }
@@ -82,15 +89,20 @@ function countBy(rows, keysOf) {
   return out;
 }
 
-export function browseFeatures(original, rows) {
+// Columns to browse: the bound schema's fields in their order (BR-R02), then any other column a value is in, marked
+// "not in schema". Without ``fields``, the original's columns.
+export function browseFeatures(original, rows, fields = null) {
   const labels = featureLabels(original);
-  const order = original.features.map((f) => f.feature_id);
+  const inSchema = new Set(fields ? fields.map((f) => f.field_id) : original.features.map((f) => f.feature_id));
+  if (fields) fields.forEach((f) => { labels[f.field_id] = f.label; });
+  const order = fields ? fields.map((f) => f.field_id) : original.features.map((f) => f.feature_id);
   const known = new Set(order);
   rows.forEach((r) => { if (!known.has(r.featureId)) { known.add(r.featureId); order.push(r.featureId); } });
   const tally = countBy(rows, (r) => [r.featureId]);
   return order.map((id) => {
     const t = tally.get(id) || { total: 0, done: 0 };
-    return { id, label: labels[id] || id, total: t.total, done: t.done };
+    const label = labels[id] || id;
+    return { id, label: inSchema.has(id) ? label : `${label} · not in schema`, total: t.total, done: t.done };
   }).filter((f) => f.total > 0);
 }
 

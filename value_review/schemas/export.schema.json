@@ -13,6 +13,7 @@
     "at": { "type": "string", "format": "date-time" },
     "by": { "type": "string" },
     "source": { "$ref": "version.schema.json#/$defs/source" },
+    "schema_ref": { "$ref": "version.schema.json#/$defs/schema_ref" },
     "records": {
       "type": "array",
       "items": {

@@ -993,3 +993,81 @@ Models without a catalog price add nothing, and Setup says their key's limit can
 ### Verification
 
 `test_extraction_trial.py`, `test_extraction_launch.py`, `test_extraction_runs.py` (`key_at_limit`).
+
+## ADR-030 · Review is bound to the run's schema version; other folders use the seeded "Tensile properties" v1
+
+**Status** · Accepted (option chosen by the user on 2026-11-27)
+**Date** · 2026-11-27
+**Reference** · BR-R01, BR-R02, BR-R09, AC-R01, AC-R02; [80-review-schema-specification.md](80-review-schema-specification.md)
+
+### Context
+
+Review took its columns from `ingest/features.py` (the old extraction guide), while Schema now defines the fields and
+Extraction records in `run.json` the schema version each run was made with. Results made before Extraction carry no
+schema.
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Bind each extraction to its `run.json` version; others to the seeded v1 | Nothing to choose; the old run keeps its columns | Folders not made by Extraction always use v1 |
+| The reviewer picks a schema for each folder without `run.json` | Flexible | One more step; reviews of one folder could follow two schemas |
+| Keep `features.py` for old folders | No change for them | Two column systems to maintain |
+
+### Decision and rationale
+
+The first option. The seeded v1 was made from `features.py` (ADR-012), so its field ids are exactly the old run's.
+
+### Consequences
+
+- `service/review_binding.py` reads `run.json` and the schema version on each request (small files).
+- A deleted schema leaves the paper reviewable on its original's columns, with a warning (BR-R09).
+
+### Verification
+
+`test_review_schema.py` (binding, fallback, deleted schema); the old run: 0 new checks on its 2,581 values.
+
+## ADR-031 · Schema checks are worked out when a paper is read, not stored in the original
+
+**Status** · Accepted
+**Date** · 2026-11-27
+**Reference** · BR-R04, BR-R05, BR-01, AC-R10
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Work them out on read from the original and the schema version | Originals never change; always matches the bound version | A little work per request |
+| Rebuild the originals with the checks inside | Read once | Breaks BR-01: `write_original` refuses changed content (`OriginalChanged`) for every existing paper |
+| Store them in the working copy | No work on read | Goes stale when the binding changes; the state is the reviewer's, not the model's |
+
+### Decision and rationale
+
+On read. Measured on the 14-paper run: about 60 ms for all papers, so there is no cache.
+
+### Verification
+
+`test_review_schema.py` (`ModelChecks`, `BoundReview`); originals unchanged (`test_ingest.py`).
+
+## ADR-032 · A value that does not fit its field warns and never blocks; values stay strings
+
+**Status** · Accepted (option chosen by the user on 2026-11-27)
+**Date** · 2026-11-27
+**Reference** · BR-R06, BR-R07, BR-05, AC-R07
+
+### Options considered
+
+| Option | Relevant benefit | Cost or risk |
+|---|---|---|
+| Warn, keep the value as typed | The reviewer is never stuck; nothing is lost | Values that do not fit reach the export (with their warning) |
+| Block the submit | Clean exports | A paper can't be finished until every value fits |
+| Ignore the field types | Nothing to build | Typos in categories and missing numbers go unseen |
+
+### Decision and rationale
+
+Warn. A number field only asks for a digit, so `710 ± 26`, `10⁻³` and `< 0.01` fit; Normalize turns values into numbers
+later. The warnings travel with the version (`values[].warnings`, `counts.mismatched`).
+
+### Verification
+
+`test_review_schema.py` (`Fit`, a correction `abc`); `fieldFit.test.js`; e2e `review-schema.spec.js`.

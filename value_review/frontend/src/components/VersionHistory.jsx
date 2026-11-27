@@ -22,7 +22,7 @@ export default function VersionHistory({ paper, runName, keep, onClose, onChange
   const load = useCallback(() => api.versions(paper.paper).then(setList).catch((e) => setError(e.message)), [paper.paper]);
   useEffect(() => {
     load();
-    api.paper(paper.paper).then((d) => setLabels(Object.fromEntries(d.feature_catalog.concat(d.original.features).map((f) => [f.feature_id, f.label])))).catch(() => {});
+    api.paper(paper.paper).then((d) => setLabels(Object.fromEntries(d.original.features.map((f) => [f.feature_id, f.label]).concat((d.fields || []).map((f) => [f.field_id, f.label]))))).catch(() => {});
   }, [load, paper.paper]);
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') { if (detail) setDetail(null); else onClose(); } };
