@@ -82,7 +82,8 @@ class Papers(Base):  # OP-01, AC-01
         self.assertEqual(r.json(), [{
             'paper': '7', 'title': 'A test paper', 'pages': 2, 'records': 2, 'values': 4, 'needs_check': 3,
             'reviewed': 0, 'total': 4, 'status': 'not_started', 'version': 0, 'latest': None, 'draft_at': None,
-            'source_changed': False, 'source_problems': [], 'completion': 'partial'}])
+            'source_changed': False, 'source_problems': [], 'completion': 'partial',
+        'schema_ref': {'id': 'tensile-properties', 'version': 1, 'name': 'Tensile properties'}}])
 
     def test_latest_version_and_newer_draft(self):
         s1 = empty_state()

@@ -13,8 +13,12 @@ def shape_problems(state):
     return [{'pointer': p, 'message': m} for p, m in schemas.errors('state', state)[:MAX_PROBLEMS]]
 
 
-def check_state(original, state, submit=True):
-    """Business rules on a schema-valid state. ``submit`` adds BR-04 (a draft may hold an unfinished reason)."""
+def check_state(original, state, submit=True, targets=None):
+    """Business rules on a schema-valid state. ``submit`` adds BR-04 (a draft may hold an unfinished reason).
+
+    ``targets`` are the field ids a value may be moved to or added in: the bound schema version's fields that are not
+    calculated (BR-R03). A model value may also go back to its own column. Without ``targets``, the old guide's
+    features and the original's columns are accepted."""
     out = []
 
     def bad(ref, rule):
@@ -24,7 +28,7 @@ def check_state(original, state, submit=True):
     model_obs = {o['observation_id']: o for o in original['observations']}
     model_recs = {r['record_id'] for r in original['records']}
     pages = {p['number'] for p in original['pages']}
-    known_features = set(features.LABELS) | {f['feature_id'] for f in original['features']}
+    known_features = set(targets) if targets is not None else set(features.LABELS) | {f['feature_id'] for f in original['features']}
 
     # Reviewer ids: unique, and never the id of a model item.
     added_recs = [r['record_id'] for r in state['added_records']]
@@ -48,7 +52,8 @@ def check_state(original, state, submit=True):
     for oid, m in state['column_moves'].items():
         if oid not in model_obs:
             bad(oid, 'unknown_observation')
-        if m['feature_id'] not in known_features:
+        own = model_obs[oid]['feature_id'] if oid in model_obs else None
+        if m['feature_id'] not in known_features and m['feature_id'] != own:
             bad(oid, 'unknown_feature')
 
     for oid, m in state['record_moves'].items():
